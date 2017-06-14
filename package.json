@@ -1,0 +1,21 @@
+{
+  "name": "FCMax",
+  "version": "1.0.0",
+  "description": "This is a full stack project in the MEAN stack. Which is aptly named in this case as this SPA is a partial recreation of a program I wrote many years ago in VB for Office, when as an attorney I needed something to manage foreclosures I was handling for my employer. Thankfully, the loans I was foreclosing were commercial and speculative, so I never had to kick anyone out of their home.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.28",
+    "mongoose": "^4.10.6",
+    "mongoose-sequence": "^3.2.0",
+    "morgan": "^1.8.2"
+  }
+}
