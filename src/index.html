@@ -8,30 +8,78 @@
     <title>FCMaxx 120</title>
   
   <!--vendor scripts-->
-    <script src="node_modules/angular/angular.js"></script>
-    <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
-    <script src="node_modules/angular-animate/angular-animate.js"></script>
-    <script src="node_modules/angular-aria/angular-aria.js"></script>
-    <script src="node_modules/angular-messages/angular-messages.js"></script>
-    <script src="node_modules/angular-material/angular-material.js"></script>
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="./node_modules/angular-animate/angular-animate.js"></script>
+    <script src="./node_modules/angular-aria/angular-aria.js"></script>
+    <script src="./node_modules/angular-messages/angular-messages.js"></script>
+    <script src="./node_modules/angular-material/angular-material.js"></script>
   
   <!--CSS-->
-    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="main.css">
-
-    <base href="/">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="./main.css">
+    <base href="/src/">
   </head>
   <body ng-cloak>
 
-    <navbar ng-include="'components/navbar/navbar.template.html'"></navbar>
+    <div id="main-container" layout="column">
+      <header id="main-header">
+        <h1>FC Maxx</h1>
+        <h3>All Your Base Are Belong to Us</h3>
+      </header>
+      <md-toolbar flex layout="row" md-toolbar-tools>
+        <h1 flex-offset="10">Case List</h1>
+      </md-toolbar>
+      <md-content padding>
+        <md-list layout="column">
+          <md-list-item layout="row" layout-wrap layout-align="space-between">
+            <h4 flex-offset="10" flex="10">File #</h4>
+            <h4 flex md-truncate >Address</h4>
+            <h4 flex >Lender</h4>
+            <h4 flex >Borrower</h4>
+            <h4 flex >Loan Amount</h4>
+          </md-list-item>
 
+          <!-- Hard Coded Mockup Data -->
+          <md-list-item layout="row" layout-align="space-between center" class="case-summary">
+            <md-button class="view-detail">
+              <md-icon>expand_more</md-icon>
+            </md-button>  
+            <div flex="10" flex-offset="10">17-34829</div>
+            <div flex>7561 S Highland Dr.</div>
+            <div flex>Steve Choat</div>
+            <div flex>Paul Brack</div>
+            <div flex>$1,500,000</div>
+          </md-list-item>
+          <md-list-item layout="row" layout-align="space-between center" class="case-summary">
+            <md-button class="view-detail">
+              <md-icon>expand_more</md-icon>
+            </md-button>  
+            <div flex="10" flex-offset="10">16-77810</div>
+            <div flex>7561 S Highland Dr.</div>
+            <div flex>Steve Choat</div>
+            <div flex>Paul Brack</div>
+            <div flex>$500,000</div>
+          </md-list-item>
+          <md-list-item layout="row" layout-align="space-between center" class="case-summary">
+            <md-button class="view-detail">
+              <md-icon>expand_more</md-icon>
+            </md-button>  
+            <div flex="10" flex-offset="10">17-60612</div>
+            <div flex>7561 S Highland Dr.</div>
+            <div flex>Steve Choat</div>
+            <div flex>Paul Brack</div>
+            <div flex>$250,000</div>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </div>  <!-- Main Container -->
 
-    <ui-view></ui-view>
   
     <!--local components-->
     <script src="./app.module.js"></script>
     <script src="./app.config.js"></script>
-    <script src="./components/navbar/navbar.component.js"></script>
     <script src="./components/home/home.component.js"></script>
 
   </body>

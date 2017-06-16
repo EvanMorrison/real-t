@@ -6,11 +6,7 @@
 
       $urlRouterProvider.otherwise('/');
 
-      $stateProvider
-        .state('home', {
-          url: '/',
-          component: 'home'
-        })
+        
 
     }])
 

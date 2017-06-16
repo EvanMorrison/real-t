@@ -4,8 +4,6 @@
   angular.module('FCMaxApp', [
     'ngMaterial',
     'ui.router',
-    'Navbar',
-    'Home'
   ]);
   
 })();

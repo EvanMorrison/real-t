@@ -20,9 +20,6 @@
 
     ////////////////
 
-    $ctrl.$onInit = function() { };
-    $ctrl.$onChanges = function() { };
-    $ctrl.$onDestroy = function() { };
   }
   
 })();
