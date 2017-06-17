@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+html, body {
+  font-family: 'Open Sans', 'Helvetica Neue', 'sans serif';
+  margin: 0;
+  padding: 0 0 80px;
+}
+
+#hero * {
+  background-color: transparent;
+  color: #fff;
+}
+
+
+#hero {
+  background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('http://bigreddog.com/wp-content/uploads/2014/09/BRD-1.jpg');
+  background-size: cover;
+}
+
+#toolbar {
+  padding: 2em 10vw;
+}
+
+#toolbar * {
+  margin: 0;
+}
+
+
+
+.case-summary {
+  position: relative;
+  font-size: .9em;
+  padding-bottom: 1.5em;
+}
+
+.view-detail {
+  position: absolute;
+  left: 5vw;
+  top: -3px;
+}
+
+.case-detail {
+  margin-top: -1em;
+}
+
+.case-detail * p {
+  margin: 0;
+  font-size: .9em;
+}
+
+.case-detail * p:last-child {
+  margin-bottom: 1.5em;
+}
+
+
+
