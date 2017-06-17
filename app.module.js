@@ -4,6 +4,7 @@
   angular.module('FCMaxApp', [
     'ngMaterial',
     'ui.router',
+    'Cases'
   ]);
   
 })();

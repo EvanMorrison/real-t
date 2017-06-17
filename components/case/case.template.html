@@ -1,0 +1,21 @@
+<md-list-item class="case-detail" layout="row" layout-align="space-between start" >
+  <div flex="10" flex-offset="10"></div>
+  <div flex>
+    <p>{{ctrl.case.property.city}}</p>
+    <p>{{ctrl.case.property.county}} County</p>
+    <p>id: {{ctrl.case.property.taxId}}</p>
+  </div>
+  <div flex>
+    <p>{{ctrl.case.lender.phone | tel }}</p>
+    <p>{{ctrl.case.lender.address1}}</p>
+    <p>{{ctrl.case.lender.city}}, {{ctrl.case.lender.state}} {{ctrl.case.lender.zip}}</p>
+  </div>
+  <div flex>
+    <p>{{ctrl.case.borrower.address1}}</p>
+    <p>{{ctrl.case.borrower.city}}, {{ctrl.case.borrower.state}} {{ctrl.case.borrower.zip}}</p>
+  </div>
+  <div flex>
+
+  </div>
+</md-list-item>
+<md-divider></md-divider>
