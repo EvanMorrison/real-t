@@ -30,22 +30,29 @@ html, body {
 .case-summary {
   position: relative;
   font-size: .9em;
-  padding-bottom: 1.5em;
 }
 
-.view-detail {
+.more-detail, .less-detail {
   position: absolute;
-  left: 5vw;
+  left: 3vw;
   top: -3px;
 }
 
-.case-detail {
+.edit {
+  
+}
+
+.case-detail  {
+  position: relative;
+}
+
+.case-detail > div {
   margin-top: -1em;
 }
 
 .case-detail * p {
   margin: 0;
-  /*font-size: .9em;*/
+  font-size: .9em;
 }
 
 .case-detail * p:last-child {
