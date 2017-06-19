@@ -1,43 +1,50 @@
 <md-content >
-        <md-list layout="column" ng-init="ctrl.caseSelected=null">
-          <md-list-item layout="row" layout-wrap layout-align="space-between">
-            <h4 flex-offset="10" flex="10">File #</h4>
-            <h4 flex md-truncate >Property</h4>
-            <h4 flex >Lender</h4>
-            <h4 flex >Borrower</h4>
-            <h4 flex >Loan Amount</h4>
-          </md-list-item>
+  <md-list ng-init="ctrl.caseSelected=null" flex>
+    <md-list-item>
+      <h4 flex="10" >File #</h4>
+      <h4 flex >Property</h4>
+      <h4 flex >Lender</h4>
+      <h4 flex >Borrower</h4>
+      <h4 flex="10" >Loan Amount</h4>
+      <h4 flex="10"></h4>
+    </md-list-item>
 
-          <!-- Show summary, with expand for details option -->
-          <div ng-repeat="case in ctrl.cases track by $index"  >
-            <md-list-item layout="column" layout-fill style="min-height:24px"
-                  layout-align="start stretch" >
-              <div layout="row">
-                         <!--expand button displays additional case details-->
-              <md-button class="view-detail md-fab md-mini md-primary md-hue-2"
-                ui-sref="cases.case({fileId:case.file})"
-                ng-click="ctrl.caseSelected = $index"
-                ng-show="ctrl.caseSelected !=$index">
-                <md-icon>expand_more</md-icon>
-              </md-button>
-                  <!--collapse button. visible only when details are shown-->
-              <md-button class="view-detail md-fab md-mini md-primary md-hue-3"
-                ui-sref="cases"
-                ng-click="ctrl.caseSelected = null"
-                ng-show="ctrl.caseSelected === $index">
-              <md-icon>expand_less</md-icon>
-              </md-button>
-               <!--Case Summary info-->
-                    <div flex="10" flex-offset="10">{{case.file}}</div>
-                    <div flex>{{case.property.address1}}</div>
-                    <div flex>{{case.lender.name}}</div>
-                    <div flex>{{case.borrower.name}}</div>
-                    <div flex>{{case.borrower.loanAmount | currency : "$" : 0}}</div>
-                  </div>
-              <ui-view ng-if="ctrl.caseSelected === $index"></ui-view>
-            </md-list-item>
-              <md-divider></md-divider>
-              <!-- more case details-->
+    <!-- Show summary, with expand for details option -->
+
+      <md-list-item class="md-2-line" ng-repeat="case in ctrl.cases track by $index">
+                    <!--expand button displays additional case details-->
+        <md-button class="md-fab md-mini md-secondary md-hue-2"
+          ui-sref="cases.case({fileId:case.file})"
+          ng-click="ctrl.caseSelected = $index"
+          ng-show="ctrl.caseSelected !=$index">
+          <md-icon>expand_more</md-icon>
+        </md-button>
+            <!--collapse button. visible only when details are shown-->
+        <md-button class="md-fab md-mini md-secondary md-hue-3"
+          ui-sref="cases"
+          ng-click="ctrl.caseSelected = null"
+          ng-show="ctrl.caseSelected === $index">
+          <md-icon>expand_less</md-icon>
+        </md-button>
+        <md-button class="md-secondary md-mini md-fab">
+          <md-icon>create</md-icon>
+        </md-button>
+        <div class="md-list-item-text" layout="column">
+          <div layout="row" ng-if="ctrl.caseSelected !=$index">
+            <!--Case Summary info-->
+                <div flex="10">{{case.file}}</div>
+                <div flex >{{case.property.address1}}</div>
+                <div flex >{{case.lender.name}}</div>
+                <div flex >{{case.borrower.name}}</div>
+                <div flex="10" >{{case.borrower.loanAmount | currency : "$" : 0}}</div>
           </div>
-        </md-list>
-      </md-content>
+          <div>
+            <ui-view ng-if="ctrl.caseSelected === $index"></ui-view>
+          </div>
+          <md-divider></md-divider>
+                </md-list-item>
+        </div>
+        <!-- more case details-->
+
+  </md-list>
+</md-content>
