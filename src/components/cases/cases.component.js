@@ -13,12 +13,16 @@
 
     function CasesController(caseService) {
       const ctrl = this;
+        ctrl.caseSelected = false;
 
         ctrl.$onDestroy = function() { 
           console.log('destroyer')
           ctrl.selectedFile = 0; 
         }
-      
+        
+        ctrl.$onUpdate = function() {
+          console.log('selected ', ctrl.caseSelected)
+        }
 
 
       // track which case the user has selected to view details
