@@ -39,6 +39,10 @@ html, body {
   top: -3px;
 }
 
+.case-detail {
+  margin-top: -1em;
+}
+
 .case-detail * p {
   margin: 0;
   /*font-size: .9em;*/
