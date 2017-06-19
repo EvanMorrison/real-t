@@ -1,5 +1,5 @@
-<md-content padding>
-        <md-list layout="column">
+<md-content >
+        <md-list layout="column" ng-init="ctrl.caseSelected=null">
           <md-list-item layout="row" layout-wrap layout-align="space-between">
             <h4 flex-offset="10" flex="10">File #</h4>
             <h4 flex md-truncate >Property</h4>
@@ -8,53 +8,36 @@
             <h4 flex >Loan Amount</h4>
           </md-list-item>
 
-          <!-- Hard Coded Mockup Data -->
-          <div ng-repeat="case in ctrl.cases">
-            <md-list-item layout="row" 
-                  layout-align="space-between center" 
-                  class="case-summary">
-              <!--expand button displays additional case details-->
+          <!-- Show summary, with expand for details option -->
+          <div ng-repeat="case in ctrl.cases track by $index"  >
+            <md-list-item layout="column" layout-fill style="min-height:24px"
+                  layout-align="start stretch" >
+              <div layout="row">
+                         <!--expand button displays additional case details-->
               <md-button class="view-detail md-fab md-mini md-primary md-hue-2"
-                    ui-sref="cases.case({fileId:case.file})"
-                    ng-click="ctrl.selected(case)"
-                    ng-show="case.file!=ctrl.selectedFile">
-                  <md-icon>expand_more</md-icon>
+                ui-sref="cases.case({fileId:case.file})"
+                ng-click="ctrl.caseSelected = $index"
+                ng-show="ctrl.caseSelected !=$index">
+                <md-icon>expand_more</md-icon>
               </md-button>
-              <!--collapse button. visible only when details are shown-->
+                  <!--collapse button. visible only when details are shown-->
               <md-button class="view-detail md-fab md-mini md-primary md-hue-3"
-                    ui-sref="cases"
-                    ng-click="ctrl.selected(case)"
-                    ng-show="case.file==ctrl.selectedFile">
-                  <md-icon>expand_less</md-icon>
-                </md-button>
-                  <div flex="10" flex-offset="10">{{case.file}}</div>
-                  <div flex>{{case.property.address1}}</div>
-                  <div flex>{{case.lender.name}}</div>
-                  <div flex>{{case.borrower.name}}</div>
-                  <div flex>{{case.borrower.loanAmount | currency : "$" : 0}}</div>
+                ui-sref="cases"
+                ng-click="ctrl.caseSelected = null"
+                ng-show="ctrl.caseSelected === $index">
+              <md-icon>expand_less</md-icon>
+              </md-button>
+               <!--Case Summary info-->
+                    <div flex="10" flex-offset="10">{{case.file}}</div>
+                    <div flex>{{case.property.address1}}</div>
+                    <div flex>{{case.lender.name}}</div>
+                    <div flex>{{case.borrower.name}}</div>
+                    <div flex>{{case.borrower.loanAmount | currency : "$" : 0}}</div>
+                  </div>
+              <ui-view ng-if="ctrl.caseSelected === $index"></ui-view>
             </md-list-item>
-              <md-divider ng-if="case.file!=ctrl.selectedFile"></md-divider>
-              <ui-view ng-if="case.file==ctrl.selectedFile"></ui-view>
+              <md-divider></md-divider>
+              <!-- more case details-->
           </div>
-          <!--<md-list-item layout="row" layout-align="space-between center" class="case-summary">
-            <md-button class="view-detail">
-              <md-icon>expand_more</md-icon>
-            </md-button>  
-            <div flex="10" flex-offset="10">16-77810</div>
-            <div flex>3183 S State St.</div>
-            <div flex>Diane Mulkazy</div>
-            <div flex>Thomas Peterson</div>
-            <div flex>$500,000</div>
-          </md-list-item>
-          <md-list-item layout="row" layout-align="space-between center" class="case-summary">
-            <md-button class="view-detail">
-              <md-icon>expand_more</md-icon>
-            </md-button>  
-            <div flex="10" flex-offset="10">17-60612</div>
-            <div flex>720 N Canyon View Rd.</div>
-            <div flex>Kirk Brontwell</div>
-            <div flex>Sherri Perkins</div>
-            <div flex>$250,000</div>
-          </md-list-item>-->
         </md-list>
       </md-content>
