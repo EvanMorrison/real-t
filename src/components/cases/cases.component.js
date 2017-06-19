@@ -6,28 +6,23 @@
   ])
     .component('cases', {
       templateUrl: 'components/cases/cases.template.html',
-      controller: ['caseService', CasesController],
+      controller: ['$state', 'caseService', CasesController],
       controllerAs: 'ctrl',
       bindings: { cases : '<'},
     });
 
-    function CasesController(caseService) {
+    function CasesController($state, caseService) {
       const ctrl = this;
 
-        ctrl.$onDestroy = function() { 
-          console.log('destroyer')
-          ctrl.selectedFile = 0; 
-        }
-      
-
-
-      // track which case the user has selected to view details
-      ctrl.selected = function(c) {
-        if (c.file === ctrl.selectedFile) {
-          ctrl.selectedFile = 0;
-        } else {
-        ctrl.selectedFile = c.file;
-        }
+      // toggle parent or child state depending on what is currently showing
+      ctrl.toggleSelected = function(index) {
+          if (ctrl.selectedCase === index) {
+            $state.go('cases')
+            ctrl.selectedCase = null;
+            } else {
+              $state.go('cases.case', {fileId: ctrl.cases[index].file})
+              ctrl.selectedCase = index;
+            }
       }
 
     }
