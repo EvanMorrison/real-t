@@ -1,180 +1,202 @@
 <md-toolbar class="toolbar md-whiteframe-z2">
   <h3>Case View</h3>
 </md-toolbar>
-<md-content style="min-height: 50vh" layout-sm="column" layout="row" layout-wrap>
+<md-content style="min-height: 50vh" layout-gt-sm="row" layout="column" layout-align-gt-sm="center center" layout-align="space-around stretch" layout-wrap>
 
   <!-- Property Card-->
-  <div flex="100">
+  <div flex-gt-sm="80">
     <md-card >
       <md-card-title>
         <md-card-title-text>
           <span class="md-headline">Property</span>
         </md-card-title-text>
       </md-card-title>
-      <md-card-content layout="column">
-        <md-grid-list md-cols-gt-xs="8" md-cols-xs="8" md-row-height="1.5em" style="overflow:scroll" >
+      <md-card-content>
+        <md-grid-list md-cols="12" md-row-height="1.5em" >
     
-          <md-grid-tile md-colspan-gt-xs="1" md-colspan-xs="3">
-                <strong md-truncate>Owner:</strong>
+          <md-grid-tile md-colspan-gt-sm="5" md-colspan-sm="6" md-colspan-xs="12"
+                        md-rowspan="5">
+            <div layout="column" flex="95">
+              <div layout="row">
+                <div flex="25">
+                  <strong >Owner:</strong>
+                </div>
+                <div flex="75">
+                  <div>Stuart McFarlain</div>
+                </div>
+              </div>
+              <div layout="row" layout-wrap>
+                <div flex="25" >
+                  <strong>Address: </strong>
+                </div>
+                <div flex="75">
+                  <div>13700 N Fountain Hills Boulevard, Apt 202</div>
+                </div>
+              </div>
+                  
+              <div layout="row">
+                <div flex="25">
+                  <strong>County: </strong>
+                </div>
+                <div flex="75">
+                  <div>Davis</div>
+                </div>
+              </div>
+                  
+              <div layout="row">
+                <div flex="25">
+                  <strong>Tax Id: </strong>
+                </div>
+                <div flex="75">
+                  <div>36-238-9984</div>
+                </div>
+              </div>
+            </div>
           </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="5">
-              <span>Stuart McFarlain</span>
-          </md-grid-tile>
-          
-          <md-grid-tile md-colspan-gt-xs="1" md-colspan-xs="3" md-rowspan="5">
-            <strong>Legal Description: </strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="5" md-rowspan="5" >
-            <md-grid-header>
-              <span>Lot 75, VISTA BONITA HEIGHTS SUBDIVISION, according to the official plat thereof on file and of record in the Office of the Recorder for Davis County, Utah. </span>
-            </md-grid-header>
+          <md-grid-tile md-colspan-gt-sm="7" md-colspan-sm="6" md-colspan-xs="12" 
+                        md-rowspan="5">
+            <div layout="row" flex="95">
+              <div flex="30" >
+                <strong >Legal Description: </strong>
+              </div>
+              <div flex="70">
+                <div>Lot 75, VISTA BONITA HEIGHTS SUBDIVISION, according to the official plat thereof on file and of record in the Office of the Recorder for Davis County, Utah. </div>
+              </div>
+            </div>
           </md-grid-tile>
 
-          <md-grid-tile md-colspan-gt-xs:"1" md-colspan-xs="3">
-            <strong>Address: </strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="5">
-            <span md-truncate>2349 East Taylor Boulevard</span>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-xs="1" md-colspan-xs="3">
-            <strong>County: </strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="5">
-            <span>Davis</span>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-xs="1" md-colspan-xs="3">
-            <strong>Tax Id: </strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="5">
-            <span>36-238-9984</span>
-          </md-grid-tile>
         </md-grid-list>
-    
       </md-card-content>
     </md-card> 
   </div>  
   <!-- End Property card -->
 
   <!-- Lender card -->
-  <div flex-gt-sm="50" flex="100">
-    <md-card >
-    
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Lender</span>
-        </md-card-title-text>
-      </md-card-title>
-    
-      <md-card-content layout="column">
-        
-        <md-grid-list md-cols-gt-xs="4" md-cols-xs="3" md-row-height="1.5em" style="overflow:scroll" >
-          <md-grid-tile >
-              <md-grid-header>
-                <strong md-truncate>Name:</strong>
-              </md-grid-header>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-              <span>Peter Boghashian</span>
-          </md-grid-tile>
-    
-          <md-grid-tile>
-            <strong>Address: </strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-            <span md-truncate>50 S Main Street</span>
-          </md-grid-tile>
-    
-          <md-grid-tile>
-            <strong></strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-            <span>Salt Lake City, UT 84111</span>
-          </md-grid-tile>
-    
-          <md-grid-tile>
-            <strong>Phone:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-            <span>801-462-8382</span>
-          </md-grid-tile>
-    
-          <md-grid-tile >
-            <strong>Email:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2" >
-            <md-grid-header>
-              <span>pboghashian@email.net</span>
-            </md-grid-header>
-          </md-grid-tile>
-        </md-grid-list>
-      </md-card-content>
-    </md-card>
-  </div>
+<div flex-gt-sm="40">
+  <md-card >
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Lender</span>
+      </md-card-title-text>
+    </md-card-title>
+  
+    <md-card-content>
+      <md-grid-list md-cols="2" md-row-height="1.5em">
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="3">
+          <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Name:</strong>
+              </div>
+              <div flex="75">
+                <div>Peter Boghashian</div>
+              </div>
+            </div>
+
+            <div layout="row">
+              <div flex="25">
+                <strong>Address: </strong>
+              </div>
+              <div flex="75">
+                <div>50 S Main Street</div>
+                <div>Salt Lake City, UT 84111</div>
+              </div>
+            </div>
+          </div>
+        </md-grid-tile>
+  
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="2" >
+         <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Phone:</strong>
+              </div>
+              <div flex="75">
+                <div>801-412-8382</div>
+              </div>
+            </div>
+            <div layout="row" >
+              <div flex="25" >
+                <strong>Email:</strong>
+              </div>
+              <div flex="75" >
+                <div>pboghashian@email.net</div>
+              </div>
+            </div>
+         </div>
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+  </md-card>
+</div>
   <!-- End Lender Card-->
   
-  <!-- Borrower Card-->
-  <div flex-gt-sm="50" flex="100">
-    <md-card >
-    
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Borrower</span>
-        </md-card-title-text>
-      </md-card-title>
-    
-      <md-card-content layout="column">
-        
-        <md-grid-list md-cols-gt-xs="4" md-cols-xs="3" md-row-height="1.5em" style="overflow:scroll" >
-          <md-grid-tile >
-              <md-grid-header>
-                <strong md-truncate>Name:</strong>
-              </md-grid-header>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-              <span>Jamie Lannister</span>
-          </md-grid-tile>
-    
-          <md-grid-tile>
-            <strong>Address: </strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-            <span md-truncate>301 South 200 East</span>
-          </md-grid-tile>
-    
-          <md-grid-tile>
-            <strong></strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-            <span>Salt Lake City, UT 84111</span>
-          </md-grid-tile>
-    
-          <md-grid-tile>
-            <strong>Phone:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2">
-            <span>801-558-0192</span>
-          </md-grid-tile>
-    
-          <md-grid-tile >
-            <strong>Email:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-xs="3" md-colspan-xs="2" >
-            <md-grid-header>
-              <span></span>
-            </md-grid-header>
-          </md-grid-tile>
-    
-    
-        </md-grid-list>
-      </md-card-content>
-    </md-card>
-  </div>
-  <!-- End Borrower Card-->
+  <!-- Borrower card -->
+<div flex-gt-sm="40">
+  <md-card >
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Borrower</span>
+      </md-card-title-text>
+    </md-card-title>
+  
+    <md-card-content>
+      <md-grid-list md-cols="2" md-row-height="1.5em">
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="3">
+          <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Name:</strong>
+              </div>
+              <div flex="75">
+                <div>Jamie Lannister</div>
+              </div>
+            </div>
 
+            <div layout="row">
+              <div flex="25">
+                <strong>Address: </strong>
+              </div>
+              <div flex="75">
+                <div>301 South 200 East</div>
+                <div>Salt Lake City, UT 84111</div>
+              </div>
+            </div>
+          </div>
+        </md-grid-tile>
+  
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="2" >
+         <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Phone:</strong>
+              </div>
+              <div flex="75">
+                <div>801-558-0192</div>
+              </div>
+            </div>
+            <div layout="row" >
+              <div flex="25" >
+                <strong>Email:</strong>
+              </div>
+              <div flex="75" >
+                <div></div>
+              </div>
+            </div>
+         </div>
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+  </md-card>
+</div>
+  <!-- End Borrower Card-->
+  
   <!-- Loan & Trust Deed Card-->
-  <div flex="100">
+  <div flex-gt-sm="80">
     <md-card >
       <md-card-title>
         <md-card-title-text>
@@ -184,88 +206,93 @@
     
       <md-card-content>
         
-        <md-grid-list md-cols-gt-sm="12" md-cols-sm="9" md-cols-xs="9" md-row-height="1.5em" 
-                      style="min-height:12em;overflow:scroll" >
-          <md-grid-tile md-colspan-gt-sm="1" md-colspan-sm="1" md-colspan-xs="3" 
-                        md-rowspan-gt-xs="2">
-                <strong >Amount:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="3" md-colspan-sm="2" md-colspan-xs="6" 
-                        md-rowspan-gt-xs="2">
-              <span>$257,842</span>
+        <md-grid-list md-cols="6" md-row-height="1.5em">
+          <md-grid-tile md-colspan-gt-xs="2" md-colspan-xs="6" 
+                        md-rowspan="3">
+            <div layout="column" flex="95">
+              <div layout="row">
+                <div flex="45" flex-xs="25">
+                  <strong >Amount:</strong>
+                </div>
+                <div flex="55" flex-xs="75">
+                  <div>$257,842</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="45" flex-xs="25">
+                  <strong>Recorded:</strong>
+                </div>
+                <div flex="55" flex-xs="75">
+                  <div>April 3, 2015</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="45" flex-xs="25">
+                  <strong>Entry No:</strong>
+                </div>
+                <div flex="55" flex-xs="75">
+                  <div>158293045</div>
+                </div>
+              </div>
+            </div>
           </md-grid-tile>
     
-          <md-grid-tile md-colspan-gt-sm="1" md-colspan-sm="1" md-colspan-xs="3"
-                        md-rowspan-gt-xs="2" >
-            <strong>Recorded:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="3" md-colspan-sm="2" md-colspan-xs="6"
-                        md-rowspan-gt-xs="2" >
-            <span md-truncate>April 3, 2015</span>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-sm="1" md-colspan-sm="1" md-colspan-xs="3"
-                        md-rowspan-gt-xs="2" >
-            <strong>Entry No:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="3" md-colspan-sm="2" md-colspan-xs="6"
-                        md-rowspan-gt-xs="2" >
-            <span md-truncate>158293045</span>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-sm="2" md-colspan-sm="2" md-colspan-xs="9"
-                        md-rowspan-sm="2">
-            <strong md-truncate>Original Beneficiary:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="4" md-colspan-sm="2" md-colspan-xs="9"
-                        md-rowspan-sm="2">
-            <span >Oscar Travers</span>
-          </md-grid-tile>
-          
-          <md-grid-tile md-colspan-gt-sm="2" md-colspan-sm="2" md-colspan-xs="9"
-                        md-rowspan-sm="2">
-            <strong>Original Trustee:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="4" md-colspan-sm="3" md-colspan-xs="9"
-                        md-rowspan-sm="2">
-            <span >First American Title Insurance Company</span>
-          </md-grid-tile>
-          
-          <md-grid-tile md-colspan-gt-sm="4" md-colspan-sm="9" md-colspan-xs="9"
-                        md-rowspan-gt-sm="2">
-            <strong>Substitution of Trustee:</strong>
+          <md-grid-tile md-colspan-gt-xs="4" md-colspan-xs="6"
+                        md-rowspan="4">
+            <div layout="column" flex="95">
+              <div layout="row" >
+                <div flex="30">
+                  <strong>Original Beneficiary:</strong>
+                </div>
+                <div flex="70">
+                  <div >Oscar Travers</div>
+                </div>
+              </div>
+              <div layout="row" >
+                <div flex="30">
+                  <strong>Original Trustee:</strong>
+                </div>
+                <div flex="70">
+                  <div >First American Title Insurance Company</div>
+                </div>
+              </div>
+            </div>
           </md-grid-tile>
 
-          <md-grid-tile md-colspan-gt-sm="1" md-colspan-sm="1" md-colspan-xs="3"
-                        md-rowspan-gt-xs="2" >
-            <strong>Recorded:</strong>
+          <md-grid-tile md-colspan="6"
+                        md-rowspan="5">
+            <div layout="column" flex="95">
+              <div>
+                <strong>Assignments:</strong>
+              </div>
+              <div layout="row">
+                <div flex="30">
+                  <strong>Recorded:</strong>
+                </div>
+                <div flex="70">
+                  <div>05/12/2017</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="30">
+                  <strong>Entry No:</strong>
+                </div>
+                <div flex="70">
+                  <div>172389298</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="30">
+                  <strong>Assignee:</strong>
+                </div>
+                <div flex="70">
+                  <div>
+                    Peter Boghashian
+                  </div>
+                </div>
+              </div>
+            </div>
           </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="3" md-colspan-sm="2" md-colspan-xs="6"
-                        md-rowspan-gt-xs="2" >
-            <span md-truncate>05/12/2017</span>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-sm="1" md-colspan-sm="1" md-colspan-xs="3"
-                        md-rowspan-gt-xs="2" >
-            <strong>Entry No:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="3" md-colspan-sm="2" md-colspan-xs="6"
-                        md-rowspan-gt-xs="2" >
-            <span md-truncate>172389298</span>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-sm="1" md-colspan-sm="2" md-colspan-xs="3">
-            <strong>Assignment:</strong>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="3" md-colspan-sm="4" md-colspan-xs="6">
-            <p md-truncate>Date: 10/07/2015</p>
-            <p md-truncate>Entry No.: 15020348</p>
-            <p md-truncate>To: Peter Boghashian</p>
-          </md-grid-tile>
-    
-          
-    
-    
         </md-grid-list>
       </md-card-content>
     </md-card>
