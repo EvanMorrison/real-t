@@ -1,0 +1,12 @@
+# Custom .gitignore version solely for the gh-pages branch
+
+
+.DS_Store
+
+node_modules
+
+src
+
+package.json
+.vscode
+.log
