@@ -1,7 +1,7 @@
 (function() {
   angular.module('Cases')
     .component('case', {
-      templateUrl: '/components/case/case.template.html',
+      templateUrl: 'components/cases.case/case.template.html',
       controller: [CaseController],
       controllerAs: 'ctrl',
       bindings: { case: '<'}

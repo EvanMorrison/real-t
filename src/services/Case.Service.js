@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('FCMaxApp')
+  angular.module('RTApp')
     .service('caseService', ['$q', CaseService])
 
     function CaseService($q) {

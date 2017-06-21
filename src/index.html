@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="FCMaxApp">
+<html lang="en" ng-app="RTApp">
   <head>
     <meta charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,18 +25,18 @@
 
     <div id="main-container" layout="column">
       <div id="hero">
-        <md-toolbar id="toolbar">
+        <md-toolbar class="toolbar md-whiteframe-z1">
           <h1>REAL-T</h1>
           <h3><strong>R</strong>eal <strong>E</strong>st<strong>A</strong>te <strong>L</strong>ending <strong>T</strong>racker</h3>
           <h3>All Your Base Are Belong to Us</h3>
         </md-toolbar>
-        <div class="md-whiteframe-z2" flex layout="row">
-          <h1 flex-offset="10">Case List</h1>
-        </div>
       </div>
-      <div layout="row">
+      <nav layout="row">
         <md-button ui-sref="cases">Case List Home</md-button>
-      </div>
+        <md-button ui-sref="caseMain">Case Lookup</md-button>
+        <md-button ui-sref="legacyforms">Legacy Input Forms</md-button>
+      </nav>
+      <div id="background"></div>
       <ui-view></ui-view>
 
 
@@ -47,7 +47,9 @@
     <script src="/app.module.js"></script>
     <script src="/app.config.js"></script>
     <script src="/components/cases/cases.component.js"></script>
-    <script src="/components/case/case.component.js"></script>
+    <script src="/components/cases.case/case.component.js"></script>
+    <script src="/components/caseMain/caseMain.component.js"></script>
+    <script src="/components/legacyViews/legacyViews.component.js"></script>
     <script src="/services/Case.Service.js"></script>
 
   </body>
