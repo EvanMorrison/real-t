@@ -1,5 +1,5 @@
 # REAL-T 
-## Reas EstAte Lending Tracker
+## Real Estate Lending Tracker
 
 
 ### Background
@@ -26,4 +26,6 @@ The main target features of the app are to:
 * Automatically generate the schedule for mailing and publication, and the appropriate correspodence and emails for the applicable jurisdiction.
 
 The front end is built using Angularjs with Angular Material, and routing is handled by UI-Router. Frontend package management is handled with Bower. The backend uses Node.js, npm, and MongoDB. 
+
+### See the work in progress on gh-pages: [evanmorrison.github.io/real-t](https://evanmorrison.github.io/real-t)
  
