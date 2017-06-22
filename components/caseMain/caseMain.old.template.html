@@ -1,0 +1,329 @@
+<md-toolbar class="toolbar md-whiteframe-z2">
+  <h3>Case View</h3>
+</md-toolbar>
+<md-content layout-gt-sm="row" layout-align-gt-sm="center center" layout-wrap
+            layout="column" 
+            class="case-view-container">
+
+  <!-- Search Box -->
+  <div flex-gt-sm="25" flex-offset="60">
+        <md-input-container>
+          <label for=""><md-icon>search</md-icon> look up case number</label>
+          <input class="md-headline" type="search"></input>
+        </md-input-container>
+  </div>
+
+  <div flex-gt-sm="80" flex-offset="5" >
+    <h1 >Case: 17-62829</h1>
+  </div>
+
+  <!-- Property Card-->
+  <div flex-gt-sm="80">
+    <md-card >
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Property</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-grid-list md-cols="12" md-row-height="1.5em" >
+    
+          <md-grid-tile md-colspan-gt-sm="5" md-colspan-sm="6" md-colspan-xs="12"
+                        md-rowspan="8">
+            <div layout="column" flex="95">
+              <div layout="row">
+                <div flex="25">
+                  <p>
+                    <strong >Owner:</strong>
+                  </p>
+                </div>
+                <div flex="75">
+                  <p>Stuart McFarlain</p>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="25" >
+                  <p>
+                    <strong>Address: </strong>
+                  </p>
+                </div>
+                <div flex="75">
+                  <p>13700 N Fountain Hills Boulevard, Apt 202</p>
+                  <p>Syracuse, UT 84014</p>
+                </div>
+              </div>
+                  
+              <div layout="row">
+                <div flex="25">
+                  <p>
+                    <strong>County: </strong>
+                  </p>
+                </div>
+                <div flex="75">
+                  <p>Davis</p>
+                </div>
+              </div>
+                  
+              <div layout="row">
+                <div flex="25">
+                  <p>
+                    <strong>Tax Id: </strong>
+                  </p>
+                </div>
+                <div flex="75">
+                  <p>36-238-9984</p>
+                </div>
+              </div>
+            </div>
+          </md-grid-tile>
+          <md-grid-tile md-colspan-gt-sm="7" md-colspan-sm="6" md-colspan-xs="12" 
+                        md-rowspan="5">
+            <div layout="row" flex="95">
+              <div flex="30" >
+                <p>
+                  <strong >Legal Description: </strong>
+                </p>
+              </div>
+              <div flex="70">
+                <p>Lot 75, VISTA BONITA HEIGHTS SUBDIVISION, according to the official plat thereof on file and of record in the Office of the Recorder for Davis County, Utah. </p>
+              </div>
+            </div>
+          </md-grid-tile>
+
+        </md-grid-list>
+      </md-card-content>
+    </md-card> 
+  </div>  
+  <!-- End Property card -->
+
+  <!-- Lender card -->
+<div flex-gt-sm="40">
+  <md-card >
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Lender</span>
+      </md-card-title-text>
+    </md-card-title>
+  
+    <md-card-content ng-init="ctrl.editActive=true">
+      <md-grid-list md-cols="2" md-row-height="1.5em">
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="3">
+          <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Name:</strong>
+              </div>
+              <div flex="75">
+                
+                <div ng-hide="ctrl.editActive">Peter Boghashian</div>
+                
+              </div>
+            </div>
+
+            <div layout="row">
+              <div flex="25">
+                <strong>Address: </strong>
+              </div>
+              <div flex="75">
+                <div>50 S Main Street</div>
+                <div>Salt Lake City, UT 84111</div>
+              </div>
+            </div>
+          </div>
+        </md-grid-tile>
+  
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="2" >
+         <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Phone:</strong>
+              </div>
+              <div flex="75">
+                <div>801-412-8382</div>
+              </div>
+            </div>
+            <div layout="row" >
+              <div flex="25" >
+                <strong>Email:</strong>
+              </div>
+              <div flex="75" >
+                <div>pboghashian@email.net</div>
+              </div>
+            </div>
+         </div>
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+  </md-card>
+</div>
+  <!-- End Lender Card-->
+  
+  <!-- Borrower card -->
+<div flex-gt-sm="40">
+  <md-card >
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Borrower</span>
+      </md-card-title-text>
+    </md-card-title>
+  
+    <md-card-content>
+      <md-grid-list md-cols="2" md-row-height="1.5em">
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="3">
+          <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Name:</strong>
+              </div>
+              <div flex="75">
+                <div>Jamie Lannister</div>
+              </div>
+            </div>
+
+            <div layout="row">
+              <div flex="25">
+                <strong>Address: </strong>
+              </div>
+              <div flex="75">
+                <div>301 South 200 East</div>
+                <div>Salt Lake City, UT 84111</div>
+              </div>
+            </div>
+          </div>
+        </md-grid-tile>
+  
+        <md-grid-tile md-colspan="2" md-colspan-sm="1"
+                      md-rowspan="2" >
+         <div layout="column" flex="95">
+            <div layout="row">
+              <div flex="25">
+                <strong>Phone:</strong>
+              </div>
+              <div flex="75">
+                <div>801-558-0192</div>
+              </div>
+            </div>
+            <div layout="row" >
+              <div flex="25" >
+                <strong>Email:</strong>
+              </div>
+              <div flex="75" >
+                <div></div>
+              </div>
+            </div>
+         </div>
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+  </md-card>
+</div>
+  <!-- End Borrower Card-->
+  
+  <!-- Loan & Trust Deed Card-->
+  <div flex-gt-sm="80">
+    <md-card >
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Loan &amp; Trust Deed</span>
+        </md-card-title-text>
+      </md-card-title>
+    
+      <md-card-content>
+        
+        <md-grid-list md-cols="6" md-row-height="1.5em">
+          <md-grid-tile md-colspan-gt-xs="2" md-colspan-xs="6" 
+                        md-rowspan="3">
+            <div layout="column" flex="95">
+              <div layout="row">
+                <div flex="45" flex-xs="25">
+                  <strong >Amount:</strong>
+                </div>
+                <div flex="55" flex-xs="75">
+                  <div>$257,842</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="45" flex-xs="25">
+                  <strong>Recorded:</strong>
+                </div>
+                <div flex="55" flex-xs="75">
+                  <div>April 3, 2015</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="45" flex-xs="25">
+                  <strong>Entry No:</strong>
+                </div>
+                <div flex="55" flex-xs="75">
+                  <div>158293045</div>
+                </div>
+              </div>
+            </div>
+          </md-grid-tile>
+    
+          <md-grid-tile md-colspan-gt-xs="4" md-colspan-xs="6"
+                        md-rowspan="4">
+            <div layout="column" flex="95">
+              <div layout="row" >
+                <div flex="30">
+                  <strong>Original Beneficiary:</strong>
+                </div>
+                <div flex="70">
+                  <div >Oscar Travers</div>
+                </div>
+              </div>
+              <div layout="row" >
+                <div flex="30">
+                  <strong>Original Trustee:</strong>
+                </div>
+                <div flex="70">
+                  <div >First American Title Insurance Company</div>
+                </div>
+              </div>
+            </div>
+          </md-grid-tile>
+
+          <md-grid-tile md-colspan="6"
+                        md-rowspan="5">
+            <div layout="column" flex="95">
+              <div>
+                <strong>Assignments:</strong>
+              </div>
+              <div layout="row">
+                <div flex="30">
+                  <strong>Recorded:</strong>
+                </div>
+                <div flex="70">
+                  <div>05/12/2017</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="30">
+                  <strong>Entry No:</strong>
+                </div>
+                <div flex="70">
+                  <div>172389298</div>
+                </div>
+              </div>
+              <div layout="row">
+                <div flex="30">
+                  <strong>Assignee:</strong>
+                </div>
+                <div flex="70">
+                  <div>
+                    Peter Boghashian
+                  </div>
+                </div>
+              </div>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-card-content>
+    </md-card>
+  </div>
+  <!-- End Loan & Trust Deed Card -->
+</md-content>
+
