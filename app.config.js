@@ -7,10 +7,10 @@
       $urlRouterProvider.otherwise('/');
 
       $stateProvider
-      // .state('home', {
-      //   url: '/',
-      //   component: 'cases'
-      // })
+      .state('home', {
+        url: '/',
+        component: 'home'
+      })
       .state('cases', {
         url: '/cases',
         component: 'cases',
@@ -46,5 +46,6 @@
       $mdThemingProvider.theme('default')
         .primaryPalette('light-blue')
     })
+
 
 })();
