@@ -1,16 +1,16 @@
 (function() {
 
-  angular.module('FCMaxApp')
+  angular.module('RTApp')
     .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function config($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.html5Mode(true);
 
       $urlRouterProvider.otherwise('/');
 
       $stateProvider
-      // .state('home', {
-      //   url: '/',
-      //   component: 'cases'
-      // })
+      .state('home', {
+        url: '/',
+        component: 'home'
+      })
       .state('cases', {
         url: '/cases',
         component: 'cases',
@@ -31,6 +31,14 @@
             }
           }
       })
+      .state('caseMain', {
+        url: '/case',
+        component: 'caseMain'
+      })
+      .state('legacyforms', {
+        url: '/legacyforms',
+        component: 'legacyViews'
+      })
 
     }])
 
@@ -38,5 +46,6 @@
       $mdThemingProvider.theme('default')
         .primaryPalette('light-blue')
     })
+
 
 })();

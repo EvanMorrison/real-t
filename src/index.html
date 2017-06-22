@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="FCMaxApp">
+<html lang="en" ng-app="RTApp">
   <head>
     <meta charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,15 +8,16 @@
     <title>REAL-T</title>
   
   <!--vendor scripts-->
-    <script src="/node_modules/angular/angular.js"></script>
-    <script src="/node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
-    <script src="/node_modules/angular-animate/angular-animate.js"></script>
-    <script src="/node_modules/angular-aria/angular-aria.js"></script>
-    <script src="/node_modules/angular-messages/angular-messages.js"></script>
-    <script src="/node_modules/angular-material/angular-material.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.js"></script>
+    <script src="node_modules/angular-messages/angular-messages.js"></script>
+    <script src="node_modules/angular-material/angular-material.js"></script>
   
   <!--CSS-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="./main.css">
     <base href="/">
@@ -25,18 +26,19 @@
 
     <div id="main-container" layout="column">
       <div id="hero">
-        <md-toolbar id="toolbar">
+        <md-toolbar class="toolbar md-whiteframe-z1">
           <h1>REAL-T</h1>
           <h3><strong>R</strong>eal <strong>E</strong>st<strong>A</strong>te <strong>L</strong>ending <strong>T</strong>racker</h3>
           <h3>All Your Base Are Belong to Us</h3>
         </md-toolbar>
-        <div class="md-whiteframe-z2" flex layout="row">
-          <h1 flex-offset="10">Case List</h1>
-        </div>
       </div>
-      <div layout="row">
-        <md-button ui-sref="cases">Case List Home</md-button>
-      </div>
+      <nav layout="row">
+        <md-button ui-sref="home" ui-sref-active="active">Home</md-button>
+        <md-button ui-sref="cases" ui-sref-active="active">Case List Home</md-button>
+        <md-button ui-sref="caseMain" ui-sref-active="active">Case Lookup</md-button>
+        <md-button ui-sref="legacyforms" ui-sref-active="active">Legacy Input Forms</md-button>
+      </nav>
+      <div id="background"></div>
       <ui-view></ui-view>
 
 
@@ -44,11 +46,14 @@
 
   
     <!--local components-->
-    <script src="/app.module.js"></script>
-    <script src="/app.config.js"></script>
-    <script src="/components/cases/cases.component.js"></script>
-    <script src="/components/case/case.component.js"></script>
-    <script src="/services/Case.Service.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="components/cases/cases.component.js"></script>
+    <script src="components/cases.case/case.component.js"></script>
+    <script src="components/caseMain/caseMain.component.js"></script>
+    <script src="components/legacyViews/legacyViews.component.js"></script>
+    <script src="components/home/home.component.js"></script>
+    <script src="services/Case.Service.js"></script>
 
   </body>
 </html>

@@ -1,60 +1,57 @@
-<md-content padding>
-        <md-list layout="column">
-          <md-list-item layout="row" layout-wrap layout-align="space-between">
-            <h4 flex-offset="10" flex="10">File #</h4>
-            <h4 flex md-truncate >Property</h4>
-            <h4 flex >Lender</h4>
-            <h4 flex >Borrower</h4>
-            <h4 flex >Loan Amount</h4>
-          </md-list-item>
+<md-toolbar class="toolbar md-whiteframe-z2">
+      <h3 >Case List</h3>
+</md-toolbar>
+<md-content>
+  
+  <!-- Search Box -->
+  <div flex="25" flex-offset="60">
+        <md-input-container>
+          <label for=""><md-icon>search</md-icon> search cases</label>
+          <input class="md-headline" type="search"></input>
+        </md-input-container>
+  </div>
+  
+  <md-list ng-init="ctrl.selectedCase=null">
+    <md-list-item layout="row" layout-wrap layout-align="space-between">
+      <h4 flex-offset="10" flex="10">File #</h4>
+      <h4 flex="20" md-truncate >Property</h4>
+      <h4 flex="20" >Lender</h4>
+      <h4 flex="20" >Borrower</h4>
+      <h4 flex="20" >Loan Amount</h4>
+    </md-list-item>
 
-          <!-- Hard Coded Mockup Data -->
-          <div ng-repeat="case in ctrl.cases">
-            <md-list-item layout="row" 
-                  layout-align="space-between center" 
-                  class="case-summary">
-              <!--expand button displays additional case details-->
-              <md-button class="view-detail md-fab md-mini md-primary md-hue-2"
-                    ui-sref="cases.case({fileId:case.file})"
-                    ng-click="ctrl.selected(case)"
-                    ng-show="case.file!=ctrl.selectedFile">
-                  <md-icon>expand_more</md-icon>
-              </md-button>
-              <!--collapse button. visible only when details are shown-->
-              <md-button class="view-detail md-fab md-mini md-primary md-hue-3"
-                    ui-sref="cases"
-                    ng-click="ctrl.selected(case)"
-                    ng-show="case.file==ctrl.selectedFile">
-                  <md-icon>expand_less</md-icon>
-                </md-button>
-                  <div flex="10" flex-offset="10">{{case.file}}</div>
-                  <div flex>{{case.property.address1}}</div>
-                  <div flex>{{case.lender.name}}</div>
-                  <div flex>{{case.borrower.name}}</div>
-                  <div flex>{{case.borrower.loanAmount | currency : "$" : 0}}</div>
-            </md-list-item>
-              <md-divider ng-if="case.file!=ctrl.selectedFile"></md-divider>
-              <ui-view ng-if="case.file==ctrl.selectedFile"></ui-view>
-          </div>
-          <!--<md-list-item layout="row" layout-align="space-between center" class="case-summary">
-            <md-button class="view-detail">
-              <md-icon>expand_more</md-icon>
-            </md-button>  
-            <div flex="10" flex-offset="10">16-77810</div>
-            <div flex>3183 S State St.</div>
-            <div flex>Diane Mulkazy</div>
-            <div flex>Thomas Peterson</div>
-            <div flex>$500,000</div>
-          </md-list-item>
-          <md-list-item layout="row" layout-align="space-between center" class="case-summary">
-            <md-button class="view-detail">
-              <md-icon>expand_more</md-icon>
-            </md-button>  
-            <div flex="10" flex-offset="10">17-60612</div>
-            <div flex>720 N Canyon View Rd.</div>
-            <div flex>Kirk Brontwell</div>
-            <div flex>Sherri Perkins</div>
-            <div flex>$250,000</div>
-          </md-list-item>-->
+    <!-- list summary info for al cases -->
+    <div  ng-repeat="case in ctrl.cases track by $index" >
+      <md-list-item 
+            class="case-summary"
+            ng-click="ctrl.toggleSelected($index)"
+            >
+        <!--expand button displays additional case details-->
+        <md-button class="more-detail md-fab md-mini md-primary md-hue-2"
+              ng-click="ctrl.toggleSelected($index)"
+              ng-show="ctrl.selectedCase != $index">
+            <md-icon>expand_more</md-icon>
+        </md-button>
+        <!--collapse button. visible only when details are shown-->
+        <md-button class="less-detail md-fab md-mini md-primary md-hue-3"
+              ng-click="ctrl.toggleSelected($index)"
+              ng-show="ctrl.selectedCase === $index">
+            <md-icon>expand_less</md-icon>
+        </md-button>
+        <div flex="10" flex-offset="10">{{case.file}}</div>
+        <div flex>{{case.property.address1}}</div>
+        <div flex>{{case.lender.name}}</div>
+        <div flex>{{case.borrower.name}}</div>
+        <div flex>{{case.borrower.loanAmount | currency : "$" : 0}}</div>
+        <md-button  ng-href="case"
+                    class="md-secondary md-mini" 
+                    style="position:absolute;right:3vw" >
+          <md-icon>create</md-icon>
+        </md-button>
+      </md-list-item>
+        <md-divider ng-if="ctrl.selectedCase != $index"></md-divider>
+        <ui-view  ng-show="ctrl.selectedCase === $index"></ui-view>
+    </div>
+    
         </md-list>
       </md-content>

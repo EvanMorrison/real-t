@@ -1,10 +1,11 @@
 (function() {
   'use strict';
 
-  angular.module('FCMaxApp', [
+  angular.module('RTApp', [
     'ngMaterial',
     'ui.router',
-    'Cases'
+    'Cases',
+    'CaseMain'
   ]);
   
 })();
