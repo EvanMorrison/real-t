@@ -107,10 +107,16 @@ md-grid-list md-grid-tile figure, figure {
 
 .case-view-container p {
   margin: 0;
+  position: relative;
 }
 
 .case-view-container div>p:first-child {
   margin-top: 1em;
 }
 
+#fab-case-actions {
+  position: absolute;
+  top: 95vh;
+  right: 95vw;
+}
 
