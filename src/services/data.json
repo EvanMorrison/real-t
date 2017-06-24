@@ -1,4 +1,3 @@
- // data for testing
 {
   "caseNum": "17-62829",
   "NOD": {
@@ -34,8 +33,7 @@
         "loan": {
           "amount": "$257,842",
           "DOT": {
-                "recorded": "new Date(2015,03,03)",
-                "recString": "04-03-2015",
+                "recorded": "2015,03,03",
                 "entry": "158293045",
                 "origBeneficiary": "Oscar Travers",
                 "origTrustee": "First American Title Insurance Company",
@@ -43,8 +41,7 @@
         },
         "assignments":[ 
               {
-                "recorded": "new Date(2017,04,12)",
-                "recString": "05-12-2017",
+                "recorded": "2017,04,12",
                 "entry": "172389298",
                 "assignee": "Peter Boghasian"
               }

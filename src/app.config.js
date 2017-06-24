@@ -33,7 +33,12 @@
       })
       .state('caseMain', {
         url: '/case',
-        component: 'caseMain'
+        component: 'caseMain',
+        resolve: {
+          case: function(caseService) {
+            return caseService.getFullCase();
+          }
+        }
       })
       .state('legacyforms', {
         url: '/legacyforms',
