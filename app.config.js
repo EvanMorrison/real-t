@@ -33,7 +33,12 @@
       })
       .state('caseMain', {
         url: '/case',
-        component: 'caseMain'
+        component: 'caseMain',
+        resolve: {
+          case: function(caseService) {
+            return caseService.getFullCase();
+          }
+        }
       })
       .state('legacyforms', {
         url: '/legacyforms',
@@ -42,10 +47,11 @@
 
     }])
 
+    
+    
     .config(function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('light-blue')
     })
-
-
+    
 })();

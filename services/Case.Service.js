@@ -2,9 +2,22 @@
   'use strict';
 
   angular.module('RTApp')
-    .service('caseService', ['$q', CaseService])
+    .service('caseService', ['$http','$q', CaseService])
 
-    function CaseService($q) {
+
+
+    function CaseService($http, $q) {
+      const self = this;
+
+      this.getFullCase = function() {
+        return $http.get('services/data.json')
+        .then(function(response){
+          let data = response.data;
+          data.loan.DOT.recorded = new Date(data.loan.DOT.recorded)
+          data.loan.assignments[0].recorded = new Date(data.loan.assignments[0].recorded)
+          return response.data;
+        })
+      }
 
       const cases = [
         {
@@ -90,13 +103,12 @@
         }
       ]
 
-      return {
-        LoadAllCases: function() {
+
+        self.LoadAllCases = function() {
           
           return $q.when(cases)
 
         }
-      }
 
     }
 
