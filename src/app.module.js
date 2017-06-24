@@ -6,6 +6,7 @@
     'ui.router',
     'Cases',
     'CaseMain'
-  ]);
+  ])
+
   
 })();

@@ -5,6 +5,7 @@ html, body {
   margin: 0;
   padding: 0 0 80px;
   background: transparent;
+  position:relative;
 }
 
 
@@ -40,6 +41,11 @@ md-toolbar.toolbar {
   background-size: cover;
   z-index: -1;
 }
+
+md-content {
+  padding-bottom: 200px;
+}
+
 
 /*
    Home Page Links 
@@ -106,3 +112,5 @@ md-grid-list md-grid-tile figure, figure {
 .case-view-container div>p:first-child {
   margin-top: 1em;
 }
+
+

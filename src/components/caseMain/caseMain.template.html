@@ -5,7 +5,7 @@
             layout="column" 
             class="case-view-container"
             ng-init="ctrl.isActiveEdit=false">
-
+           
   <!-- Search Box -->
   <div flex-gt-sm="25" flex-offset="60">
         <md-input-container>
@@ -144,6 +144,7 @@
               
               <md-input-container flex-gt-xs="40" flex-offset="5">
                 <label >Current Owner</label>
+
                 <input  ng-model="ctrl.property.owner"
                         type="text" 
                         ng-readonly="!ctrl.isActiveEdit">
@@ -205,11 +206,13 @@
                      ng-readonly="!ctrl.isActiveEdit">
         </md-input-container>
          
-        <md-input-container flex-gt-xs="30" flex-offset="5">
+        <md-input-container flex-gt-xs="30" flex-offset="5" > 
+
              <label>Recorded:</label>
-             <input  ng-model="ctrl.loan.DOT.recorded"
-                     type="text" 
-                     ng-readonly="!ctrl.isActiveEdit">
+            <md-datepicker ng-model="ctrl.loan.DOT.recorded" 
+                ng-disabled="!ctrl.isActiveEdit"
+                ng-click="ctrl.positionDatepicker($event)">
+             
         </md-input-container>
          
         <md-input-container flex-gt-xs="30" flex-offset="5">
@@ -240,11 +243,14 @@
             <div  ng-repeat="assignment in ctrl.loan.assignments" 
                   layout-xs="column" layout-gt-xs="row" flex layout-wrap>
               <md-input-container flex-gt-xs="25" flex-offset="5">
+                
                   <label>recorded</label>
-                  <input  ng-model="assignment.recorded"
-                          type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
-                </md-input-container>
+                  <md-datepicker ng-model="assignment.recorded"
+                          ng-disabled="!ctrl.isActiveEdit"
+                          ng-click="ctrl.positionDatepicker($event)">
+                  </md-datepicker>
+                 
+              </md-input-container>
               <md-input-container flex-gt-xs="25" flex-offset="5">
                   <label>entry</label>
                   <input  ng-model="assignment.entry"

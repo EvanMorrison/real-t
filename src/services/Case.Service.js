@@ -4,6 +4,8 @@
   angular.module('RTApp')
     .service('caseService', ['$q', CaseService])
 
+    
+
     function CaseService($q) {
 
       const cases = [
