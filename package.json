@@ -14,9 +14,6 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "mongodb": "^2.2.28",
-    "mongoose": "^4.10.6",
-    "mongoose-sequence": "^3.2.0",
     "morgan": "^1.8.2"
   },
   "cacheDirectories": [

@@ -5,3 +5,8 @@ node_modules
 
 *.log
 
+.firebaserc
+database.rules.json
+firebase.json
+
+

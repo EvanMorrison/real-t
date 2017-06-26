@@ -1,6 +1,8 @@
 (function() {
 
   angular.module('RTApp')
+
+// routing with ui-router
     .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function config($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.html5Mode(true);
 
@@ -31,15 +33,21 @@
             }
           }
       })
+
       .state('caseMain', {
         url: '/case',
         component: 'caseMain',
         resolve: {
-          case: function(caseService) {
-            return caseService.getFullCase();
+          case: function($firebaseObject) {
+            const rootref = firebase.database().ref().child('cases')
+            const ref = rootref.child('17-62829')
+            return $firebaseObject(ref)
           }
         }
+        
+                
       })
+
       .state('legacyforms', {
         url: '/legacyforms',
         component: 'legacyViews'
@@ -48,10 +56,13 @@
     }])
 
     
-    
+  // material design config for theming, etc.
     .config(function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('light-blue')
     })
     
+
+  
+
 })();

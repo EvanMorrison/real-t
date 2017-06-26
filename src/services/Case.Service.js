@@ -2,22 +2,25 @@
   'use strict';
 
   angular.module('RTApp')
-    .service('caseService', ['$http','$q', CaseService])
+    .service('caseService', ['$firebaseObject','$q', CaseService])
 
 
-
-    function CaseService($http, $q) {
+    function CaseService($firebaseObject, $q) {
       const self = this;
+      const rootref = firebase.database().ref().child('cases')
+      const ref = rootref.child('17-62829')
+      this.case = $firebaseObject(ref)
+      
 
-      this.getFullCase = function() {
-        return $http.get('services/data.json')
-        .then(function(response){
-          let data = response.data;
-          data.loan.DOT.recorded = new Date(data.loan.DOT.recorded)
-          data.loan.assignments[0].recorded = new Date(data.loan.assignments[0].recorded)
-          return response.data;
-        })
-      }
+      // this.getFullCase = function() {
+      //   return $http.get('services/data.json')
+      //   .then(function(response){
+      //     let data = response.data;
+      //     data.loan.DOT.recorded = new Date(data.loan.DOT.recorded)
+      //     data.loan.assignments[0].recorded = new Date(data.loan.assignments[0].recorded)
+      //     return response.data;
+      //   })
+      // }
 
       const cases = [
         {
