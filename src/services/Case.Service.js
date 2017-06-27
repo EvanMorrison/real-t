@@ -2,14 +2,23 @@
   'use strict';
 
   angular.module('RTApp')
-    .service('caseService', ['$firebaseObject','$q', CaseService])
+    .service('caseService', ['$q','$firebaseArray', '$firebaseObject', '$firebaseRef', '$stateParams', CaseService])
 
 
-    function CaseService($firebaseObject, $q) {
+    function CaseService($q, $firebaseArray, $firebaseObject, $firebaseRef, $stateParams) {
       const self = this;
-      const rootref = firebase.database().ref().child('cases')
-      const ref = rootref.child('17-62829')
-      this.case = $firebaseObject(ref)
+
+
+      self.getFullCase = function(searchId) {
+          // const caseId = searchId;
+          // let caseId = $stateParams.caseId ? $stateParams.caseId : '17-62829'
+          // searchId = null
+          
+          return $firebaseObject($firebaseRef.cases.child(searchId));
+        
+      }
+
+      
       
 
       // this.getFullCase = function() {

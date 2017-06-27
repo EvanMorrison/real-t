@@ -9,21 +9,40 @@
 
   .component('caseMain', {
     templateUrl: 'components/caseMain/caseMain.template.html',
-    controller: ['$firebaseObject', CaseMainController],
+    controller: ['caseService', '$state', CaseMainController],
     controllerAs: 'ctrl',
     bindings: { 'case': '<'}
   });
 
-    function CaseMainController($firebaseObject) {
+    function CaseMainController(caseService, $state) {
           const ctrl = this;
           
+          ctrl.isCaseIdValid = true;
+
           ctrl.$onInit = function() {
               ctrl.isActiveEdit = false;
               console.log('case', ctrl.case)
           }
 
-             ctrl.case.$loaded().then(function() {
+          // lookup case by caseId 
+          ctrl.caseLookup = function($event) {
+            $event.preventDefault();
+            console.log('looking for ', ctrl.searchId)
+            caseService.getFullCase(ctrl.searchId)
+            .$loaded(function(data) {
+                console.log('data ', data)
+                console.log('val ', data.$value);
+                if (data.$value === undefined) {
+                    ctrl.isCaseIdValid = true;
+                    ctrl.case = data;
+                } else {
+                    ctrl.isCaseIdValid = false;
+                }
             })
+            
+            
+            
+          }
 
           // save edits to case info
           ctrl.saveChanges = function() {
@@ -34,9 +53,7 @@
                   val['recorded'] = val['recorded'].toString()
                 }
               })
-              // ctrl.case.loan.assignments.forEach(function(elmt) {
             
-              // })
               ctrl.case.$save().then(function(ref) {
                 ctrl.isActiveEdit = !ctrl.isActiveEdit;
               })
@@ -44,7 +61,7 @@
 
           // cancel edits restore original data
           ctrl.cancelChanges = function() {
-            ctrl.case = $firebaseObject(ctrl.case.$ref());
+            ctrl.case = caseService.getFullCase(ctrl.searchId);
             ctrl.isActiveEdit = !ctrl.isActiveEdit;
           }
 

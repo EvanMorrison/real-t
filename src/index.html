@@ -37,11 +37,14 @@
           <h3>All Your Base Are Belong to Us</h3>
         </md-toolbar>
       </div>
-      <nav layout="row">
-        <md-button ui-sref="home" ui-sref-active="active">Home</md-button>
-        <md-button ui-sref="cases" ui-sref-active="active">Case List</md-button>
-        <md-button ui-sref="caseMain" ui-sref-active="active">Case Lookup</md-button>
-        <md-button ui-sref="legacyforms" ui-sref-active="active">Legacy Input Forms</md-button>
+      <nav layout="row" flex layout-align="space-between center">
+        <div>
+          <md-button ui-sref="home" ui-sref-active="active">Home</md-button>
+          <md-button ui-sref="cases" ui-sref-active="active">Case List</md-button>
+          <md-button ui-sref="caseMain" ui-sref-active="active">Case Lookup</md-button>
+          <md-button ui-sref="legacyforms" ui-sref-active="active">Legacy Input Forms</md-button>
+        </div>
+          <md-button ui-sref="login" ui-sref-active="active">Login/Sign-up</md-button>
       </nav>
       <div id="background"></div>
       <ui-view></ui-view>
@@ -58,6 +61,7 @@
     <script src="components/caseMain/caseMain.component.js"></script>
     <script src="components/legacyViews/legacyViews.component.js"></script>
     <script src="components/home/home.component.js"></script>
+    <script src="components/login/login.component.js"></script>
     <script src="services/Case.Service.js"></script>
 
   </body>

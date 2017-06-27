@@ -1,6 +1,27 @@
 (function() {
 
+  // config and initialize firebase
+  const config = {
+    apiKey: "AIzaSyBfxeu8LggGmAgO4fMn1AsNxkzmpwf6d6g",
+    authDomain: "real-t-e5280.firebaseapp.com",
+    databaseURL: "https://real-t-e5280.firebaseio.com",
+    projectId: "real-t-e5280",
+    storageBucket: "real-t-e5280.appspot.com",
+    messagingSenderId: "586766522818"
+  };
+  firebase.initializeApp(config);
+
+  
   angular.module('RTApp')
+
+    .config(function($firebaseRefProvider) {
+      $firebaseRefProvider.registerUrl({
+        default: config.databaseURL,
+        cases: `${config.databaseURL}/cases`
+      })
+    })
+
+
 
 // routing with ui-router
     .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function config($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -38,19 +59,29 @@
         url: '/case',
         component: 'caseMain',
         resolve: {
-          case: function($firebaseObject) {
-            const rootref = firebase.database().ref().child('cases')
-            const ref = rootref.child('17-62829')
-            return $firebaseObject(ref)
+          case: function(caseService) {
+              return caseService.getFullCase('16-77810');
           }
         }
-        
-                
       })
-
+        .state('fullCase', {
+          url: 'case/{caseId}',
+          component: 'caseMain',
+          resolve: {
+            fullCase: function(caseService, $stateParams) {
+              return caseService.getFullCase($stateParams.caseId);
+            }
+          }
+        })
+        
       .state('legacyforms', {
         url: '/legacyforms',
         component: 'legacyViews'
+      })
+
+      .state('login', {
+        url: '/login',
+        component: 'userAuthentication'
       })
 
     }])

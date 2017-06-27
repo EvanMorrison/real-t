@@ -105,6 +105,10 @@ md-grid-list md-grid-tile figure, figure {
   overflow: auto;
 }
 
+.case-view-container {
+  padding-top: 1.5em;
+}
+
 .case-view-container p {
   margin: 0;
   position: relative;
