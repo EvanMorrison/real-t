@@ -21,19 +21,14 @@
           const findCaseId = null;
 
           ctrl.$onInit = function() {
-              console.log('params ', $stateParams)
             if ($stateParams.directId) {
               ctrl.caseLookup($stateParams.directId);
             }
-            // if ($stateParams.caseId) {
-            //     ctrl.caseLookup($stateParams.caseId)
-            // }
           }
 
 
           // lookup case by caseId 
           ctrl.caseLookup = function(searchId) {
-            console.log('looking for ', searchId)
             caseService.getFullCase(searchId)
             .$loaded(function(snap){
                 ctrl.caseRecord = snap;
@@ -66,9 +61,6 @@
             ctrl.case = caseService.getFullCase(ctrl.searchId);
             ctrl.isActiveEdit = !ctrl.isActiveEdit;
           }
-
-         
-         
           
           
     }

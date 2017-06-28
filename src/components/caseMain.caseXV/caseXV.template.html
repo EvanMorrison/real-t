@@ -22,6 +22,7 @@
                 <md-input-container>
                   <label>Name</label>
                   <input  ng-model="ctrl.case.lender.name"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -29,6 +30,7 @@
                 <md-input-container>
                   <label >Address</label>
                   <textarea ng-model="ctrl.case.lender.address"
+                            ng-change="ctrl.update()"
                             style="text-align:left" 
                             max-rows="3"  
                             ng-readonly="!ctrl.isActiveEdit">
@@ -41,6 +43,7 @@
                <md-input-container>
                   <label>Phone</label>
                   <input  ng-model="ctrl.case.lender.phone"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -48,6 +51,7 @@
                 <md-input-container>
                   <label>Email</label>
                   <input  ng-model="ctrl.case.lender.email"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -73,6 +77,7 @@
                 <md-input-container>
                   <label>Name</label>
                   <input  ng-model="ctrl.case.borrower.name"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -80,6 +85,7 @@
                 <md-input-container>
                   <label >Address</label>
                   <textarea ng-model="ctrl.case.borrower.address"
+                            ng-change="ctrl.update()"
                             style="text-align:left" 
                             max-rows="3"  
                             ng-readonly="!ctrl.isActiveEdit">
@@ -92,6 +98,7 @@
                <md-input-container>
                   <label>Phone</label>
                   <input  ng-model="ctrl.case.borrower.phone"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -99,6 +106,7 @@
                 <md-input-container>
                   <label>Email</label>
                   <input  ng-model="ctrl.case.borrower.email"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -123,6 +131,7 @@
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label >Address</label>
                   <textarea ng-model="ctrl.case.property.address"
+                            ng-change="ctrl.update()"
                             style="text-align:left" 
                             max-rows="3"  
                             ng-readonly="!ctrl.isActiveEdit">
@@ -134,13 +143,16 @@
                   <label >Current Owner</label>
   
                   <input  ng-model="ctrl.case.property.owner"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
                 
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label>County</label>
-                  <md-select ng-model="ctrl.case.property.county" >
+                  <md-select ng-model="ctrl.case.property.county"
+                             ng-change="ctrl.update()" 
+                             >
                     <md-option ng-repeat="county in ctrl.Counties" 
                                 ng-value="county"
                                 ng-selected="county === '{{ctrl.case.property.county}}'" 
@@ -153,6 +165,7 @@
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label>Tax Id:</label>
                   <input  ng-model="ctrl.case.property.taxId"
+                          ng-change="ctrl.update()"
                           type="text" 
                           ng-readonly="!ctrl.isActiveEdit">
                 </md-input-container>
@@ -161,6 +174,7 @@
                   <md-input-container flex>  
                     <label>Legal Description</label>
                     <textarea ng-model="ctrl.case.property.legalDescription" 
+                              ng-change="ctrl.update()"
                               ng-readonly="!ctrl.isActiveEdit">
                               {{ctrl.case.property.legalDescription}} </textarea>
                   </md-input-container>
@@ -189,6 +203,7 @@
           <md-input-container flex-gt-xs="25" flex-offset="5">
                <label>Amount:</label>
                <input  ng-model="ctrl.case.loan.amount"
+                       ng-change="ctrl.update()"
                        type="text" 
                        value="{{ctrl.case.loan.amount | currency : "$" : 0 }}"
                        ng-readonly="!ctrl.isActiveEdit">
@@ -198,6 +213,7 @@
   
                <label>Recorded:</label>
               <md-datepicker ng-model="ctrl.case.loan.DOT.recorded" 
+                  ng-change="ctrl.updateDate()"
                   ng-disabled="!ctrl.isActiveEdit"
                   ng-click="ctrl.positionDatepicker($event)">
                
@@ -206,6 +222,7 @@
           <md-input-container flex-gt-xs="30" flex-offset="5">
                <label>Entry Number:</label>
                <input  ng-model="ctrl.case.loan.DOT.entry"
+                       ng-change="ctrl.update()"
                        type="text" 
                        ng-readonly="!ctrl.isActiveEdit">
           </md-input-container>
@@ -214,6 +231,7 @@
            <md-input-container flex-gt-xs="45" flex-offset="5">
                <label>Original Beneficiary:</label>
                <input  ng-model="ctrl.case.loan.DOT.origBeneficiary"
+                       ng-change="ctrl.update()"
                        type="text" 
                        ng-readonly="!ctrl.isActiveEdit">
            </md-input-container>
@@ -221,6 +239,7 @@
            <md-input-container flex-gt-xs="45" flex-offset="5">
                <label>Original Trustee:</label>
                <input  ng-model="ctrl.case.loan.DOT.origTrustee"
+                       ng-change="ctrl.update()"
                        type="text" 
                        ng-readonly="!ctrl.isActiveEdit">
            </md-input-container>
@@ -234,6 +253,7 @@
                   
                     <label>recorded</label>
                     <md-datepicker ng-model="assignment.recorded"
+                            ng-change="ctrl.updateDate()"
                             ng-disabled="!ctrl.isActiveEdit"
                             ng-click="ctrl.positionDatepicker($event)">
                     </md-datepicker>
@@ -242,12 +262,14 @@
                 <md-input-container flex-gt-xs="25" flex-offset="5">
                     <label>entry</label>
                     <input  ng-model="assignment.entry"
+                            ng-change="ctrl.update()"
                             type="text" 
                             ng-readonly="!ctrl.isActiveEdit">
                   </md-input-container>
                 <md-input-container flex-gt-xs="35" flex-offset="5">
                     <label>Assignee</label>
                     <input  ng-model="assignment.assignee"
+                            ng-change="ctrl.update()"
                             type="text" 
                             ng-readonly="!ctrl.isActiveEdit">
                   </md-input-container>

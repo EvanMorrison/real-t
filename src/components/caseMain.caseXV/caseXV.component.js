@@ -7,7 +7,8 @@
     controllerAs: 'ctrl',
     bindings: { case: '<',
                 isActiveEdit: '<',
-                isCaseIdValid: '<'}
+                isCaseIdValid: '<',
+                onUpdate: '&'}
   })
 
   function CaseXVController() {
@@ -15,7 +16,11 @@
     ctrl.$onInit = function() {
      
     }
-      
+    
+    ctrl.update = function() {
+        ctrl.onUpdate()
+    }
+
 
         // county selection input options
       ctrl.Counties = ["Box Elder", "Davis", "Salt Lake", "Summit", "Uintah", "Wasatch", "Washington", "Weber"]

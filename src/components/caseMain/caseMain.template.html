@@ -1,7 +1,7 @@
 <!-- FAB -->
 
 <md-toolbar class="toolbar md-whiteframe-z2">
-  <h3>Case View</h3>
+  <h3>Case View &amp; Edit</h3>
 </md-toolbar>
 
 <div ng-cloak>
@@ -80,7 +80,7 @@
 <!-- End Search Box -->
 
   <div flex-gt-sm="80" flex-offset="5" >
-    <h1 ng-show="ctrl.caseRecord">Case: {{ctrl.caseRecord.$id}}</h1>
+    <h1 ng-show="ctrl.caseRecord">Case: {{ctrl.caseRecord.caseId}}</h1>
   <div flex-gt-sm="80" flex-offset="5"
         ng-if="!ctrl.isCaseIdValid">
     <h1 class="md-headline">No Matches Found </h1>

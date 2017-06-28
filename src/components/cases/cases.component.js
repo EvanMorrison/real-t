@@ -15,7 +15,6 @@
     function CasesController($state, caseService) {
       const ctrl = this;
       ctrl.$onInit = function() {
-        console.log('cases ', ctrl.caseList)
       }
       // toggle parent or child state depending on what is currently showing
       ctrl.toggleSelected = function(index) {
@@ -23,14 +22,13 @@
             $state.go('cases')
             ctrl.selectedCase = null;
             } else {
-              $state.go('cases.case', {caseId: ctrl.caseList[index].$id})
+              $state.go('cases.case', {caseId: ctrl.caseList[index].caseId})
               ctrl.selectedCase = index;
             }
       }
 
       ctrl.gotoCase = function (index) {
-        console.log('case id ', ctrl.caseList[index].$id )
-          $state.go('caseMain', {directId: ctrl.caseList[index].$id})
+          $state.go('caseMain', {directId: ctrl.caseList[index].caseId})
       }
 
     }

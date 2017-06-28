@@ -22,7 +22,6 @@
     })
 
 
-
 // routing with ui-router
     .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function config($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.html5Mode(true);
@@ -58,6 +57,15 @@
           component: 'caseXV'
         })
 
+        .state('newCase', {
+          url:'/createCase',
+          component: 'newCase',
+        })
+
+        .state('newCaseForm', {
+          parent: 'newCase',
+          component: 'caseXV'
+        })
         
       .state('legacyforms', {
         url: '/legacyforms',
