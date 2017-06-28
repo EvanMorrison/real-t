@@ -4,7 +4,7 @@
       templateUrl: 'components/cases.case/case.template.html',
       controller: [CaseController],
       controllerAs: 'ctrl',
-      bindings: { case: '<'}
+      bindings: { caseExpanded: '<'}
     });
 
     function CaseController() {

@@ -13,7 +13,7 @@
   
   <md-list ng-init="ctrl.selectedCase=null">
     <md-list-item layout="row" layout-wrap layout-align="space-between">
-      <h4 flex-offset="10" flex="10">File #</h4>
+      <h4 flex-offset="10" flex="10">Case #</h4>
       <h4 flex="20" md-truncate >Property</h4>
       <h4 flex="20" >Lender</h4>
       <h4 flex="20" >Borrower</h4>
@@ -21,7 +21,7 @@
     </md-list-item>
 
     <!-- list summary info for al cases -->
-    <div  ng-repeat="case in ctrl.cases track by $index" >
+    <div  ng-repeat="case in ctrl.caseList track by $index" >
       <md-list-item 
             class="case-summary"
             ng-click="ctrl.toggleSelected($index)"
@@ -38,19 +38,19 @@
               ng-show="ctrl.selectedCase === $index">
             <md-icon>expand_less</md-icon>
         </md-button>
-        <div flex="10" flex-offset="10">{{case.file}}</div>
-        <div flex>{{case.property.address1}}</div>
+        <div flex="10" flex-offset="10">{{case.$id}}</div>
+        <div flex md-truncate>{{case.property.address}}</div>
         <div flex>{{case.lender.name}}</div>
         <div flex>{{case.borrower.name}}</div>
-        <div flex>{{case.borrower.loanAmount | currency : "$" : 0}}</div>
-        <md-button  ng-href="case"
+        <div flex>{{case.loan.amount}}</div>
+        <md-button  ng-click="ctrl.gotoCase($index)"
                     class="md-secondary md-mini" 
                     style="position:absolute;right:3vw" >
           <md-icon>create</md-icon>
         </md-button>
       </md-list-item>
         <md-divider ng-if="ctrl.selectedCase != $index"></md-divider>
-        <ui-view  ng-show="ctrl.selectedCase === $index"></ui-view>
+        <ui-view case-expanded="case" ng-show="ctrl.selectedCase === $index"></ui-view>
     </div>
     
         </md-list>

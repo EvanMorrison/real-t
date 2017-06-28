@@ -1,19 +1,17 @@
 <md-list-item class="case-detail">
   <div flex="10" flex-offset="10"></div>
   <div flex>
-    <p>{{ctrl.case.property.city}}</p>
-    <p>{{ctrl.case.property.county}} County</p>
-    <p>id: {{ctrl.case.property.taxId}}</p>
+    <p>{{ctrl.caseExpanded.property.county}} County</p>
+    <p>id: {{ctrl.caseExpanded.property.taxId}}</p>
   </div>
   <div flex>
-    <p>{{ctrl.case.lender.address1}}</p>
-    <p>{{ctrl.case.lender.city}}, {{ctrl.case.lender.state}} {{ctrl.case.lender.zip}}</p>
-    <p>{{ctrl.case.lender.phone | tel }}</p>
+    <p>{{ctrl.caseExpanded.lender.address}}</p>
+    <p>{{ctrl.caseExpanded.lender.phone }}</p>
+    <p>{{ctrl.caseExpanded.lender.email }}</p>
   </div>
   <div flex>
-    <p>{{ctrl.case.borrower.address1}}</p>
-    <p>{{ctrl.case.borrower.city}}, {{ctrl.case.borrower.state}} {{ctrl.case.borrower.zip}}</p>
-    <p style="visibility:hidden">{{ctrl.case.borrower.phone | tel }}.</p>
+    <p>{{ctrl.caseExpanded.borrower.address}}</p>
+    <p style="visibility:hidden">{{ctrl.caseExpanded.borrower.phone | tel }}.</p>
   </div>
   <div flex>
 

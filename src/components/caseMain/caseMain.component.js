@@ -9,52 +9,54 @@
 
   .component('caseMain', {
     templateUrl: 'components/caseMain/caseMain.template.html',
-    controller: ['caseService', '$state', CaseMainController],
+    controller: ['caseService', '$state', '$stateParams', CaseMainController],
     controllerAs: 'ctrl',
-    bindings: { 'case': '<'}
+    bindings: { 'caseRecord': '<'}
   });
 
-    function CaseMainController(caseService, $state) {
+    function CaseMainController(caseService, $state, $stateParams) {
           const ctrl = this;
-          
+          ctrl.isActiveEdit = false
           ctrl.isCaseIdValid = true;
+          const findCaseId = null;
 
           ctrl.$onInit = function() {
-              ctrl.isActiveEdit = false;
-              console.log('case', ctrl.case)
+              console.log('params ', $stateParams)
+            if ($stateParams.directId) {
+              ctrl.caseLookup($stateParams.directId);
+            }
+            // if ($stateParams.caseId) {
+            //     ctrl.caseLookup($stateParams.caseId)
+            // }
           }
 
+
           // lookup case by caseId 
-          ctrl.caseLookup = function($event) {
-            $event.preventDefault();
-            console.log('looking for ', ctrl.searchId)
-            caseService.getFullCase(ctrl.searchId)
-            .$loaded(function(data) {
-                console.log('data ', data)
-                console.log('val ', data.$value);
-                if (data.$value === undefined) {
-                    ctrl.isCaseIdValid = true;
-                    ctrl.case = data;
+          ctrl.caseLookup = function(searchId) {
+            console.log('looking for ', searchId)
+            caseService.getFullCase(searchId)
+            .$loaded(function(snap){
+                ctrl.caseRecord = snap;
+                if (snap.$value === undefined) {
+                  ctrl.isCaseIdValid = true;
                 } else {
                     ctrl.isCaseIdValid = false;
                 }
             })
-            
-            
-            
+            $state.go('caseMain.caseXV', {caseId: searchId})
           }
 
-          // save edits to case info
+           // save edits to case info
           ctrl.saveChanges = function() {
               // convert dates to strings for JSON format in database
-              ctrl.case.loan.DOT.recorded = ctrl.case.loan.DOT.recorded.toString()
-              angular.forEach(ctrl.case.loan.assignments, function(val, key) {
+              ctrl.caseRecord.loan.DOT.recorded = ctrl.caseRecord.loan.DOT.recorded.toString()
+              angular.forEach(ctrl.caseRecord.loan.assignments, function(val, key) {
                 if (val['recorded']) { 
                   val['recorded'] = val['recorded'].toString()
                 }
               })
             
-              ctrl.case.$save().then(function(ref) {
+              ctrl.caseRecord.$save().then(function(ref) {
                 ctrl.isActiveEdit = !ctrl.isActiveEdit;
               })
           }
@@ -65,41 +67,8 @@
             ctrl.isActiveEdit = !ctrl.isActiveEdit;
           }
 
-
-          // county selection input options
-          ctrl.Counties = ["Box Elder", "Davis", "Salt Lake", "Summit", "Uintah", "Wasatch", "Washington", "Weber"]
-          
-          /**
-           * fix posiitioning of datepicker, which otherwise 
-           * is positioned off screen.
-           */
-          ctrl.positionDatepicker = function($event) {
-            
-              // get md-input-container parent of the clicked button
-              let pickerContainer = angular.element($event.target).parent().parent()
-
-              // handle case of right hand button rather than left hand button, which are
-              // on different levels
-            
-              const pcName = pickerContainer.prop('nodeName');
-              if (pcName === 'MD-DATEPICKER') {
-                pickerContainer = pickerContainer.parent()
-              } else if (pcName === 'DIV') {
-                pickerContainer = pickerContainer.parent().parent()
-              }
-              // get position of the container element
-              const pcPosition = pickerContainer.prop('offsetTop');
-
-              // get the datepicker pane element, which when opened is always added at 
-              // the end of <body>
-              const dpickerPane = angular.element(document.querySelector('body').lastChild);
-
-              // move the datepicker pane to be near its input container button
-              if (dpickerPane.hasClass('md-datepicker-calendar-pane')) {
-                dpickerPane.css('top', pcPosition + 300 + 'px');
-              }
-          }
-          
+         
+         
           
           
     }

@@ -38,41 +38,26 @@
         url: '/cases',
         component: 'cases',
         resolve: {
-          cases: function(caseService) {
+          caseList: function(caseService) {
             return caseService.LoadAllCases();
           }
         }
       })
       .state('cases.case', {
-        url: '/{fileId}',
-        component: 'case',
-        resolve: {
-          case: function(cases, $stateParams) {
-            return cases.find(function(c){
-              return c.file === $stateParams.fileId
-            })
-            }
-          }
+        url: '/{caseId}',
+        component: 'case'
       })
 
       .state('caseMain', {
         url: '/case',
-        component: 'caseMain',
-        resolve: {
-          case: function(caseService) {
-              return caseService.getFullCase('16-77810');
-          }
-        }
+        params: { directId: null } ,
+        component: 'caseMain'
       })
-        .state('fullCase', {
-          url: 'case/{caseId}',
-          component: 'caseMain',
-          resolve: {
-            fullCase: function(caseService, $stateParams) {
-              return caseService.getFullCase($stateParams.caseId);
-            }
-          }
+        .state('caseMain.caseXV', {
+          url: '/{caseId}',
+          component: 'caseXV'
         })
+
         
       .state('legacyforms', {
         url: '/legacyforms',
