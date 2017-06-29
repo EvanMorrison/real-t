@@ -37,17 +37,21 @@
           <h3>All Your Base Are Belong to Us</h3>
         </md-toolbar>
       </div>
-      <nav layout="row" flex layout-align="space-between center">
+      <nav layout-gt-xs="row" layout-xs="column" flex layout-align="space-between center" layout-wrap>
         <div>
           <md-button ui-sref="home" ui-sref-active="active">Home</md-button>
           <md-button ui-sref="cases" ui-sref-active="active">Case List</md-button>
           <md-button ui-sref="caseMain" ui-sref-active="active">View/Edit Case</md-button>
-          <md-button ui-sref="newCaseForm" ui-sref-active="active">New Case</md-button>
-          <md-button ui-sref="legacyforms" ui-sref-active="active">Legacy Input Forms</md-button>
+          <md-button ui-sref="newCaseForm" ui-sref-active="active">Create New Case</md-button>
         </div>
-          <md-button ui-sref="login" ui-sref-active="active">Login/Sign-up</md-button>
+          <md-button ui-sref="legacyforms" ui-sref-active="active">Legacy Input Forms</md-button>
+          <div ng-controller="isAuthController as auth">
+            <md-button ng-if="auth.isLoggedIn" ng-click="auth.logout()" >user: {{auth.user}} / logout</md-button>
+          </div>
       </nav>
       <div id="background"></div>
+      
+
       <ui-view></ui-view>
 
 
@@ -57,6 +61,7 @@
     <!--local components-->
     <script src="app.module.js"></script>
     <script src="app.config.js"></script>
+    <script src="components/appContainer/appContainer.component.js"></script>
     <script src="components/cases/cases.component.js"></script>
     <script src="components/cases.case/case.component.js"></script>
     <script src="components/caseMain/caseMain.component.js"></script>
@@ -64,8 +69,9 @@
     <script src="components/home/home.component.js"></script>
     <script src="components/caseMain.caseXV/caseXV.component.js"></script>
     <script src="components/newCase/newCase.component.js"></script>
-    <script src="components/login/login.component.js"></script>
     <script src="services/Case.Service.js"></script>
+    <script src="services/userAuth.Service.js"></script>
+
 
   </body>
 </html>

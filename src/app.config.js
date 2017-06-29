@@ -29,13 +29,19 @@
       $urlRouterProvider.otherwise('/');
 
       $stateProvider
+      .state('appContainer',{
+        component: 'appContainer'
+      })
+      
       .state('home', {
         url: '/',
-        component: 'home'
+        component: 'home',
+        parent: 'appContainer'
       })
       .state('cases', {
         url: '/cases',
         component: 'cases',
+        parent: 'appContainer',
         resolve: {
           caseList: function(caseService) {
             return caseService.LoadAllCases();
@@ -50,7 +56,8 @@
       .state('caseMain', {
         url: '/case',
         params: { directId: null } ,
-        component: 'caseMain'
+        component: 'caseMain',
+        parent: 'appContainer'
       })
         .state('caseMain.caseXV', {
           url: '/{caseId}',
@@ -60,6 +67,7 @@
         .state('newCase', {
           url:'/createCase',
           component: 'newCase',
+          parent: 'appContainer'
         })
 
         .state('newCaseForm', {
@@ -69,7 +77,8 @@
         
       .state('legacyforms', {
         url: '/legacyforms',
-        component: 'legacyViews'
+        component: 'legacyViews',
+        parent: 'appContainer'
       })
 
       .state('login', {

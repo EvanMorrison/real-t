@@ -27,8 +27,8 @@
             }
       }
 
-      ctrl.gotoCase = function (index) {
-          $state.go('caseMain', {directId: ctrl.caseList[index].caseId})
+      ctrl.gotoCase = function (id) {
+          $state.go('caseMain', {directId: id})
       }
 
     }

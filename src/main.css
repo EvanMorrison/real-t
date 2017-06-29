@@ -37,7 +37,7 @@ md-toolbar.toolbar {
   position: absolute;
   width: 100vw;
   height: 360px;
-  background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('http://bigreddog.com/wp-content/uploads/2014/09/BRD-1.jpg');
+  background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('https://i.imgur.com/i9F4EwJ.jpg');
   background-size: cover;
   z-index: -1;
 }
