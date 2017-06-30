@@ -34,13 +34,13 @@
         <md-toolbar class="toolbar md-whiteframe-z1">
           <h1>REAL-T</h1>
           <h3><strong>R</strong>eal <strong>E</strong>st<strong>A</strong>te <strong>L</strong>ending <strong>T</strong>racker</h3>
-          <h3>All Your Base Are Belong to Us</h3>
+          <h3 class="md-headline">Real Time Data</h3>
         </md-toolbar>
       </div>
       <nav layout-gt-xs="row" layout-xs="column" flex layout-align="space-between center" layout-wrap>
         <div>
           <md-button ui-sref="home" ui-sref-active="active">Home</md-button>
-          <md-button ui-sref="cases" ui-sref-active="active">Case List</md-button>
+          <md-button ui-sref="cases.case" ui-sref-active="active">Case List</md-button>
           <md-button ui-sref="caseMain" ui-sref-active="active">View/Edit Case</md-button>
           <md-button ui-sref="newCaseForm" ui-sref-active="active">Create New Case</md-button>
         </div>
@@ -62,15 +62,14 @@
     <script src="app.module.js"></script>
     <script src="app.config.js"></script>
     <script src="components/appContainer/appContainer.component.js"></script>
-    <script src="components/cases/cases.component.js"></script>
-    <script src="components/cases.case/case.component.js"></script>
+    <script src="components/caseList/caseList.component.js"></script>
+    <script src="components/caseList.case/case.component.js"></script>
     <script src="components/caseMain/caseMain.component.js"></script>
     <script src="components/legacyViews/legacyViews.component.js"></script>
     <script src="components/home/home.component.js"></script>
     <script src="components/caseMain.caseXV/caseXV.component.js"></script>
     <script src="components/newCase/newCase.component.js"></script>
     <script src="services/Case.Service.js"></script>
-    <script src="services/userAuth.Service.js"></script>
 
 
   </body>

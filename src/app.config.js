@@ -39,41 +39,58 @@
         parent: 'appContainer'
       })
       .state('cases', {
-        url: '/cases',
-        component: 'cases',
+        component: 'caseList',
         parent: 'appContainer',
         resolve: {
-          caseList: function(caseService) {
-            return caseService.LoadAllCases();
-          }
+          caseList: function($firebaseAuth, caseService) {
+                      return $firebaseAuth().$requireSignIn()
+                              .then(function(user){
+                                return caseService.LoadAllCases();
+                              })
+                              .catch(function(err){
+                                return 'not logged in'
+                              })
+                    }
         }
       })
       .state('cases.case', {
-        url: '/{caseId}',
-        component: 'case'
+        url: '/case-list',
+        component: 'caseExpanded'
       })
 
       .state('caseMain', {
         url: '/case',
-        params: { directId: null } ,
         component: 'caseMain',
+        parent: 'appContainer',
+        resolve: {
+          caseList: function($firebaseAuth, caseService) {
+                      return $firebaseAuth().$requireSignIn()
+                              .then(function(user){
+                                return caseService.LoadAllCases();
+                              })
+                              .catch(function(err){
+                                return 'not logged in'
+                              })
+                    }
+        }
+      })
+
+      .state('caseMain.caseXV', {
+        url: '/{caseId}',
+        component: 'caseXV'
+      })
+
+
+      .state('newCase', {
+        url:'/createCase',
+        component: 'newCase',
         parent: 'appContainer'
       })
-        .state('caseMain.caseXV', {
-          url: '/{caseId}',
-          component: 'caseXV'
-        })
 
-        .state('newCase', {
-          url:'/createCase',
-          component: 'newCase',
-          parent: 'appContainer'
-        })
-
-        .state('newCaseForm', {
-          parent: 'newCase',
-          component: 'caseXV'
-        })
+      .state('newCaseForm', {
+        parent: 'newCase',
+        component: 'caseXV'
+      })
         
       .state('legacyforms', {
         url: '/legacyforms',
@@ -92,7 +109,13 @@
   // material design config for theming, etc.
     .config(function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
-        .primaryPalette('light-blue')
+        .primaryPalette('deep-purple')
+        .accentPalette('indigo')
+    })
+    .config(function($mdThemingProvider) {
+      $mdThemingProvider.theme('alt')
+        .primaryPalette('indigo')
+
     })
     
 

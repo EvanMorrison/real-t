@@ -1,7 +1,7 @@
 (function() {
-  angular.module('Cases')
-    .component('case', {
-      templateUrl: 'components/cases.case/case.template.html',
+  angular.module('CaseList')
+    .component('caseExpanded', {
+      templateUrl: 'components/caseList.case/case.template.html',
       controller: [CaseController],
       controllerAs: 'ctrl',
       bindings: { caseExpanded: '<'}
@@ -9,11 +9,10 @@
 
     function CaseController() {
       const ctrl = this;
-      
     }
 
     // filter for formatting phone numbers
-  angular.module('Cases').filter('tel', function() {
+  angular.module('CaseList').filter('tel', function() {
     return function(tel) {
       if (!tel) { return '' };
 

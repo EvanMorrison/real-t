@@ -1,5 +1,7 @@
 (function() {
 
+// Container Component for Login sidebar and all content views
+
   angular.module('RTApp')
     .component('appContainer', {
       templateUrl: 'components/appContainer/appContainer.template.html',
@@ -23,7 +25,7 @@
         // user login
         ctrl.authObj.$signInWithEmailAndPassword(ctrl.user.email, ctrl.user.password)
           .then(function(res) {
-            console.log('signin successfull ', res)
+            console.log('signin successfull')
             ctrl.isLoggedIn = true;
             ctrl.user.email = '';
             ctrl.user.password = '';
@@ -59,10 +61,9 @@
         // add a realtime user auth listener
         ctrl.authObj.$onAuthStateChanged(function(firebaseUser) {
           if(firebaseUser) {
-            console.log(firebaseUser) 
             ctrl.isLoggedIn = true;
           } else {
-            console.log('not logged in')
+            console.log('Auth state changed, not logged in')
             ctrl.isLoggedIn = false;
           }
         })

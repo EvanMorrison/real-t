@@ -5,18 +5,23 @@
       
       <ui-view></ui-view>
     </div>
-      <md-sidenav class="md-sidenav-right"
+      <md-sidenav  
+                  class="md-sidenav-right"
                   md-component-id="loginSidebar"
                   md-is-locked-open="!ctrl.isLoggedIn"
                   md-whiteframe="4">
-        <md-toolbar color="md-theme-red"> 
+        <md-toolbar class="md-primary"> 
           <h1 class="md-toolbar-tools" ng-if="!ctrl.isLoggedIn">Login/Sign-Up</h1>
           <h1 class="md-toolbar-tools" ng-if="ctrl.isLoggedIn">Logout</h1>
         </md-toolbar>
 
         <md-content layout="column" flex-gt-xs="90" flex-offset-gt-xs="5" layout-align="start stretch">
            
-            <form name="login" layout="column" style="margin-top:30px">
+            <form md-theme="alt"
+                  name="login" 
+                  ng-submit="ctrl.login($event)"
+                  layout="column" 
+                  style="margin-top:30px">
           
               <md-input-container flex>
                 <label>email</label>
@@ -29,22 +34,23 @@
               </md-input-container>
               
               <md-button flex 
-                        class="md-primary md-raised"
+                        class="md-accent md-raised"
                         ng-if="!ctrl.isLoggedIn"
+                        type="submit"
                         ng-click="ctrl.login($event)">
                 Log In
               </md-button>
-              <md-button flex 
-                        class="md-primary md-raised"
-                        ng-if="!ctrl.isLoggedIn"
-                        ng-click="ctrl.signup($event)">
-                Sign Up
-              </md-button>
               <md-button  flex 
-                          class="md-primary md-raised"
+                          class="md-accent md-raised"
                           ng-if="ctrl.isLoggedIn"
                           ng-click="ctrl.signOut($event)">
                 Log Out
+              </md-button>
+              <md-button flex 
+                        class="md-accent md-hue-1 md-raised"
+                        ng-if="!ctrl.isLoggedIn"
+                        ng-click="ctrl.signup($event)">
+                Sign Up
               </md-button>
             </form>
         </md-content>

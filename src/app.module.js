@@ -7,23 +7,16 @@
     'firebase',
     'ngMaterial',
     'ui.router',
-    'Cases',
+    'CaseList',
     'CaseMain'
   ])
   .controller('isAuthController', ['$firebaseAuth', IsAuthController])
 
     function IsAuthController($firebaseAuth) {
       const ctrl = this;
-      
+      ctrl.isLoggedIn = true;
+
       ctrl.authObj = $firebaseAuth();
-      
-      // synchronous method to get the current user login status
-      let authState = ctrl.authObj.$getAuth();
-        if(authState) {
-          ctrl.isLoggedIn = true;
-        } else {
-          ctrl.isLoggedIn = false;
-        }
 
         // watch for changes in authentication state
         ctrl.authObj.$onAuthStateChanged(function(authData){

@@ -14,9 +14,32 @@
     ctrl.$onInit = function() {
     }
 
-    ctrl.createNewCase =function() {
+    ctrl.createNewCase =function(newCaseId) {
         console.log('running create new case ')
-        ctrl.newCase = $firebaseObject($firebaseRef.cases.push({caseId: ctrl.generateCaseId('17')}));
+        newCaseId = newCaseId || ctrl.generateCaseId('17');
+        
+        $firebaseObject($firebaseRef.cases.child(newCaseId)).$loaded(function(fbObj) {
+          // check if caseId is unique, if not increment by 1
+          if (fbObj.caseId) {
+            newCaseId = '17-' + (parseInt(newCaseId.slice(3)) + 1).toString()
+            ctrl.createNewCase(newCaseId)
+          } else {
+            // the new case number is unique
+            // create the object structure for the case
+            ctrl.newCase = fbObj;
+            ctrl.newCase.caseId = fbObj.$id;
+            ctrl.newCase.lender = {name: ''};
+            ctrl.newCase.borrower = {name: ''};
+            ctrl.newCase.property = {taxId: ''};
+            ctrl.newCase.loan = { amount: ''};
+            ctrl.newCase.loan.DOT = {entry: ''};
+            ctrl.newCase.loan.DOT.assignments = {1: {entry: ''}}
+
+            ctrl.newCase.$save();
+          }
+        }, function(err){
+            console.log('error creating new case ', err);
+        })
     }
 
     ctrl.generateCaseId = function(yr) {
@@ -26,10 +49,8 @@
         return newNum
     }
 
-    // load full array of cases to list on screen 
-    // ctrl.caseList = $firebaseArray($firebaseRef.cases)
-
-      // delete a case from the database and the local firebaseArray    
+   
+      // // delete a case from the database and the local firebaseArray    
       // ctrl.deleteCase = function(index) {
       //   console.log(index)
       //   ctrl.caseList.$remove(index)

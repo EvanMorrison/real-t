@@ -60,14 +60,15 @@
   <!-- Search Box -->
   <div flex-gt-sm="50" flex-offset="50" layout="row">
         <form name="caseLookup" 
-              style="margin-top:20px;padding:10px 10px 0;border:2px solid transparent;border-radius:60px;background-color:#efefee"
-              >
-          <md-input-container>
+              
+              layout="row"
+              layout-align="center center">
+          <md-input-container >
             <label for=""><md-icon>search</md-icon> look up case number</label>
             <input ng-model="ctrl.searchId"
                    class="md-headline"
                    type="search"
-                   style="background-color:#f5f5f5">
+                   >
             </input>
           </md-input-container>
           <md-button class="md-fab md-mini md-primary md-hue-3"
