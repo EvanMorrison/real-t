@@ -113,9 +113,11 @@
         .accentPalette('indigo')
     })
     .config(function($mdThemingProvider) {
-      $mdThemingProvider.theme('alt')
-        .primaryPalette('indigo')
-
+      $mdThemingProvider.theme('Auth')
+        .primaryPalette('red')
+        .accentPalette('indigo', {
+          'default' : '600'
+        })
     })
     
 

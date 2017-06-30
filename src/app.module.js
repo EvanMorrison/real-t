@@ -23,7 +23,7 @@
           if (authData) {
             ctrl.isLoggedIn = true;
             if (authData.isAnonymous) {
-              ctrl.user = 'anonymously'
+              ctrl.user = 'anonymous'
             } else if (authData.displayName) {
               ctrl.user = authData.displayName
             } else if (authData.email) {

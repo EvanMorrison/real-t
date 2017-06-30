@@ -39,7 +39,26 @@
           $state.go('caseMain.caseXV', {caseId: caseObj.caseId})
       }
 
+      // handle change in user authentication status
+      ctrl.authObj = $firebaseAuth();
+      console.log('auth object: ')
+      console.log(ctrl.authObj)
+
+      ctrl.authObj.$onAuthStateChanged(function(user) {
+        if (user) {
+            caseService.LoadAllCases()
+            .$loaded(function(cases) {
+              ctrl.caseList = cases
+            }, function(err) {
+              console.log('error retrieving cases ', err)
+            })
+        } else {
+            ctrl.caseList.$destroy();
+        }
+      });
+
     }
+
 
 
 })();

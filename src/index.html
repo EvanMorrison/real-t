@@ -23,13 +23,14 @@
   <!--CSS-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="main.css">
     <base href="/">
   </head>
   <body ng-cloak>
 
-    <div id="main-container" layout="column">
+    <div id="main-container" layout="column" >
       <div id="hero">
         <md-toolbar class="toolbar md-whiteframe-z1">
           <h1>REAL-T</h1>
@@ -52,7 +53,7 @@
       <div id="background"></div>
       
 
-      <ui-view></ui-view>
+      <ui-view class="view-container" ></ui-view>
 
 
     </div>  <!-- Main Container -->

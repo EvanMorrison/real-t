@@ -9,17 +9,20 @@
 
   .component('caseMain', {
     templateUrl: 'components/caseMain/caseMain.template.html',
-    controller: ['caseService', '$state', '$stateParams', CaseMainController],
+    controller: ['caseService', '$state', '$stateParams', '$mdToast', CaseMainController],
     controllerAs: 'ctrl',
     bindings: { 'caseList': '<'}
   });
 
-    function CaseMainController(caseService, $state, $stateParams) {
+    function CaseMainController(caseService, $state, $stateParams, $mdToast) {
           const ctrl = this;
           ctrl.isActiveEdit = false
           ctrl.isCaseIdValid = true;
           const findCaseId = null;
 
+
+          // When the controller loads, check for a case id in the url params, if it's
+          // there then call the case lookup with that case number
           ctrl.$onInit = function() {
             console.log('case list ', ctrl.caseList)
             if ($stateParams.caseId) {
@@ -30,14 +33,14 @@
           }
 
 
-          // lookup case by caseId 
+          // lookup case by caseId. CaseId can come from either url params, or from the user typing
+          // it in the search box located in this view.
           ctrl.caseLookup = function(searchId) {
-            
+            // caseList comes loaded from the route resolve, as a firebaseArray of all cases
             ctrl.caseRecord =  ctrl.caseList.find(function(elm) {
-              console.log('array element ', elm.$id, ' case id ', elm.caseId)
               return elm.caseId === searchId
             })
-            console.log('case record found ', ctrl.caseRecord)
+
                 if (ctrl.caseRecord) {
                   ctrl.isCaseIdValid = true;
                 } else {
@@ -49,7 +52,7 @@
 
            // save edits to case info
           ctrl.saveChanges = function() {
-              // convert dates to strings for JSON format in database
+              // convert date objects to strings for JSON format in database
               if (ctrl.caseRecord.loan && ctrl.caseRecord.loan.DOT && ctrl.caseRecord.loan.DOT.recorded) {
                   ctrl.caseRecord.loan.DOT.recorded = ctrl.caseRecord.loan.DOT.recorded.toString()
               }
@@ -63,7 +66,14 @@
             
               ctrl.caseList.$save(ctrl.caseRecord).then(function(ref) {
                 ctrl.isActiveEdit = !ctrl.isActiveEdit;
+                //TODO: show a confirmation message to the user
                 console.log('changes saved successfully for ', ref.key)
+                $mdToast.show(
+                    $mdToast.simple()
+                      .textContent('Changes Saved')
+                      .position('bottom right')
+                      .hideDelay(3000)
+                )
               })
               .catch(function(err) {
                 console.log('error saving changes ', err)
@@ -72,12 +82,16 @@
 
           // cancel edits restore original data
           ctrl.cancelChanges = function() {
-            console.log('caserecord id ', ctrl.caseRecord.$id)
-            console.log('original caserecord ', ctrl.caseList.$getRecord(ctrl.caseRecord.$id))
+            let caseKey = ctrl.caseRecord.$id;
+            caseService.LoadAllCases()
+            .$loaded().then(function(data) {
+              ctrl.caseList = data;
+              ctrl.caseRecord = ctrl.caseList.$getRecord(caseIndex);
+            }, function(err) {
+              console.log('error retrieving data ', err)
+            })
+            
             ctrl.isActiveEdit = !ctrl.isActiveEdit;
-            let recordId = ctrl.caseRecord.$id;
-            ctrl.caseRecord = null;
-            // ctrl.caseRecord = ctrl.caseList.$getRecord(recordId);
 
           }
           

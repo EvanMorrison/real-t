@@ -12,6 +12,7 @@
     ctrl.isCaseIdValid = true;
 
     ctrl.$onInit = function() {
+      ctrl.isCaseIdValid = false;
     }
 
     ctrl.createNewCase =function(newCaseId) {
@@ -35,6 +36,7 @@
             ctrl.newCase.loan.DOT = {entry: ''};
             ctrl.newCase.loan.DOT.assignments = {1: {entry: ''}}
 
+            ctrl.isCaseIdValid = true;
             ctrl.newCase.$save();
           }
         }, function(err){
@@ -50,27 +52,18 @@
     }
 
    
-      // // delete a case from the database and the local firebaseArray    
-      // ctrl.deleteCase = function(index) {
-      //   console.log(index)
-      //   ctrl.caseList.$remove(index)
-      //   .then(function(ref) {
-      //     console.log("ref.$id ", ref.key);
-      //   })
-      // }
     
        // save edits to database
           ctrl.saveChanges = function() {
               // convert dates to strings for JSON format in database
-              // if (ctrl.newCase.loan.DOT.recorded ) {
-              //   ctrl.newCase.loan.DOT.recorded = ctrl.caseRecord.loan.DOT.recorded.toString()
-              // }
-              // angular.forEach(ctrl.newCase.loan.assignments, function(val, key) {
-              //   if (val['recorded']) { 
-              //     val['recorded'] = val['recorded'].toString()
-              //   }
-              // })
-              console.log('saving changes ')
+              if (ctrl.newCase.loan.DOT.recorded ) {
+                ctrl.newCase.loan.DOT.recorded = ctrl.caseRecord.loan.DOT.recorded.toString()
+              }
+              angular.forEach(ctrl.newCase.loan.assignments, function(val, key) {
+                if (val['recorded']) { 
+                  val['recorded'] = val['recorded'].toString()
+                }
+              })
               ctrl.newCase.$save().then(function(ref){
                 console.log('saved case ', ref.key)
               })
@@ -79,6 +72,7 @@
           // cancel edits restore original data
           ctrl.cancelNewCase = function() {
               if (window.confirm('Click OK to cancel without saving')) {
+                  ctrl.isCaseIdValid = false;
                   ctrl.newCase.$remove().then(function(ref) {
                   console.log('deleted record ', ref.key)
                   }, function(err) {

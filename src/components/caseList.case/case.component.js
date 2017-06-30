@@ -4,7 +4,9 @@
       templateUrl: 'components/caseList.case/case.template.html',
       controller: [CaseController],
       controllerAs: 'ctrl',
-      bindings: { caseExpanded: '<'}
+      bindings: { caseExpanded: '<',
+                  selectedCase: '<',
+                  index: '<'}
     });
 
     function CaseController() {

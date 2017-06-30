@@ -1,4 +1,4 @@
-<md-list-item class="case-detail" layout="row" layout-align="start start">
+<md-list-item ng-if="ctrl.selectedCase === ctrl.index" class="case-detail" layout="row" layout-align="start start">
   <div flex-gt-xs="10" flex-offset="5"></div>
   <div flex-gt-xs="20" flex-offset-xs="5">
     <p>{{ctrl.caseExpanded.property.county}} County</p>

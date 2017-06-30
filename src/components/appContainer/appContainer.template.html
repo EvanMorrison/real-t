@@ -3,7 +3,7 @@
     
     <div flex>
       
-      <ui-view></ui-view>
+      <ui-view style="min-height:100vh"></ui-view>
     </div>
       <md-sidenav  
                   class="md-sidenav-right"
@@ -16,7 +16,26 @@
         </md-toolbar>
 
         <md-content layout="column" flex-gt-xs="90" flex-offset-gt-xs="5" layout-align="start stretch">
-           
+            <md-button layout="row" layout-align="start center" style="text-align: start"
+                        md-theme="Auth"
+                        class="md-primary md-raised"
+                        ng-if="!ctrl.isLoggedIn"
+                        ng-click="ctrl.loginWithGoogle($event)">
+                <i flex="15" flex-offset="20" class="fa fa-google fa-lg"></i> <div flex="65">Google</div>
+              </md-button>
+             <!--  <md-button layout="row" layout-align="start center" style="text-align: start"
+                       md-theme="Auth"
+                       class="md-accent md-raised"
+                       ng-if="!ctrl.isLoggedIn"
+                       ng-click="ctrl.loginWithFacebook($event)">
+               <i flex="15" flex-offset="20" class="fa fa-facebook fa-lg"></i> <div flex="65">Facebook</div>
+                         </md-button>   -->
+            <md-button  
+                        class="md-accent md-raised"
+                        ng-if="!ctrl.isLoggedIn"
+                        ng-click="ctrl.loginAnonymous($event)">
+                Sign in Anonymously
+              </md-button>         
             <form md-theme="alt"
                   name="login" 
                   ng-submit="ctrl.login($event)"
@@ -52,6 +71,8 @@
                         ng-click="ctrl.signup($event)">
                 Sign Up
               </md-button>
+              
+              
             </form>
         </md-content>
     </md-sidenav>
