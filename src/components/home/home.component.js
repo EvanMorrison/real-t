@@ -1,9 +1,10 @@
-(function() {
 
-  angular.module("RTApp")
+module.exports =function(ngModule) {
+
+  ngModule
     .component('home', {
-      templateUrl: 'components/home/home.template.html',
-      controller: HomeController,
+      template: require('./home.template.html'),
+      controller: [HomeController],
       controllerAs: 'ctrl'
     });
 
@@ -13,4 +14,4 @@
       
     }
 
-})();
+}

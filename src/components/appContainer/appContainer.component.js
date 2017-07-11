@@ -1,11 +1,10 @@
-(function() {
 
 // Container Component for Login-sidebar, user authentication, and all content views
-
-  angular.module('RTApp')
+module.exports = function(ngModule) {
+  ngModule
     .component('appContainer', {
-      templateUrl: 'components/appContainer/appContainer.template.html',
-      controller: ['$firebaseAuth', AppContainerController],
+      template: require('./appContainer.template.html'),
+      controller: [ '$firebaseAuth', AppContainerController],
       controllerAs: 'ctrl'
     });
 
@@ -107,4 +106,4 @@
         })
     }
 
-}());
+}

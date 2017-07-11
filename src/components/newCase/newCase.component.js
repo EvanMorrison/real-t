@@ -1,9 +1,12 @@
-(function() {
-
-  angular.module('CaseMain')
+module.exports = function(ngModule) {
+  ngModule
   .component('newCase', {
-    templateUrl: 'components/newCase/newCase.template.html',
-    controller: ['$firebaseArray', '$firebaseObject', '$firebaseRef', NewCaseController],
+    template: require('./newCase.template.html'),
+    controller: [ '$firebaseArray', 
+                  '$firebaseObject', 
+                  '$firebaseRef', 
+                  NewCaseController
+                ],
     controllerAs: 'ctrl'
   });
 
@@ -85,4 +88,4 @@
 
   }
 
-}());
+}
