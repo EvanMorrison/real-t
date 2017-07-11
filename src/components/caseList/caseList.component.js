@@ -1,11 +1,14 @@
 
-(function() {
-  'use strict'
 
-  angular.module('CaseList', [ ])
+module.exports = function(ngModule) {
+  ngModule
     .component('caseList', {
-      templateUrl: 'components/caseList/caseList.template.html',
-      controller: ['$state', 'caseService', '$firebaseAuth', CasesController],
+      template: require('./caseList.template.html'),
+      controller: [ '$state', 
+                    'caseService', 
+                    '$firebaseAuth', 
+                    CasesController
+                  ],
       controllerAs: 'ctrl',
       bindings: { caseList : '<'},
     });
@@ -59,6 +62,4 @@
 
     }
 
-
-
-})();
+}

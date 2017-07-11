@@ -1,8 +1,8 @@
-(function() {
 
-  angular.module('CaseMain')
+module.exports = function(ngModule) {
+  ngModule
   .component('caseXV', {
-    templateUrl: 'components/caseMain.caseXV/caseXV.template.html',
+    template: require('./caseXV.template.html'),
     controller: [CaseXVController],
     controllerAs: 'ctrl',
     bindings: { case: '<',
@@ -33,7 +33,7 @@
           ctrl.positionDatepicker = function($event) {
             
               // get md-input-container parent of the clicked button
-              let pickerContainer = angular.element($event.target).parent().parent()
+              var pickerContainer = angular.element($event.target).parent().parent()
 
               // handle case of right hand button rather than left hand button, which are
               // on different levels
@@ -60,4 +60,4 @@
 
   }
 
-}());
+}

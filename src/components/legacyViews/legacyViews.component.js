@@ -1,17 +1,17 @@
-(function() {
 
-  angular.module('RTApp')
-  .component('legacyViews', {
-    templateUrl: 'components/legacyViews/legacyViews.template.html',
-    controller: [LegacyController],
-    controllerAs: 'ctrl'
-  });
+module.exports = function(ngModule) {
+  ngModule
+      .component('legacyViews', {
+        template: require('./legacyViews.template.html'),
+        controller: [LegacyController],
+        controllerAs: 'ctrl'
+      });
 
-    function LegacyController() {
-      const ctrl = this
+        function LegacyController() {
+          const ctrl = this
 
 
 
-    }
+        }
 
-})();
+}

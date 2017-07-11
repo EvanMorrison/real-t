@@ -1,7 +1,7 @@
-(function() {
-  angular.module('CaseList')
+module.exports = function(ngModule) {
+  ngModule
     .component('caseExpanded', {
-      templateUrl: 'components/caseList.case/case.template.html',
+      template: require('./case.template.html'),
       controller: [CaseController],
       controllerAs: 'ctrl',
       bindings: { caseExpanded: '<',
@@ -24,4 +24,4 @@
     }
   })
 
-})();
+}

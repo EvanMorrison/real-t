@@ -1,15 +1,18 @@
-(function() {
-
   
-
-  angular.module('CaseMain', [])
-    .config(function($compileProvider) {
+module.exports = function(ngModule) {
+  ngModule
+    .config(['$compileProvider', function($compileProvider) {
     $compileProvider.preAssignBindingsEnabled(true);
-  })
+  }])
 
   .component('caseMain', {
-    templateUrl: 'components/caseMain/caseMain.template.html',
-    controller: ['caseService', '$state', '$stateParams', '$mdToast', CaseMainController],
+    template: require('./caseMain.template.html'),
+    controller: [ 'caseService', 
+                  '$state', 
+                  '$stateParams', 
+                  '$mdToast', 
+                  CaseMainController
+                ],
     controllerAs: 'ctrl',
     bindings: { 'caseList': '<'}
   });
@@ -99,4 +102,4 @@
     }
 
 
-})();
+}
