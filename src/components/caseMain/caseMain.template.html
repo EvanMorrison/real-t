@@ -1,315 +1,94 @@
+<!-- FAB -->
+
 <md-toolbar class="toolbar md-whiteframe-z2">
-  <h3>Case View</h3>
+  <h3 class="view-frame">Case View &amp; Edit</h3>
 </md-toolbar>
-<md-content layout-gt-sm="row" layout="column" layout-align-gt-sm="center center" layout-align="space-around stretch" layout-wrap>
+
+<div ng-cloak style="position:relative;min-height:100vh">
+
+<!-- Floating button for edit, save, etc. -->
+    <md-fab-speed-dial  md-direction="up" 
+                        class="md-fling md-fab-bottom-right"
+                        style="position:fixed;top:auto;left:auto;right:20px;bottom:20px"
+                        md-open="ctrl.isFABOpen"
+                        ng-mouseenter="ctrl.isFABOpen=true"
+                        ng-mouseleave="ctrl.isFABOpen=false"
+                         >
+    <md-fab-trigger md-mouseenter>
+          <md-button  class="md-fab md-warn" 
+                      aria-label="Actions..."
+                      ng-if="!ctrl.isActiveEdit">
+              <md-tooltip >Actions</md-tooltip>
+              <md-icon >menu</md-icon>
+          </md-button>
+          <md-button  class="md-fab md-warn" 
+                      ng-if="ctrl.isActiveEdit">
+            <md-tooltip md-visible='true'
+                        md-direction="bottom">
+                        Edit Mode On</md-tooltip>
+            <md-icon>edit</md-icon>
+          </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+      <md-button  
+                  class="md-fab md-mini md-raised md-hue-3"
+                  aria-label="edit"
+                  ng-disabled="ctrl.isActiveEdit"
+                  ng-click="ctrl.isActiveEdit=!ctrl.isActiveEdit">
+        <md-tooltip md-direction="left">edit mode</md-tooltip>
+        <md-icon >edit</md-icon>
+      </md-button>
+    
+      <md-button  class="md-fab md-mini md-raised md-hue-3"
+                  aria-label="save"
+                  ng-disabled="!ctrl.isActiveEdit"
+                  ng-click="ctrl.saveChanges()">
+        <md-tooltip md-direction="left">save changes</md-tooltip>
+        <md-icon >save</md-icon>
+      </md-button>
+      <md-button  class="md-fab md-mini md-raised md-hue-3"
+                  aria-label="cancel changes"
+                  ng-disabled="!ctrl.isActiveEdit"
+                  ng-click="ctrl.cancelChanges()">
+        <md-tooltip md-direction="left">cancel without saving</md-tooltip>
+        <md-icon >cancel</md-icon>
+      </md-button>
+    </md-fab-actions>
+    </md-fab-speed-dial>
+  <!-- Floating button for edit, save, etc. -->
 
   <!-- Search Box -->
-  <div flex-gt-sm="25" flex-offset="60">
-        <md-input-container>
-          <label for=""><md-icon>search</md-icon> look up case number</label>
-          <input class="md-headline" type="search"></input>
-        </md-input-container>
+  <div flex-gt-sm="50" flex-offset="50" layout="row">
+        <form name="caseLookup"
+              ng-submit="ctrl.caseLookup(ctrl.searchId)" 
+              
+              layout="row"
+              layout-align="center center">
+          <md-input-container >
+            <label ><md-icon>search</md-icon> look up case number</label>
+            <input ng-model="ctrl.searchId"
+                   class="md-headline"
+                   type="search"
+                   >
+            </input>
+          </md-input-container>
+          <md-button class="md-fab md-mini md-primary md-hue-3"
+                     type="submit"
+                     >
+              go
+          </md-button>
+        </form>
+  </div>
+<!-- End Search Box -->
+
+  <div flex-gt-sm="80" flex-offset="5" >
+    <h1 ng-show="ctrl.caseRecord">Case: {{ctrl.caseRecord.caseId}}</h1>
+  <div flex-gt-sm="80" flex-offset="5"
+        ng-if="!ctrl.isCaseIdValid">
+    <h1 class="md-headline">No Matches Found </h1>
+  </div>
   </div>
 
-  <div flex-gt-sm="80" flex-offset="5">
-    <h1 >Case: 17-62829</h1>
-  </div>
+  <ui-view case="ctrl.caseRecord" is-active-edit="ctrl.isActiveEdit" is-case-id-valid="ctrl.isCaseIdValid"></ui-view>
 
-  <!-- Property Card-->
-  <div flex-gt-sm="80">
-    <md-card >
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Property</span>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        <md-grid-list md-cols="12" md-row-height="1.5em" >
-    
-          <md-grid-tile md-colspan-gt-sm="5" md-colspan-sm="6" md-colspan-xs="12"
-                        md-rowspan="6">
-            <div layout="column" flex="95">
-              <div layout="row">
-                <div flex="25">
-                  <strong >Owner:</strong>
-                </div>
-                <div flex="75">
-                  <div>Stuart McFarlain</div>
-                </div>
-              </div>
-              <div layout="row" layout-wrap>
-                <div flex="25" >
-                  <strong>Address: </strong>
-                </div>
-                <div flex="75">
-                  <div>13700 N Fountain Hills Boulevard, Apt 202</div>
-                  <div>Syracuse, UT 84014</div>
-                </div>
-              </div>
-                  
-              <div layout="row">
-                <div flex="25">
-                  <strong>County: </strong>
-                </div>
-                <div flex="75">
-                  <div>Davis</div>
-                </div>
-              </div>
-                  
-              <div layout="row">
-                <div flex="25">
-                  <strong>Tax Id: </strong>
-                </div>
-                <div flex="75">
-                  <div>36-238-9984</div>
-                </div>
-              </div>
-            </div>
-          </md-grid-tile>
-          <md-grid-tile md-colspan-gt-sm="7" md-colspan-sm="6" md-colspan-xs="12" 
-                        md-rowspan="5">
-            <div layout="row" flex="95">
-              <div flex="30" >
-                <strong >Legal Description: </strong>
-              </div>
-              <div flex="70">
-                <div>Lot 75, VISTA BONITA HEIGHTS SUBDIVISION, according to the official plat thereof on file and of record in the Office of the Recorder for Davis County, Utah. </div>
-              </div>
-            </div>
-          </md-grid-tile>
-
-        </md-grid-list>
-      </md-card-content>
-    </md-card> 
-  </div>  
-  <!-- End Property card -->
-
-  <!-- Lender card -->
-<div flex-gt-sm="40">
-  <md-card >
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">Lender</span>
-      </md-card-title-text>
-    </md-card-title>
-  
-    <md-card-content>
-      <md-grid-list md-cols="2" md-row-height="1.5em">
-        <md-grid-tile md-colspan="2" md-colspan-sm="1"
-                      md-rowspan="3">
-          <div layout="column" flex="95">
-            <div layout="row">
-              <div flex="25">
-                <strong>Name:</strong>
-              </div>
-              <div flex="75">
-                <div>Peter Boghashian</div>
-              </div>
-            </div>
-
-            <div layout="row">
-              <div flex="25">
-                <strong>Address: </strong>
-              </div>
-              <div flex="75">
-                <div>50 S Main Street</div>
-                <div>Salt Lake City, UT 84111</div>
-              </div>
-            </div>
-          </div>
-        </md-grid-tile>
-  
-        <md-grid-tile md-colspan="2" md-colspan-sm="1"
-                      md-rowspan="2" >
-         <div layout="column" flex="95">
-            <div layout="row">
-              <div flex="25">
-                <strong>Phone:</strong>
-              </div>
-              <div flex="75">
-                <div>801-412-8382</div>
-              </div>
-            </div>
-            <div layout="row" >
-              <div flex="25" >
-                <strong>Email:</strong>
-              </div>
-              <div flex="75" >
-                <div>pboghashian@email.net</div>
-              </div>
-            </div>
-         </div>
-        </md-grid-tile>
-      </md-grid-list>
-    </md-card-content>
-  </md-card>
 </div>
-  <!-- End Lender Card-->
-  
-  <!-- Borrower card -->
-<div flex-gt-sm="40">
-  <md-card >
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">Borrower</span>
-      </md-card-title-text>
-    </md-card-title>
-  
-    <md-card-content>
-      <md-grid-list md-cols="2" md-row-height="1.5em">
-        <md-grid-tile md-colspan="2" md-colspan-sm="1"
-                      md-rowspan="3">
-          <div layout="column" flex="95">
-            <div layout="row">
-              <div flex="25">
-                <strong>Name:</strong>
-              </div>
-              <div flex="75">
-                <div>Jamie Lannister</div>
-              </div>
-            </div>
-
-            <div layout="row">
-              <div flex="25">
-                <strong>Address: </strong>
-              </div>
-              <div flex="75">
-                <div>301 South 200 East</div>
-                <div>Salt Lake City, UT 84111</div>
-              </div>
-            </div>
-          </div>
-        </md-grid-tile>
-  
-        <md-grid-tile md-colspan="2" md-colspan-sm="1"
-                      md-rowspan="2" >
-         <div layout="column" flex="95">
-            <div layout="row">
-              <div flex="25">
-                <strong>Phone:</strong>
-              </div>
-              <div flex="75">
-                <div>801-558-0192</div>
-              </div>
-            </div>
-            <div layout="row" >
-              <div flex="25" >
-                <strong>Email:</strong>
-              </div>
-              <div flex="75" >
-                <div></div>
-              </div>
-            </div>
-         </div>
-        </md-grid-tile>
-      </md-grid-list>
-    </md-card-content>
-  </md-card>
-</div>
-  <!-- End Borrower Card-->
-  
-  <!-- Loan & Trust Deed Card-->
-  <div flex-gt-sm="80">
-    <md-card >
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Loan &amp; Trust Deed</span>
-        </md-card-title-text>
-      </md-card-title>
-    
-      <md-card-content>
-        
-        <md-grid-list md-cols="6" md-row-height="1.5em">
-          <md-grid-tile md-colspan-gt-xs="2" md-colspan-xs="6" 
-                        md-rowspan="3">
-            <div layout="column" flex="95">
-              <div layout="row">
-                <div flex="45" flex-xs="25">
-                  <strong >Amount:</strong>
-                </div>
-                <div flex="55" flex-xs="75">
-                  <div>$257,842</div>
-                </div>
-              </div>
-              <div layout="row">
-                <div flex="45" flex-xs="25">
-                  <strong>Recorded:</strong>
-                </div>
-                <div flex="55" flex-xs="75">
-                  <div>April 3, 2015</div>
-                </div>
-              </div>
-              <div layout="row">
-                <div flex="45" flex-xs="25">
-                  <strong>Entry No:</strong>
-                </div>
-                <div flex="55" flex-xs="75">
-                  <div>158293045</div>
-                </div>
-              </div>
-            </div>
-          </md-grid-tile>
-    
-          <md-grid-tile md-colspan-gt-xs="4" md-colspan-xs="6"
-                        md-rowspan="4">
-            <div layout="column" flex="95">
-              <div layout="row" >
-                <div flex="30">
-                  <strong>Original Beneficiary:</strong>
-                </div>
-                <div flex="70">
-                  <div >Oscar Travers</div>
-                </div>
-              </div>
-              <div layout="row" >
-                <div flex="30">
-                  <strong>Original Trustee:</strong>
-                </div>
-                <div flex="70">
-                  <div >First American Title Insurance Company</div>
-                </div>
-              </div>
-            </div>
-          </md-grid-tile>
-
-          <md-grid-tile md-colspan="6"
-                        md-rowspan="5">
-            <div layout="column" flex="95">
-              <div>
-                <strong>Assignments:</strong>
-              </div>
-              <div layout="row">
-                <div flex="30">
-                  <strong>Recorded:</strong>
-                </div>
-                <div flex="70">
-                  <div>05/12/2017</div>
-                </div>
-              </div>
-              <div layout="row">
-                <div flex="30">
-                  <strong>Entry No:</strong>
-                </div>
-                <div flex="70">
-                  <div>172389298</div>
-                </div>
-              </div>
-              <div layout="row">
-                <div flex="30">
-                  <strong>Assignee:</strong>
-                </div>
-                <div flex="70">
-                  <div>
-                    Peter Boghashian
-                  </div>
-                </div>
-              </div>
-            </div>
-          </md-grid-tile>
-        </md-grid-list>
-      </md-card-content>
-    </md-card>
-  </div>
-  <!-- End Loan & Trust Deed Card -->
-</md-content>
-

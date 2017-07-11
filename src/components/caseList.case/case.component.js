@@ -1,19 +1,20 @@
-(function() {
-  angular.module('Cases')
-    .component('case', {
-      templateUrl: 'components/cases.case/case.template.html',
+module.exports = function(ngModule) {
+  ngModule
+    .component('caseExpanded', {
+      template: require('./case.template.html'),
       controller: [CaseController],
       controllerAs: 'ctrl',
-      bindings: { case: '<'}
+      bindings: { caseExpanded: '<',
+                  selectedCase: '<',
+                  index: '<'}
     });
 
     function CaseController() {
       const ctrl = this;
-      
     }
 
     // filter for formatting phone numbers
-  angular.module('Cases').filter('tel', function() {
+  angular.module('CaseList').filter('tel', function() {
     return function(tel) {
       if (!tel) { return '' };
 
@@ -23,4 +24,4 @@
     }
   })
 
-})();
+}

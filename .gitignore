@@ -2,6 +2,12 @@
 .vscode
 
 node_modules
+dist
 
 *.log
+
+.firebaserc
+database.rules.json
+firebase.json
+
 

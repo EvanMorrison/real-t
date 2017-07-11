@@ -2,9 +2,9 @@
             layout="row" 
             layout-align="center center">  
 <div flex="80" style="min-height:50vh;margin-top:80px">
-  <md-grid-list md-cols="3" md-row-height="1.5em" md-gutter="20px">
-    <md-grid-tile md-rowspan="10">
-          <a ui-sref="cases" class="plain-link">
+  <md-grid-list md-cols-gt-xs="3" md-cols-xs="1" md-row-height="1.5em" md-gutter="20px">
+    <md-grid-tile md-rowspan="7">
+          <a ui-sref="cases.case" class="plain-link">
             <div layout="column" flex layout-align="center center">
               
               <h1><br/>List All Cases </h1>
@@ -14,7 +14,7 @@
             </div>
           </a>
     </md-grid-tile>
-    <md-grid-tile md-rowspan="10">
+    <md-grid-tile md-rowspan="7">
       <a ui-sref="caseMain" class="plain-link"><div layout="column" flex layout-align="center center">
           <h1 style="text-align:center">Lookup<br/> Case Number</h1>
         <div layout="row" >
@@ -23,8 +23,8 @@
         </div>
       </a>
     </md-grid-tile>
-    <md-grid-tile md-rowspan="10">
-      <a ui-sref="create" class="plain-link">
+    <md-grid-tile md-rowspan="7">
+      <a ui-sref="newCaseForm" class="plain-link">
         <div layout="column" flex layout-align="center center"> 
           <h1 style="text-align:center"><br/>Open A New Case</h1>
           <div>

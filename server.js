@@ -1,20 +1,20 @@
 const express = require('express');
 const path = require('path');
 
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
+// const mongoose = require('mongoose');
+// const bodyParser = require('body-parser');
+// const logger = require('morgan');
 
 const port = process.env.PORT || 8080;
 
 const app = express();
 
 
-app.use(express.static(path.join(__dirname,'/src')));
+app.use(express.static(path.join(__dirname,'/dist')));
 
 
 // use middleware
-app.use(logger('dev'));
+// app.use(logger('dev'));
 
 
 /**
@@ -22,7 +22,7 @@ app.use(logger('dev'));
  * known route works
  */
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname,'/src/index.html'))
+  res.sendFile(path.join(__dirname,'/dist/index.html'))
 });
 
 app.listen(port, function() {

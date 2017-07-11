@@ -1,0 +1,50 @@
+<!-- FAB -->
+
+<md-toolbar class="toolbar md-whiteframe-z2">
+  <h3>Create A New Case</h3>
+</md-toolbar>
+
+<div ng-cloak layout="column" layout-align="center end"
+style="position:fixed;top:auto;left:auto;right:20px;bottom:20px;z-index:100">
+    <md-button  class="md-fab md-mini md-raised md-hue-3"
+                  aria-label="cancel changes"
+                  ng-click="ctrl.cancelNewCase()">
+        <md-tooltip md-direction="left">cancel without saving</md-tooltip>
+        <md-icon >cancel</md-icon>
+    </md-button>
+    <md-button  class="md-fab md-mini md-raised md-hue-3"
+                  aria-label="save"
+                  ng-click="ctrl.saveNewCase()">
+        <md-tooltip md-direction="left">save changes</md-tooltip>
+        <md-icon >cloud_upload</md-icon>
+    </md-button>
+    <div layout="row" layout-align="end center">
+      <div >
+        <h4 ng-if="!ctrl.isCaseIdValid" class="md-title">Click here to start a new case</h4>
+      </div>
+      <md-button  class="md-fab md-mini md-raised md-accent"
+                    aria-label="Create New Case..."
+                    ng-click="ctrl.createNewCase()">
+          <md-tooltip md-direction="left">Create Another Case</md-tooltip>
+          <md-icon >add</md-icon>
+      </md-button>
+    </div>
+</div>
+  <!-- Floating button for edit, save, etc. -->
+
+
+  <div flex-gt-sm="80" flex-offset="5" layout="row" layout-align="start end">
+      <h1 class="md-headline" layout-align="start start">Case: </h1>
+    <div style="position:relative;top:1.75em;left:10px">
+      <md-input-container >
+          <input  class="md-headline"
+                  type="text" 
+                  ng-model="ctrl.newCase.caseId"
+                  ng-change="ctrl.saveChanges()">
+      </md-input-container>
+    </div>
+  </div>
+
+  <ui-view class="view-frame" case="ctrl.newCase" on-update="ctrl.saveChanges()" is-active-edit="true" is-case-id-valid="ctrl.isCaseIdValid"></ui-view>
+
+

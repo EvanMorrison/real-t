@@ -5,6 +5,7 @@ html, body {
   margin: 0;
   padding: 0 0 80px;
   background: transparent;
+  position:relative;
 }
 
 
@@ -13,7 +14,6 @@ html, body {
   color: #fff;
   
 }
-
 
 #hero {
   /*background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('http://bigreddog.com/wp-content/uploads/2014/09/BRD-1.jpg');
@@ -37,12 +37,22 @@ md-toolbar.toolbar {
   position: absolute;
   width: 100vw;
   height: 360px;
-  background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('http://bigreddog.com/wp-content/uploads/2014/09/BRD-1.jpg');
+  background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('https://i.imgur.com/kdsjf48.jpg');
+  /*background-image: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('https://i.imgur.com/i9F4EwJ.jpg');*/
   background-size: cover;
+  background-position-y: -60px;
   z-index: -1;
 }
 
-/* Home Page Links */
+md-content {
+  padding-bottom: 200px;
+}
+
+
+/*
+   Home Page Links 
+*/
+
 .home-view-container a {
   text-decoration: none;
   color: #333;
@@ -53,6 +63,11 @@ a.active {
   border-bottom: 3px solid #ddd;
 }
 
+
+/*
+  CASE LIST PAGE
+*/
+
 .case-summary {
   position: relative;
   font-size: .9em;
@@ -60,13 +75,10 @@ a.active {
 
 .more-detail, .less-detail {
   position: absolute;
-  left: 3vw;
+  left: 1em;
   top: -3px;
 }
 
-.edit {
-  
-}
 
 .case-detail  {
   position: relative;
@@ -85,7 +97,37 @@ a.active {
   margin-bottom: 1.5em;
 }
 
+.case-list-address {
+  padding-right: 1em;
+}
 
+/*
+  CASE VIEW FULL DETAIL
+*/
+
+md-grid-list md-grid-tile figure, figure {
+  align-items: flex-start;
+  overflow: auto;
+}
+
+.case-view-container {
+  padding-top: 1.5em;
+}
+
+.case-view-container p {
+  margin: 0;
+  position: relative;
+}
+
+.case-view-container div>p:first-child {
+  margin-top: 1em;
+}
+
+#fab-case-actions {
+  position: absolute;
+  top: 95vh;
+  right: 95vw;
+}
 
 md-grid-list md-grid-tile figure, figure {
   align-items: flex-start;
