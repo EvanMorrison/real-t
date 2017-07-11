@@ -1,4 +1,8 @@
-(function() {
+
+
+
+
+module.exports = function(ngApp) {  
 
   // config and initialize firebase
   const config = {
@@ -9,21 +13,26 @@
     storageBucket: "real-t-e5280.appspot.com",
     messagingSenderId: "586766522818"
   };
+  
   firebase.initializeApp(config);
 
-  
-  angular.module('RTApp')
-
-    .config(function($firebaseRefProvider) {
+  ngApp
+    .config(['$firebaseRefProvider', function($firebaseRefProvider) {
       $firebaseRefProvider.registerUrl({
         default: config.databaseURL,
-        cases: `${config.databaseURL}/cases`
+        cases: config.databaseURL + '/cases'
       })
-    })
+    }])
 
 
 // routing with ui-router
-    .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function config($locationProvider, $stateProvider, $urlRouterProvider) {
+    .config([ '$locationProvider', 
+              '$stateProvider', 
+              '$urlRouterProvider', 
+              function config( $locationProvider, 
+                               $stateProvider, 
+                               $urlRouterProvider) {
+
       $locationProvider.html5Mode(true);
 
       $urlRouterProvider.otherwise('/');
@@ -42,7 +51,7 @@
         component: 'caseList',
         parent: 'appContainer',
         resolve: {
-          caseList: function($firebaseAuth, caseService) {
+          caseList: ['$firebaseAuth', 'caseService', function($firebaseAuth, caseService) {
                       return $firebaseAuth().$requireSignIn()
                               .then(function(user){
                                 return caseService.LoadAllCases();
@@ -50,7 +59,7 @@
                               .catch(function(err){
                                 return 'not logged in'
                               })
-                    }
+                    }]
         }
       })
       .state('cases.case', {
@@ -63,7 +72,7 @@
         component: 'caseMain',
         parent: 'appContainer',
         resolve: {
-          caseList: function($firebaseAuth, caseService) {
+          caseList: ['$firebaseAuth', 'caseService', function($firebaseAuth, caseService) {
                       return $firebaseAuth().$requireSignIn()
                               .then(function(user){
                                 return caseService.LoadAllCases();
@@ -71,7 +80,7 @@
                               .catch(function(err){
                                 return 'not logged in'
                               })
-                    }
+                    }]
         }
       })
 
@@ -107,20 +116,20 @@
 
     
   // material design config for theming, etc.
-    .config(function($mdThemingProvider) {
+    .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('deep-purple')
         .accentPalette('indigo')
-    })
-    .config(function($mdThemingProvider) {
+    }])
+    .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('Auth')
         .primaryPalette('red')
         .accentPalette('indigo', {
           'default' : '600'
         })
-    })
+    }])
     
 
   
 
-})();
+}

@@ -1,8 +1,14 @@
-(function() {
-  'use strict';
 
-  angular.module('RTApp')
-    .service('caseService', ['$firebaseArray', '$firebaseObject', '$firebaseRef', '$stateParams', CaseService])
+module.exports = function(ngModule) {
+
+  ngModule
+    .service('caseService', [
+                                '$firebaseArray', 
+                                '$firebaseObject', 
+                                '$firebaseRef', 
+                                '$stateParams', 
+                                CaseService
+                            ])
 
 
     function CaseService($firebaseArray, $firebaseObject, $firebaseRef, $stateParams) {
@@ -20,4 +26,4 @@
       
     }
 
-})();
+}
