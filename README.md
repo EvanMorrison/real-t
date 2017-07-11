@@ -15,7 +15,7 @@ That experience played a major role in my eventual migration to a career in prog
 #
 ## Project Summary
 
-This is a full stack project in the MEAN stack.
+This is a full stack project. The front end is built using Angularjs and Angular Material design together with UI-Router. The backend is currently (6/30/17) using Google's Firebase database service. 
 
 This web app is for managing real estate loans and non-judicial foreclosures of those loans that do not get repaid. 
 
@@ -25,7 +25,6 @@ The main target features of the app are to:
 * Generate the necessary legal documents with the case-specific data.  
 * Automatically generate the schedule for mailing and publication, and the appropriate correspodence and emails for the applicable jurisdiction.
 
-The front end is built using Angularjs with Angular Material, and routing is handled by UI-Router. Frontend package management is handled with Bower. The backend uses Node.js, npm, and MongoDB. 
 
-### See the work in progress on gh-pages: [evanmorrison.github.io/real-t](https://evanmorrison.github.io/real-t)
+### See the work in progress: [real-t.evmorrison.com](https://real-t.evmorrison.com)
  
