@@ -1,9 +1,6 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-<<<<<<< HEAD
-=======
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
->>>>>>> dev
 
 module.exports = {
 
