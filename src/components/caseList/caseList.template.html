@@ -1,4 +1,4 @@
-<md-toolbar class="toolbar md-whiteframe-z2">
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
       <h3 class="view-frame" >Case List</h3>
 </md-toolbar>
 <md-content class="view-frame">
@@ -48,7 +48,7 @@
                     style="position:absolute;right:3em" >
           <md-icon>create</md-icon>
         </md-button>
-        <md-button  ng-click="ctrl.deleteCase(case)"
+        <md-button  ng-click="ctrl.deleteCase($event, case)"
                     class="md-secondary md-icon-button" 
                     style="position:absolute;right:1em" >
           <md-icon>cancel</md-icon>

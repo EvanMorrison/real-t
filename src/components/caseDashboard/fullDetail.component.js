@@ -1,36 +1,36 @@
 
 module.exports = function(ngModule) {
   ngModule
-  .component('caseXV', {
-    template: require('./caseXV.template.html'),
-    controller: [CaseXVController],
-    controllerAs: 'ctrl',
+  .component('fullDetail', {
+    template: require('./fullDetail.template.html'),
+    controller: [FullDetailController],
+    controllerAs: 'vm',
     bindings: { case: '<',
                 isActiveEdit: '<',
                 isCaseIdValid: '<',
                 onUpdate: '&'}
   })
 
-  function CaseXVController() {
-    const ctrl = this;
-    ctrl.$onInit = function() {
+  function FullDetailController() {
+    const vm = this;
+    vm.$onInit = function() {
      
     }
     
-    ctrl.update = function() {
-        ctrl.onUpdate()
+    vm.update = function() {
+        vm.onUpdate()
     }
 
 
         // county selection input options
-      ctrl.Counties = ["Box Elder", "Davis", "Salt Lake", "Summit", "Uintah", "Wasatch", "Washington", "Weber"]
+      vm.Counties = ["Box Elder", "Davis", "Salt Lake", "Summit", "Uintah", "Wasatch", "Washington", "Weber"]
           
 
      /**
            * fix posiitioning of datepicker, which otherwise 
            * is positioned off screen.
            */
-          ctrl.positionDatepicker = function($event) {
+          vm.positionDatepicker = function($event) {
             
               // get md-input-container parent of the clicked button
               var pickerContainer = angular.element($event.target).parent().parent()

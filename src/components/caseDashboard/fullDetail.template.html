@@ -1,8 +1,8 @@
 
 <md-content layout-gt-sm="row" layout-align-gt-sm="center center" layout-wrap
             layout="column" flex 
-            class="case-view-container view-container"
-            ng-if="ctrl.isCaseIdValid">
+            class="view-container"
+            >
 
 
 
@@ -21,20 +21,20 @@
               <div layout="column" flex="90" flex-offset="5">
                 <md-input-container>
                   <label>Name</label>
-                  <input  ng-model="ctrl.case.lender.name"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.lender.name"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
                 
                 <md-input-container>
                   <label >Address</label>
-                  <textarea ng-model="ctrl.case.lender.address"
-                            ng-change="ctrl.update()"
+                  <textarea ng-model="vm.case.lender.address"
+                            ng-change="vm.update()"
                             style="text-align:left" 
                             max-rows="3"  
-                            ng-readonly="!ctrl.isActiveEdit">
-                          {{ctrl.case.lender.address}}
+                            ng-readonly="!vm.isActiveEdit">
+                          {{vm.case.lender.address}}
                   </textarea>
                 </md-input-container>
               </div>
@@ -42,18 +42,18 @@
               <div layout="column" flex="90" flex-offset="5">
                <md-input-container>
                   <label>Phone</label>
-                  <input  ng-model="ctrl.case.lender.phone"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.lender.phone"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
               
                 <md-input-container>
                   <label>Email</label>
-                  <input  ng-model="ctrl.case.lender.email"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.lender.email"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
               </div>
             </div>
@@ -76,20 +76,20 @@
               <div layout="column" flex="90" flex-offset="5">
                 <md-input-container>
                   <label>Name</label>
-                  <input  ng-model="ctrl.case.borrower.name"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.borrower.name"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
                 
                 <md-input-container>
                   <label >Address</label>
-                  <textarea ng-model="ctrl.case.borrower.address"
-                            ng-change="ctrl.update()"
+                  <textarea ng-model="vm.case.borrower.address"
+                            ng-change="vm.update()"
                             style="text-align:left" 
                             max-rows="3"  
-                            ng-readonly="!ctrl.isActiveEdit">
-                          {{ctrl.case.borrower.address}}
+                            ng-readonly="!vm.isActiveEdit">
+                          {{vm.case.borrower.address}}
                   </textarea>
                 </md-input-container>
               </div>
@@ -97,18 +97,18 @@
               <div layout="column" flex="90" flex-offset="5">
                <md-input-container>
                   <label>Phone</label>
-                  <input  ng-model="ctrl.case.borrower.phone"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.borrower.phone"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
               
                 <md-input-container>
                   <label>Email</label>
-                  <input  ng-model="ctrl.case.borrower.email"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.borrower.email"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
               </div>
             </div>
@@ -130,33 +130,33 @@
                 
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label >Address</label>
-                  <textarea ng-model="ctrl.case.property.address"
-                            ng-change="ctrl.update()"
+                  <textarea ng-model="vm.case.property.address"
+                            ng-change="vm.update()"
                             style="text-align:left" 
                             max-rows="3"  
-                            ng-readonly="!ctrl.isActiveEdit">
-                          {{ctrl.case.property.address}}
+                            ng-readonly="!vm.isActiveEdit">
+                          {{vm.case.property.address}}
                   </textarea>
                 </md-input-container>
                 
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label >Current Owner</label>
   
-                  <input  ng-model="ctrl.case.property.owner"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.property.owner"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
                 
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label>County</label>
-                  <md-select ng-model="ctrl.case.property.county"
-                             ng-change="ctrl.update()" 
+                  <md-select ng-model="vm.case.property.county"
+                             ng-change="vm.update()" 
                              >
-                    <md-option ng-repeat="county in ctrl.Counties" 
+                    <md-option ng-repeat="county in vm.Counties" 
                                 ng-value="county"
-                                ng-selected="county === '{{ctrl.case.property.county}}'" 
-                                ng-disabled="county != '{{ctrl.case.property.county}}' && !ctrl.isActiveEdit">
+                                ng-selected="county === '{{vm.case.property.county}}'" 
+                                ng-disabled="county != '{{vm.case.property.county}}' && !vm.isActiveEdit">
                           {{county}}
                     </md-option>  
                   </md-select>
@@ -164,19 +164,19 @@
   
                 <md-input-container flex-gt-xs="40" flex-offset="5">
                   <label>Tax Id:</label>
-                  <input  ng-model="ctrl.case.property.taxId"
-                          ng-change="ctrl.update()"
+                  <input  ng-model="vm.case.property.taxId"
+                          ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!ctrl.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit">
                 </md-input-container>
                 
                 <div flex-gt-xs="90" flex-offset="5" layout="column" style="max-height:15em;overflow:auto">
                   <md-input-container flex>  
                     <label>Legal Description</label>
-                    <textarea ng-model="ctrl.case.property.legalDescription" 
-                              ng-change="ctrl.update()"
-                              ng-readonly="!ctrl.isActiveEdit">
-                              {{ctrl.case.property.legalDescription}} </textarea>
+                    <textarea ng-model="vm.case.property.legalDescription" 
+                              ng-change="vm.update()"
+                              ng-readonly="!vm.isActiveEdit">
+                              {{vm.case.property.legalDescription}} </textarea>
                   </md-input-container>
                 </div>
   
@@ -202,76 +202,76 @@
          <div layout-xs="column" layout="row" layout-wrap>
           <md-input-container flex-gt-xs="25" flex-offset="5">
                <label>Amount:</label>
-               <input  ng-model="ctrl.case.loan.amount"
-                       ng-change="ctrl.update()"
+               <input  ng-model="vm.case.loan.amount"
+                       ng-change="vm.update()"
                        type="text" 
-                       value="{{ctrl.case.loan.amount | currency : "$" : 0 }}"
-                       ng-readonly="!ctrl.isActiveEdit">
+                       value="{{vm.case.loan.amount | currency : "$" : 0 }}"
+                       ng-readonly="!vm.isActiveEdit">
           </md-input-container>
            
           <md-input-container flex-gt-xs="30" flex-offset="5" > 
   
                <label>Recorded:</label>
-              <md-datepicker ng-model="ctrl.case.loan.DOT.recorded" 
-                  ng-change="ctrl.updateDate()"
-                  ng-disabled="!ctrl.isActiveEdit"
-                  ng-click="ctrl.positionDatepicker($event)">
+              <md-datepicker ng-model="vm.case.loan.DOT.recorded" 
+                  ng-change="vm.updateDate()"
+                  ng-disabled="!vm.isActiveEdit"
+                  ng-click="vm.positionDatepicker($event)">
                
           </md-input-container>
            
           <md-input-container flex-gt-xs="30" flex-offset="5">
                <label>Entry Number:</label>
-               <input  ng-model="ctrl.case.loan.DOT.entry"
-                       ng-change="ctrl.update()"
+               <input  ng-model="vm.case.loan.DOT.entry"
+                       ng-change="vm.update()"
                        type="text" 
-                       ng-readonly="!ctrl.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit">
           </md-input-container>
         </div>
          <div layout-xs="column" layout="row"> 
            <md-input-container flex-gt-xs="45" flex-offset="5">
                <label>Original Beneficiary:</label>
-               <input  ng-model="ctrl.case.loan.DOT.origBeneficiary"
-                       ng-change="ctrl.update()"
+               <input  ng-model="vm.case.loan.DOT.origBeneficiary"
+                       ng-change="vm.update()"
                        type="text" 
-                       ng-readonly="!ctrl.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit">
            </md-input-container>
            
            <md-input-container flex-gt-xs="45" flex-offset="5">
                <label>Original Trustee:</label>
-               <input  ng-model="ctrl.case.loan.DOT.origTrustee"
-                       ng-change="ctrl.update()"
+               <input  ng-model="vm.case.loan.DOT.origTrustee"
+                       ng-change="vm.update()"
                        type="text" 
-                       ng-readonly="!ctrl.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit">
            </md-input-container>
         </div>
   
           <div layout="column">
-            <h4 ng-hide="!ctrl.case.loan.assignments" flex="90" flex-offset="5">Assignments</h4>
-              <div  ng-repeat="assignment in ctrl.case.loan.assignments" 
+            <h4 ng-hide="!vm.case.loan.assignments" flex="90" flex-offset="5">Assignments</h4>
+              <div  ng-repeat="assignment in vm.case.loan.assignments" 
                     layout-xs="column" layout-gt-xs="row" flex layout-wrap>
                 <md-input-container flex-gt-xs="25" flex-offset="5">
                   
                     <label>recorded</label>
                     <md-datepicker ng-model="assignment.recorded"
-                            ng-change="ctrl.updateDate()"
-                            ng-disabled="!ctrl.isActiveEdit"
-                            ng-click="ctrl.positionDatepicker($event)">
+                            ng-change="vm.updateDate()"
+                            ng-disabled="!vm.isActiveEdit"
+                            ng-click="vm.positionDatepicker($event)">
                     </md-datepicker>
                    
                 </md-input-container>
                 <md-input-container flex-gt-xs="25" flex-offset="5">
                     <label>entry</label>
                     <input  ng-model="assignment.entry"
-                            ng-change="ctrl.update()"
+                            ng-change="vm.update()"
                             type="text" 
-                            ng-readonly="!ctrl.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit">
                   </md-input-container>
                 <md-input-container flex-gt-xs="35" flex-offset="5">
                     <label>Assignee</label>
                     <input  ng-model="assignment.assignee"
-                            ng-change="ctrl.update()"
+                            ng-change="vm.update()"
                             type="text" 
-                            ng-readonly="!ctrl.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit">
                   </md-input-container>
               </div>
           </div>

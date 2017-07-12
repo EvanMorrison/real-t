@@ -1,0 +1,22 @@
+<div layout-gt-xs="row" layout-xs="column" flex layout-align="space-between center" layout-wrap>
+    <md-menu>
+      <md-button class="navbar-title" ng-mouseenter="$mdMenu.open($event)" >
+        REAL-T
+      </md-button>
+      <md-menu-content ng-mouseleave="$mdMenu.close()">
+        <md-menu-item >
+            <md-button ui-sref="legacyforms">View Input Forms from Legacy App</md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+        <div>
+          <md-button ui-sref="home" ui-sref-active="active">Home</md-button>
+          <md-button ui-sref="caseList" ui-sref-active="active">Case List</md-button>
+          <md-button ui-sref="caseDashboard" ui-sref-active="active">Case Dashboard</md-button>
+          <md-button ui-sref="newCaseForm" ui-sref-active="active">Create New Case</md-button>
+        </div>
+          
+          <div>
+            <md-button ng-if="vm.user.isLoggedIn" ng-click="vm.logout()" >user: {{auth.user}} / logout</md-button>
+          </div>
+</div>
