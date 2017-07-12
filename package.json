@@ -1,7 +1,7 @@
 {
   "name": "real-t",
-  "version": "1.0.0",
-  "description": "An spa to track and manage real estate loans, payoffs, and foreclosures.",
+  "version": "2.0.0",
+  "description": "A SPA to track and manage real estate loans, payoffs, and foreclosures.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.dev.config.js -p --progress --colors"
   },
   "keywords": [],
-  "author": "",
+  "author": "Evan Morrison",
   "license": "ISC",
   "dependencies": {
     "@uirouter/angularjs": "^1.0.5",
@@ -35,8 +35,5 @@
     "url-loader": "^0.5.9",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.5.1"
-  },
-  "cacheDirectories": [
-    "src/node_modules"
-  ]
+  }
 }

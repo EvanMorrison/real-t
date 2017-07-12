@@ -1,0 +1,64 @@
+<!-- FAB -->
+
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
+  <md-button class="md-icon-button" ng-click="vm.toggleSidenav($event)"
+              hide-gt-xs>
+    <i class="fa fa-bars fa-lg" ></i>
+  </md-button>
+  <h3 >Case View &amp; Edit Dashboard</h3>
+</md-toolbar>
+
+<div layout="row">
+<md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
+          md-component-id="sideMenu" 
+          md-disable-backdrop
+          md-is-locked-open="$mdMedia('min-width:500px')"
+          >
+      <md-toolbar class="md-toolbar-tools md-hue-3">
+        <h3>Cases</h3>
+      </md-toolbar>
+      <md-content layout="column">
+        <md-input-container>
+          <label><md-icon>search</md-icon> search</label>
+          <input type="search" ng-model="vm.query" md-autofocus>
+          <md-button class="md-icon-button" ng-click="vm.query=''" style="position:absolute;right:0;top:0" ng-hide="!vm.query"><md-icon>cancel</md-icon> </md-button>
+        </md-input-container>
+        <md-list>
+          <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp"
+                        class="case-list-item"
+                        ng-class="{selected: case.caseId == vm.caseRecord.caseId}"
+                        ui-sref="fullDetail({recordId: case.$id})">
+            <div>{{case.caseId}}</div>
+          </md-list-item>  
+        </md-list>  
+      </md-content>
+</md-sidenav>
+
+<!-- Dashboard Layout-->
+<md-content layout="column" class="dashboard-content" flex><!-- Edit, Save and Search Box -->
+    <ui-view name="timeline"></ui-view>
+    <ui-view name="docs"></ui-view>
+  
+    <ui-view  name="editToolbar" 
+              is-active-edit="vm.isActiveEdit"
+              on-edit="vm.toggleEdit()" 
+              on-save="vm.saveChanges()" 
+              on-cancel="vm.cancelChanges()" 
+              on-search="vm.caseLookup(searchId)">
+    </ui-view>
+    
+    <div flex-gt-sm="80" flex-offset="5" >
+      <h1 ng-show="vm.caseRecord.caseId">Case: {{vm.caseRecord.caseId}}</h1>
+      <h1 ng-hide="vm.caseRecord.caseId">Select A Case To View.</h1>
+    </div>
+
+  
+    <ui-view  name="fullDetail"
+              case="vm.caseRecord" 
+              is-active-edit="vm.isActiveEdit" 
+              is-case-id-valid="vm.isCaseIdValid"
+              on-exit="vm.clearCaseRecord()"
+              on-case-selected="vm.caseLookup(id)">
+    </ui-view>
+  </md-content>
+</div>

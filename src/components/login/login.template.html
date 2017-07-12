@@ -1,0 +1,75 @@
+  <div class="login-page">
+    <div>
+      <div class="hero-title-block">
+        <h1 class="md-display-4">REAL-T</h1>
+        <h3 class="md-subhead">Real EstAte Lending Tracker With Real-Time Database</h3>
+      </div>
+    </div>
+    <md-card class="login-card">
+        <md-toolbar class="md-primary"> 
+          <h1 class="md-toolbar-tools" ng-if="!vm.isLoggedIn">REAL-T:<small> Sign-In or Sign-Up</small></h1>
+          <h1 class="md-toolbar-tools" ng-if="vm.isLoggedIn">Logout</h1>
+        </md-toolbar>
+    
+          <md-card-content layout="column">
+              <md-button  
+                          md-theme="Auth"
+                          class="md-primary md-raised loginbox-btn"
+                          ng-if="!vm.isLoggedIn"
+                          ng-click="vm.loginWithGoogle($event)">
+                          <i class="fa fa-google fa-lg"></i> 
+                          <span style="margin-left:10px">Google</span>
+                </md-button>
+                <!--  <md-button layout="row" layout-align="start center" style="text-align: start"
+                          md-theme="Auth"
+                          class="md-accent md-raised"
+                          ng-if="!vm.isLoggedIn"
+                          ng-click="vm.loginWithFacebook($event)">
+                  <i flex="15" flex-offset="20" class="fa fa-facebook fa-lg"></i> <div flex="65">Facebook</div>
+                            </md-button>   -->
+                <md-button  class="md-accent md-raised loginbox-btn"
+                          ng-if="!vm.isLoggedIn"
+                          ng-click="vm.loginAnonymous($event)">
+                  Sign in Anonymously
+                </md-button>         
+                
+                <!-- sign in with username and password-->
+                <div class="login-form "
+                     ng-if="!vm.isLoggedIn">
+                  <p class="loginbox-btn title">Sign In or Sign Up With Email Address</p>
+                  <form md-theme="Auth"
+                        layout="column"
+                        name="login" 
+                        ng-submit="vm.login($event)" >
+                              
+                    <md-input-container class="login-form-input">
+                      <label>email</label>
+                      <input type="email" ng-required ng-model="vm.user.email">
+                    </md-input-container>
+                              
+                    <md-input-container class="login-form-input">
+                      <label>password</label>
+                      <input type="password" ng-required ng-model="vm.user.password">
+                    </md-input-container>
+                    
+                    <md-button flex 
+                              class="md-accent md-raised loginbox-btn"
+                              type="submit"
+                              ng-click="vm.login($event)">
+                      Sign In
+                    </md-button>
+                    <md-button class="loginbox-btn"
+                                ng-click="vm.signup($event)" >
+                        Create An Account
+                    </md-button>
+                  </form>
+                </div>
+                <md-button  flex 
+                            class="md-accent md-raised loginbox-btn"
+                            ng-if="vm.isLoggedIn"
+                            ng-click="vm.signOut($event)">
+                  Log Out
+                </md-button>
+          </md-card-content>
+    </md-card>
+  </div>

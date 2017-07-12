@@ -1,10 +1,13 @@
+<div layout="row" layout-align="end center">
+  <md-button ng-click="vm.signOut()">user: {{vm.user.username}} / logout</md-button>
+</div>
 <md-content class="home-view-container"
             layout="row" 
             layout-align="center center">  
 <div flex="80" style="min-height:50vh;margin-top:80px">
   <md-grid-list md-cols-gt-xs="3" md-cols-xs="1" md-row-height="1.5em" md-gutter="20px">
     <md-grid-tile md-rowspan="7">
-          <a ui-sref="cases.case" class="plain-link">
+          <a ui-sref="caseList" class="plain-link">
             <div layout="column" flex layout-align="center center">
               
               <h1><br/>List All Cases </h1>
@@ -15,10 +18,10 @@
           </a>
     </md-grid-tile>
     <md-grid-tile md-rowspan="7">
-      <a ui-sref="caseMain" class="plain-link"><div layout="column" flex layout-align="center center">
-          <h1 style="text-align:center">Lookup<br/> Case Number</h1>
+      <a ui-sref="caseDashboard" class="plain-link"><div layout="column" flex layout-align="center center">
+          <h1 style="text-align:center">Case<br/> Dashboard</h1>
         <div layout="row" >
-          <i class="fa fa-compass fa-5x"></i>
+          <i class="fa fa-tachometer fa-5x"></i>
         </div>
         </div>
       </a>
