@@ -117,10 +117,12 @@ a.active {
 
 }
 
+
 /* Alert Dialog for login errors */
 .md-dialog-content {
   max-width: 400px;
 }
+
 .md-dialog-content .md-title {
   margin-bottom: 1em;
 }
