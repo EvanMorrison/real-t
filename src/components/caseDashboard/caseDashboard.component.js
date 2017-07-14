@@ -11,14 +11,14 @@ module.exports = function(ngModule) {
                   
                   '$state', 
                   '$mdSidenav',
-                  '$mdToast', 
+                  '$mdDialog', 
                   CaseDashboardController
                 ],
     controllerAs: 'vm',
     bindings: { 'caseList': '<'}
   });
 
-    function CaseDashboardController(caseService, $state, $mdSidenav, $mdToast) {
+    function CaseDashboardController(caseService, $state, $mdSidenav, $mdDialog) {
           const vm = this;
           vm.isActiveEdit = false
           vm.isCaseIdValid = true;
@@ -64,16 +64,24 @@ module.exports = function(ngModule) {
                 vm.isActiveEdit = !vm.isActiveEdit;
                 //TODO: show a confirmation message to the user
                 console.log('changes saved successfully for ', ref.key)
-                $mdToast.show(
-                    $mdToast.simple()
-                      .textContent('Changes Saved')
-                      .parent(angular.element(document.querySelector('.dashboard-fullDetail-container')))
-                      .position('top right')
-                      .hideDelay(3000)
+                $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(true)
+                      .title('Saved')
+                      .textContent('Changes Saved Successfully')
+                      .ok('Ok')
                 )
               })
               .catch(function(err) {
                 console.log('error saving changes ', err)
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(true)
+                      .title('Error Saving')
+                      .textContent(`There was a problem saving: ${err}`)
+                      .ok('Ok')
+                )
+
               })
           }
 

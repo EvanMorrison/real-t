@@ -1,20 +1,20 @@
-module.exports = function(ngModule) {
-  ngModule
+module.exports = function(app) {
+  app
     .component('caseExpanded', {
       template: require('./case.template.html'),
       controller: [CaseController],
-      controllerAs: 'ctrl',
+      controllerAs: 'vm',
       bindings: { caseExpanded: '<',
                   selectedCase: '<',
                   index: '<'}
     });
 
     function CaseController() {
-      const ctrl = this;
+      const vm = this;
     }
 
     // filter for formatting phone numbers
-  angular.module('CaseList').filter('tel', function() {
+  app.filter('tel', function() {
     return function(tel) {
       if (!tel) { return '' };
 

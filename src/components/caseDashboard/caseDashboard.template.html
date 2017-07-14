@@ -1,4 +1,3 @@
-<!-- FAB -->
 
 <md-toolbar class="md-toolbar-tools md-whiteframe-z2">
   <md-button class="md-icon-button" ng-click="vm.toggleSidenav($event)"
@@ -35,11 +34,21 @@
 </md-sidenav>
 
 <!-- Dashboard Layout-->
-<md-content layout="column" class="dashboard-content" flex><!-- Edit, Save and Search Box -->
-    <ui-view name="timeline"></ui-view>
+<md-content layout="column" class="dashboard-content" flex>
+    
+    <div class="dashboard-title-container" >
+      <h2 ng-show="vm.caseRecord.caseId">Case: {{vm.caseRecord.caseId}} <small>/ {{vm.caseRecord.lender.name}} / {{vm.caseRecord.borrower.name}} / {{vm.caseRecord.property.address}}</small></h2>
+      <h2 ng-hide="vm.caseRecord.caseId">Select A Case To View.</h2>
+    </div>
+
+    <ui-view  name="timeline"
+              >
+
+    </ui-view>
     <ui-view name="docs"></ui-view>
   
     <ui-view  name="editToolbar" 
+              class="editToolbar-container"
               is-active-edit="vm.isActiveEdit"
               on-edit="vm.toggleEdit()" 
               on-save="vm.saveChanges()" 
@@ -47,11 +56,6 @@
               on-search="vm.caseLookup(searchId)">
     </ui-view>
     
-    <div flex-gt-sm="80" flex-offset="5" >
-      <h1 ng-show="vm.caseRecord.caseId">Case: {{vm.caseRecord.caseId}}</h1>
-      <h1 ng-hide="vm.caseRecord.caseId">Select A Case To View.</h1>
-    </div>
-
   
     <ui-view  name="fullDetail"
               case="vm.caseRecord" 

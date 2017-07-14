@@ -117,14 +117,15 @@ a.active {
 
 }
 
+
 /* Alert Dialog for login errors */
 .md-dialog-content {
   max-width: 400px;
 }
+
 .md-dialog-content .md-title {
   margin-bottom: 1em;
 }
-
 
 
 /* Navbar styles */
@@ -136,8 +137,13 @@ a.active {
   text-decoration: none;
 }
 
-
 /* Dashboard View */
+
+.dashboard-title-container {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
 .dashboard-content {
   min-height: 100vh;
 }
@@ -145,31 +151,77 @@ a.active {
 .dashboard-sidenav {
   width: 98vw;
   max-width: 200px;
-
 }
 
 .dashboard-sidenav .case-list-item.selected {
   background-color: rgba(179,136,255,0.5);
 }
 
+
+/* Timeline Section Styling */
+
+.dashboard-title-container, .timeline-container {
+  position: relative;
+  /*min-height: 200px;*/
+  border-bottom: 1px solid rgba(179,136,255,.2);
+  /*border-radius: 5px;*/
+  margin: 10px;
+  padding: 10px;
+}
+
+.timeline-label-container {
+  position: relative;
+  margin-top: 20px;
+  min-height: 110px;
+}
+
+.timeline-label {
+  transform-origin: top right;
+  transform: translateX(-50%) rotate(290deg) ;
+}
+
+
+
+/* Edit Toolbar Styling*/
+
+.toolbarFixed-add {
+  transition: all .5s linear;
+}
+
+.dashboard-editToolbar.toolbarFixed-add {
+  position: fixed;
+}
+
+.dashboard-editToolbar.toolbarFixed, 
+.toolbarFixed-add.toolbarFixed-add-active {
+  position: fixed;
+  background-color: #ddd;
+  z-index: 1;
+}
+
 .dashboard-editToolbar {
   position: relative;
 }
 
-.dashboard-fullDetail-container {
+.editToolbar-container {
   position: relative;
-  width: 100%;
+  min-height: 60px;
 }
+
 /*
   CASE LIST PAGE
 */
 
 .case-summary {
-  position: relative;
   font-size: .9em;
 }
 
-.more-detail, .less-detail {
+.more-detail {
+  position: absolute;
+  left: 1em;
+}
+
+.less-detail {
   position: absolute;
   left: 1em;
   top: -3px;

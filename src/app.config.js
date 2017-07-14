@@ -110,7 +110,6 @@ module.exports = function(ngApp) {
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
                       'bodyContent@mainLayout': { component: 'caseDashboard' },
-                      'editToolbar@caseDashboard': { component: 'editToolbar' },
                       'fullDetail@caseDashboard': { componennt: 'fullDetail' }
                     },
                     resolve: {
@@ -119,12 +118,13 @@ module.exports = function(ngApp) {
                                               }]
                     }
                   })
-
                       .state('fullDetail', {
                         url: '/{recordId}',
                         parent: 'caseDashboard',
                         views: {
                         //   'editToolbar@caseDashboard': { component: 'editToolbar' },
+                          'timeline@caseDashboard': { component: 'timeline' },
+                          'editToolbar@caseDashboard': { component: 'editToolbar' },
                           'fullDetail@caseDashboard': { component: 'fullDetail'}
                         }
                       })

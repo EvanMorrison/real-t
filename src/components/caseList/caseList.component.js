@@ -10,28 +10,28 @@ module.exports = function(ngModule) {
                     '$firebaseAuth', 
                     CasesController
                   ],
-      controllerAs: 'ctrl',
+      controllerAs: 'vm',
       bindings: { caseList : '<'},
     });
 
     function CasesController($mdDialog, $state, caseService, $firebaseAuth) {
-      const ctrl = this;
+      const vm = this;
 
-      ctrl.orderProp = 'caseId';
+      vm.orderProp = 'caseId';
 
 
       // toggle parent or child state depending on what is currently showing
-      ctrl.toggleSelected = function(index) {
+      vm.toggleSelected = function(index) {
           
-          if (ctrl.selectedCase === index) {
-            ctrl.selectedCase = null;
+          if (vm.selectedCase === index) {
+            vm.selectedCase = null;
             } else {
-              ctrl.selectedCase = index;
+              vm.selectedCase = index;
             }
       }
 
       // delete a case from the database and the local firebaseArray    
-      ctrl.deleteCase = function(ev, caseObj) {
+      vm.deleteCase = function(ev, caseObj) {
         const confirm = $mdDialog.prompt()
           .title('Delete Case')
           .textContent(`To delete case ${caseObj.caseId}, enter the case number below.\nThis cannot be undone.`)
@@ -43,7 +43,7 @@ module.exports = function(ngModule) {
         $mdDialog.show(confirm)
           .then(function(result) {
               if (result == caseObj.caseId) {
-                ctrl.caseList.$remove(caseObj)
+                vm.caseList.$remove(caseObj)
                   .then(function(ref){
                     $mdDialog.show(
                       $mdDialog.alert()
@@ -78,23 +78,23 @@ module.exports = function(ngModule) {
       // end deleteCase
 
       // goto to fullDetail view for a selected case
-      ctrl.gotoCase = function (caseObj) {
+      vm.gotoCase = function (caseObj) {
           $state.go('fullDetail', {recordId: caseObj.$id })
       }
 
       // handle change in user authentication status
-      // ctrl.authObj = $firebaseAuth();
+      // vm.authObj = $firebaseAuth();
 
-      // ctrl.authObj.$onAuthStateChanged(function(user) {
+      // vm.authObj.$onAuthStateChanged(function(user) {
       //   if (user) {
       //       caseService.LoadAllCases()
       //       .$loaded(function(cases) {
-      //         ctrl.caseList = cases
+      //         vm.caseList = cases
       //       }, function(err) {
       //         console.log('error retrieving cases ', err)
       //       })
       //   } else {
-      //       ctrl.caseList.$destroy();
+      //       vm.caseList.$destroy();
       //   }
       // });
 

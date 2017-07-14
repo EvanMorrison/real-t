@@ -8,8 +8,7 @@ import './animations.css';
 const app = angular.module('RTApp', [
     'firebase',
     'ngMaterial',
-    'ui.router',
-    'CaseList'
+    'ui.router'
   ])
   
   
@@ -24,12 +23,8 @@ require('./components/home/home.component')(app);
 require('./components/login/login.component')(app);
 require('./components/legacyViews/legacyViews.component')(app);
 
-
-const CaseList = angular.module('CaseList', []);
-
-require('./components/caseList/caseList.component')(CaseList);
-require('./components/caseList.case/case.component')(CaseList);
-
+require('./components/caseList')(app);
 
 require('./components/caseDashboard')(app);
+
 require('./components/newCase/newCase.component')(app);
