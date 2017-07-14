@@ -8,42 +8,49 @@ module.exports = function(ngModule) {
   .component('caseDashboard', {
     template: require('./caseDashboard.template.html'),
     controller: [ 'caseService', 
-                  
                   '$state', 
-                  '$mdSidenav',
-                  '$mdDialog', 
+                  '$stateParams', 
+                  '$mdToast', 
                   CaseDashboardController
                 ],
     controllerAs: 'vm',
     bindings: { 'caseList': '<'}
   });
 
-    function CaseDashboardController(caseService, $state, $mdSidenav, $mdDialog) {
+    function CaseDashboardController(caseService, $state, $stateParams, $mdToast) {
           const vm = this;
           vm.isActiveEdit = false
           vm.isCaseIdValid = true;
           const findCaseId = null;
 
 
-          vm.toggleSidenav = function($event) {
-            $event.preventDefault();
-            $mdSidenav('sideMenu').toggle();
+          // When the controller loads, check for a case id in the url params, if it's
+          // there then call the case lookup with that case number
+          vm.$onInit = function() {
+            console.log('case list ', vm.caseList)
+            if ($stateParams.recordId) {
+              console.log('stateParams ', $stateParams)
+              vm.key = $stateParams.recordId
+              vm.caseLookup(vm.key)
+            } 
           }
 
-          
-          // lookup case by its firebase $id. when selected from the sidenav list
+
+          // lookup case by caseId. CaseId can come from either url params, or from the user typing
+          // it in the search box located in this view.
           vm.caseLookup = function(searchId) {
-            // vm.caseList is loaded from the resolve for this state/route
-            vm.caseList.$loaded().then(function(){
-                vm.caseRecord = vm.caseList.$getRecord(searchId);
-            }, function(err) {
-                window.alert(`There was a problem retrieving case data: ${err}`)
-            })
-          }
-
-          // when the user clicks the Edit button
-          vm.toggleEdit = function() {
-            vm.isActiveEdit = !vm.isActiveEdit;
+            // caseList comes loaded from the route resolve, as a firebaseArray of all cases
+            vm.caseRecord = vm.caseList.$getRecord(searchId);
+                console.log('case matched ', vm.caseRecord);
+                if (vm.caseRecord) {
+                  vm.isCaseIdValid = true;
+                  console.log('case is valid')
+                } else {
+                    vm.isCaseIdValid = false;
+                    console.log('case is not valid')
+                }
+            
+            // $state.go('fullDetail', {caseId: searchId})
           }
 
            // save edits to case info
@@ -64,24 +71,15 @@ module.exports = function(ngModule) {
                 vm.isActiveEdit = !vm.isActiveEdit;
                 //TODO: show a confirmation message to the user
                 console.log('changes saved successfully for ', ref.key)
-                $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(true)
-                      .title('Saved')
-                      .textContent('Changes Saved Successfully')
-                      .ok('Ok')
+                $mdToast.show(
+                    $mdToast.simple()
+                      .textContent('Changes Saved')
+                      .position('bottom right')
+                      .hideDelay(3000)
                 )
               })
               .catch(function(err) {
                 console.log('error saving changes ', err)
-                  $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(true)
-                      .title('Error Saving')
-                      .textContent(`There was a problem saving: ${err}`)
-                      .ok('Ok')
-                )
-
               })
           }
 
@@ -101,10 +99,6 @@ module.exports = function(ngModule) {
 
           }
           
-          // when user returns to parent Dashboard state, without any case selected for view
-          vm.clearCaseRecord = function() {
-            vm.caseRecord = {};
-          }
           
     }
 
