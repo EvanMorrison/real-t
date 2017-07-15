@@ -11,12 +11,13 @@ module.exports = function(AuthApp) {
                   ],
       controllerAs: 'vm',
       bindings: {
-                  'isLoggedIn': '<'
+                  'user': '<'
       }
     });
 
     function LoginController($mdDialog, $state, $firebaseAuth) {
       const vm = this;
+      vm.waiting = false;
       vm.authObj = $firebaseAuth();
 
             vm.showAlert = function(err) {
@@ -32,14 +33,15 @@ module.exports = function(AuthApp) {
        // login with email and password
             vm.login = function($event) {
               $event.preventDefault();
+              vm.waiting = true;
               // user login
               vm.authObj.$signInWithEmailAndPassword(vm.user.email, vm.user.password)
                 .then(function(res) {
-                  console.log('signin successfull')
-                  vm.isLoggedIn = true;
                   vm.user.email = '';
                   vm.user.password = '';
+                  $state.go('home');
               }, function(err) {
+                    vm.waiting = false;
                     vm.showAlert(err)
                     console.log('error on sign in ', err)
               })  
@@ -48,13 +50,13 @@ module.exports = function(AuthApp) {
             // anonymous login
             vm.loginAnonymous = function($event) {
               $event.preventDefault();
-              
+                vm.waiting = true;
                 vm.authObj.$signInAnonymously()
                 .then(function(res){
-                  vm.isLoggedIn = true;
-                  console.log('anonymous signin successful ', res)
+                  $state.go('home');
                 })
                 .catch(function(err) {
+                  vm.waiting = false;
                   vm.showAlert(err)
                   console.log('error with anonymous sign in ', err)
                 })
@@ -63,11 +65,14 @@ module.exports = function(AuthApp) {
           // Google OAuth login
           vm.loginWithGoogle = function($event) {
             $event.preventDefault();
+            vm.waiting = true;
             vm.authObj.$signInWithPopup('google')
             .then(function(result) {
-                  vm.user = result.user
+              $state.go('home');
             }, function(err) {
               console.log('OAuth sign in failed ', err)
+                vm.waiting = false;
+                vm.showAlert(err)
             })
           }
 
@@ -87,16 +92,18 @@ module.exports = function(AuthApp) {
             // user signup with email & password
             vm.signup = function($event) {
               $event.preventDefault();
+              vm.waiting = true;
               // sign up
               vm.authObj.$createUserWithEmailAndPassword(vm.user.email, vm.user.password)
               .then(function(user){
-                vm.isLoggedIn = true;
                 vm.user.email = '';
                 vm.user.password = '';
+                $state.go('home');
               })
-              .catch(function(e) {
-                console.log('error ', e.message)
-                vm.isLoggedIn = false;
+              .catch(function(err) {
+                console.log('error ', err)
+                vm.waiting = false;
+                vm.showAlert(err)
               })
             }
 
@@ -104,20 +111,9 @@ module.exports = function(AuthApp) {
             vm.signOut = function($event) {
               $event.preventDefault();
               // signout
-              vm.isLoggedIn = false;
               vm.authObj.$signOut();
             }
 
-              // add a realtime user auth listener
-              vm.authObj.$onAuthStateChanged(function(firebaseUser) {
-                if(firebaseUser) {
-                  vm.isLoggedIn = true;
-                  $state.go('home')
-                } else {
-                  console.log('Auth state changed, not logged in')
-                  vm.isLoggedIn = false;
-                }
-              })
-          }
+    }
 
 }

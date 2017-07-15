@@ -34,7 +34,6 @@ module.exports = function(ngModule) {
                       } else {
                         vm.user.username = ''
                       }
-
                     } else {
                       vm.user = { isLoggedIn: false };
                       $state.go('login')

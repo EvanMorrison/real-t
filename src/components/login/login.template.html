@@ -7,15 +7,15 @@
     </div>
     <md-card class="login-card">
         <md-toolbar class="md-primary"> 
-          <h1 class="md-toolbar-tools" ng-if="!vm.isLoggedIn">REAL-T:<small> Sign-In or Sign-Up</small></h1>
-          <h1 class="md-toolbar-tools" ng-if="vm.isLoggedIn">Logout</h1>
+          <h1 class="md-toolbar-tools" ng-if="!vm.user.isLoggedIn">REAL-T:<small> Sign-In or Sign-Up</small></h1>
+          <h1 class="md-toolbar-tools" ng-if="vm.user.isLoggedIn">Logout</h1>
         </md-toolbar>
     
           <md-card-content layout="column">
               <md-button  
                           md-theme="Auth"
                           class="md-primary md-raised loginbox-btn"
-                          ng-if="!vm.isLoggedIn"
+                          ng-if="!vm.user.isLoggedIn"
                           ng-click="vm.loginWithGoogle($event)">
                           <i class="fa fa-google fa-lg"></i> 
                           <span style="margin-left:10px">Google</span>
@@ -23,19 +23,19 @@
                 <!--  <md-button layout="row" layout-align="start center" style="text-align: start"
                           md-theme="Auth"
                           class="md-accent md-raised"
-                          ng-if="!vm.isLoggedIn"
+                          ng-if="!vm.user.isLoggedIn"
                           ng-click="vm.loginWithFacebook($event)">
                   <i flex="15" flex-offset="20" class="fa fa-facebook fa-lg"></i> <div flex="65">Facebook</div>
                             </md-button>   -->
                 <md-button  class="md-accent md-raised loginbox-btn"
-                          ng-if="!vm.isLoggedIn"
+                          ng-if="!vm.user.isLoggedIn"
                           ng-click="vm.loginAnonymous($event)">
                   Sign in Anonymously
                 </md-button>         
                 
                 <!-- sign in with username and password-->
                 <div class="login-form "
-                     ng-if="!vm.isLoggedIn">
+                     ng-if="!vm.user.isLoggedIn">
                   <p class="loginbox-btn title">Sign In or Sign Up With Email Address</p>
                   <form md-theme="Auth"
                         layout="column"
@@ -66,10 +66,14 @@
                 </div>
                 <md-button  flex 
                             class="md-accent md-raised loginbox-btn"
-                            ng-if="vm.isLoggedIn"
+                            ng-if="vm.user.isLoggedIn"
                             ng-click="vm.signOut($event)">
                   Log Out
                 </md-button>
           </md-card-content>
     </md-card>
+      <md-progress-circular  md-mode="indeterminate" 
+                            class="progress-circular"
+                            ng-if="vm.waiting">
+      </md-progress-circular>
   </div>
