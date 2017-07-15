@@ -33,10 +33,13 @@ module.exports = function(ngModule) {
           
           // lookup case by its firebase $id. when selected from the sidenav list
           vm.caseLookup = function(searchId) {
+            vm.waiting = true;
             // vm.caseList is loaded from the resolve for this state/route
             vm.caseList.$loaded().then(function(){
+                vm.waiting = false;
                 vm.caseRecord = vm.caseList.$getRecord(searchId);
             }, function(err) {
+                vm.waiting = false;
                 window.alert(`There was a problem retrieving case data: ${err}`)
             })
           }
@@ -48,6 +51,8 @@ module.exports = function(ngModule) {
 
            // save edits to case info
           vm.saveChanges = function() {
+            vm.waiting = true;
+            console.log('waiting status ', vm.waiting);
               // convert date objects to strings for JSON format in database
               if (vm.caseRecord.loan && vm.caseRecord.loan.DOT && vm.caseRecord.loan.DOT.recorded) {
                   vm.caseRecord.loan.DOT.recorded = vm.caseRecord.loan.DOT.recorded.toString()
@@ -62,7 +67,7 @@ module.exports = function(ngModule) {
             
               vm.caseList.$save(vm.caseRecord).then(function(ref) {
                 vm.isActiveEdit = !vm.isActiveEdit;
-                //TODO: show a confirmation message to the user
+                vm.waiting = false;
                 console.log('changes saved successfully for ', ref.key)
                 $mdDialog.show(
                     $mdDialog.alert()
@@ -73,6 +78,7 @@ module.exports = function(ngModule) {
                 )
               })
               .catch(function(err) {
+                vm.waiting = false;
                 console.log('error saving changes ', err)
                   $mdDialog.show(
                     $mdDialog.alert()
@@ -87,13 +93,16 @@ module.exports = function(ngModule) {
 
           // cancel edits restore original data
           vm.cancelChanges = function() {
+            vm.waiting = true;
             if (vm.caseRecord) {
             let caseKey = vm.caseRecord.$id;
             caseService.LoadAllCases()
-            .$loaded().then(function(data) {
+            .then(function(data) {
+              vm.waiting = false;
               vm.caseList = data;
               vm.caseRecord = vm.caseList.$getRecord(caseKey);
             }, function(err) {
+              vm.waiting = false;
               console.log('error retrieving data ', err)
             })
             }

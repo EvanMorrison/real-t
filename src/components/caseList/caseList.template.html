@@ -3,6 +3,12 @@
 </md-toolbar>
 <md-content class="view-frame">
   
+  <md-progress-circular class="progress-circular" 
+                        mode="md-indeterminate"
+                        ng-if="vm.waiting">
+
+  </md-progress-circular>
+
   <!-- Search Box -->
   <div flex="25" flex-offset="60">
         <md-input-container>

@@ -8,8 +8,7 @@ module.exports = function(app) {
                   'isActiveEdit': '<',
                   'onEdit' : '&',
                   'onSave' : '&',
-                  'onCancel': '&',
-                  'onSearch': '&'
+                  'onCancel': '&'
       }
     });
 
@@ -27,10 +26,6 @@ module.exports = function(app) {
         vm.cancel = function() {
           vm.onCancel();
         }
-
-        vm.search = function(searchId) {
-
-          vm.onSearch({searchId: searchId});
-        }
+        
     }
 }

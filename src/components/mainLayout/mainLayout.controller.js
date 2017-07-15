@@ -13,5 +13,7 @@ module.exports = function(app) {
 
     function MainLayoutController () {
       const vm = this;
+
+
     }
 }

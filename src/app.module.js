@@ -13,7 +13,7 @@ const app = angular.module('RTApp', [
   
   
 require('./app.config')(app);
-require('./services/Case.Service')(app);
+require('./services/caseService.Service')(app);
 
 require('./components/appContainer/appContainer.component')(app);
 require('./components/mainLayout/mainLayout.controller')(app);

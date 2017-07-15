@@ -41,19 +41,25 @@
       <h2 ng-hide="vm.caseRecord.caseId">Select A Case To View.</h2>
     </div>
 
+    <md-progress-circular   class="progress-circular"
+                            mode="indeterminate"
+                            ng-show="vm.waiting">
+    </md-progress-circular>
+
     <ui-view  name="timeline"
-              >
+              case="vm.caseRecord">
 
     </ui-view>
-    <ui-view name="docs"></ui-view>
+    <ui-view  name="docs"
+              case="vm.caseRecord">
+    </ui-view>
   
     <ui-view  name="editToolbar" 
               class="editToolbar-container"
               is-active-edit="vm.isActiveEdit"
               on-edit="vm.toggleEdit()" 
               on-save="vm.saveChanges()" 
-              on-cancel="vm.cancelChanges()" 
-              on-search="vm.caseLookup(searchId)">
+              on-cancel="vm.cancelChanges()">
     </ui-view>
     
   

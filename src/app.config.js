@@ -86,11 +86,13 @@ module.exports = function(ngApp) {
                     }
                   })
 
-                  .state('cases', {
+                  .state('caseList', {
                     parent: 'mainLayout',
+                    url: 'case-list',
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
-                      'bodyContent@mainLayout': { component: 'caseList' }
+                      'bodyContent@mainLayout': { component: 'caseList' },
+                      '@caseList': { component: 'caseExpanded' }
                     },
                     resolve: {
                       caseList: ['caseService', function(caseService) {
@@ -98,11 +100,7 @@ module.exports = function(ngApp) {
                                 }]
                     }
                   })
-                  .state('caseList', {
-                    url: 'case-list',
-                    parent: 'cases',
-                    component: 'caseExpanded'
-                  })
+                  
 
                   .state('caseDashboard', {
                     url: 'dashboard',
@@ -114,7 +112,8 @@ module.exports = function(ngApp) {
                     },
                     resolve: {
                       caseList: ['caseService', function(caseService) {
-                                                  return caseService.LoadAllCases();
+                                                  return caseService.LoadAllCases()
+                                                  
                                               }]
                     }
                   })
