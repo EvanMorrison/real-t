@@ -30,7 +30,7 @@
 
   <md-list ng-init="vm.selectedCase=null">
     <!-- list summary info for al cases -->
-      <md-list-item ng-repeat="case in vm.caseList | filter:vm.query | orderBy:vm.orderProp"
+      <md-list-item ng-repeat="case in vm.caseList | filter:vm.query | orderBy:vm.orderProp : reverse = true"
                     class="case-list-item case-summary md-2-line md-long-text"
                     ng-click="vm.toggleSelected($index)">
             <md-button class="md-icon-button md-primary" ng-class="{'more-detail': vm.selectedCase != $index, 'less-detail': vm.selectedCase == $index}"
@@ -59,8 +59,8 @@
             <ui-view flex="100" case-expanded="case" selected-case="vm.selectedCase" index="$index" ></ui-view>
            </div>
         </div> 
+        <md-divider></md-divider>
       </md-list-item>
-        <md-divider ng-if="vm.selectedCase != $index"></md-divider>
     
         </md-list>
       </md-content>

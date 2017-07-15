@@ -1,54 +1,59 @@
-module.exports = function(ngModule) {
-  ngModule
+module.exports = function(app) {
+  app
   .component('newCase', {
     template: require('./newCase.template.html'),
-    controller: [ '$firebaseArray', 
-                  '$firebaseObject', 
+    controller: [ '$firebaseArray',
+                  '$firebaseObject',
                   '$firebaseRef', 
                   NewCaseController
                 ],
-    controllerAs: 'ctrl'
+    controllerAs: 'vm',
+    bindings: {
+                'caseList': '<'
+    }
   });
 
   function NewCaseController($firebaseArray, $firebaseObject, $firebaseRef) { 
-    const ctrl = this;
-    ctrl.isCaseIdValid = true;
+    const vm = this;
+    vm.isCaseIdValid = true;
 
-    ctrl.$onInit = function() {
-      ctrl.isCaseIdValid = false;
+    vm.$onInit = function() {
+      vm.isCaseIdValid = false;
     }
 
-    ctrl.createNewCase =function(newCaseId) {
+    vm.createNewCase =function(newCaseId) {
         console.log('running create new case ')
-        newCaseId = newCaseId || ctrl.generateCaseId('17');
+        vm.isCreating = true;
+        newCaseId = newCaseId || vm.generateCaseId('17');
         
         $firebaseObject($firebaseRef.cases.child(newCaseId)).$loaded(function(fbObj) {
           // check if caseId is unique, if not increment by 1
           if (fbObj.caseId) {
             newCaseId = '17-' + (parseInt(newCaseId.slice(3)) + 1).toString()
-            ctrl.createNewCase(newCaseId)
+            vm.createNewCase(newCaseId)
           } else {
             // the new case number is unique
             // create the object structure for the case
-            ctrl.newCase = fbObj;
-            ctrl.newCase.caseId = fbObj.$id;
-            ctrl.newCase.lender = {name: ''};
-            ctrl.newCase.borrower = {name: ''};
-            ctrl.newCase.property = {taxId: ''};
-            ctrl.newCase.loan = { amount: ''};
-            ctrl.newCase.loan.DOT = {entry: ''};
-            ctrl.newCase.loan.DOT.assignments = {1: {entry: ''}}
+            vm.newCase = fbObj;
+            vm.newCase.caseId = fbObj.$id;
+            vm.newCase.lender = {name: ''};
+            vm.newCase.borrower = {name: ''};
+            vm.newCase.property = {taxId: ''};
+            vm.newCase.loan = { amount: ''};
+            vm.newCase.loan.DOT = {entry: ''};
+            vm.newCase.loan.DOT.assignments = {1: {entry: ''}}
 
-            ctrl.isCaseIdValid = true;
-            ctrl.newCase.$save();
+            vm.isCaseIdValid = true;
+            vm.newCase.$save();
           }
         }, function(err){
             console.log('error creating new case ', err);
         })
     }
 
-    ctrl.generateCaseId = function(yr) {
-        let newNum = Math.floor(Math.random() * 100000).toString();
+    vm.generateCaseId = function(yr) {
+        let newNum = Math.random().toString().slice(2,7);
+        console.log('newNum ', newNum);
         newNum = yr + '-' + newNum;
         console.log('newNum', newNum)
         return newNum
@@ -57,26 +62,30 @@ module.exports = function(ngModule) {
    
     
        // save edits to database
-          ctrl.saveChanges = function() {
+          vm.saveChanges = function() {
               // convert dates to strings for JSON format in database
-              if (ctrl.newCase.loan.DOT.recorded ) {
-                ctrl.newCase.loan.DOT.recorded = ctrl.caseRecord.loan.DOT.recorded.toString()
+              if (vm.newCase.loan.DOT.recorded ) {
+                vm.newCase.loan.DOT.recorded = vm.caseRecord.loan.DOT.recorded.toString()
               }
-              angular.forEach(ctrl.newCase.loan.assignments, function(val, key) {
+              angular.forEach(vm.newCase.loan.assignments, function(val, key) {
                 if (val['recorded']) { 
                   val['recorded'] = val['recorded'].toString()
                 }
               })
-              ctrl.newCase.$save().then(function(ref){
+              vm.newCase.$save().then(function(ref){
                 console.log('saved case ', ref.key)
               })
           }
 
+          vm.finalize = function() {
+            vm.isCreating = false;
+          }
           // cancel edits restore original data
-          ctrl.cancelNewCase = function() {
+          vm.cancelNewCase = function() {
+            vm.isCreating = false;
               if (window.confirm('Click OK to cancel without saving')) {
-                  ctrl.isCaseIdValid = false;
-                  ctrl.newCase.$remove().then(function(ref) {
+                  vm.isCaseIdValid = false;
+                  vm.newCase.$remove().then(function(ref) {
                   console.log('deleted record ', ref.key)
                   }, function(err) {
                     console.log('error ', error);

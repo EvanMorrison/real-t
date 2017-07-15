@@ -121,7 +121,6 @@ module.exports = function(ngApp) {
                         url: '/{recordId}',
                         parent: 'caseDashboard',
                         views: {
-                        //   'editToolbar@caseDashboard': { component: 'editToolbar' },
                           'timeline@caseDashboard': { component: 'timeline' },
                           'editToolbar@caseDashboard': { component: 'editToolbar' },
                           'fullDetail@caseDashboard': { component: 'fullDetail'}
@@ -129,25 +128,30 @@ module.exports = function(ngApp) {
                       })
 
 
-          // .state('newCase', {
-          //   url:'/createCase',
-          //   component: 'newCase',
-          //   parent: 'index'
-          // })
+                  .state('newCase', {
+                    url:'create-new-case',
+                    parent: 'mainLayout',
+                    views: {
+                      'headerContent@mainLayout': { component: 'navbar' },
+                      'bodyContent@mainLayout': { component: 'newCase' },
+                      '@newCase': { component: 'fullDetail' }
+                    },
+                    resolve: {
+                      caseList: ['caseService', function(caseService) {
+                                                  return caseService.LoadAllCases()
 
-          // .state('newCaseForm', {
-          //   parent: 'newCase',
-          //   component: 'fullDetail'
-          // })
-            
-                    .state('legacyforms', {
-                      url: 'legacyforms',
-                      parent: 'mainLayout',
-                      views: {
-                        'headerContent@mainLayout': { component: 'navbar'},
-                        'bodyContent@mainLayout': { component: 'legacyViews'}
-                      },
-                    })
+                                              }]
+                    }
+                  })
+
+                  .state('legacyforms', {
+                    url: 'legacyforms',
+                    parent: 'mainLayout',
+                    views: {
+                      'headerContent@mainLayout': { component: 'navbar'},
+                      'bodyContent@mainLayout': { component: 'legacyViews'}
+                    },
+                  })
 
           // .state('login', {
           //   url: '/login',

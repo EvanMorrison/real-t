@@ -4,7 +4,7 @@
               hide-gt-xs>
     <i class="fa fa-bars fa-lg" ></i>
   </md-button>
-  <h3 >Case View &amp; Edit Dashboard</h3>
+  <h3 >{{vm.viewTitle}}</h3>
 </md-toolbar>
 
 <div layout="row">
@@ -23,7 +23,7 @@
           <md-button class="md-icon-button" ng-click="vm.query=''" style="position:absolute;right:0;top:0" ng-hide="!vm.query"><md-icon>cancel</md-icon> </md-button>
         </md-input-container>
         <md-list>
-          <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp"
+          <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
                         ng-class="{selected: case.caseId == vm.caseRecord.caseId}"
                         ui-sref="fullDetail({recordId: case.$id})">
@@ -40,11 +40,6 @@
       <h2 ng-show="vm.caseRecord.caseId">Case: {{vm.caseRecord.caseId}} <small>/ {{vm.caseRecord.lender.name}} / {{vm.caseRecord.borrower.name}} / {{vm.caseRecord.property.address}}</small></h2>
       <h2 ng-hide="vm.caseRecord.caseId">Select A Case To View.</h2>
     </div>
-
-    <md-progress-circular   class="progress-circular"
-                            mode="indeterminate"
-                            ng-show="vm.waiting">
-    </md-progress-circular>
 
     <ui-view  name="timeline"
               case="vm.caseRecord">

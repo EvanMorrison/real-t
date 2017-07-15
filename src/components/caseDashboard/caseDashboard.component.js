@@ -24,6 +24,11 @@ module.exports = function(ngModule) {
           vm.isCaseIdValid = true;
           const findCaseId = null;
 
+          //
+          vm.viewTitle = 'Case View & Edit Dashboard'
+
+          // property to user for sorting cases in sidenav
+          vm.orderProp = 'caseId';
 
           vm.toggleSidenav = function($event) {
             $event.preventDefault();
