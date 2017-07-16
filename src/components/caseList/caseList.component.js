@@ -4,61 +4,87 @@ module.exports = function(ngModule) {
   ngModule
     .component('caseList', {
       template: require('./caseList.template.html'),
-      controller: [ '$state', 
-                    'caseService', 
-                    '$firebaseAuth', 
+      controller: [ '$mdDialog',
+                    '$state', 
                     CasesController
                   ],
-      controllerAs: 'ctrl',
+      controllerAs: 'vm',
       bindings: { caseList : '<'},
     });
 
-    function CasesController($state, caseService, $firebaseAuth) {
-      const ctrl = this;
+    function CasesController($mdDialog, $state) {
+      const vm = this;
 
-      ctrl.orderProp = 'caseId';
+      vm.orderProp = 'caseId';
 
 
       // toggle parent or child state depending on what is currently showing
-      ctrl.toggleSelected = function(index) {
-          if (ctrl.selectedCase === index) {
-            ctrl.selectedCase = null;
+      vm.toggleSelected = function(index) {
+          
+          if (vm.selectedCase === index) {
+            vm.selectedCase = null;
             } else {
-              ctrl.selectedCase = index;
+              vm.selectedCase = index;
             }
       }
 
       // delete a case from the database and the local firebaseArray    
-      ctrl.deleteCase = function(caseObj) {
-        if (window.confirm('Click Ok to Permanently Delete case ' + caseObj.caseId)) {
-              ctrl.caseList.$remove(caseObj)
-              .then(function(ref) {
-                console.log("ref.$id ", ref.key);
-              })
-        }
+      vm.deleteCase = function(ev, caseObj) {
+        const confirm = $mdDialog.prompt()
+          .title('Delete Case')
+          .textContent(`To delete case ${caseObj.caseId}, enter the case number below.\nThis cannot be undone.`)
+          .placeholder(caseObj.caseId)
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel')
+
+        $mdDialog.show(confirm)
+          .then(function(result) {
+              vm.waiting = true;
+              if (result == caseObj.caseId) {
+                vm.caseList.$remove(caseObj)
+                  .then(function(ref){
+                    vm.waiting = false;
+                    $mdDialog.show(
+                      $mdDialog.alert()
+                        .clickOutsideToClose(true)
+                        .title('Success')
+                        .textContent(`Case ${caseObj.caseId} has been permanently deleted.`)
+                        .ok('Ok')
+                    )
+                  }, function(err) {
+                    vm.waiting = false;
+                    $mdDialog.show(
+                      $mdDialog.alert()
+                        .clickOutsideToClose(true)
+                        .title('Error')
+                        .textContent(`Case ${caseObj.caseId} has been permanently deleted.`)
+                        .ok('Ok')
+                    )
+                  })
+              } else {
+                  vm.waiting = false;
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(true)
+                      .title('Not Deleted')
+                      .textContent('The case numbers did not match, the case was not deleted.')
+                      .ok('Ok')
+                  )
+              }
+          }, function() {
+                vm.waiting = false;
+                console.log('delete canceled by user')
+          })
+        
+      }
+      // end deleteCase
+
+      // goto to fullDetail view for a selected case
+      vm.gotoCase = function (caseObj) {
+          $state.go('fullDetail', {recordId: caseObj.$id })
       }
 
-      ctrl.gotoCase = function (caseObj) {
-          $state.go('caseMain.caseXV', {caseId: caseObj.caseId})
-      }
-
-      // handle change in user authentication status
-      ctrl.authObj = $firebaseAuth();
-      console.log('auth object: ')
-      console.log(ctrl.authObj)
-
-      ctrl.authObj.$onAuthStateChanged(function(user) {
-        if (user) {
-            caseService.LoadAllCases()
-            .$loaded(function(cases) {
-              ctrl.caseList = cases
-            }, function(err) {
-              console.log('error retrieving cases ', err)
-            })
-        } else {
-            ctrl.caseList.$destroy();
-        }
-      });
 
     }
 

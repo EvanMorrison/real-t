@@ -1,0 +1,29 @@
+  <div class="editToolbar-container">
+    <div flex="100" layout="column"  class="dashboard-editToolbar" ng-class="{'toolbarFixed': vm.isActiveEdit}">
+          <div layout="row" layout-align="start">
+            <md-button  
+                    class="md-hue-3"
+                    aria-label="edit"
+                    ng-disabled="vm.isActiveEdit"
+                    ng-click="vm.edit()">
+          <md-tooltip md-direction="top">edit mode</md-tooltip>
+          <md-icon >edit</md-icon> Edit
+        </md-button>
+      
+        <md-button  class="md-hue-3"
+                    aria-label="save"
+                    ng-disabled="!vm.isActiveEdit"
+                    ng-click="vm.save()">
+          <md-tooltip md-direction="top">save changes</md-tooltip>
+          <md-icon >save</md-icon> Save
+        </md-button>
+        <md-button  class="md-hue-3"
+                    aria-label="cancel changes"
+                    ng-disabled="!vm.isActiveEdit"
+                    ng-click="vm.cancel()">
+          <md-tooltip md-direction="top">cancel without saving</md-tooltip>
+          <md-icon >cancel</md-icon> Cancel
+        </md-button>
+          </div>
+    </div>
+  </div>

@@ -1,0 +1,19 @@
+<div ng-if="vm.selectedCase === vm.index" class="case-detail" layout="row" layout-align="start start">
+  <div flex-gt-xs="10" flex-offset="5"></div>
+  <div flex-gt-xs="20" flex-offset-xs="5">
+    <p>{{vm.caseExpanded.property.county}} County</p>
+    <p>id: {{vm.caseExpanded.property.taxId}}</p>
+  </div>
+  <div flex-gt-xs="20" hide-xs>
+    <p class="case-list-address">{{vm.caseExpanded.lender.address}}</p>
+    <p>{{vm.caseExpanded.lender.phone }}</p>
+    <p>{{vm.caseExpanded.lender.email }}</p>
+  </div>
+  <!--<div flex-gt-xs="15" hide-xs>
+    <p md-truncate class="case-list-address">{{vm.caseExpanded.borrower.address}}</p>
+    <p style="visibility:hidden">{{vm.caseExpanded.borrower.phone | tel }}.</p>
+  </div>-->
+  <!--<div flex>-->
+
+  </div>
+</div>

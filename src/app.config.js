@@ -17,6 +17,7 @@ module.exports = function(ngApp) {
   firebase.initializeApp(config);
 
   ngApp
+  // initialize firebaseRefProvider
     .config(['$firebaseRefProvider', function($firebaseRefProvider) {
       $firebaseRefProvider.registerUrl({
         default: config.databaseURL,
@@ -24,98 +25,7 @@ module.exports = function(ngApp) {
       })
     }])
 
-
-// routing with ui-router
-    .config([ '$locationProvider', 
-              '$stateProvider', 
-              '$urlRouterProvider', 
-              function config( $locationProvider, 
-                               $stateProvider, 
-                               $urlRouterProvider) {
-
-      $locationProvider.html5Mode(true);
-
-      $urlRouterProvider.otherwise('/');
-
-      $stateProvider
-      .state('appContainer',{
-        component: 'appContainer'
-      })
-      
-      .state('home', {
-        url: '/',
-        component: 'home',
-        parent: 'appContainer'
-      })
-      .state('cases', {
-        component: 'caseList',
-        parent: 'appContainer',
-        resolve: {
-          caseList: ['$firebaseAuth', 'caseService', function($firebaseAuth, caseService) {
-                      return $firebaseAuth().$requireSignIn()
-                              .then(function(user){
-                                return caseService.LoadAllCases();
-                              })
-                              .catch(function(err){
-                                return 'not logged in'
-                              })
-                    }]
-        }
-      })
-      .state('cases.case', {
-        url: '/case-list',
-        component: 'caseExpanded'
-      })
-
-      .state('caseMain', {
-        url: '/case',
-        component: 'caseMain',
-        parent: 'appContainer',
-        resolve: {
-          caseList: ['$firebaseAuth', 'caseService', function($firebaseAuth, caseService) {
-                      return $firebaseAuth().$requireSignIn()
-                              .then(function(user){
-                                return caseService.LoadAllCases();
-                              })
-                              .catch(function(err){
-                                return 'not logged in'
-                              })
-                    }]
-        }
-      })
-
-      .state('caseMain.caseXV', {
-        url: '/{caseId}',
-        component: 'caseXV'
-      })
-
-
-      .state('newCase', {
-        url:'/createCase',
-        component: 'newCase',
-        parent: 'appContainer'
-      })
-
-      .state('newCaseForm', {
-        parent: 'newCase',
-        component: 'caseXV'
-      })
-        
-      .state('legacyforms', {
-        url: '/legacyforms',
-        component: 'legacyViews',
-        parent: 'appContainer'
-      })
-
-      .state('login', {
-        url: '/login',
-        component: 'userAuthentication'
-      })
-
-    }])
-
-    
-  // material design config for theming, etc.
+ // material design config for theming, etc.
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('deep-purple')
@@ -130,6 +40,131 @@ module.exports = function(ngApp) {
     }])
     
 
+
+// routing with ui-router
+    .config([ '$locationProvider', 
+              '$stateProvider', 
+              '$urlRouterProvider', 
+              RoutingConfig
+            ]);
+
+      function RoutingConfig( $locationProvider, 
+                              $stateProvider, 
+                              $urlRouterProvider) {
+
+          $locationProvider.html5Mode(true);
+
+          $urlRouterProvider.otherwise('/');
+
+          $stateProvider
+          .state('index',{
+            abstract: true,
+            // appContainer is a component used to manage the user state for the entire app
+            component: 'appContainer'
+          })
+          
+              .state('mainLayout', {
+                parent: 'index',
+                url: '/',
+                component: 'mainLayout'
+              })
+
+                  .state('home', {
+                    url: 'home',
+                    parent: 'mainLayout',
+                    views: {
+                      'headerContent@mainLayout': { component: 'hero' },
+                      'bodyContent@mainLayout': { component: 'home' }
+                    }
+                  })
+
+                  .state('login', {
+                    url: 'login',
+                    parent: 'mainLayout',
+                    views: {
+                      'bodyContent@mainLayout': { component: 'loginComponent'}
+                    }
+                  })
+
+                  .state('caseList', {
+                    parent: 'mainLayout',
+                    url: 'case-list',
+                    views: {
+                      'headerContent@mainLayout': { component: 'navbar' },
+                      'bodyContent@mainLayout': { component: 'caseList' },
+                      '@caseList': { component: 'caseExpanded' }
+                    },
+                    resolve: {
+                      caseList: ['caseService', function(caseService) {
+                                            return caseService.LoadAllCases();
+                                }]
+                    }
+                  })
+                  
+
+                  .state('caseDashboard', {
+                    url: 'dashboard',
+                    parent: 'mainLayout',
+                    views: {
+                      'headerContent@mainLayout': { component: 'navbar' },
+                      'bodyContent@mainLayout': { component: 'caseDashboard' }
+                      // 'fullDetail@caseDashboard': { componennt: 'fullDetail' }
+                    },
+                    resolve: {
+                      caseList: ['caseService', function(caseService) {
+                                                  return caseService.LoadAllCases()
+                                                  
+                                              }]
+                    }
+                  })
+                      .state('fullDetail', {
+                        url: '/{recordId}',
+                        parent: 'caseDashboard',
+                        views: {
+                          'timeline@caseDashboard': { component: 'timeline' },
+                          'editToolbar@caseDashboard': { component: 'editToolbar' },
+                          'fullDetail@caseDashboard': { component: 'fullDetail'}
+                        }
+                      })
+
+                    .state('newCase', {
+                      url: '/create-new-case',
+                      parent: 'caseDashboard',
+                      views: {
+                        'newCase@caseDashboard': { component: 'newCase' },
+                        '@newCase': { component: 'fullDetail' },
+                        'fullDetail@caseDashboard': ''
+                      }
+                    })
+
+                  // .state('newCase', {
+                  //   url:'create-new-case',
+                  //   parent: 'mainLayout',
+                  //   views: {
+                  //     'headerContent@mainLayout': { component: 'navbar' },
+                  //     'bodyContent@mainLayout': { component: 'newCase' },
+                  //     '@newCase': { component: 'fullDetail' }
+                  //   }
+                  // })
+
+                  .state('legacyforms', {
+                    url: 'legacyforms',
+                    parent: 'mainLayout',
+                    views: {
+                      'headerContent@mainLayout': { component: 'navbar'},
+                      'bodyContent@mainLayout': { component: 'legacyViews'}
+                    },
+                  })
+
+          // .state('login', {
+          //   url: '/login',
+          //   component: 'userAuthentication'
+          // })
+
+      }
+
+    
+ 
   
 
 }
