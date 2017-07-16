@@ -19,7 +19,7 @@
                   <input  ng-model="vm.case.lender.name"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
                 
                 <md-input-container>
@@ -28,7 +28,7 @@
                             ng-change="vm.update()"
                             style="text-align:left" 
                             max-rows="3"  
-                            ng-readonly="!vm.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                           {{vm.case.lender.address}}
                   </textarea>
                 </md-input-container>
@@ -40,7 +40,7 @@
                   <input  ng-model="vm.case.lender.phone"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
               
                 <md-input-container>
@@ -48,7 +48,7 @@
                   <input  ng-model="vm.case.lender.email"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
               </div>
             </div>
@@ -74,7 +74,7 @@
                   <input  ng-model="vm.case.borrower.name"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
                 
                 <md-input-container>
@@ -83,7 +83,7 @@
                             ng-change="vm.update()"
                             style="text-align:left" 
                             max-rows="3"  
-                            ng-readonly="!vm.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                           {{vm.case.borrower.address}}
                   </textarea>
                 </md-input-container>
@@ -95,7 +95,7 @@
                   <input  ng-model="vm.case.borrower.phone"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
               
                 <md-input-container>
@@ -103,7 +103,7 @@
                   <input  ng-model="vm.case.borrower.email"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
               </div>
             </div>
@@ -129,7 +129,7 @@
                             ng-change="vm.update()"
                             style="text-align:left" 
                             max-rows="3"  
-                            ng-readonly="!vm.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                           {{vm.case.property.address}}
                   </textarea>
                 </md-input-container>
@@ -140,7 +140,7 @@
                   <input  ng-model="vm.case.property.owner"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
                 
                 <md-input-container flex-gt-xs="40" flex-offset="5">
@@ -151,7 +151,7 @@
                     <md-option ng-repeat="county in vm.Counties" 
                                 ng-value="county"
                                 ng-selected="county === '{{vm.case.property.county}}'" 
-                                ng-disabled="county != '{{vm.case.property.county}}' && !vm.isActiveEdit">
+                                ng-disabled="county != '{{vm.case.property.county}}' && !vm.isActiveEdit && !vm.isCreating">
                           {{county}}
                     </md-option>  
                   </md-select>
@@ -162,7 +162,7 @@
                   <input  ng-model="vm.case.property.taxId"
                           ng-change="vm.update()"
                           type="text" 
-                          ng-readonly="!vm.isActiveEdit">
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                 </md-input-container>
                 
                 <div flex-gt-xs="90" flex-offset="5" layout="column" style="max-height:15em;overflow:auto">
@@ -170,7 +170,7 @@
                     <label>Legal Description</label>
                     <textarea ng-model="vm.case.property.legalDescription" 
                               ng-change="vm.update()"
-                              ng-readonly="!vm.isActiveEdit">
+                              ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                               {{vm.case.property.legalDescription}} </textarea>
                   </md-input-container>
                 </div>
@@ -201,7 +201,7 @@
                        ng-change="vm.update()"
                        type="text" 
                        value="{{vm.case.loan.amount | currency : "$" : 0 }}"
-                       ng-readonly="!vm.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
           </md-input-container>
            
           <md-input-container flex-gt-xs="30" flex-offset="5" > 
@@ -209,7 +209,7 @@
                <label>Recorded:</label>
               <md-datepicker ng-model="vm.case.loan.DOT.recorded" 
                   ng-change="vm.updateDate()"
-                  ng-disabled="!vm.isActiveEdit">
+                  ng-disabled="!vm.isActiveEdit && !vm.isCreating">
               </md-datepicker>
           </md-input-container>
            
@@ -218,7 +218,7 @@
                <input  ng-model="vm.case.loan.DOT.entry"
                        ng-change="vm.update()"
                        type="text" 
-                       ng-readonly="!vm.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
           </md-input-container>
         </div>
          <div layout-xs="column" layout="row"> 
@@ -227,7 +227,7 @@
                <input  ng-model="vm.case.loan.DOT.origBeneficiary"
                        ng-change="vm.update()"
                        type="text" 
-                       ng-readonly="!vm.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
            </md-input-container>
            
            <md-input-container flex-gt-xs="45" flex-offset="5">
@@ -235,7 +235,7 @@
                <input  ng-model="vm.case.loan.DOT.origTrustee"
                        ng-change="vm.update()"
                        type="text" 
-                       ng-readonly="!vm.isActiveEdit">
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
            </md-input-container>
         </div>
   
@@ -248,7 +248,7 @@
                     <label>recorded</label>
                     <md-datepicker ng-model="assignment.recorded"
                             ng-change="vm.updateDate()"
-                            ng-disabled="!vm.isActiveEdit">
+                            ng-disabled="!vm.isActiveEdit && !vm.isCreating">
                     </md-datepicker>
                    
                 </md-input-container>
@@ -257,14 +257,14 @@
                     <input  ng-model="assignment.entry"
                             ng-change="vm.update()"
                             type="text" 
-                            ng-readonly="!vm.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                   </md-input-container>
                 <md-input-container flex-gt-xs="35" flex-offset="5">
                     <label>Assignee</label>
                     <input  ng-model="assignment.assignee"
                             ng-change="vm.update()"
                             type="text" 
-                            ng-readonly="!vm.isActiveEdit">
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
                   </md-input-container>
               </div>
           </div>

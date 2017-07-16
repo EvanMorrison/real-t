@@ -1,23 +1,18 @@
-<!-- FAB -->
-
-<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
-  <h3>Create A New Case</h3>
-</md-toolbar>
 
 <div class="create-toolbar-container" style="position:relative;min-height:60px">
   <div layout="row" layout-align="space-between"
   style="position:fixed;left:15vw;z-index:10">
         
-      <md-button  class="md-accent"
-                      aria-label="Create New Case..."
-                      ng-click="vm.createNewCase()"
-                      ng-disabled="vm.isCreating">
-            <md-tooltip md-direction="bottom">Create Another Case</md-tooltip>
-            <md-icon >add_circle</md-icon> Create
-      </md-button>
+     <!--  <md-button  class="md-accent"
+                     aria-label="Create New Case..."
+                     ng-click="vm.createNewCase()"
+                     ng-disabled="vm.isCreating">
+           <md-tooltip md-direction="bottom">Create Another Case</md-tooltip>
+           <md-icon >add_circle</md-icon> Create
+     </md-button> -->
       <md-button  class="md-hue-3"
                     aria-label="cancel changes"
-                    ng-click="vm.cancelNewCase()"
+                    ng-click="vm.cancel()"
                     ng-disabled="!vm.isCreating">
           <md-tooltip md-direction="bottom">cancel without saving</md-tooltip>
           <md-icon >cancel</md-icon> Cancel
@@ -42,11 +37,11 @@
             <label >Case Number</label>
             <input  class="md-headline"
                     type="text" 
-                    ng-model="vm.newCase.caseId"
+                    ng-model="vm.newcase.caseId"
                     ng-change="vm.saveChanges()"
                     ng-readonly="!vm.isCreating">
         </md-input-container>
       </div>
-  <ui-view class="view-frame" case="vm.newCase" on-update="vm.saveChanges()" is-active-edit="true" ></ui-view>
+  <ui-view class="view-frame" case="vm.newcase" on-update="vm.onUpdate()" is-active-edit="vm.isActiveEdit" is-creating="vm.isCreating" ></ui-view>
 
 

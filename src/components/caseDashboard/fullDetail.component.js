@@ -9,7 +9,7 @@ module.exports = function(ngModule) {
     controllerAs: 'vm',
     bindings: { case: '<',
                 isActiveEdit: '<',
-                isCaseIdValid: '<',
+                isCreating: '<',
                 onUpdate: '&',
                 onExit: '&',
                 onCaseSelected: '&'

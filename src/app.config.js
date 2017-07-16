@@ -107,8 +107,8 @@ module.exports = function(ngApp) {
                     parent: 'mainLayout',
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
-                      'bodyContent@mainLayout': { component: 'caseDashboard' },
-                      'fullDetail@caseDashboard': { componennt: 'fullDetail' }
+                      'bodyContent@mainLayout': { component: 'caseDashboard' }
+                      // 'fullDetail@caseDashboard': { componennt: 'fullDetail' }
                     },
                     resolve: {
                       caseList: ['caseService', function(caseService) {
@@ -127,22 +127,25 @@ module.exports = function(ngApp) {
                         }
                       })
 
+                    .state('newCase', {
+                      url: '/create-new-case',
+                      parent: 'caseDashboard',
+                      views: {
+                        'newCase@caseDashboard': { component: 'newCase' },
+                        '@newCase': { component: 'fullDetail' },
+                        'fullDetail@caseDashboard': ''
+                      }
+                    })
 
-                  .state('newCase', {
-                    url:'create-new-case',
-                    parent: 'mainLayout',
-                    views: {
-                      'headerContent@mainLayout': { component: 'navbar' },
-                      'bodyContent@mainLayout': { component: 'newCase' },
-                      '@newCase': { component: 'fullDetail' }
-                    },
-                    resolve: {
-                      caseList: ['caseService', function(caseService) {
-                                                  return caseService.LoadAllCases()
-
-                                              }]
-                    }
-                  })
+                  // .state('newCase', {
+                  //   url:'create-new-case',
+                  //   parent: 'mainLayout',
+                  //   views: {
+                  //     'headerContent@mainLayout': { component: 'navbar' },
+                  //     'bodyContent@mainLayout': { component: 'newCase' },
+                  //     '@newCase': { component: 'fullDetail' }
+                  //   }
+                  // })
 
                   .state('legacyforms', {
                     url: 'legacyforms',
