@@ -10,6 +10,12 @@ body {
   padding-bottom: 200px;
 }
 
+/* suggested fix for Safari not displaying flex-wrap items
+corrctly, but only partially fixes the problem and makes
+it worse on Chrome, Firefox and Edge. 
+ .layout-row.layout-wrap > * { flex: 1 1 0; } 
+ */
+
 .progress-circular {
   position: absolute;
   top: 50%;
@@ -192,11 +198,11 @@ a.active {
 
 /* Edit Toolbar Styling*/
 
-.toolbarFixed-add {
+/* .toolbarFixed-add {
   transition: all .5s linear;
-}
+} */
 
-.dashboard-editToolbar.toolbarFixed-add {
+/* .dashboard-editToolbar.toolbarFixed-add {
   position: fixed;
 }
 
@@ -205,7 +211,7 @@ a.active {
   position: fixed;
   background-color: #ddd;
   z-index: 1;
-}
+} */
 
 .dashboard-editToolbar {
   position: relative;
