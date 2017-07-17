@@ -26,7 +26,7 @@
           <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
                         ng-class="{selected: case.caseId == vm.caseRecord.caseId}"
-                        ui-sref="fullDetail({recordId: case.$id})">
+                        ui-sref="caseFocus({recordId: case.$id})">
             <div>{{case.caseId}}</div>
           </md-list-item>  
         </md-list>

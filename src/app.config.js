@@ -65,12 +65,12 @@ module.exports = function(ngApp) {
           
               .state('mainLayout', {
                 parent: 'index',
-                url: '/',
+                abstract: true,
                 component: 'mainLayout'
               })
 
                   .state('home', {
-                    url: 'home',
+                    url: '/',
                     parent: 'mainLayout',
                     views: {
                       'headerContent@mainLayout': { component: 'hero' },
@@ -79,7 +79,7 @@ module.exports = function(ngApp) {
                   })
 
                   .state('login', {
-                    url: 'login',
+                    url: '/login',
                     parent: 'mainLayout',
                     views: {
                       'bodyContent@mainLayout': { component: 'loginComponent'}
@@ -88,7 +88,7 @@ module.exports = function(ngApp) {
 
                   .state('caseList', {
                     parent: 'mainLayout',
-                    url: 'case-list',
+                    url: '/case-list',
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
                       'bodyContent@mainLayout': { component: 'caseList' },
@@ -100,15 +100,14 @@ module.exports = function(ngApp) {
                                 }]
                     }
                   })
-                  
 
                   .state('caseDashboard', {
-                    url: 'dashboard',
+                    url: '/dashboard',
                     parent: 'mainLayout',
+                    params: { isNewCase: null },
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
                       'bodyContent@mainLayout': { component: 'caseDashboard' }
-                      // 'fullDetail@caseDashboard': { componennt: 'fullDetail' }
                     },
                     resolve: {
                       caseList: ['caseService', function(caseService) {
@@ -117,7 +116,7 @@ module.exports = function(ngApp) {
                                               }]
                     }
                   })
-                      .state('fullDetail', {
+                      .state('caseFocus', {
                         url: '/{recordId}',
                         parent: 'caseDashboard',
                         views: {
@@ -137,29 +136,14 @@ module.exports = function(ngApp) {
                       }
                     })
 
-                  // .state('newCase', {
-                  //   url:'create-new-case',
-                  //   parent: 'mainLayout',
-                  //   views: {
-                  //     'headerContent@mainLayout': { component: 'navbar' },
-                  //     'bodyContent@mainLayout': { component: 'newCase' },
-                  //     '@newCase': { component: 'fullDetail' }
-                  //   }
-                  // })
-
                   .state('legacyforms', {
-                    url: 'legacyforms',
+                    url: '/legacyforms',
                     parent: 'mainLayout',
                     views: {
                       'headerContent@mainLayout': { component: 'navbar'},
                       'bodyContent@mainLayout': { component: 'legacyViews'}
                     },
                   })
-
-          // .state('login', {
-          //   url: '/login',
-          //   component: 'userAuthentication'
-          // })
 
       }
 

@@ -1,6 +1,6 @@
 
-module.exports = function(ngModule) {
-  ngModule
+module.exports = function(app) {
+  app
     .component('hero', {
       template: require('./hero.template.html'),
       controller: [HeroController],
@@ -14,7 +14,7 @@ module.exports = function(ngModule) {
         const vm = this;
 
         vm.$onChanges = function() {
-          if (vm.user.isLoggedIn) {
+          if (vm.user && vm.user.isLoggedIn) {
             vm.message = 'Where Would You Like to Start?'
           } else {
             vm.message = 'Sign In to Get Started.'
