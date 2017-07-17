@@ -25,11 +25,9 @@ module.exports = function(ngModule) {
                 .$loaded(function(res) {
                     self.waiting = false;
                     self.CaseList = res;
-                    console.log('service success ', res);
                     return self.CaseList;
                 }, function(err) {
                     self.waiting = false;
-                    console.log('service error ', err);
                     return err;
                 })
 

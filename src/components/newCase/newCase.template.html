@@ -1,15 +1,8 @@
 
 <div class="create-toolbar-container" style="position:relative;min-height:60px">
-  <div layout="row" layout-align="space-between"
-  style="position:fixed;left:15vw;z-index:10">
-        
-     <!--  <md-button  class="md-accent"
-                     aria-label="Create New Case..."
-                     ng-click="vm.createNewCase()"
-                     ng-disabled="vm.isCreating">
-           <md-tooltip md-direction="bottom">Create Another Case</md-tooltip>
-           <md-icon >add_circle</md-icon> Create
-     </md-button> -->
+  <div layout="row" layout-align="start"
+  style="left:15vw">
+     
       <md-button  class="md-hue-3"
                     aria-label="cancel changes"
                     ng-click="vm.cancel()"
@@ -23,13 +16,11 @@
                     ng-click="vm.finalize()"
                     ng-disabled="!vm.isCreating">
           <md-tooltip md-direction="bottom">finalize</md-tooltip>
-          <md-icon >cloud_upload</md-icon>
+          <md-icon >cloud_upload</md-icon> Finalize & Goto Case Overview
       </md-button>
       
   </div>
 </div>
-
-
 
       <div layout="row" layout-align="start center">
         <h1 class="md-headline" style="position:relative;top:-10px;margin-right:10px" flex-offset-gt-xs="5">Case: </h1>

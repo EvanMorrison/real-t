@@ -1,10 +1,11 @@
 
 
-module.exports = function(ngModule) {
-  ngModule
+module.exports = function(app) {
+  app
     .component('caseList', {
       template: require('./caseList.template.html'),
-      controller: [ '$mdDialog',
+      controller: [ 
+                    '$mdDialog',
                     '$state', 
                     CasesController
                   ],
@@ -16,7 +17,6 @@ module.exports = function(ngModule) {
       const vm = this;
 
       vm.orderProp = 'caseId';
-
 
       // toggle parent or child state depending on what is currently showing
       vm.toggleSelected = function(index) {
@@ -80,9 +80,9 @@ module.exports = function(ngModule) {
       }
       // end deleteCase
 
-      // goto to fullDetail view for a selected case
+      // goto to caseFocus view for a selected case
       vm.gotoCase = function (caseObj) {
-          $state.go('fullDetail', {recordId: caseObj.$id })
+          $state.go('caseFocus', {recordId: caseObj.$id })
       }
 
 

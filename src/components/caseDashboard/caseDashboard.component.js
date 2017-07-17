@@ -9,6 +9,7 @@ module.exports = function(ngModule) {
     template: require('./caseDashboard.template.html'),
     controller: [ 'caseService', 
                   '$state', 
+                  '$stateParams',
                   '$mdSidenav',
                   '$mdDialog', 
                   CaseDashboardController
@@ -17,11 +18,24 @@ module.exports = function(ngModule) {
     bindings: { 'caseList': '<'}
   });
 
-    function CaseDashboardController(caseService, $state, $mdSidenav, $mdDialog) {
+    function CaseDashboardController( caseService, 
+                                      $state, 
+                                      $stateParams, 
+                                      $mdSidenav, 
+                                      $mdDialog) {
           const vm = this;
+
+          vm.$onInit = function() {
+            if ($stateParams.isNewCase) {
+              vm.gotoNewCase();
+            }
+          }
+          
+          
+          // default value sets fields to read-only
           vm.isActiveEdit = false
 
-          //
+          //title for toolbar
           vm.viewTitle = 'View, Edit & Create Cases'
             // vm.viewTitle = 'Create New Case'
 
@@ -43,7 +57,12 @@ module.exports = function(ngModule) {
                 vm.caseRecord = vm.caseList.$getRecord(searchId);
             }, function(err) {
                 vm.waiting = false;
-                window.alert(`There was a problem retrieving case data: ${err}`)
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .title('Error')
+                    .textContent(`There was a problem retrieving case data. ${err}`)
+                    .ok('Ok')
+                )
             })
           }
 
@@ -141,7 +160,6 @@ module.exports = function(ngModule) {
                 
                   let newNum = Math.random().toString().slice(2,7);
                   newNum = yr + '-' + newNum;
-                  console.log('newNum', newNum)
                   return newNum
             }
             // create the object structure for the case
@@ -159,7 +177,6 @@ module.exports = function(ngModule) {
             .then(function(ref) {
               // set the caseRecord to point at the new firebase record
                 vm.caseRecord = vm.caseList.$getRecord(ref.key)
-                console.log('got newcase ', vm.caseRecord);
               // go to the view for entering new case data
                 $state.go('newCase')
             }, function(err) {
@@ -188,21 +205,30 @@ module.exports = function(ngModule) {
         
         vm.finalizeNewCase = function() {
             vm.isCreating = false;
-            $state.go('fullDetail', {recordId: vm.caseRecord.$id})
+            $state.go('caseFocus', {recordId: vm.caseRecord.$id})
           }
         // cancel edits restore original data
         vm.cancelNewCase = function() {
             vm.isCreating = false;
-              if (window.confirm('Click OK to cancel without saving')) {
-                  vm.caseList.$remove(vm.caseRecord)
-                  .then(function(ref) {
-                    console.log('deleted record ', ref.key)
-                    vm.clearCaseRecord();
-                    $state.go('caseDashboard');
-                  }, function(err) {
-                    console.log('error ', err);
-                  })
-              }
+              $mdDialog.show(
+                $mdDialog.confirm()
+                  .title('Cancel Without Saving')
+                  .textContent('Do you want to discard the new case without saving?')
+                  .ok('Yes')
+                  .cancel('No')
+              )
+                .then(function(yes) {
+                    vm.caseList.$remove(vm.caseRecord)
+                    .then(function(ref) {
+                      console.log('deleted record ', ref.key)
+                      vm.clearCaseRecord();
+                      $state.go('caseDashboard');
+                    }, function(err) {
+                      console.log('error ', err);
+                    })
+                }, function(no) {
+
+                })
 
         }
     }

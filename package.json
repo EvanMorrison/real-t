@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "webpack-dev-server --config webpack.dev.config.js --progress --colors",
-    "build": "webpack --config webpack.dev.config.js -p --progress --colors"
+    "dev": "webpack-dev-server --config webpack.config.js --progress --colors",
+    "build": "webpack --env.production --config webpack.config.js -p --progress --colors"
   },
   "keywords": [],
   "author": "Evan Morrison",
