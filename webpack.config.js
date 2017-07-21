@@ -1,6 +1,9 @@
 const path = require('path');
+const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = (env = {}) => {
   const isProduction = env.production === true
@@ -54,8 +57,17 @@ module.exports = (env = {}) => {
         ];
         if (isProduction) {
                 pluginList.push(
+                    new CleanWebpackPlugin(['dist']), 
+                    new webpack.optimize.CommonsChunkPlugin({ name: 'common'}),
                     new ExtractTextPlugin({
                       filename: '[name].[contenthash].css'
+                    }),
+                    new CompressionPlugin({
+                      asset: '[path].gz[query]',
+                      algorithm: 'gzip',
+                      test: /\.js$/,
+                      threshold: 10240,
+                      minRatio: 0.8
                     })
                 )
         }
