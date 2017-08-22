@@ -72,7 +72,7 @@ module.exports = (env = {}) => {
                 )
         }
         return pluginList
-      })()
+      })(),
 
   }
 
