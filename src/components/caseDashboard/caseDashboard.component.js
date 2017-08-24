@@ -47,6 +47,9 @@ module.exports = function(ngModule) {
             $mdSidenav('sideMenu').toggle();
           }
 
+          vm.closeSidenav = function() {
+            $mdSidenav('sideMenu').close();
+          }
           
           // lookup case by its firebase $id. when selected from the sidenav list
           vm.caseLookup = function(searchId) {

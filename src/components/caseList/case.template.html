@@ -1,10 +1,10 @@
-<div ng-if="vm.selectedCase === vm.index" class="case-detail" layout="row" layout-align="start start">
+<div ng-if="vm.selectedCase === vm.index" class="case-expanded case-detail" layout="row" layout-align="start start">
   <div flex-gt-xs="10" flex-offset="5"></div>
-  <div flex-gt-xs="20" flex-offset-xs="5">
+  <div flex-gt-xs="20" flex-offset-xs="5" class="case-text">
     <p>{{vm.caseExpanded.property.county}} County</p>
     <p>id: {{vm.caseExpanded.property.taxId}}</p>
   </div>
-  <div flex-gt-xs="20" hide-xs>
+  <div flex-gt-xs="20" hide-xs class="case-text">
     <p class="case-list-address">{{vm.caseExpanded.lender.address}}</p>
     <p>{{vm.caseExpanded.lender.phone }}</p>
     <p>{{vm.caseExpanded.lender.email }}</p>

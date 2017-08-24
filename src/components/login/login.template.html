@@ -17,7 +17,7 @@
                           class="md-primary md-raised loginbox-btn"
                           ng-if="!vm.user.isLoggedIn"
                           ng-click="vm.loginWithGoogle($event)">
-                          <i class="fa fa-google fa-lg"></i> 
+                          <md-icon class="icon-google"></md-icon> 
                           <span style="margin-left:10px">Google</span>
                 </md-button>
                 <!--  <md-button layout="row" layout-align="start center" style="text-align: start"
@@ -52,7 +52,7 @@
                       <input type="password" ng-required ng-model="vm.user.password">
                     </md-input-container>
                     
-                    <md-button flex 
+                    <md-button  
                               class="md-accent md-raised loginbox-btn"
                               type="submit"
                               ng-click="vm.login($event)">
@@ -64,7 +64,7 @@
                     </md-button>
                   </form>
                 </div>
-                <md-button  flex 
+                <md-button   
                             class="md-accent md-raised loginbox-btn"
                             ng-if="vm.user.isLoggedIn"
                             ng-click="vm.signOut($event)">

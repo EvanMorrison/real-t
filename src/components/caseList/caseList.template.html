@@ -12,7 +12,7 @@
   <!-- Search Box -->
   <div flex="25" flex-offset="60">
         <md-input-container>
-          <label><md-icon>search</md-icon> search cases</label>
+          <label><md-icon class="icon-search"></md-icon> search cases</label>
           <input class="md-title" type="search" ng-model="vm.query"></input>
         </md-input-container>
   </div>
@@ -33,10 +33,12 @@
       <md-list-item ng-repeat="case in vm.caseList | filter:vm.query | orderBy:vm.orderProp : reverse = true"
                     class="case-list-item case-summary md-2-line md-long-text"
                     ng-click="vm.toggleSelected($index)">
-            <md-button class="md-icon-button md-primary" ng-class="{'more-detail': vm.selectedCase != $index, 'less-detail': vm.selectedCase == $index}"
-                 ng-click="vm.toggleSelected($index)">
-               <md-icon ng-show="vm.selectedCase != $index">expand_more</md-icon>
-               <md-icon ng-show="vm.selectedCase === $index">expand_less</md-icon>
+            <md-button  class="md-icon-button md-primary" 
+                        ng-class="{'more-detail': vm.selectedCase != $index, 'less-detail': vm.selectedCase == $index}"
+                        ng-click="vm.toggleSelected($index)"
+                        aria-label="toggle case details">
+               <md-icon class="icon-expand_more" ng-show="vm.selectedCase != $index"></md-icon>
+               <md-icon class="icon-expand_less" ng-show="vm.selectedCase === $index"></md-icon>
            </md-button>
          <div class="md-list-item-text">  
            <div layout="row" layout-wrap>
@@ -48,13 +50,15 @@
              <div flex-gt-xs="15" flex md-truncate >{{case.loan.saleDate}}</div>
              <md-button  ng-click="vm.gotoCase(case)"
                          class="md-secondary md-icon-button" 
-                         style="position:absolute;right:3em" >
-               <md-icon>create</md-icon>
+                         style="position:absolute;right:3em"
+                         aria-label="view full case" >
+               <md-icon class="icon-mode_edit"></md-icon>
              </md-button>
              <md-button  ng-click="vm.deleteCase($event, case)"
                          class="md-secondary md-icon-button" 
-                         style="position:absolute;right:1em" >
-               <md-icon>cancel</md-icon>
+                         style="position:absolute;right:1em" 
+                         aria-label="delete case">
+               <md-icon class="icon-delete"></md-icon>
              </md-button>
             <ui-view flex="100" case-expanded="case" selected-case="vm.selectedCase" index="$index" ></ui-view>
            </div>

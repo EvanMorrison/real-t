@@ -66,7 +66,10 @@ module.exports = function(ngApp) {
               .state('mainLayout', {
                 parent: 'index',
                 abstract: true,
-                component: 'mainLayout'
+                views: {
+                  '@index': { component: 'mainLayout' }
+
+                }
               })
 
                   .state('home', {

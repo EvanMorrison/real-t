@@ -7,7 +7,7 @@
                     ng-disabled="vm.isActiveEdit"
                     ng-click="vm.edit()">
           <md-tooltip md-direction="top">edit mode</md-tooltip>
-          <md-icon >edit</md-icon> Edit
+          <md-icon class="icon-mode_edit"></md-icon> Edit
         </md-button>
       
         <md-button  class="md-hue-3"
@@ -15,14 +15,14 @@
                     ng-disabled="!vm.isActiveEdit"
                     ng-click="vm.save()">
           <md-tooltip md-direction="top">save changes</md-tooltip>
-          <md-icon >save</md-icon> Save
+          <md-icon class="icon-save"></md-icon> Save
         </md-button>
         <md-button  class="md-hue-3"
                     aria-label="cancel changes"
                     ng-disabled="!vm.isActiveEdit"
                     ng-click="vm.cancel()">
           <md-tooltip md-direction="top">cancel without saving</md-tooltip>
-          <md-icon >cancel</md-icon> Cancel
+          <md-icon class="icon-cancel"></md-icon> Cancel
         </md-button>
           </div>
     </div>

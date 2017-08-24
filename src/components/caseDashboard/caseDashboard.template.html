@@ -1,8 +1,10 @@
 
 <md-toolbar class="md-toolbar-tools md-whiteframe-z2">
-  <md-button class="md-icon-button" ng-click="vm.toggleSidenav($event)"
+  <md-button  class="md-icon-button" 
+              ng-click="vm.toggleSidenav($event)"
+              aria-label="Toggle Sidenav"
               hide-gt-xs>
-    <i class="fa fa-bars fa-lg" ></i>
+    <md-icon class="icon-menu"></md-icon>
   </md-button>
   <h3 >{{vm.viewTitle}}</h3>
 </md-toolbar>
@@ -18,15 +20,22 @@
       </md-toolbar>
       <md-content layout="column">
         <md-input-container>
-          <label><md-icon>search</md-icon> search</label>
+          <label><md-icon class="icon-search"></md-icon> search</label>
           <input type="search" ng-model="vm.query" md-autofocus>
-          <md-button class="md-icon-button" ng-click="vm.query=''" style="position:absolute;right:0;top:0" ng-hide="!vm.query"><md-icon>cancel</md-icon> </md-button>
+          <md-button  class="md-icon-button" 
+                      ng-click="vm.query=''" 
+                      style="position:absolute;right:0;top:0" 
+                      ng-hide="!vm.query"
+                      aria-label="Clear Search">
+              <md-icon class="icon-cancel"></md-icon> 
+          </md-button>
         </md-input-container>
         <md-list>
           <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
                         ng-class="{selected: case.caseId == vm.caseRecord.caseId}"
-                        ui-sref="caseFocus({recordId: case.$id})">
+                        ui-sref="caseFocus({recordId: case.$id})"
+                        ng-click="vm.closeSidenav()">
             <div>{{case.caseId}}</div>
           </md-list-item>  
         </md-list>
@@ -35,10 +44,11 @@
             
             <md-button  class="md-fab md-accent"
                         hide-xs
-            style="position:fixed;top:90vh;left:120px;z-index:100"
-                        ng-click="vm.gotoNewCase()">
+                        style="position:fixed;top:90vh;left:120px;z-index:100"
+                        ng-click="vm.gotoNewCase()"
+                        aria-label="create new case">
               <md-tooltip md-direction="top">create a new case</md-tooltip>
-              <md-icon>add</md-icon>
+              <md-icon class="icon-add"></md-icon>
             </md-button>
 
 <!-- Dashboard Layout-->
@@ -47,7 +57,13 @@
     <div class="dashboard-title-container" ng-hide="vm.isCreating" >
       <h2 ng-show="vm.caseRecord.caseId">Case: {{vm.caseRecord.caseId}} <small>/ {{vm.caseRecord.lender.name}} / {{vm.caseRecord.borrower.name}} / {{vm.caseRecord.property.address}}</small></h2>
       <h2 ng-hide="vm.caseRecord.caseId">Select A Case To View or 
-           Create A New Case<md-button  ng-click="vm.gotoNewCase()" class="md-icon-button"> <md-icon>add_circle</md-icon> </md-button></h2>
+           Create A New Case
+          <md-button  ng-click="vm.gotoNewCase()" 
+                      class="md-icon-button"
+                      aria-label="create a new case"> 
+              <md-icon class="icon-add_circle"></md-icon> 
+          </md-button>
+      </h2>
             
     </div>
 

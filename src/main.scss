@@ -1,0 +1,277 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import 'icons';
+
+$white: #fff;
+$black: #000;
+$gray: #555;
+$orange: #f80;
+$purple: #606;
+
+html, body, h1, h2, h3, h4, h5, h6, p {
+  font-family: 'Roboto', 'Helvetica Neue', 'sans serif';
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding-bottom: 200px;
+}
+
+
+
+// loading progress spinner
+.progress-circular {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+
+.hero-container {
+    position: relative;
+    width: 100vw;
+    height: 50vh;
+    z-index: 1;
+    color: $white;
+    &::before {
+      position: absolute;
+      content: ' ';
+      width: 100%;
+      height: 100%;
+        /* image of city skyline */
+      background: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('./assets/architecture-1867077_960.jpg');
+      background-repeat: no-repeat;
+      background-position: top center, bottom center;
+      background-size: cover;
+      z-index: -1;
+    }
+    .hero-title-block {
+      position: absolute;
+      top: 5vh;
+      left: 15vw;
+    }
+    .hero-text {
+      position: absolute;
+      width: 100vw;
+      bottom: 1vh;
+      text-align: center;
+    }
+}
+
+
+/*
+   Home Page Links 
+*/
+
+.home-view-container {
+  color: $gray;
+  .main-nav-links {
+    text-align: center;
+    .home-icon {
+      transform: scale(5) translateY(30%);
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+a.active {
+  font-weight: 900;
+  border-bottom: 3px solid #ddd;
+}
+
+
+/*
+    Login View Styling
+*/
+
+.login-page {
+  position: absolute;
+  /*content: ' ';*/
+  width: 100vw;
+  height: 100vh;
+  min-height: 900px;
+  background: url('./assets/architecture-1867077_960.jpg');
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: cover;
+  .hero-title-block {
+    position: absolute;
+    top: 35px;
+    left: 5vw;
+  }
+  .login-card {
+    position: relative;
+    margin-top: 180px;
+    min-height: 500px;
+    width: 98%;
+    max-width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,.9);
+    .login-form {
+      /*position: relative;*/
+      margin: 10px auto;
+      padding: 10px;
+      width: 98%;
+      max-width: 500px;
+      border: 1px solid rgba(0,0,0,.2);
+      border-radius: 5px;
+      .login-form-input {
+        margin: 1.25em auto 0;
+        width: 98%;
+        max-width: 350px;
+      }
+    }
+    .loginbox-btn {
+      height: 40px;
+      width: 98%;
+      max-width: 300px;
+      margin: 5px auto;
+      font-size: 1.1em;
+      font-weight: 700;
+    
+    }
+  }
+}
+
+/* Alert Dialog for login errors */
+.md-dialog-content {
+  max-width: 400px;
+  .md-title {
+    margin-bottom: 1em;
+  }
+}
+
+/* Navbar styles */
+.navbar-title {
+  padding: 5px 10px;
+  color: $purple;
+  font-weight: 900;
+  font-size: 1.35em;
+  text-decoration: none;
+}
+
+/* Dashboard View */
+
+.dashboard-title-container {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.dashboard-content {
+  min-height: 100vh;
+}
+
+.dashboard-sidenav {
+  width: 98vw;
+  max-width: 200px;
+  .case-list-item.selected {
+    background-color: rgba(179,136,255,0.5);
+  }
+}
+
+
+/* Timeline Section Styling */
+
+.dashboard-title-container, .timeline-container {
+  position: relative;
+  /*min-height: 200px;*/
+  border-bottom: 1px solid rgba(179,136,255,.2);
+  /*border-radius: 5px;*/
+  margin: 10px;
+  padding: 10px;
+}
+
+.timeline-label-container {
+  position: relative;
+  margin-top: 20px;
+  min-height: 110px;
+  .timeline-label {
+    transform-origin: top right;
+    transform: translateX(-50%) rotate(290deg) ;
+  }
+}
+
+
+.editToolbar-container {
+  position: relative;
+  min-height: 60px;
+  .dashboard-editToolbar {
+    position: relative;
+  }
+}
+
+/*
+  CASE LIST PAGE
+*/
+
+.case-summary {
+  font-size: .9em;
+}
+
+.more-detail {
+  position: absolute;
+  left: 1em;
+}
+
+.less-detail {
+  position: absolute;
+  left: 1em;
+  top: -3px;
+}
+
+.case-list-item.case-summary {
+  .md-button:not(.md-icon-button):hover {
+    background-color: transparent;
+  }
+  .md-icon-button:hover {
+    background-color: rgba(0,0,0,.1);
+  }
+}
+
+.case-expanded.case-detail {
+  position: relative;
+  div.case-text {
+    margin-top: -1em;
+    p {
+      margin: .5em 0;
+      line-height: 1.15em;
+      font-size: 1em;
+    &:last-child {
+        margin-bottom: 1.5em;
+      }
+    }
+  }
+}
+
+.case-list-address {
+  padding-right: 1em;
+}
+
+/*
+  CASE VIEW FULL DETAIL
+*/
+
+md-grid-list md-grid-tile figure, figure {
+  align-items: flex-start;
+  overflow: auto;
+}
+
+.case-view-container {
+  padding-top: 1.5em;
+}
+
+.case-view-container p {
+  margin: 0;
+  position: relative;
+}
+
+.case-view-container div>p:first-child {
+  margin-top: 1em;
+}
+
+

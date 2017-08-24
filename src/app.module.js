@@ -1,15 +1,15 @@
-import './main.css';
-import './animations.css';
-  
-
-
-
+import './main.scss';
+import './animations.scss';
+// import 'angular';
+// import 'angular-material';
 
 const app = angular.module('RTApp', [
-    'firebase',
-    'ngMaterial',
-    'ui.router'
-  ])
+                                      'firebase',
+                                      'ngMaterial',
+                                      'ngMessages',
+                                      'ngResource',
+                                      'ui.router'
+                                    ]);
   
   
 require('./app.config')(app);
