@@ -1,0 +1,94 @@
+  <div class="login-page">
+    <div>
+      <div class="hero-title-block">
+        <h1 class="md-display-4">REAL-T</h1>
+        <h3 class="md-subhead">Real EstAte Lending Tracker With Real-Time Database</h3>
+      </div>
+    </div>
+    <md-card class="login-card" ng-init="vm.showSignup = false">
+        <md-toolbar class="md-primary"> 
+          <h1 class="md-toolbar-tools" ng-if="!vm.user.SignedIn">REAL-T:<small> Sign-In or Sign-Up</small></h1>
+          <h1 class="md-toolbar-tools" ng-if="vm.user.SignedIn">Signout</h1>
+        </md-toolbar>
+    
+          <md-card-content layout="column">
+                <a href="/auth/google" target="_self" class="loginbox-btn">
+                  <md-button  
+                              md-theme="Auth"
+                              class="md-primary md-raised loginbox-btn"
+                              ng-if="!vm.user.SignedIn">
+                              <md-icon class="icon-google"></md-icon> 
+                              <span style="margin-left:10px">Google</span>
+                    </md-button>
+                </a>
+                <!--  <md-button layout="row" layout-align="start center" style="text-align: start"
+                          md-theme="Auth"
+                          class="md-accent md-raised"
+                          ng-if="!vm.user.SignedIn"
+                          ng-click="vm.loginWithFacebook($event)">
+                  <i flex="15" flex-offset="20" class="fa fa-facebook fa-lg"></i> <div flex="65">Facebook</div>
+                            </md-button>   -->
+                <md-button  class="md-accent md-raised loginbox-btn"
+                          ng-if="!vm.user.SignedIn"
+                          ng-click="vm.loginAnonymous($event)">
+                  Sign in Anonymously
+                </md-button>         
+                
+                <!-- sign in with username and password-->
+                <div class="login-form"
+                     ng-if="!vm.user.SignedIn">
+                  
+                  <p class="loginbox-btn title"
+                      ng-show="!vm.showSignup">
+                      Sign In With Email Address
+                      <br/><small style="font-weight:200">need an account? <a href="" ng-click="vm.showSignup=!vm.showSignup">create a new one</a></small>
+                  </p>
+                  <p class="loginbox-btn title"
+                      ng-show="vm.showSignup">
+                      Sign Up With Email Address
+                      <br/><small style="font-weight:200">already have an account? <a href="" ng-click="vm.showSignup=!vm.showSignup">sign in here</a></small>
+                  </p>
+                  <div class="loginbox-btn error-message" ng-show="vm.signinError" style="color:red">
+                      <small>{{vm.signinMsg}}</small>
+                    </div>
+                  <form md-theme="Auth"
+                        layout="column"
+                        name="login">
+                    <md-input-container class="login-form-input">
+                      <label>email</label>
+                      <input type="email" ng-required ng-model="vm.user.email" ng-change="vm.signinError=false">
+                    </md-input-container>
+                              
+                    <md-input-container class="login-form-input">
+                      <label>password</label>
+                      <input type="password" ng-required ng-model="vm.user.password" ng-change="vm.signinError=false">
+                    </md-input-container>
+                    
+                    <md-button  
+                              class="md-accent md-raised loginbox-btn"
+                              ng-if="!vm.showSignup"
+                              type="submit"
+                              ng-click="vm.signin($event)">
+                      Sign In
+                    </md-button>
+                    <md-button class="loginbox-btn"
+                                ng-if="vm.showSignup"
+                                ng-click="vm.signup($event)" 
+                                type="submit">
+                        Create An Account
+                    </md-button>
+                  </form>
+                </div>
+                <md-button   
+                            class="md-accent md-raised loginbox-btn"
+                            ng-if="vm.user.SignedIn"
+                            ng-click="vm.signOut($event)">
+                  Log Out
+                </md-button>
+          </md-card-content>
+    </md-card>
+      <md-progress-circular  md-mode="indeterminate" 
+                            class="progress-circular"
+                            ng-if="vm.waiting">
+      </md-progress-circular>
+  </div>

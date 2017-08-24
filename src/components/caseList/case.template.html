@@ -1,0 +1,15 @@
+<div ng-if="vm.selectedCase === vm.index" class="additional-info case-expanded case-detail">
+  <div class="case-text"></div>
+  <div class="case-text">
+    <p>{{vm.caseExpanded.property.county}} County</p>
+    <p>id: {{vm.caseExpanded.property.taxParcelNo}}</p>
+  </div>
+  <div hide-xs class="case-text">
+    <p class="case-list-address">{{vm.caseExpanded.clientContact.address1}}</p>
+    <p class="case-list-address">{{vm.caseExpanded.clientContact.address2}}</p>
+    <p class="case-list-address">{{vm.caseExpanded.clientContact.city}}, {{vm.caseExpanded.clientContact.state}} {{vm.caseExpanded.clientContact.zip}}</p>
+    <p>{{vm.caseExpanded.clientContact.phones[0].value | phone}}</p>
+    <p>{{vm.caseExpanded.clientContact.email }}</p>
+  </div>
+  </div>
+</div>

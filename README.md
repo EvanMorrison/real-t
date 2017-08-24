@@ -13,7 +13,7 @@ That experience played a major part in motivating my transformation to a career 
 #
 ## Project Summary
 
-This is a full stack project. On the front end I use **AngularJS, Angular Material, UI-Router, Sass, and Webpack**. The back end on the live version is currently (9/2/17) using Google's **Firebase** for database and user authentication, but I am building a back end with **Node.js, Express, Mongoose, MongoDB, and Passport** - see the "mongo" branch of this repo for its current progress.
+This is a full stack project. On the front end I use **AngularJS, Angular Material, UI-Router, Sass, and Webpack**. The back end on the live version is currently (9/2/17) using Google's **Firebase** for database and user authentication, but I am building a back end with **Node.js, Express, Mongoose, MongoDB, and Passport** - see the code "mongo" branch of this repo for its current progress.
 
 This web app is for real estate professionals, lawyers, or title companies, to manage real estate loans and non-judicial foreclosures. 
 

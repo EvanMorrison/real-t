@@ -1,7 +1,7 @@
 
 
-module.exports = function(ngModule) {
-  ngModule
+module.exports = (app) => {
+  app
     .component('caseList', {
       template: require('./caseList.template.html'),
       controller: [ '$state', 

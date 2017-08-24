@@ -1,32 +1,23 @@
 <!-- FAB -->
 
-<md-toolbar class="toolbar md-whiteframe-z2">
-  <h3>Create A New Case</h3>
-</md-toolbar>
+<div class="create-toolbar-container" style="position:relative;min-height:60px">
+  <div layout="row" layout-align="start"
+  style="left:15vw">
+     
+      <md-button  class="md-hue-3"
+                    aria-label="cancel changes"
+                    ng-click="vm.cancel()"
+                    ng-disabled="!vm.isCreating">
+          <md-tooltip md-direction="bottom">cancel without saving</md-tooltip>
+          <md-icon class="icon-cancel"></md-icon> Cancel
+      </md-button>
 
-<div ng-cloak layout="column" layout-align="center end"
-style="position:fixed;top:auto;left:auto;right:20px;bottom:20px;z-index:100">
-    <md-button  class="md-fab md-mini md-raised md-hue-3"
-                  aria-label="cancel changes"
-                  ng-click="ctrl.cancelNewCase()">
-        <md-tooltip md-direction="left">cancel without saving</md-tooltip>
-        <md-icon >cancel</md-icon>
-    </md-button>
-    <md-button  class="md-fab md-mini md-raised md-hue-3"
-                  aria-label="save"
-                  ng-click="ctrl.saveNewCase()">
-        <md-tooltip md-direction="left">save changes</md-tooltip>
-        <md-icon >cloud_upload</md-icon>
-    </md-button>
-    <div layout="row" layout-align="end center">
-      <div >
-        <h4 ng-if="!ctrl.isCaseIdValid" class="md-title">Click here to start a new case</h4>
-      </div>
-      <md-button  class="md-fab md-mini md-raised md-accent"
-                    aria-label="Create New Case..."
-                    ng-click="ctrl.createNewCase()">
-          <md-tooltip md-direction="left">Create Another Case</md-tooltip>
-          <md-icon >add</md-icon>
+      <md-button  class="md-button md-hue-3"
+                    aria-label="finalize and save"
+                    ng-click="vm.finalize()"
+                    ng-disabled="!vm.isCreating">
+          <md-tooltip md-direction="bottom">finalize</md-tooltip>
+          <md-icon class="icon-cloud_upload"></md-icon> Finalize & Goto Case Overview
       </md-button>
     </div>
 </div>

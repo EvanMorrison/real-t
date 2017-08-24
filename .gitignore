@@ -5,8 +5,11 @@ node_modules
 dist
 assets
 
+backend/**/*config.js
+
 *.log
 
+.env
 .firebaserc
 database.rules.json
 firebase.json

@@ -1,0 +1,271 @@
+
+<md-content class="dashboard-fullDetail-container">
+
+
+    <!-- Lender card -->
+  <div flex-gt-sm="33" flex="100">
+    <md-card >
+      <md-card-title>
+        <md-card-title-text>
+          <div  class="md-headline">Lender</div>
+        </md-card-title-text>
+      </md-card-title>
+    
+      <md-card-content>
+            <div layout-sm="row" layout="column" flex-gt-sm="90">
+              <div layout="column" flex="90" flex-offset="5">
+                <md-input-container>
+                  <label>Name</label>
+                  <input  ng-model="vm.case.clientContact.fullName"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+                
+                <md-input-container>
+                  <label >Address</label>
+                  <input ng-model="vm.case.clientContact.address1"
+                            ng-change="vm.update()"
+                            style="text-align:left" 
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                  </input>
+                </md-input-container>
+              </div>
+              
+              <div layout="column" flex="90" flex-offset="5">
+               <md-input-container>
+                  <label>Phone</label>
+                  <input  ng-model="vm.case.clientContact.phones[0].value"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+              
+                <md-input-container>
+                  <label>Email</label>
+                  <input  ng-model="vm.case.clientContact.email"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+              </div>
+            </div>
+      </md-card-content>
+    </md-card>
+  </div>
+    <!-- End Lender Card-->
+    
+    <!-- Borrower card -->
+  <div flex-gt-sm="33" flex="100">
+    <md-card >
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Borrower</span>
+        </md-card-title-text>
+      </md-card-title>
+    
+      <md-card-content>
+         <div layout-sm="row" layout="column" flex-gt-sm="90">
+              <div layout="column" flex="90" flex-offset="5">
+                <md-input-container>
+                  <label>Name</label>
+                  <input  ng-model="vm.case.oppositePartyPerson.fullName"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+                
+                <md-input-container>
+                  <label >Address</label>
+                  <input ng-model="vm.case.oppositePartyPerson.address1"
+                            ng-change="vm.update()"
+                            style="text-align:left" 
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                  </input>
+                </md-input-container>
+              </div>
+              
+              <div layout="column" flex="90" flex-offset="5">
+               <md-input-container>
+                  <label>Phone</label>
+                  <input  ng-model="vm.case.oppositePartyPerson.phones[0].value"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+              
+                <md-input-container>
+                  <label>Email</label>
+                  <input  ng-model="vm.case.oppositePartyPerson.email"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+              </div>
+            </div>
+      </md-card-content>
+    </md-card>
+  </div>
+    <!-- End Borrower Card-->
+  
+   <!-- Property Card-->
+    <div flex="33">
+      <md-card >
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Property</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+              <div layout="column" flex>
+                
+                <md-input-container>
+                  <label >Address</label>
+                  <input ng-model="vm.case.property.address1"
+                            ng-change="vm.update()"
+                            style="text-align:left" 
+                            max-rows="3"  
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                  </input>
+                </md-input-container>
+                
+                <md-input-container>
+                  <label >Current Owner</label>
+  
+                  <input  ng-model="vm.case.currentOwnerName"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+                
+                <md-input-container>
+                  <label>County</label>
+                  <md-select ng-model="vm.case.property.county"
+                             ng-change="vm.update()" 
+                             >
+                    <md-option ng-repeat="county in vm.Counties" 
+                                ng-value="county"
+                                ng-selected="county === '{{vm.case.property.county}}'" 
+                                ng-disabled="county != '{{vm.case.property.county}}' && !vm.isActiveEdit && !vm.isCreating">
+                          {{county}}
+                    </md-option>  
+                  </md-select>
+                </md-input-container>
+  
+                <md-input-container>
+                  <label>Tax Id:</label>
+                  <input  ng-model="vm.case.property.taxParcelNo"
+                          ng-change="vm.update()"
+                          type="text" 
+                          ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                </md-input-container>
+                
+                <div flex-gt-xs="90" flex-offset="5" layout="column" style="max-height:15em;overflow:auto">
+                  <md-input-container flex>  
+                    <label>Legal Description</label>
+                    <textarea ng-model="vm.case.property.legalDescription" 
+                              ng-change="vm.update()"
+                              ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                              {{vm.case.property.legalDescription}} </textarea>
+                  </md-input-container>
+                </div>
+  
+              </div>
+              
+        </md-card-content>
+      </md-card> 
+    </div>  
+    <!-- End Property card -->
+  
+  
+    <!-- Loan & Trust Deed Card-->
+    <div flex="33">
+      <md-card >
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Loan &amp; Trust Deed</span>
+          </md-card-title-text>
+        </md-card-title>
+      
+        <md-card-content>
+          
+         <div layout="column">
+          <md-input-container flex-gt-xs="25" flex-offset="5">
+               <label>Amount:</label>
+               <input  ng-model="vm.case.loan.initialPrincipal"
+                       ng-change="vm.update()"
+                       type="text" 
+                       value="{{vm.case.loan.initialPrincipal | currency : "$" : 0 }}"
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+          </md-input-container>
+           
+          <md-input-container flex-gt-xs="30" flex-offset="5" > 
+  
+               <label>Recorded:</label>
+              <md-datepicker ng-model="vm.case.documents.trustDeed.recDate" 
+                  ng-change="vm.updateDate()"
+                  ng-disabled="!vm.isActiveEdit && !vm.isCreating">
+              </md-datepicker>
+          </md-input-container>
+           
+          <md-input-container flex-gt-xs="30" flex-offset="5">
+               <label>Entry Number:</label>
+               <input  ng-model="vm.case.documents.trustDeed.entryNo"
+                       ng-change="vm.update()"
+                       type="text" 
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+          </md-input-container>
+        </div>
+         <div layout-xs="column" layout="row"> 
+           <md-input-container flex-gt-xs="45" flex-offset="5">
+               <label>Original Beneficiary:</label>
+               <input  ng-model="vm.case.documents.trustDeed.ob"
+                       ng-change="vm.update()"
+                       type="text" 
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+           </md-input-container>
+           
+           <md-input-container flex-gt-xs="45" flex-offset="5">
+               <label>Original Trustee:</label>
+               <input  ng-model="vm.case.documents.trustDeed.otee"
+                       ng-change="vm.update()"
+                       type="text" 
+                       ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+           </md-input-container>
+        </div>
+  
+          <div layout="column">
+            <h4 ng-hide="!vm.case.documents.assignmentTD" flex="90" flex-offset="5">Assignments</h4>
+              <div  ng-repeat="assignment in vm.case.documents.assignmentTD" 
+                    layout-xs="column" layout-gt-xs="row" flex layout-wrap>
+                <md-input-container flex-gt-xs="25" flex-offset="5">
+                  
+                    <label>recorded</label>
+                    <md-datepicker ng-model="assignment.recDate"
+                            ng-change="vm.updateDate()"
+                            ng-disabled="!vm.isActiveEdit && !vm.isCreating">
+                    </md-datepicker>
+                   
+                </md-input-container>
+                <md-input-container flex-gt-xs="25" flex-offset="5">
+                    <label>entry</label>
+                    <input  ng-model="assignment.entryNo"
+                            ng-change="vm.update()"
+                            type="text" 
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                  </md-input-container>
+                <md-input-container flex-gt-xs="35" flex-offset="5">
+                    <label>Assignee</label>
+                    <input  ng-model="assignment.assignee"
+                            ng-change="vm.update()"
+                            type="text" 
+                            ng-readonly="!vm.isActiveEdit && !vm.isCreating">
+                  </md-input-container>
+              </div>
+          </div>
+  
+        </md-card-content>
+      </md-card>
+    </div>
+    <!-- End Loan & Trust Deed Card -->
+</md-content>
