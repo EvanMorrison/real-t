@@ -213,6 +213,42 @@ a.active {
   font-size: .9em;
 }
 
+.case-list-item.case-summary {
+  .md-button:not(.md-icon-button):hover {
+    background-color: transparent;
+  }
+  .md-icon-button:hover {
+    background-color: rgba(0,0,0,.1);
+  }
+}
+
+.caselist-row {
+  width: 100%;
+}
+
+.caselist-headings, .caselist-row, .additional-info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  >*, >*>* {
+    padding-right: 20px;
+  }
+  >*:first-child {
+    flex: 0 0 8%;
+    margin-left: 5vw;
+  }
+  >*:nth-child(n+2) {
+    flex: 0 0 20%;
+  }
+  >*:nth-child(n+3) {
+    flex: 0 0 15%;
+  }
+  >*:last-child {
+    flex: 0 1 10%;
+    padding-right: 10;
+  }
+}
+
 .more-detail {
   position: absolute;
   left: 1em;
@@ -224,19 +260,10 @@ a.active {
   top: -3px;
 }
 
-.case-list-item.case-summary {
-  .md-button:not(.md-icon-button):hover {
-    background-color: transparent;
-  }
-  .md-icon-button:hover {
-    background-color: rgba(0,0,0,.1);
-  }
-}
-
 .case-expanded.case-detail {
   position: relative;
+  top: -1em;
   div.case-text {
-    margin-top: -1em;
     p {
       margin: .5em 0;
       line-height: 1.15em;
@@ -248,30 +275,6 @@ a.active {
   }
 }
 
-.case-list-address {
-  padding-right: 1em;
-}
-
-/*
-  CASE VIEW FULL DETAIL
-*/
-
-md-grid-list md-grid-tile figure, figure {
-  align-items: flex-start;
-  overflow: auto;
-}
-
-.case-view-container {
-  padding-top: 1.5em;
-}
-
-.case-view-container p {
-  margin: 0;
-  position: relative;
-}
-
-.case-view-container div>p:first-child {
-  margin-top: 1em;
-}
-
+/* TODO
+Need media query to handle CaseList view on smaller screens */
 

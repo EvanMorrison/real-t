@@ -6,7 +6,6 @@
   <md-progress-circular class="progress-circular" 
                         mode="md-indeterminate"
                         ng-if="vm.waiting">
-
   </md-progress-circular>
 
   <!-- Search Box -->
@@ -18,13 +17,13 @@
   </div>
   
   <md-list>
-      <md-list-item layout="row" layout-wrap layout-align="space-between" >
-      <h4 flex-gt-xs="10" flex="25" flex-offset-gt-xs="5" flex-offset-xs="10">Case #</h4>
-      <h4 flex-gt-xs="20" flex md-truncate hide-xs>Property</h4>
-      <h4 flex-gt-xs="20" flex hide-xs>Lender</h4>
-      <h4 flex-gt-xs="15" flex >Borrower</h4>
-      <h4 flex-gt-xs="15" flex >Loan Amount</h4>
-      <h4 flex-gt-xs="15" flex >Sale Date</h4>
+      <md-list-item class="caselist-headings">
+      <h4>Case #</h4>
+      <h4 md-truncate hide-xs>Property</h4>
+      <h4 hide-xs>Lender</h4>
+      <h4>Borrower</h4>
+      <h4>Loan Amount</h4>
+      <h4>Sale Date</h4>
     </md-list-item>
   </md-list>
 
@@ -40,29 +39,29 @@
                <md-icon class="icon-expand_more" ng-show="vm.selectedCase != $index"></md-icon>
                <md-icon class="icon-expand_less" ng-show="vm.selectedCase === $index"></md-icon>
            </md-button>
-         <div class="md-list-item-text">  
-           <div layout="row" layout-wrap>
-             <div flex-gt-xs="10" flex="25" flex-offset-gt-xs="5" flex-offset-xs="10">{{case.caseId}}</div>
-             <div flex-gt-xs="20" flex md-truncate hide-xs class="case-list-address">{{case.property.address}}</div>
-             <div flex-gt-xs="20" flex md-truncate hide-xs>{{case.lender.name}}</div>
-             <div flex-gt-xs="15" flex md-truncate >{{case.borrower.name}}</div>
-             <div flex-gt-xs="15" flex md-truncate >{{case.loan.amount}}</div>
-             <div flex-gt-xs="15" flex md-truncate >{{case.loan.saleDate}}</div>
-             <md-button  ng-click="vm.gotoCase(case)"
-                         class="md-secondary md-icon-button" 
-                         style="position:absolute;right:3em"
-                         aria-label="view full case" >
-               <md-icon class="icon-mode_edit"></md-icon>
-             </md-button>
-             <md-button  ng-click="vm.deleteCase($event, case)"
-                         class="md-secondary md-icon-button" 
-                         style="position:absolute;right:1em" 
-                         aria-label="delete case">
-               <md-icon class="icon-delete"></md-icon>
-             </md-button>
-            <ui-view flex="100" case-expanded="case" selected-case="vm.selectedCase" index="$index" ></ui-view>
-           </div>
-        </div> 
+         <div layout="column" flex>
+           <div class="caselist-row">  
+               <div >{{case.caseId}}</div>
+               <div md-truncate hide-xs class="case-list-address">{{case.property.address}}</div>
+               <div md-truncate hide-xs>{{case.lender.name}}</div>
+               <div md-truncate >{{case.borrower.name}}</div>
+               <div md-truncate >{{case.loan.amount}}</div>
+               <div md-truncate >{{case.loan.saleDate}}</div>
+            </div> 
+               <md-button  ng-click="vm.gotoCase(case)"
+                           class="md-secondary md-icon-button" 
+                           style="position:absolute;right:3em"
+                           aria-label="view full case" >
+                 <md-icon class="icon-mode_edit"></md-icon>
+               </md-button>
+               <md-button  ng-click="vm.deleteCase($event, case)"
+                           class="md-secondary md-icon-button" 
+                           style="position:absolute;right:1em" 
+                           aria-label="delete case">
+                 <md-icon class="icon-delete"></md-icon>
+               </md-button>
+              <ui-view case-expanded="case" selected-case="vm.selectedCase" index="$index" ></ui-view>
+         </div>
         <md-divider></md-divider>
       </md-list-item>
     

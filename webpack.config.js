@@ -45,21 +45,15 @@ module.exports = ((env = {}) => {
             else return 'cheap-module-eval-source-map'
         })(),
 
-      devServer: {
-        contentBase: './dist',
-        historyApiFallback: {
-          index: '/'
-        }
-      },
-      // (() => {
-      //   if (isProduction) return {}
-      //   else return {
-      //                 contentBase: './dist',
-      //                 historyApiFallback: {
-      //                   index: '/'
-      //                 }
-      //               }
-      // })(),
+      devServer: (() => {
+        if (isProduction) return {}
+        else return {
+                      contentBase: './dist',
+                      historyApiFallback: {
+                        index: '/'
+                      }
+                    }
+      })(),
 
       module: {
         rules: [
@@ -116,7 +110,7 @@ module.exports = ((env = {}) => {
                       disable: !isProduction
                 }),
                   /**
-                   * CommonsChunckPlugin is usually only run in production, but
+                   * Note: CommonsChunckPlugin is usually only run in production, but
                    * dev-server was not loading angular correctly without it
                    */
                 new webpack.optimize.CommonsChunkPlugin({ 

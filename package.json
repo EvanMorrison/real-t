@@ -4,7 +4,7 @@
   "description": "A SPA to track and manage real estate loans, payoffs, and foreclosures.",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "NODE_ENV=production PORT=5000 node server.js",
     "dev": "webpack-dev-server --config webpack.config.js --progress --colors",
     "build": "webpack --env.production --config webpack.config.js -p --progress --colors"
   },
