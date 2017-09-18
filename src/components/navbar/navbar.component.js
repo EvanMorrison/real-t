@@ -6,7 +6,7 @@ module.exports = function(app) {
         controllerAs: 'vm',
         bindings: {
                     'user': '<',
-                    'onLogout': '&'
+                    'onSignout': '&'
         }
       });
 
@@ -14,9 +14,9 @@ module.exports = function(app) {
       function NavbarController() {
         const vm = this;
 
-        vm.logout = function() {
-          console.log('trying to logout');
-          vm.onLogout();
+        vm.signout = function() {
+          console.log('trying to signout');
+          vm.onSignout();
         }
         
       }

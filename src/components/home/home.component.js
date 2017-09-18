@@ -10,15 +10,14 @@ module.exports =function(ngModule) {
       controllerAs: 'vm',
       bindings: {
                   'user': '<',
-                  onLogout: '&'
+                  onSignout: '&'
       }
     });
-
     function HomeController() {
       const vm = this;
 
-      vm.signOut = function() {
-        vm.onLogout();
+      vm.signout = function() {
+        vm.onSignout();
       }
         
       

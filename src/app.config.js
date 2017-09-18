@@ -58,9 +58,15 @@ module.exports = function(ngApp) {
 
           $stateProvider
           .state('index',{
-            abstract: true,
+            // abstract: true,
             // appContainer is a component used to manage the user state for the entire app
-            component: 'appContainer'
+            component: 'appContainer',
+            resolve: {
+              'user': ['localAuthService', function(localAuthService) {
+                return localAuthService.getUser().then( (usr) => usr);
+                        
+              }]
+            }
           })
           
               .state('mainLayout', {
@@ -83,9 +89,9 @@ module.exports = function(ngApp) {
 
                   .state('login', {
                     url: '/login',
-                    parent: 'mainLayout',
+                    // parent: 'mainLayout',
                     views: {
-                      'bodyContent@mainLayout': { component: 'loginComponent'}
+                      '@': { component: 'loginComponent'}
                     }
                   })
 

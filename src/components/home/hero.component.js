@@ -14,7 +14,7 @@ module.exports = function(app) {
         const vm = this;
 
         vm.$onChanges = function() {
-          if (vm.user && vm.user.isLoggedIn) {
+          if (vm.user && vm.user.isSignedIn) {
             vm.message = 'Where Would You Like to Start?'
           } else {
             vm.message = 'Sign In to Get Started.'

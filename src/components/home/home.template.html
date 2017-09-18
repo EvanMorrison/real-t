@@ -1,12 +1,12 @@
 <div layout="row" layout-align="end center">
-  <md-button ng-click="vm.signOut()">user: {{vm.user.username}} / logout</md-button>
+  <md-button ng-click="vm.signout()">user: {{vm.user.name}} / sign out</md-button>
 </div>
 <md-content class="home-view-container"
             layout="row" 
             layout-align="center center">  
-<div flex="80" style="min-height:50vh;margin-top:40px">
+<div flex="80" style="min-height:50vh;margin-top:20px">
   <md-grid-list md-cols-gt-xs="3" md-cols-xs="1" md-row-height="1.5em" md-gutter="20px">
-    <md-grid-tile md-rowspan="7">
+    <md-grid-tile md-rowspan="5">
             <div layout="column"
                   class="main-nav-links"
                   ui-sref="caseList">
@@ -15,7 +15,7 @@
             </div>
           </a>
     </md-grid-tile>
-    <md-grid-tile md-rowspan="7">
+    <md-grid-tile md-rowspan="5">
         <div  layout="column" 
               class="main-nav-links"
               ui-sref="caseDashboard">
@@ -23,7 +23,7 @@
           <md-icon  class="icon-chrome_reader_mode home-icon"></md-icon>
         </div>
     </md-grid-tile>
-    <md-grid-tile md-rowspan="7">
+    <md-grid-tile md-rowspan="5">
         <div layout="column"
               class="main-nav-links"
               ui-sref="caseDashboard({isNewCase: true})"> 

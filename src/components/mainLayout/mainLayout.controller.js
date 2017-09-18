@@ -6,7 +6,7 @@ module.exports = function(app) {
       controllerAs: 'vm',
       bindings: {
                   'user': '<',
-                  'onLogout': '&'
+                  'onSignout': '&'
 
       }
     });

@@ -1,6 +1,6 @@
 
 
-module.exports = function(app) {
+module.exports = (app) => {
   app
     .component('caseList', {
       template: require('./caseList.template.html'),

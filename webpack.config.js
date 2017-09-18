@@ -5,7 +5,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = ((env = {}) => {
+// see webpack --env option for passing environment to config, if it is a function
+// note: this is not the same as -p option or process.env used with node.js
+module.exports = (env = {}) => {
   
   const isProduction = env.production === true;
 
@@ -18,6 +20,7 @@ module.exports = ((env = {}) => {
           'angular-material',
           'angular-resource',
           'angular-messages',
+          'angular-cookies',
           '@uirouter/angularjs',
           'angularfire',
           './node_modules/angular-material/angular-material.scss',
@@ -90,7 +93,7 @@ module.exports = ((env = {}) => {
                       options: { sourceMap: true }
                     }
                   ],    
-                  // use style-loader for inline styles in development
+                  // fallback to inlining styles when extracting is disabled in development
                   fallback: 'style-loader',
                 })
           },
@@ -107,10 +110,10 @@ module.exports = ((env = {}) => {
                 }),
                 new ExtractTextPlugin({
                       filename: '[name].[contenthash].css',
-                      disable: !isProduction
+                      disable: !isProduction // will use fallback loader in development 
                 }),
                   /**
-                   * Note: CommonsChunckPlugin is usually only run in production, but
+                   * Note: CommonsChunckPlugin is often only run in production, but
                    * dev-server was not loading angular correctly without it
                    */
                 new webpack.optimize.CommonsChunkPlugin({ 
@@ -145,4 +148,4 @@ module.exports = ((env = {}) => {
 
   }
 
-})()
+}

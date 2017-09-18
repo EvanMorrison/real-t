@@ -16,6 +16,30 @@
  }
 
  
+/*
+* Animations for error messages
+*/
+.error-message.ng-hide-add, .error-message.ng-hide-remove {
+  transition: all .3s linear !important;
+}
+
+.error-message.ng-hide-add {
+  opacity: 1 !important;
+}
+
+.error-message.ng-hide-add.ng-hide-add-active {
+  height: 0;
+  opacity: 0 !important;
+}
+
+.error-message.ng-hide-remove {
+  height: 0;
+  opacity: 0 !important;
+}
+
+.error-message.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1 !important;
+}
 
 
 /**
