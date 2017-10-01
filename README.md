@@ -4,7 +4,7 @@
 
 ### Background
 
-This is a project using modern web technologies to recreate and reimagine a software program I wrote years ago. At the time I was a real estate attorney working for a local title company. I saw a problem and created a solution. I taught myself object oriented programming in visual basic to automate case file production and formatting for a portfolio of client business. The software was for the Microsoft Office platform and automated tasks across Word, Excel, and Outlook, creating documents, tasks, and emails, scheduling events, and aggregating information for analysis.
+This is a project using modern web technologies to recreate and reimagine a set of program modules I wrote years ago. At the time, I was a real estate attorney working for a local title company. I saw a problem and created a solution. I taught myself programming in object oriented visual basic to automate case file production and formatting for a portfolio of clients. The software was for the Microsoft Office platform and automated tasks across Word, Excel, and Outlook, creating documents, tasks, and emails, scheduling events, and aggregating information for analysis.
 
 On my own time, and over the course of several months, I engineered a system that achieved a better than 50% reduction in the time required to prepare and manage case files, while improving accuracy. It was an exciting and deeply satisfying project for me because I used it every day in my professional work and it made such an improvement.
 
@@ -24,7 +24,7 @@ The main target features of the app are to:
 * Automatically generate the schedule for mailing and publication, and the appropriate correspodence and emails for the applicable jurisdiction.
 * Enable useful analytics of data pertaining to all aspects of the portfolio, including clients, properties, case progress, etc.
 
-### Not all of these have been fully implemented yet, but you can see an early version live here: 
+Not all of these have been fully implemented yet, but you can see an early version live here: 
 ### [real-t.evmorrison.com](https://real-t.evmorrison.com). 
 
  
