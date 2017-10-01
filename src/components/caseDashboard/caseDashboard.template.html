@@ -18,7 +18,7 @@
       <md-toolbar class="md-toolbar-tools md-hue-3">
         <h3>Cases</h3>
       </md-toolbar>
-      <md-content layout="column">
+      <div layout="column" padding>
         <md-input-container>
           <label><md-icon class="icon-search"></md-icon> search</label>
           <input type="search" ng-model="vm.query" md-autofocus>
@@ -33,13 +33,13 @@
         <md-list>
           <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
-                        ng-class="{selected: case.caseId == vm.caseRecord.caseId}"
-                        ui-sref="caseFocus({recordId: case.$id})"
+                        ng-class="{selected: case.caseNum == vm.caseRecord.caseNum}"
+                        ui-sref="caseFocus({recordId: case.caseNum})"
                         ng-click="vm.closeSidenav()">
-            <div>{{case.caseId}}</div>
+            <div>{{case.caseNum}}</div>
           </md-list-item>  
         </md-list>
-      </md-content>
+      </div>
 </md-sidenav>
             
             <md-button  class="md-fab md-accent"
@@ -52,11 +52,11 @@
             </md-button>
 
 <!-- Dashboard Layout-->
-<md-content layout="column" class="dashboard-content" flex>
+<md-content layout="column" class="dashboard-content">
     
     <div class="dashboard-title-container" ng-hide="vm.isCreating" >
-      <h2 ng-show="vm.caseRecord.caseId">Case: {{vm.caseRecord.caseId}} <small>/ {{vm.caseRecord.lender.name}} / {{vm.caseRecord.borrower.name}} / {{vm.caseRecord.property.address}}</small></h2>
-      <h2 ng-hide="vm.caseRecord.caseId">Select A Case To View or 
+      <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.loan.lender}} / {{vm.caseRecord.loan.borrower}} / {{vm.caseRecord.property.address1}}</small></h2>
+      <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View or 
            Create A New Case
           <md-button  ng-click="vm.gotoNewCase()" 
                       class="md-icon-button"
@@ -69,8 +69,8 @@
 
     <ui-view  name="timeline"
               case="vm.caseRecord">
-
     </ui-view>
+
     <ui-view  name="docs"
               case="vm.caseRecord">
     </ui-view>

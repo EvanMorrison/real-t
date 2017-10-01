@@ -2,19 +2,22 @@ module.exports = function(app) {
   app
     .component('caseExpanded', {
       template: require('./case.template.html'),
-      controller: [CaseController],
+      controller: [
+                      'phoneFilter',
+                      CaseController
+                  ],
       controllerAs: 'vm',
       bindings: { caseExpanded: '<',
                   selectedCase: '<',
                   index: '<'}
     });
 
-    function CaseController() {
+    function CaseController(phoneFilter) {
       const vm = this;
     }
 
     // filter for formatting phone numbers
-  app.filter('tel', function() {
+  app.filter('phone', function() {
     return function(tel) {
       if (!tel) { return '' };
 

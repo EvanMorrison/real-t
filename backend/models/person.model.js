@@ -4,14 +4,15 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
-const contactSchema = new mongoose.Schema({
-  type: { type: String, enum: ['person', 'organization']},
+const personSchema = new mongoose.Schema({
   fullName: String,
-  shortName: String,
+  nickName: String,
   firstName: String, 
   lastName: String, 
-  organization: String, // if contact is an individual
-  orgShortName: String,
+  relationship: String, // client, opposite party, attorney, service provider
+  organization: { // for individuals
+    type: ObjectId, ref: 'Organization'
+  },
   address1: String,
   address2: String,
   city: String,
@@ -35,4 +36,4 @@ const contactSchema = new mongoose.Schema({
 { timestamps: true })
 
 
-module.exports = mongoose.model('Contact', contactSchema);
+module.exports = mongoose.model('Person', personSchema);

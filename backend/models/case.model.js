@@ -3,24 +3,31 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
+
 const caseSchema = new mongoose.Schema({
-  caseNum: Number,
-  client: {
-    type: ObjectId, ref: 'Person'
-  },
-  clientContact: { type: Number, default: 0},
-  oppositeParty: [{
-    type: ObjectId, ref: 'Person' // person/org id
-  }],
+  caseNum: String,
+  clientContact: { type: ObjectId, ref: 'Person' },
+  clientOrg: { type: ObjectId, ref: 'Organization'},
+  clientAtty: { type: ObjectId, ref: 'Person'}, // outside counsel for client
+  oppositePartyPerson: { type: ObjectId, ref: 'Person' },
+  oppositePartyOrg: { type: ObjectId, ref: 'Organization' },
+  oppositePartyAtty: { type: ObjectId, ref: 'Person'},
   loan: {
     type: ObjectId, ref: 'Loan'
   },
-  property: {
-    profile: { type: ObjectId },
-    currentOwnerName: String,
-    ownerOccupied: Boolean,
-  },
-  documents: { type: ObjectId, ref: 'Document' },
+  property: { type: ObjectId, ref: 'Property' },
+  currentOwnerName: String,
+  ownerOccupied: Boolean,
+  documents: { type: ObjectId, ref: 'Documents' },
+  noticeAddresses: [
+    { recipient: String,
+      address1: String,
+      address2: String,
+      city: String,
+      state: String,
+      zip: String
+    }
+  ],
   tasks: [
     {
       taskName: String,
@@ -39,5 +46,48 @@ const caseSchema = new mongoose.Schema({
 },
 // Options
 { timestamps: true })
+
+
+// schema for separate collection that stores case number counter
+const counterSchema = new mongoose.Schema({
+  _id: { type: String, required: true, default:'caseNum' }, 
+  seq: { type: Number, default: 0 }, // the sequential counter for case numbers
+  lastUpdateAt: Date
+}, { collection: 'counter' })
+// increments and returns case number sequence, resetting it to zero at the start of each year
+counterSchema.methods.nextCaseNum = function(cb) {
+  let updates = { $set: { lastUpdateAt: new Date() }};
+  if (this.lastUpdateAt.getFullYear() < new Date().getFullYear()) {
+    updates.$set = updates.$set + ', seq: 0'; // reset counter to zero each year
+  } else {
+    updates.$inc = { seq: 1 }
+  }
+  return this.update(updates, (err) => {
+    if (err) return cb(err)
+    return cb(null, this.seq);
+  })
+}
+const Counter = mongoose.model('counter', counterSchema);
+
+
+// methods
+// set the unique case number for a new case.
+caseSchema.methods.setCaseNum = function(cb) {
+  Counter.findById('caseNum') // only document in collection
+  .then(counter => {
+      counter.nextCaseNum((err, caseNum) => {
+        if (err) return cb(err);
+        caseNum = ('000' + caseNum).slice(-4);
+        let now = new Date();
+        let yr = now.getFullYear()-2000;
+        let month = ('0' + (now.getMonth() + 1)).slice(-2);
+        caseNum = yr + '-' + month + caseNum;
+        this.caseNum = caseNum;
+        return cb(null, caseNum);
+      })
+  })
+  .catch(err => cb(err))
+}
+
 
 module.exports = mongoose.model('Case', caseSchema);

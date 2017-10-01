@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
-const documentSchema = new mongoose.Schema({
+const documentsSchema = new mongoose.Schema({
   trustDeed: {
     dated: { type: Date },
     ob: { type: String, alias: 'originalBeneficiary' }, // ref person or organization
@@ -63,4 +63,4 @@ const documentSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Documents', documentSchema);
+module.exports = mongoose.model('Documents', documentsSchema);

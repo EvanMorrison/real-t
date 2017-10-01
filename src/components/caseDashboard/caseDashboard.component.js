@@ -40,7 +40,7 @@ module.exports = function(ngModule) {
             // vm.viewTitle = 'Create New Case'
 
           // property to user for sorting cases in sidenav
-          vm.orderProp = 'caseId';
+          vm.orderProp = 'caseNum';
 
           vm.toggleSidenav = function($event) {
             $event.preventDefault();
@@ -52,21 +52,21 @@ module.exports = function(ngModule) {
           }
           
           // lookup case by its firebase $id. when selected from the sidenav list
-          vm.caseLookup = function(searchId) {
+          vm.caseLookup = function(caseNum) {
             vm.waiting = true;
             // vm.caseList is loaded from the resolve for this state/route
-            vm.caseList.$loaded().then(function(){
-                vm.waiting = false;
-                vm.caseRecord = vm.caseList.$getRecord(searchId);
-            }, function(err) {
-                vm.waiting = false;
-                $mdDialog.show(
-                  $mdDialog.alert()
-                    .title('Error')
-                    .textContent(`There was a problem retrieving case data. ${err}`)
-                    .ok('Ok')
-                )
-            })
+            
+            vm.caseRecord = vm.caseList.filter(a => a.caseNum === caseNum )[0];
+            console.log('case record ', vm.caseRecord);
+            // }, function(err) {
+            //     vm.waiting = false;
+            //     $mdDialog.show(
+            //       $mdDialog.alert()
+            //         .title('Error')
+            //         .textContent(`There was a problem retrieving case data. ${err}`)
+            //         .ok('Ok')
+            //     )
+            // })
           }
 
         //////////////////////////////////////

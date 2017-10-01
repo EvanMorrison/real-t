@@ -13,8 +13,8 @@ router.use(passport.initialize());
 // create a json web token and store it in a cookie on the client
   function setTokenCookie(req,res) {
     if (!req.user) return res.status(404).send({message: 'Something went wrong trying to signin.', req: Object.keys(req)});
-    var token = jwt.sign(req.user.token, config.token_secret, { expiresIn: '24h' });
-    res.cookie('token', token);
+    var token = jwt.sign(req.user.token, config.token_secret, { expiresIn: 60*60*24 });
+    res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 });
     res.user = req.user.profile;
     res.redirect('/');
   }

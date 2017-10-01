@@ -8,6 +8,7 @@ const organizationSchema = new mongoose.Schema({
   name: String,
   shortName: String,
   entityType: String, // corporation, trust, limited liability company, etc.
+  relationship: String, // client, opposite party                                  ''''''''', service provider
   stateOfOrigin: String, 
   address1: String,
   address2: String,

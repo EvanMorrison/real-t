@@ -12,20 +12,23 @@ const loanSchema = new mongoose.Schema({
     interestRate: Number,
     paymentAmount: Number,
     finalPaymentAmount: Number,
-    finalPaymentDate: Date,
+    maturityDate: Date,
     currentPrincipal: {
       amount: Number,
       asOf: Date
     },
     delinquencyDate: Date,
     defaultInterestRate: Number,
-    pastDueAmount: {
-      value: Number,
+    pastDue: {
+      pAndI: Number,
+      lateFees: Number,
+      costs: Number,
+      amount: Number,
       asOf: Date
     },
     status: {
-      type: Enumerator,
-      value: ['repayment', 'forebearance', 'default']
+      type: String,
+      enum: ['repayment', 'forebearance', 'default', 'workout', 'foreclosure']
     }
 
     
