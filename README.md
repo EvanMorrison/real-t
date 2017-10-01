@@ -24,7 +24,7 @@ The main target features of the app are to:
 * Automatically generate the schedule for mailing and publication, and the appropriate correspodence and emails for the applicable jurisdiction.
 * Enable useful analytics of data pertaining to all aspects of the portfolio, including clients, properties, case progress, etc.
 
-### Not all of these have been fully implemented yet, but you can see an early version live here: 
+Not all of these have been fully implemented yet, but you can see an early version live here: 
 ### [real-t.evmorrison.com](https://real-t.evmorrison.com). 
 
  
