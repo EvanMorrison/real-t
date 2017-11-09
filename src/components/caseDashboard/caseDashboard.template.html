@@ -74,7 +74,16 @@
     <ui-view  name="docs"
               case="vm.caseRecord">
     </ui-view>
-  
+    
+    <!-- cards with case details -->
+      <ui-view  name="cards"
+                case="vm.caseRecord"
+                on-edit-click="vm.toggleEdit()"
+                on-save-click="vm.saveChanges()"
+                on-cancel-click="vm.cancelChanges()"
+                on-case-selected="vm.caseLookup(id)">
+      </ui-view>
+    
     <ui-view  name="editToolbar"
               is-active-edit="vm.isActiveEdit"
               on-edit="vm.toggleEdit()" 
@@ -82,7 +91,7 @@
               on-cancel="vm.cancelChanges()">
     </ui-view>
     
-  
+    
     <ui-view  name="fullDetail"
               case="vm.caseRecord" 
               is-active-edit="vm.isActiveEdit" 

@@ -6,7 +6,6 @@ module.exports = function(app) {
         template: require('./appContainer.template.html'),
         controller: [ 
                       '$state',
-                      '$firebaseAuth',
                       'localAuthService',
                        AppContainerController
                     ],
@@ -14,11 +13,11 @@ module.exports = function(app) {
         bindings: { 'user': '<'}
       });
 
-      function AppContainerController($state, $firebaseAuth, localAuthService) {
+      function AppContainerController($state, localAuthService) {
               const vm = this;
               
               
-              vm.authObj = $firebaseAuth();
+              
               
 
               // watch for changes in authentication state
@@ -43,7 +42,6 @@ module.exports = function(app) {
           
             // let the user log out
               vm.signout = function() {
-                // vm.authObj.$signOut();
                 vm.user = { SignedIn: false };
                 localAuthService.signout();
                 $state.go('login')

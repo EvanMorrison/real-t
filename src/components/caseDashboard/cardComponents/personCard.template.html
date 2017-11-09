@@ -1,0 +1,98 @@
+<edit-button  show-edit="vm.showEdit"
+              is-active-edit="vm.isActiveEdit">
+</edit-button>
+<md-card  class=" case-detail-card person-card">
+    
+
+    <!-- content for display (not editing) -->
+  <md-card-content ng-hide="vm.isActiveEdit"
+                   class="toggle-edits">
+    <div  class="md-title card-title"
+          ng-click="vm.handleEditClick()">
+      {{vm.category}}</div>
+    <div class="card-body-text">
+      <div class="md-title name">
+        {{vm.person.fullName}}
+      </div>
+      <div>
+        <div>
+          <strong>{{vm.person.phones[0].value | phone}}</strong>
+        </div>
+        <div>
+          <a href="mailto:{{vm.person.email}}">{{vm.person.email}}</a>
+        </div>
+      </div>
+      <div>
+        <div>
+          {{vm.person.address1}}
+        </div>
+        <div ng-if="ng.person.address2">
+          {{vm.person.address2}}
+        </div>
+        <div>
+          {{vm.person.city}}, {{vm.person.state}} {{vm.person.zip}}
+        </div>
+      </div>
+    </div>
+  </md-card-content>
+
+  <!-- content for editing -->
+  <md-card-content ng-show="vm.isActiveEdit"
+                    class="toggle-edit">
+      <div  class="md-title card-title"
+            ng-click="vm.handleEditClick()">
+        {{vm.category}}</div>
+      <div>
+        <form>
+            <md-input-container class="name">
+                <label>Name</label>
+                <input  ng-model="vm.person.fullName"
+                        type="text">
+            </md-input-container>
+            <md-input-container class="phone">
+                <label>Phone</label>
+                <input  ng-model="vm.person.phones[0].value"
+                        type="text">
+            </md-input-container>
+            <md-input-container class="email">
+                <label>Email</label>
+                <input  ng-model="vm.person.email"
+                        type="text">
+            </md-input-container>
+              <div layout="column" class="address-group">
+                <md-input-container class="address">
+                    <label>Address Line 1</label>
+                    <input  ng-model="vm.person.address1"
+                            type="text">
+                </md-input-container>
+                <md-input-container class="address">
+                    <label>Address Line 2</label>
+                    <input  ng-model="vm.person.address2"
+                            type="text">
+                </md-input-container>
+                <div class="city-stat-zip" layout="row">
+                    <md-input-container>
+                        <label>City</label>
+                        <input  ng-model="vm.person.city"
+                                type="text">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>State</label>
+                        <input  ng-model="vm.person.state"
+                                type="text">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Zip</label>
+                        <input  ng-model="vm.person.zip"
+                                type="text">
+                    </md-input-container>
+                </div>
+              </div>
+          <md-button class="save-btn">
+            Save
+          </md-button>
+        </form>
+      </div>
+  </md-card-content>
+
+</md-card>

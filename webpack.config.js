@@ -22,7 +22,6 @@ module.exports = (env = {}) => {
           'angular-messages',
           'angular-cookies',
           '@uirouter/angularjs',
-          'angularfire',
           './node_modules/angular-material/angular-material.scss',
         ]
       }

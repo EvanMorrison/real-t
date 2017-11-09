@@ -1,0 +1,63 @@
+<edit-button  show-edit="vm.showEdit"
+              is-active-edit="vm.isActiveEdit">
+</edit-button>
+<md-card class="case-detail-card">
+  <md-card-content ng-hide="vm.isActiveEdit"
+                   class="toggle-edits">
+    <div  class="md-title card-title"
+          ng-click="vm.handleEditClick()">
+      {{vm.category}}
+    </div>
+    <div class="card-body-text">
+        <div>
+          Original Principal: {{vm.loan.initialPrincipal | currency: "$" : "0" }}
+        </div>
+        <div>
+          Interest Rate: {{vm.loan.interestRate}}%
+        </div>
+        <div>
+          Maturity Date:{{vm.loan.maturityDate}}
+        </div>
+        <div>
+          Status: {{vm.loan.status}}
+        </div>
+      </div>
+  </md-card-content>
+
+  <md-card-content ng-show="vm.isActiveEdit"
+                      class="toggle-edit">
+    <div>
+      <div class="md-title card-title"
+           ng-click="vm.handleEditClick()">
+          {{vm.category}}
+      </div>
+      <form>
+          <div layout="column">
+            <md-input-container>
+                <label>Original Principal</label>
+                <input  ng-model="vm.loan.initialPrincipal"
+                        type="text">
+            </md-input-container>
+            <md-input-container>
+                <label>Interest Rate</label>
+                <input  ng-model="vm.loan.interestRate"
+                        type="text">
+            </md-input-container>
+            <md-input-container>
+                <label>Maturity Date</label>
+                <input  ng-model="vm.loan.maturityDate"
+                        type="text">
+            </md-input-container>
+            <md-input-container>
+                <label>Interest Rate</label>
+                <input  ng-model="vm.loan.status"
+                        type="text">
+            </md-input-container>
+          </div>
+          <md-button class="save-btn">
+              Save
+          </md-button>
+      </form>
+    </div>
+  </md-card-content>
+</md-card>

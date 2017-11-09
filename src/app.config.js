@@ -4,26 +4,7 @@
 
 module.exports = function(ngApp) {  
 
-  // config and initialize firebase
-  const config = {
-    apiKey: "AIzaSyBfxeu8LggGmAgO4fMn1AsNxkzmpwf6d6g",
-    authDomain: "real-t-e5280.firebaseapp.com",
-    databaseURL: "https://real-t-e5280.firebaseio.com",
-    projectId: "real-t-e5280",
-    storageBucket: "real-t-e5280.appspot.com",
-    messagingSenderId: "586766522818"
-  };
-  
-  firebase.initializeApp(config);
-
   ngApp
-  // initialize firebaseRefProvider
-    .config(['$firebaseRefProvider', function($firebaseRefProvider) {
-      $firebaseRefProvider.registerUrl({
-        default: config.databaseURL,
-        cases: config.databaseURL + '/cases'
-      })
-    }])
 
  // material design config for theming, etc.
     .config(['$mdThemingProvider', function($mdThemingProvider) {
@@ -130,8 +111,10 @@ module.exports = function(ngApp) {
                         parent: 'caseDashboard',
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          'editToolbar@caseDashboard': { component: 'editToolbar' },
-                          'fullDetail@caseDashboard': { component: 'fullDetail'}
+                          
+                          'cards': { component: 'cards' },
+                          'editToolbar@caseDashboard': { component: 'editToolbar' }
+                          // 'fullDetail@caseDashboard': { component: 'fullDetail'}
                         }
                       })
 

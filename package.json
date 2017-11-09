@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --env.production -p --progress && npm start",
-    "dev": "PORT=8080 nodemon --ignore src/ server.js",
-    "nmon": "NODE_ENV=production PORT=8080 nodemon server.js",
+    "devfe": "PORT=8080 nodemon --ignore src/ server.js",
+    "devbe": "NODE_ENV=production PORT=8080 nodemon server.js",
     "start": "NODE_ENV=production PORT=5000 node server.js"
   },
   "keywords": [],

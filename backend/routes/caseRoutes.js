@@ -20,7 +20,7 @@ router.get('/litelist', (req, res) => {
 // get all cases, populating most subdocuments
 router.get('/fulllist', (req, res) => {
   Case.find({})
-  .populate('clientContact clientOrg oppositePartyPerson oppositePartyOrg')
+  .populate('clientContact clientOrg borrowerPerson borrowerOrg')
   .populate('property loan documents')
   .exec()
   .then(result => res.json(result))

@@ -2,7 +2,6 @@ import './main.scss';
 import './animations.scss';
 
 const app = angular.module('RTApp', [
-                                      'firebase',
                                       'ngMaterial',
                                       'ngMessages',
                                       'ngResource',

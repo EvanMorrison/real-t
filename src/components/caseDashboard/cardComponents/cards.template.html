@@ -1,0 +1,52 @@
+<div class="case-card-group">
+  
+
+  <person-card  person="vm.case.clientContact"
+                category="Client"
+                class="case-detail-card-container person-card"
+                ng-class="{'active-edit' : vm.editClient}"
+                ng-click="vm.toggleCard($event)"
+                on-edit-click="vm.onEditClick()"
+                on-save-click="vm.onSaveClick()"
+                on-cancel-click="vm.onCancelClick()"
+                ng-mouseenter="vm.hoverClient=true"
+                ng-mouseleave="vm.hoverClient=false"
+                show-edit="vm.hoverClient">
+  </person-card>
+  <person-card  person="vm.case.borrowerPerson"
+                category="Borrower"
+                class="case-detail-card-container person-card"
+                ng-class="{'active-edit' : vm.editBorrower}"
+                ng-click="vm.toggleCard($event)"
+                on-edit-click="vm.onEditClick()"
+                on-save-click="vm.onSaveClick()"
+                on-cancel-click="vm.onCancelClick()"
+                ng-mouseenter="vm.hoverBorrower=true"
+                ng-mouseleave="vm.hoverBorrower=false"
+                show-edit="vm.hoverBorrower">
+  </person-card>
+  <loan-card    loan="vm.case.loan"
+                category="Loan"
+                class="case-detail-card-container loan-card"
+                ng-class="{'active-edit' : vm.editLoan }"
+                ng-click="vm.toggleCard($event)"
+                on-edit-click="vm.onEditClick()"
+                on-save-click="vm.onSaveClick()"
+                on-cancel-click="vm.onCancelClick()"
+                ng-mouseenter="vm.hoverLoan=true"
+                ng-mouseleave="vm.hoverLoan=false"
+                show-edit="vm.hoverLoan">
+  </loan-card>
+  <property-card  property="vm.case.property"
+                  category="Property"
+                  class="case-detail-card-container property-card"
+                  ng-class="{'active-edit' : vm.editProperty}"
+                  ng-click="vm.toggleCard($event)"
+                  on-edit-click="vm.onEditClick()"
+                  on-save-click="vm.onSaveClick()"
+                  on-cancel-click="vm.onCancelClick()"
+                  ng-mouseenter="vm.hoverProperty=true"
+                  ng-mouseleave="vm.hoverProperty=false"
+                  show-edit="vm.hoverProperty">
+  </property-card>
+</div>

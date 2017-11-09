@@ -1,4 +1,6 @@
   
+require('./caseDashboard.scss');
+
 module.exports = function(ngModule) {
   ngModule
     .config(['$compileProvider', function($compileProvider) {
@@ -95,30 +97,29 @@ module.exports = function(ngModule) {
                   })
               }
             
-              vm.caseList.$save(vm.caseRecord).then(function(ref) {
-                vm.isActiveEdit = !vm.isActiveEdit;
-                vm.waiting = false;
-                console.log('changes saved successfully for ', ref.key)
-                $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(true)
-                      .title('Saved')
-                      .textContent('Changes Saved Successfully')
-                      .ok('Ok')
-                )
-              })
-              .catch(function(err) {
-                vm.waiting = false;
-                console.log('error saving changes ', err)
-                  $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(true)
-                      .title('Error Saving')
-                      .textContent(`There was a problem saving: ${err}`)
-                      .ok('Ok')
-                )
+              // vm.caseList.$save(vm.caseRecord).then(function(ref) {
+              //   vm.isActiveEdit = !vm.isActiveEdit;
+              //   vm.waiting = false;
+              //   $mdDialog.show(
+              //       $mdDialog.alert()
+              //         .clickOutsideToClose(true)
+              //         .title('Saved')
+              //         .textContent('Changes Saved Successfully')
+              //         .ok('Ok')
+              //   )
+              // })
+              // .catch(function(err) {
+              //   vm.waiting = false;
+              //   console.log('error saving changes ', err)
+              //     $mdDialog.show(
+              //       $mdDialog.alert()
+              //         .clickOutsideToClose(true)
+              //         .title('Error Saving')
+              //         .textContent(`There was a problem saving: ${err}`)
+              //         .ok('Ok')
+              //   )
 
-              })
+              // })
           }
 
           // cancel edits restore original data
