@@ -1,0 +1,121 @@
+<edit-button show-edit="vm.showEdit"
+              is-active-edit="vm.isActiveEdit">
+</edit-button>
+<md-card class="case-detail-card property-card">
+
+    <!-- content for display (not editing) -->
+<md-card-content ng-hide="vm.isActiveEdit"
+                  class="toggle-edits">
+        <div  class="md-title card-title"
+              ng-click="vm.handleEditClick()">
+          {{vm.category}}
+        </div>
+      <div class="card-body-text">
+        <div>
+          <div>
+            {{vm.property.address1}}
+          </div>
+          <div ng-if="vm.property.address2">
+            {{vm.property.address2}}
+          </div>
+          <div>
+            {{vm.property.city}}, {{vm.property.state}} {{vm.property.zip}}
+          </div>
+        </div>
+        <div>
+          {{vm.property.county}} County 
+        </div>
+        <div>
+          parcel id. {{vm.property.taxParcelNo}}
+        </div>
+        <div class="card-body-text">
+          {{vm.property.legalDescription}}
+        </div>
+      </div>
+    </md-card-content>
+
+    <!-- content for editing -->
+    <md-card-content ng-show="vm.isActiveEdit"
+                      class="toggle-edit">
+    <div>
+      <div class="md-title card-title"
+            ng-click="vm.handleEditClick()">
+        {{vm.category}}
+      </div>
+        <form>
+            <div layout="column" class="address-group">
+                <md-input-container class="address">
+                  <label>Address Line 1</label>
+                  <input  ng-model="vm.property.address1"
+                          type="text"
+                          ng-change="vm.update()">
+                </md-input-container>
+                <md-input-container class="address">
+                  <label>Address Line 2</label>
+                  <input ng-model="vm.property.address2"
+                          type="text"
+                          ng-change="vm.update()">
+                </md-input-container>
+            <div class="city-stat-zip" layout="row">
+                <md-input-container class="city">
+                  <label>City</label>
+                  <input  ng-model="vm.property.city"
+                          type="text"
+                          ng-change="vm.update()">
+                </md-input-container>
+                <md-input-container class="state">
+                  <label>State</label>
+                  <input ng-model="vm.property.state"
+                          type="text"
+                          ng-change="vm.update()">
+                </md-input-container>
+                <md-input-container class="zip">
+                  <label>Zip</label>
+                  <input ng-model="vm.property.zip"
+                          type="text"
+                          ng-change="vm.update()">
+                </md-input-container>
+            </div>
+          </div>
+          
+          <div>
+            <md-input-container class="county">
+              <label>County</label>
+              <md-select  ng-model="vm.property.county"
+                          ng-change="vm.update()">
+                <md-option  ng-repeat="county in vm.Counties" 
+                            ng-value="county"
+                            ng-selected="county === '{{vm.property.county}}'" 
+                            ng-disabled="county != '{{vm.property.county}}' && !vm.isActiveEdit && !vm.isCreating">
+                      {{county}}
+                </md-option>  
+            </md-select>
+            </md-input-container>
+          </div>
+          <div>
+            <md-input-container class="parcel-id">
+              <label>Parcel Id.</label>
+              <input  ng-model="vm.property.taxParcelNo"
+                      type="text"
+                      ng-change="vm.update()">
+            </md-input-container>
+          </div>
+          <div layout="column">
+            <md-input-container class="legal-description">
+              <label>Legal Description</label>
+              <textarea ng-model="vm.property.legalDescription"
+                        ng-change="vm.update()">
+              </textarea>
+            </md-input-container>
+          </div>
+          <md-button class="save-btn"
+                      type="submit"
+                      ng-click="vm.handleSaveClick($event)"
+                      ng-disabled="vm.saved">
+              Save
+          </md-button>
+        </form>
+      </div>
+    </md-card-content>
+
+  </md-card>

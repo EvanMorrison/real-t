@@ -5,7 +5,8 @@
 module.exports = function(ngApp) {  
 
   ngApp
-  // material design config for theming, etc.
+
+ // material design config for theming, etc.
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('deep-purple')
@@ -110,8 +111,10 @@ module.exports = function(ngApp) {
                         parent: 'caseDashboard',
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          'editToolbar@caseDashboard': { component: 'editToolbar' },
-                          'fullDetail@caseDashboard': { component: 'fullDetail'}
+                          
+                          'cards': { component: 'cards' },
+                          'editToolbar@caseDashboard': { component: 'editToolbar' }
+                          // 'fullDetail@caseDashboard': { component: 'fullDetail'}
                         }
                       })
 

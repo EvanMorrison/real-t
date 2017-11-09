@@ -1,0 +1,102 @@
+@import '../../variables';
+
+
+.case-card-group {
+  max-width: 98%;
+  // min-width: 900px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+ 
+.case-detail-card-container {
+  flex: 0 0 33%;
+  position: relative;
+  outline: none;
+  &.property-card {
+    flex: 0 0 60%; 
+  }
+  &.active-edit {
+    flex: 0 0 90%;
+  }
+  .case-detail-card {
+    min-height: 240px;
+    .card-title {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .card-title:hover {
+      cursor: pointer;
+    }
+    .card-title:focus {
+      outline: none;
+    }
+    .card-body-text>* {
+      margin: 8px auto;
+      &.name {
+        font-weight: 900;
+        padding-bottom: 10px;
+      }
+    }
+
+    md-input-container {
+      margin: 5px 0;
+      md-select {
+        margin-bottom: 20px;
+      }
+    }
+    form {
+      // background-color: red;
+    }
+  }
+}
+
+
+
+.save-btn {
+  &:not([disabled]) {
+    background-color: $green;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+  }
+  &:not([disabled]):hover {
+    background-color: rgba($green-dk, .8);
+  }
+  &:disabled {
+    background-color: rgba($green,.2);
+  }
+}
+
+
+.toggle-edit.ng-hide-add, .toggle-edit.ng-hide-remove {
+  transition: .2s linear !important;
+}
+
+.toggle-edit.ng-hide-add {
+  opacity: 1 !important;
+}
+
+.toggle-edit.ng-hide-add.ng-hide-add-active {
+  height: 0;
+  opacity: 0 !important;
+}
+
+.toggle-edit.ng-hide-remove {
+  // height: 0;
+  opacity: 0 !important;
+}
+
+.toggle-edit.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1 !important;
+}
+
+.active-edit-add, .active-edit-remove {
+  transition: .2s cubic-bezier(.17,.67,.83,.67) !important;
+}
+
+.active-edit-add {
+  flex: 0 0 90%;
+}
+.active-edit-remove {
+  flex: 0 0 30%;
+}

@@ -1,4 +1,6 @@
   
+require('./caseDashboard.scss');
+
 module.exports = function(ngModule) {
   ngModule
     .config(['$compileProvider', function($compileProvider) {
@@ -80,34 +82,15 @@ module.exports = function(ngModule) {
           }
 
            // save edits to case info
-          vm.saveChanges = function() {
-            vm.waiting = true;
-            console.log('waiting status ', vm.waiting);
-              // convert date objects to strings for JSON format in database
-              if (vm.caseRecord.loan && vm.caseRecord.loan.DOT && vm.caseRecord.loan.DOT.recorded) {
-                  vm.caseRecord.loan.DOT.recorded = vm.caseRecord.loan.DOT.recorded.toString()
-              }
-              if (vm.caseRecord.loan && vm.caseRecord.loan.assignments) {
-                  angular.forEach(vm.caseRecord.loan.assignments, function(val, key) {
-                    if (val['recorded']) { 
-                      val['recorded'] = val['recorded'].toString()
-                    }
-                  })
-              }
-            
-              vm.caseList.$save(vm.caseRecord).then(function(ref) {
-                vm.isActiveEdit = !vm.isActiveEdit;
-                vm.waiting = false;
-                console.log('changes saved successfully for ', ref.key)
-                $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(true)
-                      .title('Saved')
-                      .textContent('Changes Saved Successfully')
-                      .ok('Ok')
-                )
+          vm.saveChanges = function(data, category) {
+            caseService.updateRecord(data, category)
+              .then(result => {
+                  vm.caseRecord = Object.assign({}, result, vm.caseRecord);
+                  console.log('result ', result);
+
               })
-              .catch(function(err) {
+              .catch(err => {
+                console.log('controller error with updating record ', err)
                 vm.waiting = false;
                 console.log('error saving changes ', err)
                   $mdDialog.show(
@@ -117,7 +100,6 @@ module.exports = function(ngModule) {
                       .textContent(`There was a problem saving: ${err}`)
                       .ok('Ok')
                 )
-
               })
           }
 

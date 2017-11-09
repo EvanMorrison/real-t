@@ -33,4 +33,14 @@ router.post('/new', (req, res) => {
   .catch(err => res.status(500).json(err));
 })
 
+router.put('/:id', (req, res) => {
+  Person.findByIdAndUpdate({ _id: req.params.id}, req.body, {new: true}, (err, result) => {
+    if (err) res.status(500).send(err);
+    else {
+      res.json(result);
+    }
+  })
+  
+})
+
 module.exports = router;

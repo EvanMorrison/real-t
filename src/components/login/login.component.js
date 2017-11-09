@@ -7,7 +7,6 @@ module.exports = function(AuthApp) {
       controller: [ '$mdDialog',
                     '$state',
                     'localAuthService',
-                    '$firebaseAuth',
                     LoginController
                   ],
       controllerAs: 'vm',
@@ -16,11 +15,10 @@ module.exports = function(AuthApp) {
       }
     });
 
-    function LoginController($mdDialog, $state, localAuthService, $firebaseAuth) {
+    function LoginController($mdDialog, $state, localAuthService) {
       const vm = this;
       vm.waiting = localAuthService.spinner;
       vm.signinError = false;
-      vm.authObj = $firebaseAuth();
 
             vm.showAlert = function(message) {
                     $mdDialog.show(
@@ -35,10 +33,7 @@ module.exports = function(AuthApp) {
             
         // user signout
         vm.signout = function($event) {
-          console.log('controller signing out')
           $event.preventDefault();
-          // signout
-          // vm.authObj.$signout();
           localAuthService.signout();
         }
 
@@ -72,17 +67,7 @@ module.exports = function(AuthApp) {
 
             // anonymous login
             vm.loginAnonymous = function($event) {
-              $event.preventDefault();
-                vm.waiting = true;
-                vm.authObj.$signInAnonymously()
-                .then(function(res){
-                  $state.go('home');
-                })
-                .catch(function(err) {
-                  vm.waiting = false;
-                  vm.showAlert(err)
-                  console.log('error with anonymous sign in ', err)
-                })
+            
             }
 
           // Google OAuth login

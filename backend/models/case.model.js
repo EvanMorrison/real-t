@@ -9,15 +9,16 @@ const caseSchema = new mongoose.Schema({
   clientContact: { type: ObjectId, ref: 'Person' },
   clientOrg: { type: ObjectId, ref: 'Organization'},
   clientAtty: { type: ObjectId, ref: 'Person'}, // outside counsel for client
-  oppositePartyPerson: { type: ObjectId, ref: 'Person' },
-  oppositePartyOrg: { type: ObjectId, ref: 'Organization' },
-  oppositePartyAtty: { type: ObjectId, ref: 'Person'},
+  borrowerType: { type: String, enum: ['natural person', 'business organization'] },
+  borrowerContact: { type: ObjectId, ref: 'Person' },
+  borrowerOrg: { type: ObjectId, ref: 'Organization' },
+  borrowerAtty: { type: ObjectId, ref: 'Person'},
   loan: {
     type: ObjectId, ref: 'Loan'
   },
   property: { type: ObjectId, ref: 'Property' },
   currentOwnerName: String,
-  ownerOccupied: Boolean,
+  isOwnerOccupied: Boolean,
   documents: { type: ObjectId, ref: 'Documents' },
   noticeAddresses: [
     { recipient: String,
