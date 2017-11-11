@@ -23,10 +23,11 @@ module.exports = function(app) {
         vm.onCaseSelected({id: $stateParams.recordId})
       }
     }
-    vm.toggleCard = function($event) {
+    vm.toggleCard = function($event, category) {
+      console.log('toggle card ', $event, category)
       let element = angular.element($event.target);
-      let text = $event.target.innerHTML;
-      if (element.hasClass('card-title')) {
+      let text = category || $event.target.innerHTML;
+      if (element.hasClass('card-title') || element.hasClass('save-btn')) {
         if (text.indexOf('Client') > -1) vm.editClient = !vm.editClient;
         else if (text.indexOf('Borrower') > -1) vm.editBorrower = !vm.editBorrower;
         else if (text.indexOf('Loan') > -1) vm.editLoan = !vm.editLoan;

@@ -10,7 +10,7 @@ const caseSchema = new mongoose.Schema({
   clientOrg: { type: ObjectId, ref: 'Organization'},
   clientAtty: { type: ObjectId, ref: 'Person'}, // outside counsel for client
   borrowerType: { type: String, enum: ['natural person', 'business organization'] },
-  borrowerPerson: { type: ObjectId, ref: 'Person' },
+  borrowerContact: { type: ObjectId, ref: 'Person' },
   borrowerOrg: { type: ObjectId, ref: 'Organization' },
   borrowerAtty: { type: ObjectId, ref: 'Person'},
   loan: {

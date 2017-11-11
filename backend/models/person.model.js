@@ -5,10 +5,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 const personSchema = new mongoose.Schema({
-  fullName: String,
-  nickName: String,
   firstName: String, 
   lastName: String, 
+  fullName: String,
+  nickName: String,
   relationship: String, // client, opposite party, attorney, service provider
   organization: { // for individuals
     type: ObjectId, ref: 'Organization'

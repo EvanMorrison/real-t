@@ -3,9 +3,6 @@ module.exports = function(ngModule) {
 
   ngModule
     .service('caseService', [
-                                // '$firebaseArray', 
-                                // '$firebaseObject', 
-                                // '$firebaseRef', 
                                 '$http',
                                 '$stateParams', 
                                 CaseService
@@ -16,10 +13,6 @@ module.exports = function(ngModule) {
       const self = this;
       self.CaseList = [];
 
-      this.getFullCase = (searchId) => {
-            
-          return $firebaseObject($firebaseRef.cases.child(searchId));
-      }
 
       this.LoadAllCases = () => {
         if (!(self.CaseList.length > 0)) {    
@@ -36,19 +29,21 @@ module.exports = function(ngModule) {
             })
         } else return self.CaseList;
       }
-    //   this.LoadAllCases = () => {
-    //         self.waiting = true;
-    //         return $firebaseArray($firebaseRef.cases)
-    //             .$loaded(function(res) {
-    //                 self.waiting = false;
-    //                 self.CaseList = res;
-    //                 return self.CaseList;
-    //             }, function(err) {
-    //                 self.waiting = false;
-    //                 return err;
-    //             })
-
-    //   }
+      
+      this.updateRecord = (data, category) => {
+          category = category.toLowerCase();
+        self.waiting = true;
+            return $http.put('/api/' + category + '/' + data._id, data)
+            .then((result) => {
+                self.waiting = false;
+                self.updatedRecord = result.data;
+                return self.updatedRecord
+            })
+            .catch(err => {
+                console.log('service error in update record ', err);
+                return err;
+            })
+      }
       
     }
 

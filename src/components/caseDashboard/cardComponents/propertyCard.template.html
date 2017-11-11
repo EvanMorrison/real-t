@@ -47,28 +47,33 @@
                 <md-input-container class="address">
                   <label>Address Line 1</label>
                   <input  ng-model="vm.property.address1"
-                          type="text">
+                          type="text"
+                          ng-change="vm.update()">
                 </md-input-container>
                 <md-input-container class="address">
                   <label>Address Line 2</label>
                   <input ng-model="vm.property.address2"
-                          type="text">
+                          type="text"
+                          ng-change="vm.update()">
                 </md-input-container>
             <div class="city-stat-zip" layout="row">
                 <md-input-container class="city">
                   <label>City</label>
                   <input  ng-model="vm.property.city"
-                          type="text">
+                          type="text"
+                          ng-change="vm.update()">
                 </md-input-container>
                 <md-input-container class="state">
                   <label>State</label>
                   <input ng-model="vm.property.state"
-                          type="text">
+                          type="text"
+                          ng-change="vm.update()">
                 </md-input-container>
                 <md-input-container class="zip">
                   <label>Zip</label>
                   <input ng-model="vm.property.zip"
-                          type="text">
+                          type="text"
+                          ng-change="vm.update()">
                 </md-input-container>
             </div>
           </div>
@@ -76,7 +81,8 @@
           <div>
             <md-input-container class="county">
               <label>County</label>
-              <md-select  ng-model="vm.property.county">
+              <md-select  ng-model="vm.property.county"
+                          ng-change="vm.update()">
                 <md-option  ng-repeat="county in vm.Counties" 
                             ng-value="county"
                             ng-selected="county === '{{vm.property.county}}'" 
@@ -90,17 +96,22 @@
             <md-input-container class="parcel-id">
               <label>Parcel Id.</label>
               <input  ng-model="vm.property.taxParcelNo"
-                      type="text">
+                      type="text"
+                      ng-change="vm.update()">
             </md-input-container>
           </div>
           <div layout="column">
             <md-input-container class="legal-description">
               <label>Legal Description</label>
-              <textarea ng-model="vm.property.legalDescription">
+              <textarea ng-model="vm.property.legalDescription"
+                        ng-change="vm.update()">
               </textarea>
             </md-input-container>
           </div>
-          <md-button class="save-btn">
+          <md-button class="save-btn"
+                      type="submit"
+                      ng-click="vm.handleSaveClick($event)"
+                      ng-disabled="vm.saved">
               Save
           </md-button>
         </form>

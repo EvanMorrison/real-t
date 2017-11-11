@@ -82,44 +82,25 @@ module.exports = function(ngModule) {
           }
 
            // save edits to case info
-          vm.saveChanges = function() {
-            vm.waiting = true;
-            console.log('waiting status ', vm.waiting);
-              // convert date objects to strings for JSON format in database
-              if (vm.caseRecord.loan && vm.caseRecord.loan.DOT && vm.caseRecord.loan.DOT.recorded) {
-                  vm.caseRecord.loan.DOT.recorded = vm.caseRecord.loan.DOT.recorded.toString()
-              }
-              if (vm.caseRecord.loan && vm.caseRecord.loan.assignments) {
-                  angular.forEach(vm.caseRecord.loan.assignments, function(val, key) {
-                    if (val['recorded']) { 
-                      val['recorded'] = val['recorded'].toString()
-                    }
-                  })
-              }
-            
-              // vm.caseList.$save(vm.caseRecord).then(function(ref) {
-              //   vm.isActiveEdit = !vm.isActiveEdit;
-              //   vm.waiting = false;
-              //   $mdDialog.show(
-              //       $mdDialog.alert()
-              //         .clickOutsideToClose(true)
-              //         .title('Saved')
-              //         .textContent('Changes Saved Successfully')
-              //         .ok('Ok')
-              //   )
-              // })
-              // .catch(function(err) {
-              //   vm.waiting = false;
-              //   console.log('error saving changes ', err)
-              //     $mdDialog.show(
-              //       $mdDialog.alert()
-              //         .clickOutsideToClose(true)
-              //         .title('Error Saving')
-              //         .textContent(`There was a problem saving: ${err}`)
-              //         .ok('Ok')
-              //   )
+          vm.saveChanges = function(data, category) {
+            caseService.updateRecord(data, category)
+              .then(result => {
+                  vm.caseRecord = Object.assign({}, result, vm.caseRecord);
+                  console.log('result ', result);
 
-              // })
+              })
+              .catch(err => {
+                console.log('controller error with updating record ', err)
+                vm.waiting = false;
+                console.log('error saving changes ', err)
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(true)
+                      .title('Error Saving')
+                      .textContent(`There was a problem saving: ${err}`)
+                      .ok('Ok')
+                )
+              })
           }
 
           // cancel edits restore original data

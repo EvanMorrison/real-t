@@ -20,7 +20,7 @@ router.get('/litelist', (req, res) => {
 // get all cases, populating most subdocuments
 router.get('/fulllist', (req, res) => {
   Case.find({})
-  .populate('clientContact clientOrg borrowerPerson borrowerOrg')
+  .populate('clientContact clientOrg borrowerContact borrowerOrg')
   .populate('property loan documents')
   .exec()
   .then(result => res.json(result))
@@ -49,7 +49,6 @@ router.post('/new', (req, res) => {
   
 
 })
-
 
 router.delete('/:id', (req, res) => {
   Case.findByIdAndRemove(req.params.id)

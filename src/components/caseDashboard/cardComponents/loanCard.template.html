@@ -36,25 +36,32 @@
             <md-input-container>
                 <label>Original Principal</label>
                 <input  ng-model="vm.loan.initialPrincipal"
-                        type="text">
+                        type="text"
+                        ng-change="vm.update()">
             </md-input-container>
             <md-input-container>
                 <label>Interest Rate</label>
                 <input  ng-model="vm.loan.interestRate"
-                        type="text">
+                        type="text"
+                        ng-change="vm.update()">
             </md-input-container>
             <md-input-container>
                 <label>Maturity Date</label>
                 <input  ng-model="vm.loan.maturityDate"
-                        type="text">
+                        type="text"
+                        ng-change="vm.update()">
             </md-input-container>
             <md-input-container>
                 <label>Interest Rate</label>
                 <input  ng-model="vm.loan.status"
-                        type="text">
+                        type="text"
+                        ng-change="vm.update()">
             </md-input-container>
           </div>
-          <md-button class="save-btn">
+          <md-button class="save-btn" 
+                      type="submit"
+                      ng-click="vm.handleSaveClick($event)"
+                      ng-disabled="vm.saved">
               Save
           </md-button>
       </form>
