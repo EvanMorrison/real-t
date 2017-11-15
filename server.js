@@ -43,9 +43,7 @@ app.use('/api', expressJWT({secret: config.token_secret}));
 app.use('/api/user', require('./backend/routes/userRoutes'));
 app.use('/api/case', require('./backend/routes/caseRoutes'));
 app.use('/api/person', require('./backend/routes/personRoutes'));
-app.use('/api/organization', require('./backend/routes/organizationRoutes'));
 app.use('/api/property', require('./backend/routes/propertyRoutes'));
-app.use('/api/loan', require('./backend/routes/loanRoutes'));
 app.use('/api/documents', require('./backend/routes/documentsRoutes'));
 
 

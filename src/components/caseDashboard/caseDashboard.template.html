@@ -13,7 +13,7 @@
 <md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
           md-component-id="sideMenu" 
           md-disable-backdrop
-          md-is-locked-open="$mdMedia('min-width:500px')"
+          md-is-locked-open="vm.isLockedOpen"
           >
       <md-toolbar class="md-toolbar-tools md-hue-3">
         <h3>Cases</h3>
@@ -40,6 +40,7 @@
           </md-list-item>  
         </md-list>
       </div>
+     
 </md-sidenav>
             
             <md-button  class="md-fab md-accent"
@@ -55,7 +56,7 @@
 <md-content layout="column" class="dashboard-content">
     
     <div class="dashboard-title-container" ng-hide="vm.isCreating" >
-      <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.loan.lender}} / {{vm.caseRecord.loan.borrower}} / {{vm.caseRecord.property.address1}}</small></h2>
+      <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.lender[0].displayName}} / {{vm.caseRecord.borrower[0].displayName}} / {{vm.caseRecord.property.address1}}</small></h2>
       <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View or 
            Create A New Case
           <md-button  ng-click="vm.gotoNewCase()" 
@@ -81,7 +82,8 @@
                 on-edit-click="vm.toggleEdit()"
                 on-save-click="vm.saveChanges(data, category)"
                 on-cancel-click="vm.cancelChanges()"
-                on-case-selected="vm.caseLookup(id)">
+                on-case-selected="vm.caseLookup(id)"
+                is-new-case="vm.isNewCase">
       </ui-view>
     
     <ui-view  name="editToolbar"
@@ -92,13 +94,6 @@
     </ui-view>
     
     
-    <ui-view  name="fullDetail"
-              case="vm.caseRecord" 
-              is-active-edit="vm.isActiveEdit" 
-              on-exit="vm.clearCaseRecord()"
-              on-case-selected="vm.caseLookup(id)">
-    </ui-view>
-
     <ui-view  name="newCase"
               newcase="vm.caseRecord"
               on-update="vm.autoSaveChanges()"

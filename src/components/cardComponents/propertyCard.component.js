@@ -7,23 +7,22 @@ module.exports = function(app) {
     controllerAs: 'vm',
     bindings: {
                 'property': '<',
-                'showEdit': '<',
                 'category': '@',
-                'onEditClick': '&',
-                'onSaveClick': '&',
-                'toggleCard' : '&'
+                'showEditBtn': '<',
+                'showInputs': '<',
+                'onSaveClick' : '&',
+                'onEditClick' : '&'
     }
   })
 
   function PropertyCardController() {
     const vm = this;
-    vm.isActiveEdit = false;
     vm.saved = true;
     
     vm.handleEditClick = $event => {
-      vm.isActiveEdit = !vm.isActiveEdit;
-      vm.onEditClick();
+        vm.onEditClick({$event: $event, category: vm.category});
     }
+    
 
     vm.update = () => {
       vm.saved = false;
@@ -32,8 +31,7 @@ module.exports = function(app) {
     vm.handleSaveClick = $event => {
       vm.onSaveClick({data: vm.property, category: vm.category});
       vm.saved = true;
-      vm.handleEditClick();
-      vm.toggleCard({$event: $event, category: vm.category});
+      vm.handleEditClick($event);
     }  
 
     // county selection input options

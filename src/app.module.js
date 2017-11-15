@@ -20,8 +20,10 @@ require('./components/home')(app);
 require('./components/login/login.component')(app);
 require('./components/legacyViews/legacyViews.component')(app);
 
+require('./components/cardComponents')(app);
+
 require('./components/caseList')(app);
 
 require('./components/caseDashboard')(app);
 
-require('./components/newCase/newCase.component')(app);
+require('./components/newCase')(app);

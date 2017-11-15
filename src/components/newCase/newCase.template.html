@@ -1,38 +1,98 @@
 
-<div class="create-toolbar-container" style="position:relative;min-height:60px">
-  <div layout="row" layout-align="start"
-  style="left:15vw">
-     
-      <md-button  class="md-hue-3"
-                    aria-label="cancel changes"
-                    ng-click="vm.cancel()"
-                    ng-disabled="!vm.isCreating">
-          <md-tooltip md-direction="bottom">cancel without saving</md-tooltip>
-          <md-icon class="icon-cancel"></md-icon> Cancel
-      </md-button>
-
-      <md-button  class="md-button md-hue-3"
-                    aria-label="finalize and save"
-                    ng-click="vm.finalize()"
-                    ng-disabled="!vm.isCreating">
-          <md-tooltip md-direction="bottom">finalize</md-tooltip>
-          <md-icon class="icon-cloud_upload"></md-icon> Finalize & Goto Case Overview
-      </md-button>
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
+    <h3 >{{vm.viewTitle}}</h3>
+  </md-toolbar>
+  
+  <div layout="row">
+  
+  <!-- Dashboard Layout-->
+  <md-content layout="column" class="dashboard-content">
       
+     
+        <div class="create-toolbar-container" style="position:relative;min-height:60px">
+            <div layout="row" layout-align="start"
+            style="left:15vw">
+               
+                <md-button  class="md-hue-3"
+                              aria-label="cancel changes"
+                              ng-click="vm.cancelWithoutSaving()"
+                              ng-disabled="!vm.isCreating">
+                    <md-tooltip md-direction="bottom">cancel without saving</md-tooltip>
+                    <md-icon class="icon-cancel"></md-icon> Cancel Without Saving
+                </md-button>
+          
+                <md-button  class="md-button md-hue-3"
+                              aria-label="finalize and save"
+                              ng-click="vm.finalize()"
+                              ng-disabled="!vm.isCreating">
+                    <md-tooltip md-direction="bottom">finalize</md-tooltip>
+                    <md-icon class="icon-cloud_upload"></md-icon> Create Case With Current Information
+                </md-button>
+                
+            </div>
+          </div>
+          <md-button ng-click="vm.initiateNewCase()"
+                     ng-disabled="vm.isCreating">
+              initiate new case
+          </md-button>
+          
+          
+          
+          <md-card class="case-card-group" flex layout="column">
+              <md-card-content flex>
+                  <div layout="row" layout-align="start center">
+                    <h1 class="md-headline" 
+                          style="position:relative;top:-10px;margin-right:10px" 
+                          flex-offset-gt-xs="5">
+                      Case: 
+                    </h1>
+                    <md-input-container >
+                        <label >Case Number</label>
+                        <input  class="md-headline"
+                                type="text" 
+                                ng-model="vm.newCase.caseNum">
+                    </md-input-container>
+                  </div>
+                <new-case-card  flex class="case-card" 
+                                names="vm.names" 
+                                category="Lender"
+                                on-submit="vm.submitForm($event, data)">
+                    
+                </new-case-card>
+              </md-card-content>
+          </md-card>
+                
+                <div    class="case-card-group"
+                        ng-show="vm.isCreating">
+                
+                
+                <person-card class="new-case-card case-detail-card-container active-edit"
+                             person="vm.newCase.lender" 
+                             category="Lender"
+                             show-inputs="vm.showInputs">
+                </person-card>
+                <person-card class="new-case-card case-detail-card-container active-edit"
+                             person="vm.newCase.borrower" 
+                             category="Borrower"
+                             show-inputs="vm.showInputs">
+                </person-card>
+                <loan-card   class="new-case-card case-detail-card-container active-edit"
+                             loan="vm.newCase.loan" 
+                             category="Loan"
+                             show-inputs="vm.showInputs">
+                </loan-card>
+                <property-card  class="new-case-card case-detail-card-container active-edit"
+                                property="vm.newCase.property" 
+                                category="Property"
+                                show-inputs="vm.showInputs">
+                </property-card>
+            </div>
+           
+           
+                
+  
+    </md-content>
   </div>
-</div>
-
-      <div layout="row" layout-align="start center">
-        <h1 class="md-headline" style="position:relative;top:-10px;margin-right:10px" flex-offset-gt-xs="5">Case: </h1>
-        <md-input-container >
-            <label >Case Number</label>
-            <input  class="md-headline"
-                    type="text" 
-                    ng-model="vm.newcase.caseId"
-                    ng-change="vm.saveChanges()"
-                    ng-readonly="!vm.isCreating">
-        </md-input-container>
-      </div>
-  <ui-view class="view-frame" case="vm.newcase" on-update="vm.onUpdate()" is-active-edit="vm.isActiveEdit" is-creating="vm.isCreating" ></ui-view>
+  
 
 

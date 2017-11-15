@@ -6,17 +6,18 @@ module.exports = (app) => {
       template: require('./caseList.template.html'),
       controller: [ 
                     '$mdDialog',
-                    '$state', 
+                    '$state',
+                    'caseService', 
                     CasesController
                   ],
       controllerAs: 'vm',
       bindings: { caseList : '<'},
     });
 
-    function CasesController($mdDialog, $state) {
+    function CasesController($mdDialog, $state, caseService) {
       const vm = this;
 
-      vm.orderProp = 'caseId';
+      vm.orderProp = 'caseNum';
 
       // toggle parent or child state depending on what is currently showing
       vm.toggleSelected = function(index) {
@@ -29,27 +30,29 @@ module.exports = (app) => {
       }
 
       // delete a case from the database and the local firebaseArray    
-      vm.deleteCase = function(ev, caseObj) {
+      vm.deleteCase = function($event, caseRecord) {
         const confirm = $mdDialog.prompt()
           .title('Delete Case')
-          .textContent(`To delete case ${caseObj.caseId}, enter the case number below.\nThis cannot be undone.`)
-          .placeholder(caseObj.caseId)
-          .targetEvent(ev)
+          .textContent(`To delete case ${caseRecord.caseNum}, enter the case number below.\nThis cannot be undone.`)
+          .placeholder(caseRecord.caseNum)
+          .initialValue(caseRecord.caseNum) // delete this line in production
+          .targetEvent($event)
           .ok('Delete')
           .cancel('Cancel')
 
         $mdDialog.show(confirm)
           .then(function(result) {
               vm.waiting = true;
-              if (result == caseObj.caseId) {
-                vm.caseList.$remove(caseObj)
-                  .then(function(ref){
+              if (result == caseRecord.caseNum) {
+                console.log('trying to delete case ', caseRecord._id)
+                caseService.deleteCase(caseRecord)
+                  .then(function(result){
                     vm.waiting = false;
                     $mdDialog.show(
                       $mdDialog.alert()
                         .clickOutsideToClose(true)
                         .title('Success')
-                        .textContent(`Case ${caseObj.caseId} has been permanently deleted.`)
+                        .textContent(`Case ${caseRecord.caseNum} has been permanently deleted.`)
                         .ok('Ok')
                     )
                   }, function(err) {
@@ -58,7 +61,7 @@ module.exports = (app) => {
                       $mdDialog.alert()
                         .clickOutsideToClose(true)
                         .title('Error')
-                        .textContent(`Case ${caseObj.caseId} has been permanently deleted.`)
+                        .textContent(`Could not delete case ${caseRecord.caseNum}. \n${err.status} ${err.statusText}.`)
                         .ok('Ok')
                     )
                   })
@@ -82,7 +85,7 @@ module.exports = (app) => {
 
       // goto to caseFocus view for a selected case
       vm.gotoCase = function (caseObj) {
-          $state.go('caseFocus', {recordId: caseObj.$id })
+          $state.go('caseFocus', {recordId: caseObj.caseNum })
       }
 
 

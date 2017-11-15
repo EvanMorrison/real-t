@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 
 const Case = require('../models/case.model');
 const Person = require('../models/person.model');
-const Organization = require('../models/organization.model');
 const Documents = require('../models/documents.model');
-const Loan = require('../models/loan.model');
 const Property = require('../models/property.model');
 
 // Route requires authentication
@@ -20,8 +18,8 @@ router.get('/litelist', (req, res) => {
 // get all cases, populating most subdocuments
 router.get('/fulllist', (req, res) => {
   Case.find({})
-  .populate('clientContact clientOrg borrowerContact borrowerOrg')
-  .populate('property loan documents')
+  .populate('lender lenderAtty borrower borrowerAtty')
+  .populate('property documents')
   .exec()
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err))
@@ -30,8 +28,8 @@ router.get('/fulllist', (req, res) => {
 // get 1 case by id and fully populate all subdocuments
 router.get('/:id', (req, res) => {
   Case.findOne({ _id: req.params.id })
-  .populate('clientContact clientOrg clientAtty oppositePartyPerson oppositePartyOrg oppositePartyAtty')
-  .populate('property loan documents')
+  .populate('lender lenderAtty borrower borrowerAtty otherParties')
+  .populate('property documents')
   .exec()
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err))
@@ -45,15 +43,21 @@ router.post('/new', (req, res) => {
     .then(result => res.json(result))
     .catch(err => res.status(500).json(err));
   })
-  
-  
+})
 
+router.put('/:id', (req, res) => {
+  Case.findByIdAndUpdate({ _id: req.params.id}, req.body, {new: true})
+    .then(result => res.json(result))
+    .catch(err => res.status(500).send(err));
 })
 
 router.delete('/:id', (req, res) => {
   Case.findByIdAndRemove(req.params.id)
   .then(result => res.json(result))
-  .catch(err => res.json(err));
-})
+  .catch(err => {
+    console.log('error: ', err)
+    res.status(500).json(err);
+  });
+});
 
 module.exports = router;

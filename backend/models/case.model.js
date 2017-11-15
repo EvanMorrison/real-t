@@ -1,3 +1,4 @@
+
 // CASE MODEL: The collection of people, property, etc. that constitute a distinct case, project, matter, loan, etc.
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -6,39 +7,85 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const caseSchema = new mongoose.Schema({
   caseNum: String,
-  clientContact: { type: ObjectId, ref: 'Person' },
-  clientOrg: { type: ObjectId, ref: 'Organization'},
-  clientAtty: { type: ObjectId, ref: 'Person'}, // outside counsel for client
-  borrowerType: { type: String, enum: ['natural person', 'business organization'] },
-  borrowerContact: { type: ObjectId, ref: 'Person' },
-  borrowerOrg: { type: ObjectId, ref: 'Organization' },
-  borrowerAtty: { type: ObjectId, ref: 'Person'},
-  loan: {
-    type: ObjectId, ref: 'Loan'
-  },
-  property: { type: ObjectId, ref: 'Property' },
-  currentOwnerName: String,
-  isOwnerOccupied: Boolean,
-  documents: { type: ObjectId, ref: 'Documents' },
-  noticeAddresses: [
-    { recipient: String,
-      address1: String,
-      address2: String,
-      city: String,
-      state: String,
-      zip: String
+
+  lender: [  
+    { type: ObjectId, ref: 'Person' }
+  ],
+
+  isLenderRepresented: { type: Boolean, default: false },
+
+  lenderAtty: [
+    { 
+      attorney: { type: ObjectId, ref: 'Person' },  
+      represents: { type: ObjectId, ref: 'Person' }
+    },
+  ],
+  
+  borrower: [
+    { type: ObjectId, ref: 'Person' }
+  ],
+
+  isBorrowerRepresented: { type: Boolean, default: false },
+
+  borrowerAtty: [
+    { 
+      attorney: { type: ObjectId, ref: 'Person' },  
+      represents: { type: ObjectId, ref: 'Person' }
+    },
+  ],
+
+  otherParties: [
+    {
+      party: { type: ObjectId, ref: 'Person' },
+      role: String,  // appraiser, surveyor, etc., or additional parties requesting notices
+      getsLegalNotices: { type: Boolean, default: false }
     }
   ],
+
+  loan: {
+    loanDate: Date,
+    originalPrincipalAmount: Number,
+    interestRate: Number,
+    installmentAmount: Number,
+    installmentPeriod: { type: String, default: 'monthly' },
+    finalPaymentAmount: Number,
+    maturityDate: Date,
+    currentPrincipal: {
+      amount: Number,
+      asOf: Date
+    },
+    delinquencyDate: Date,
+    defaultInterestRate: Number,
+    pastDue: {
+      pAndI: Number,
+      lateFees: Number,
+      costs: Number,
+      other: [
+        { description: String,
+          amount: Number },
+      ],
+      asOf: Date
+    },
+  },
+  
+  property: { type: ObjectId, ref: 'Property' },
+  
+  currentOwnerName: String,
+  isOwnerOccupied: { type: Boolean, default: false },
+  
+  documents: { type: ObjectId, ref: 'Documents' },
+  
   tasks: [
     {
       taskName: String,
       taskDescription: String,
-      dueDate: Date
+      dueDate: Date,
+      isCompleted: { type: Boolean, default: false }
     }
   ],
   status: [
     {
-      status: String,
+      description: String,
       createdAt: Date,
       createdBy: { type: ObjectId, ref: 'User'}, // User Id
       updatedAt: Date

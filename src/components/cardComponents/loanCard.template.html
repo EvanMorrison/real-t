@@ -1,11 +1,11 @@
-<edit-button  show-edit="vm.showEdit"
-              is-active-edit="vm.isActiveEdit">
+<edit-button  show-edit-btn="vm.showEditBtn"
+              show-inputs="vm.showInputs">
 </edit-button>
 <md-card class="case-detail-card">
-  <md-card-content ng-hide="vm.isActiveEdit"
+  <md-card-content ng-hide="vm.showInputs"
                    class="toggle-edits">
     <div  class="md-title card-title"
-          ng-click="vm.handleEditClick()">
+          ng-click="vm.handleEditClick($event)">
       {{vm.category}}
     </div>
     <div class="card-body-text">
@@ -24,11 +24,11 @@
       </div>
   </md-card-content>
 
-  <md-card-content ng-show="vm.isActiveEdit"
+  <md-card-content ng-show="vm.showInputs"
                       class="toggle-edit">
     <div>
       <div class="md-title card-title"
-           ng-click="vm.handleEditClick()">
+           ng-click="vm.handleEditClick($event)">
           {{vm.category}}
       </div>
       <form>
