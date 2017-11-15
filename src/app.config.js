@@ -9,13 +9,23 @@ module.exports = function(ngApp) {
  // material design config for theming, etc.
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
-        .primaryPalette('deep-purple')
-        .accentPalette('indigo')
+        .primaryPalette('deep-purple', {
+          'default' : '400',
+          'hue-1': '100',
+          'hue-2' : '600',
+          'hue-3' : 'A100'
+        })
+        .accentPalette('green', {
+          'default' : '600',
+          'hue-1' : '100',
+          'hue-2' : '600',
+          'hue-3' : 'A100'
+        })
     }])
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('Auth')
         .primaryPalette('red')
-        .accentPalette('indigo', {
+        .accentPalette('light-blue', {
           'default' : '600'
         })
     }])
@@ -45,17 +55,15 @@ module.exports = function(ngApp) {
             resolve: {
               'user': ['localAuthService', function(localAuthService) {
                 return localAuthService.getUser().then( (usr) => usr);
-                        
               }]
             }
           })
-          
+             // mainLayout is the parent container for header/navigation and content views 
               .state('mainLayout', {
                 parent: 'index',
                 abstract: true,
                 views: {
                   '@index': { component: 'mainLayout' }
-
                 }
               })
 
@@ -86,43 +94,58 @@ module.exports = function(ngApp) {
                     },
                     resolve: {
                       caseList: ['caseService', function(caseService) {
-                                            return caseService.LoadAllCases();
+                                            return caseService.loadCaseList();
                                 }]
+                    }
+                  })
+
+                  .state('caseDataContainer', {
+                    abstract: true,
+                    parent: 'mainLayout',
+                    views: {
+                      'headerContent@mainLayout': { component: 'navbar'},
+                      'bodyContent@mainLayout': {component: 'rtCaseDataContainer'}
                     }
                   })
 
                   .state('caseDashboard', {
                     url: '/dashboard',
-                    parent: 'mainLayout',
-                    params: { isNewCase: null },
+                    parent: 'caseDataContainer',
+                    params: { 'caseNum': null },
                     views: {
-                      'headerContent@mainLayout': { component: 'navbar' },
-                      'bodyContent@mainLayout': { component: 'caseDashboard' }
+                      'view@caseDataContainer': { component: 'caseDashboard' }
                     },
                     resolve: {
                       caseList: ['caseService', function(caseService) {
-                                                  return caseService.LoadAllCases()
-                                                  
+                                                  return caseService.loadCaseList();
                                               }]
                     }
                   })
                       .state('caseFocus', {
-                        url: '/{recordId}',
+                        url: '/{caseNum}',
                         parent: 'caseDashboard',
+                        params: { 'case_id': null },
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          'cards': { component: 'cards' },
-                          'editToolbar@caseDashboard': { component: 'editToolbar' }
+                          'info@caseDashboard': { component: 'rtCaseInfo' },
                         }
                       })
 
-                    .state('newCase', {
-                      url: '/create-new-case',
-                      parent: 'mainLayout',
+                    .state('caseSetupStart', {
+                      url: '/case-setup',
+                      parent: 'caseDataContainer',
                       views: {
-                        'headerContent@mainLayout': { component: 'navbar' },
-                        'bodyContent@mainLayout': { component: 'newCase' },
+                        'view@caseDataContainer': { component: 'rtCaseSetup'}
                       },
+                    })
+
+                    .state('caseSetup', {
+                      url: '/{caseNum}',
+                      parent: 'caseSetupStart',
+                      params: {'case_id': null},
+                      views: {
+                        'view@caseDataContainer': { component: 'rtCaseSetup'}
+                      }
                     })
 
                   .state('legacyforms', {

@@ -12,34 +12,20 @@ const caseSchema = new mongoose.Schema({
     { type: ObjectId, ref: 'Person' }
   ],
 
-  isLenderRepresented: { type: Boolean, default: false },
-
-  lenderAtty: [
-    { 
-      attorney: { type: ObjectId, ref: 'Person' },  
-      represents: { type: ObjectId, ref: 'Person' }
-    },
+  lenderAttorney: [
+    { type: ObjectId, ref: 'Attorney' },  
   ],
   
   borrower: [
     { type: ObjectId, ref: 'Person' }
   ],
 
-  isBorrowerRepresented: { type: Boolean, default: false },
-
-  borrowerAtty: [
-    { 
-      attorney: { type: ObjectId, ref: 'Person' },  
-      represents: { type: ObjectId, ref: 'Person' }
-    },
+  borrowerAttorney: [
+    { type: ObjectId, ref: 'Attorney' },
   ],
 
   otherParties: [
-    {
-      party: { type: ObjectId, ref: 'Person' },
-      role: String,  // appraiser, surveyor, etc., or additional parties requesting notices
-      getsLegalNotices: { type: Boolean, default: false }
-    }
+    { type: ObjectId, ref: 'OtherParty' },
   ],
 
   loan: {
@@ -56,23 +42,51 @@ const caseSchema = new mongoose.Schema({
     },
     delinquencyDate: Date,
     defaultInterestRate: Number,
-    pastDue: {
+    payoff: {
       pAndI: Number,
       lateFees: Number,
       costs: Number,
       other: [
         { description: String,
-          amount: Number },
+          amount: Number,
+          _id: false }
       ],
       asOf: Date
     },
   },
   
-  property: { type: ObjectId, ref: 'Property' },
+  property: [
+    { type: ObjectId, ref: 'Property' }
+  ],
   
-  currentOwnerName: String,
+  currentVesting: String,
   isOwnerOccupied: { type: Boolean, default: false },
   
+  saleInfo: {
+    projectedSaleDate: { type: Date, default: function() {
+      let date = new Date();
+      date.setDate(date.getDate() + 125);
+      return date;
+    }},
+    initialPublishedSaleDate: Date,
+    currentPublishedSaleDate: Date,
+    saleHeldDate: Date,
+    postponementCount: Number, 
+    isOnHold: Boolean,
+    openingBidAmount: Number,
+    finalBidAmount: Number,
+    buyer: {
+      name: String,
+      phone: String,
+      email: String,
+      address1: String,
+      address2: String,
+      city: String,
+      state: String,
+      zip: String,
+    }
+  },
+
   documents: { type: ObjectId, ref: 'Documents' },
   
   tasks: [

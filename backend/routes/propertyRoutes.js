@@ -3,41 +3,52 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Property = require('../models/property.model');
-const Case = require('../models/case.model');
 
 // Route requires authentication
 
-router.get('/all', (req, res) => {
+router.get('/', (req, res) => {
   Property.find({})
   .then(() => res.json(result))
   .catch(err => res.status(500).json(err))
 })
 
-router.post('/new', (req, res) => {
-  console.log('posting new property')
-  let newProperty = new Property(req.body.property);
-  let caseId = req.body.caseId;
-  newProperty.save()
-  .then(savedProperty => {
-    if (caseId) {
-      Case.findByIdAndUpdate(caseId, { property : savedProperty }, { new: true})
-      .then(updatedCase => {
-        res.json(savedProperty)
-      })
-      .catch(err => res.status(500).json(err));
-    }
-    else res.json(savedProperty);
+// return a list of counties for which there are property profiles
+router.get('/counties', (req, res) => {
+  Property.aggregate([
+    { $group: { _id: '$county', 'prop': { $push: '$taxId'}}}
+  ])
+  .then(result => {
+    console.log(result);
+    res.json(result)
   })
+  .catch(err => res.status(500).json(err))
+})
+
+
+router.get('/:id', (req, res) => {
+  Property.findById(req.params.id)
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err));
+})
+
+
+router.post('/', (req, res) => {
+  let newProperty = new Property(req.body);
+  newProperty.save()
+  .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
 
 router.put('/:id', (req, res) => {
-  Property.findByIdAndUpdate({ _id: req.params.id}, req.body, {new: true}, (err, result) => {
-    if (err) res.status(500).send(err);
-    else {
-      res.json(result);
-    }
-  });
+  Property.findByIdAndUpdate(req.params.id, req.body, {new: true, upsert: true })
+  .then(result => res.json(result))
+  .catch(err =>  res.status(500).send(err));
 });
+
+router.delete('/:id', (req, res) => {
+  Property.findByIdAndRemove(req.params.id)
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err));
+})
 
 module.exports = router;

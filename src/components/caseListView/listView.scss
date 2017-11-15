@@ -1,0 +1,73 @@
+
+
+.case-summary {
+  font-size: .9em;
+}
+
+.case-list-item.case-summary {
+  .md-button:not(.md-icon-button):hover {
+    background-color: transparent;
+  }
+  .md-icon-button:hover {
+    background-color: rgba(0,0,0,.1);
+  }
+}
+
+.caselist-row {
+  width: 100%;
+}
+
+.caselist-headings, .caselist-row, .additional-info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  overflow: hidden;
+  >*, >*>* {
+    padding-right: 15px;
+  }
+  >*:first-child {
+    flex: 0 0 8%;
+    margin-left: 5vw;
+  }
+  >*:nth-child(n+2) {
+    flex: 0 0 20%;
+  }
+  >*:nth-child(n+3) {
+    flex: 0 0 15%;
+  }
+  >*:last-child {
+    flex: 0 1 10%;
+    padding-right: 10px;
+  }
+}
+
+.more-detail {
+  position: absolute;
+  left: 1em;
+}
+
+.less-detail {
+  position: absolute;
+  left: 1em;
+  top: -3px;
+}
+
+.case-expanded.case-detail {
+  position: relative;
+  top: -1em;
+  div.case-text {
+    p {
+      margin: .5em 0;
+      line-height: 1.15em;
+      font-size: 1em;
+    &:last-child {
+        margin-bottom: 1.5em;
+      }
+    }
+  }
+}
+
+
+
+/* TODO
+Need media query to handle CaseList view on smaller screens */

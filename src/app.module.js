@@ -11,19 +11,21 @@ const app = angular.module('RTApp', [
   
   
 require('./app.config')(app);
-require('./services')(app);
+require('./coreServices')(app);
 
-require('./components/appContainer/appContainer.component')(app);
-require('./components/mainLayout/mainLayout.controller')(app);
+require('./containerComponents/appContainer.component')(app);
+require('./containerComponents/mainLayout.component')(app);
+require('./containerComponents/caseData.container')(app);
+
+require('./components/login/login.component')(app);
 require('./components/navbar/navbar.component')(app);
 require('./components/home')(app);
-require('./components/login/login.component')(app);
+
+require('./components/caseListView')(app);
+require('./components/caseDetailView')(app);
+require('./components/caseSetup')(app);
 require('./components/legacyViews/legacyViews.component')(app);
 
-require('./components/cardComponents')(app);
+require('./components/sharedComponents')(app);
 
-require('./components/caseList')(app);
 
-const CaseList = angular.module('CaseList', []);
-
-require('./components/newCase')(app);

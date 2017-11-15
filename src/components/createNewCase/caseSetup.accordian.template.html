@@ -1,0 +1,91 @@
+<!-- FAB -->
+
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
+    <h3 >{{vm.viewTitle}}</h3>
+  </md-toolbar>
+  
+  <div layout="row">
+  
+  <!-- Dashboard Layout-->
+  <md-content layout="column" class="dashboard-content">
+      
+     
+        <div class="create-toolbar-container" style="position:relative;min-height:60px">
+            <div  layout="row" layout-align="start">
+                <md-button  class="md-hue-3"
+                              aria-label="cancel changes"
+                              ng-click="vm.cancelWithoutSaving()"
+                              ng-disabled="!vm.isCreating">
+                    <md-tooltip md-direction="bottom">cancel without saving</md-tooltip>
+                    <md-icon class="icon-cancel"></md-icon> Cancel Without Saving
+                </md-button>
+          
+                <md-button  class="md-button md-hue-3"
+                              aria-label="finalize and save"
+                              ng-click="vm.finalize()"
+                              ng-disabled="!vm.isCreating">
+                    <md-tooltip md-direction="bottom">finalize</md-tooltip>
+                    <md-icon class="icon-cloud_upload"></md-icon> Create Case With Current Information
+                </md-button>
+            </div>
+        </div>
+
+        <div>
+          <md-button  class="save-btn"
+                      ng-click="vm.createNewCase()"
+                      ng-disabled="vm.isCreating">
+              Click to Start
+          </md-button>
+        </div>
+          
+          
+          
+      <md-card class="case-card-group" flex layout="column">
+        <md-card-content flex>
+              <div layout="row" layout-align="start center">
+                <h1 class="md-headline" 
+                      style="position:relative;top:-10px;margin-right:10px" 
+                      flex-offset-gt-xs="5">
+                  Case: 
+                </h1>
+                <md-input-container >
+                    <label >Case Number</label>
+                    <input  class="md-headline"
+                            type="text" 
+                            ng-model="vm.caseRecord.caseNum">
+                </md-input-container>
+              </div>
+
+          <div class="create-case-container">
+            <md-card class="case-section" ng-repeat="section in vm.sections">
+              <md-toolbar layout="row" layout-align="center center"
+                          class="expanding-toolbar profile-card"
+                          ng-click="expand=!expand; vm.expandBox(expand, $event)" tabindex="-1">
+                <md-card-title><h2 class="md-display-1">{{vm.props[section].title}}</h2></md-card-title>
+                <md-button class="md-icon-button large-icon-btn" aria-label="Expand Panel">
+                  <md-icon class="icon-expand_more" ng-show="!expand"></md-icon>
+                  <md-icon class="icon-expand_less" ng-show="expand"></md-icon>
+                </md-button>
+              </md-toolbar>
+              <div class="section-box" ng-class="{collapsed: !expand}">
+                <rt-add-profile profiles="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section-label="section"
+                                expand="expand"
+                                states-list="vm.statesList"
+                        save-profile-to-case="vm.saveProfileToCase(data, path, section)">
+                </rt-add-profile>
+              </div>
+            </md-card>
+          </div>
+
+        </md-card-content>
+
+
+      </md-card>
+
+  </md-content>
+</div>
+  
+
+

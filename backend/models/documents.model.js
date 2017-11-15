@@ -17,42 +17,44 @@ const documentsSchema = new mongoose.Schema({
     amount: Number, // usually same as loan amount
     recDate: Date,
     entryNo: String,
+    county: String
   },
   assignmentTD: [{
     assignor: String,
     assignee: String,
     recDate: Date,
-    entryNo: String
+    entryNo: String,
+    _id: false
   }],
   substitutionTrustee: [{
     priorTrustee: String,
     newTrustee: String,
     recDate: Date,
-    entryNo: String
+    entryNo: String,
+    _id: false
   }],
   noticeDefault: [{
     trustee: String,
     recDate: Date,
-    entryNo: String
+    entryNo: String,
+    _id: false
   }],
   vestingDeed: [{
     grantor: String,
     grantee: String,
-    type: String,
+    docTitle: String,
     recDate: Date,
-    entryNo: String
+    entryNo: String,
+    includesAllProperty: Boolean,
+    _id: false
   }],
-  noticeSale: {
+  noticeSale: [{
     saleDate: Date,
     location: String,
-    openingBid: Number,
-    publishDates: [Date],
+    publishDate: Date,
     publication: String,
     mailedAt: Date
-  },
-  noticeIRS: {
-    sentDate: Date
-  },
+  }],
   other: [{
     title: String,
     party1: String,
@@ -60,9 +62,15 @@ const documentsSchema = new mongoose.Schema({
     dated: Date,
     entryNo: String,
     recDate: Date,
-    description: String // 
+    description: String,
+    includesAllProperty: Boolean,
+    _id: false
   }]
-})
+}, 
+{ minimize: false, 
+  timestamps: true,
+  setDefaultsOnInsert: true,
+  toObject: { retainKeyOrder: true } })
 
 
 module.exports = mongoose.model('Documents', documentsSchema);

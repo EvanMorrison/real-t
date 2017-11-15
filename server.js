@@ -40,11 +40,11 @@ app.use(cookieParser());
 
 app.use('/auth', require('./backend/routes/authRoutes'));
 app.use('/api', expressJWT({secret: config.token_secret}));
-app.use('/api/user', require('./backend/routes/userRoutes'));
-app.use('/api/case', require('./backend/routes/caseRoutes'));
-app.use('/api/person', require('./backend/routes/personRoutes'));
-app.use('/api/property', require('./backend/routes/propertyRoutes'));
-app.use('/api/documents', require('./backend/routes/documentsRoutes'));
+app.use('/api/users', require('./backend/routes/userRoutes'));
+app.use('/api/cases', require('./backend/routes/caseRoutes'));
+app.use('/api/people', require('./backend/routes/personRoutes'));
+app.use('/api/properties', require('./backend/routes/propertyRoutes'));
+app.use('/api/documents', require('./backend/routes/documentRoutes'));
 
 
 ///////////////////////////////////////////////////////////////////

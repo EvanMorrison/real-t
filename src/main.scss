@@ -2,6 +2,11 @@
 @import 'icons';
 @import 'variables';
 
+// defaults
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
 
 html, body, h1, h2, h3, h4, h5, h6, p {
   font-family: 'Roboto', 'Helvetica Neue', 'sans serif';
@@ -10,9 +15,31 @@ html, body, h1, h2, h3, h4, h5, h6, p {
 }
 
 body {
+  height: auto !important; // these lines are added as a fix
+  position: absolute !important; // for angular material select box
+  top: 0 !important; // causing the window scroll to jump to the top
+  width: 100% !important; // when an option is selected
   padding-bottom: 200px;
 }
 
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  &.right-justify {
+    justify-content: flex-end;
+  }
+  &.center {
+    justify-content: center;
+  }
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-content: stretch;
+}
 
 
 // loading progress spinner
@@ -76,7 +103,7 @@ body {
 
 a.active {
   font-weight: 900;
-  border-bottom: 3px solid #ddd;
+  border-bottom: 3px solid $accent;
 }
 
 
@@ -146,135 +173,105 @@ a.active {
 /* Navbar styles */
 .navbar-title {
   padding: 5px 10px;
-  color: $purple;
+  color: $primary;
   font-weight: 900;
   font-size: 1.35em;
   text-decoration: none;
 }
 
-/* Dashboard View */
-
-.dashboard-title-container {
-  margin-top: 20px;
-  margin-left: 20px;
-}
-
-.dashboard-content {
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.dashboard-sidenav {
-  width: 98vw;
-  max-width: 200px;
-  .case-list-item.selected {
-    background-color: rgba(179,136,255,0.5);
-  }
-}
-
-
-/* Timeline Section Styling */
-
-.dashboard-title-container, .timeline-container {
-  position: relative;
-  /*min-height: 200px;*/
-  border-bottom: 1px solid rgba(179,136,255,.2);
-  /*border-radius: 5px;*/
-  margin: 10px;
-  padding: 10px;
-}
-
-.timeline-label-container {
-  position: relative;
-  margin-top: 20px;
-  min-height: 110px;
-  .timeline-label {
-    transform-origin: top right;
-    transform: translateX(-50%) rotate(290deg) ;
-  }
-}
-
-
-.editToolbar-container {
-  position: relative;
-  min-height: 60px;
-  .dashboard-editToolbar {
-    position: relative;
-  }
-}
 
 /*
-  CASE LIST PAGE
+* shared controls
 */
 
-.case-summary {
-  font-size: .9em;
-}
-
-.case-list-item.case-summary {
-  .md-button:not(.md-icon-button):hover {
-    background-color: transparent;
-  }
-  .md-icon-button:hover {
-    background-color: rgba(0,0,0,.1);
-  }
-}
-
-.caselist-row {
-  width: 100%;
-}
-
-.caselist-headings, .caselist-row, .additional-info {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  overflow: hidden;
-  >*, >*>* {
-    padding-right: 15px;
-  }
-  >*:first-child {
-    flex: 0 0 8%;
-    margin-left: 5vw;
-  }
-  >*:nth-child(n+2) {
-    flex: 0 0 20%;
-  }
-  >*:nth-child(n+3) {
-    flex: 0 0 15%;
-  }
-  >*:last-child {
-    flex: 0 1 10%;
-    padding-right: 10px;
-  }
-}
-
-.more-detail {
-  position: absolute;
-  left: 1em;
-}
-
-.less-detail {
-  position: absolute;
-  left: 1em;
-  top: -3px;
-}
-
-.case-expanded.case-detail {
-  position: relative;
-  top: -1em;
-  div.case-text {
-    p {
-      margin: .5em 0;
-      line-height: 1.15em;
-      font-size: 1em;
-    &:last-child {
-        margin-bottom: 1.5em;
-      }
+.btn,.btn.md-fab,.btn.md-fab.md-mini {
+  padding: 1px 14px 2px;
+  &:not([disabled]) {
+    border: 1px solid transparent;
+    background-color: $primary-lt;
+    color: $text-primary-lt;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    
+    * {
+      color: inherit;
+    }
+    &.save-btn {
+      background-color: $accent;
+    }
+    &.warn-btn {
+      background-color: $warn;
+    }
+    &.save-btn-reverse {
+      background-color: transparent;
+      color: $accent;
+      box-shadow: none;
+    }
+    &.warn-btn-reverse {
+      background-color: transparent;
+      color: $warn;
+      box-shadow: none;
+    }
+    &.primary-btn-reverse  {
+      background-color: transparent;
+      color: $primary-dk;
+      box-shadow: none;
     }
   }
+  &:not([disabled]):hover, &:not([disabled]):focus {
+    background-color: $accent-dk;
+    &.save-btn {
+      background-color: $accent-dk;
+    }
+    &.warn-btn {
+      background-color: $warn-dk;
+    }
+    &.primary-btn-reverse {
+      border: 1px solid rgba($primary-lt, .3);
+      background-color: transparent;
+    }
+    &.save-btn-reverse {
+      border: 1px solid rgba($accent-lt, .3);
+      background-color: transparent;
+    }
+    &.warn-btn-reverse {
+      border: 1px solid rgba($warn-lt, .3);
+      background-color: transparent;
+    }
+    
+  }
+  &:disabled {
+    background-color: $accent-lt;
+    color: $text-disabled-dk;
+    &.warn-btn, &.warn-btn * {
+      background-color: $warn-lt;
+    }
+    &.primary-btn-reverse, &.primary-btn-reverse * {
+      background-color: transparent;
+      color: rgba($primary-lt, .3);
+    }
+    &.save-btn-reverse {
+      background-color: transparent;
+      background-color: rgba($accent-lt, .2);
+    }
+    &.warn-btn-reverse {
+      background-color: transparent;
+      background-color: rgba($warn-lt, .2);
+    }
+  }
+
 }
 
-/* TODO
-Need media query to handle CaseList view on smaller screens */
+.add-contact-btn:not([disabled]),.add-contact-btn:disabled {
+  position: relative;
+  md-icon {
+    font-size: 18px;
+  }
+}
+.remove-contact-btn:not([disabled]),.remove-contact-btn:disabled {
+  position: relative;
+  md-icon {
+    font-size: 14px;
+  }
+}
+
 

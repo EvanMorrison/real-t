@@ -1,0 +1,43 @@
+<div class="row add-profile-component doc-container">
+    
+      <div class="column add-profile-group">
+        
+        <div class="profile-card-container doc-container column">
+          <rt-document-info class="profile-card"
+                          ng-class="{compact: vm.mode==='view'}"
+                          profile="vm.profileToAdd"
+                          mode="vm.mode"
+                          section="vm.section"
+                          actions="vm.actions"
+                          on-save-click="vm.handleSaveToCase(profile)">
+          </rt-document-info>
+          <div class="row right-justify" ng-show="vm.caseLoaded">
+              <md-button class="btn save-btn-reverse toggle-edit"
+                          ng-show="vm.mode==='edit'"
+                          ng-click="vm.saveClick()">
+                  <span >Save Changes</span>
+                <md-icon class="icon-save"></md-icon>
+              </md-button>
+              <md-button class="btn save-btn-reverse toggle-edit"
+                          ng-show="vm.mode==='view'"
+                          ng-click="vm.editCurrentProfile()">
+                          Edit
+                <md-icon class="icon-mode_edit"></md-icon>
+              </md-button>
+              <md-button class="btn warn-btn-reverse toggle-edit"
+                          ng-show="vm.caseLoaded && vm.mode==='edit'"
+                          ng-click="vm.cancelChangesToProfile()">
+                          Cancel
+                <md-icon class="icon-cancel"></md-icon>
+              </md-button>
+            </div>
+    
+        </div>
+    
+      </div>
+    
+    <!-- existing section profiles list -->
+    
+      <div class="column profiles-list">
+      </div>
+    </div>

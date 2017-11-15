@@ -1,0 +1,221 @@
+@import '../../../variables.scss';
+
+.info-view {
+  .display-name {
+    cursor: pointer;
+  &:focus {
+    outline: transparent;
+  }
+  }
+}
+
+.info-edit {
+  .profile-type-radio-group  {  
+    padding: 12px;
+    border: solid 1px rgba($gray, .2);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    .radio-group-caption {
+        margin-bottom: 20px;
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      >* {
+        flex: 0 1 1;
+        margin-right: 18px;
+        padding-right: 18px;
+        border-right: 1px solid rgba($gray, .3);
+      }
+    }
+  }
+  h4.md-title {
+    margin-bottom: 20px;
+  }
+  .name-input-group {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    h4 {
+      flex: 1 0 100%;
+      flex-basis: 100%;  
+    }
+    >div.row {
+      align-items: flex-end;
+    }
+    .short-org-name {
+      flex: .5 0 50%;
+      flex-basis: 200px;
+      margin-right: 48px;
+    }
+    .full-org-name, .full-name {
+      flex: 1 1 80%;
+      flex-basis: 400px;
+      max-width: 450px;
+    }
+    .state-long {
+      flex: .2 1 10%;
+      max-width: 200px;
+      min-width: 125px;
+      top: -20px;
+    }
+    .part-name {
+      flex: 1 0 25%;
+      margin-right: 18px;
+    }
+    .short-name {
+      flex: 0 1 25%
+    }
+  }
+
+.phone-email-group.row {
+  max-width: 1200px;
+}
+
+.phone-group {
+  flex: 1 40%;
+  padding-right: 30px;
+  // align-items: stretch;
+    div.column {
+      // align-content: flex-start;
+      .phone-input-group {
+        align-items: center;
+        justify-content: space-around;
+        .phone {
+          flex: 1;
+          max-width: 120px;
+        }
+    }
+  }
+}
+
+.email-group {
+  flex: 1 50%;
+  div {
+    .email-input-group {
+      align-items: center;
+      .email {
+        flex: 1;
+      }
+    }
+  }
+}
+  
+  .add-contact-btn {
+    align-self: flex-end;
+  }
+
+    .address-group {
+    max-width: 500px;
+    .city-state-zip {
+      display: flex;
+      flex-direction: row;
+      .city {
+        flex: 1 1 65%;
+      }
+      .state {
+        flex: 0 0 25%;
+        max-width: 60px;
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+      .zip {
+        flex: .5 1 15%;
+        max-width: 70px;
+      }
+    }
+  }
+  md-input-container {
+    max-height: 40px;
+  }
+}
+
+.loan-info {
+  justify-content: space-around;
+  >:first-child {
+    // flex:0 1 30%;
+  }
+  >:last-child {
+    // flex: 0 1 30%;
+  }
+  >.column {
+    flex: 0 1 45%;
+    padding: 40px 0 40px 40px;
+    > md-input-container {
+      max-width: 300px;
+    }
+  }
+  table.loan-table {
+    border-collapse: collapse;
+    th {
+      padding-right: 15px;
+    }
+    th, td {
+      text-align: right;
+    }
+  }
+}
+
+.doc-info.view-mode.row {
+  justify-content: space-around;
+  table.doc-table {
+    flex: 1 1 45%;
+    margin-left: 5%;
+    margin-top: 30px;
+    min-width: 440px;
+    border-collapse: collapse;
+    border: 1px solid rgba($gray, 0.3);
+    
+    tr:nth-child(2n) {
+      background-color: rgba($gray, 0.2);
+      border: none;
+    }
+    th {
+      text-align: left;
+      vertical-align: top;
+      padding: 8px 15px;
+      background-color: $white;
+    }
+    td:first-of-type {
+      text-align: right;
+    }
+    td {
+      padding: 3px 7px;
+    }
+    tr:first-child>* {
+      padding-top: 20px;
+    }
+    tr:last-child>* {
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba($gray, 0.3);
+    }
+  }
+}
+
+
+// styling for input/edit view of case documents section
+.doc-info.inputs {
+  md-input-container {
+    margin: auto 18px;
+    &.name {
+      flex: 1 1 30%;
+      max-width: 30em;
+    }
+  }
+  .md-title {
+    margin: 18px;
+  }
+  .add-doc-btn:not([disabled]),.add-doc-btn:disabled {
+    position: relative;
+    md-icon {
+      font-size: 18px;
+    }
+  }
+  .remove-doc-btn:not([disabled]),.remove-doc-btn:disabled {
+    position: relative;
+    md-icon {
+      font-size: 14px;
+    }
+  }
+}

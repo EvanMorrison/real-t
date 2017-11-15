@@ -2,32 +2,25 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Person = require('../models/person.model');
-const Case = require('../models/case.model');
+const { Person, Attorney, OtherParty } = require('../models/person.model');
 
 // Route requires authentication
 
-router.get('/all', (req, res) => {
+router.get('/', (req, res) => {
   Person.find({})
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
 
-// retrieves and combines into single array, all org/trust names, 
-// and all individual names that aren't associated with an org or trust
-router.get('/names', (req, res) => {
-  Person.find({}, 'fullOrgName')
-  .where('type').in(['organization', 'trust'])
-  .then(result1 => {
-    Person.find({}, 'displayName')
-    .where('type').in(['individual', 'attorney'])
-    .then(result2 => {
-      let result = result1.concat(result2);
-      res.json(result);
-    })
-  })
+// retrieves and combines into single array, all org, trust, and individual's names
+// excluding attorneys.
+router.get('/names/principals', (req, res) => {
+  Person.find({}, 'fullOrgName fullName shortName lastName')
+  .where('kind').in((req.query.type))
+  .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
+
 
 router.get('/:id', (req, res) => {
   Person.findById(req.params.id)
@@ -35,15 +28,29 @@ router.get('/:id', (req, res) => {
   .catch(err => res.status(500).json(err));
 })
 
-router.post('/new', (req, res) => {
+router.post('/', (req, res) => {
   let person = new Person(req.body);
   person.save()
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
 
+router.post('/attorney', (req, res) => {
+  let attorney = new Attorney(req.body);
+  attorney.save()
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err));
+})
+
+router.post('/otherparty', (req, res) => {
+  let party = new OtherParty(req.body);
+  party.save()
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err));
+})
+
 router.put('/:id', (req, res) => {
-  Person.findByIdAndUpdate(req.params.id, req.body, {new: true} )
+  Person.findByIdAndUpdate(req.params.id, req.body, {new: true, upsert:true} )
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
