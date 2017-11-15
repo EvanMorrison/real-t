@@ -72,7 +72,31 @@ const caseSchema = new mongoose.Schema({
   
   currentOwnerName: String,
   isOwnerOccupied: { type: Boolean, default: false },
-  
+  saleInfo: {
+    projectedSaleDate: { type: Date, default: function() {
+      let date = new Date();
+      date.setDate(date.getDate() + 125);
+      return date;
+    }},
+    initialPublishedSaleDate: Date,
+    currentPublishedSaleDate: Date,
+    saleHeldDate: Date,
+    postponementCount: Number, 
+    isOnHold: Boolean,
+    openingBidAmount: Number,
+    finalBidAmount: Number,
+    buyer: {
+      name: String,
+      phone: String,
+      email: String,
+      address1: String,
+      address2: String,
+      city: String,
+      state: String,
+      zip: String,
+    }
+  },
+
   documents: { type: ObjectId, ref: 'Documents' },
   
   tasks: [

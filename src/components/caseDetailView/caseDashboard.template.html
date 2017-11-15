@@ -9,6 +9,7 @@
   <h3 >{{vm.viewTitle}}</h3>
 </md-toolbar>
 
+
 <div layout="row">
 <md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
           md-component-id="sideMenu" 
@@ -43,6 +44,7 @@
      
 </md-sidenav>
             
+            <!-- Floating button to add create a new case -->
             <md-button  class="md-fab md-accent"
                         hide-xs
                         style="position:fixed;top:90vh;left:120px;z-index:100"
@@ -52,39 +54,25 @@
               <md-icon class="icon-add"></md-icon>
             </md-button>
 
-<!-- Dashboard Layout-->
+<!-- Case Detail View Layout-->
 <md-content layout="column" class="dashboard-content">
     
-    <div class="dashboard-title-container" ng-hide="vm.isCreating" >
+    <div class="dashboard-title-container">
       <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.lender[0].displayName}} / {{vm.caseRecord.borrower[0].displayName}} / {{vm.caseRecord.property.address1}}</small></h2>
       <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View or 
            Create A New Case
-          <md-button  ng-click="vm.gotoNewCase()" 
+           <md-button  ng-click="vm.gotoNewCase()" 
                       class="md-icon-button"
                       aria-label="create a new case"> 
               <md-icon class="icon-add_circle"></md-icon> 
           </md-button>
       </h2>
-            
     </div>
+
 
     <ui-view  name="timeline"
               case="vm.caseRecord">
     </ui-view>
-
-    <ui-view  name="docs"
-              case="vm.caseRecord">
-    </ui-view>
-    
-    <!-- cards with case details -->
-      <ui-view  name="cards"
-                case="vm.caseRecord"
-                on-edit-click="vm.toggleEdit()"
-                on-save-click="vm.saveChanges(data, category)"
-                on-cancel-click="vm.cancelChanges()"
-                on-case-selected="vm.caseLookup(id)"
-                is-new-case="vm.isNewCase">
-      </ui-view>
     
     <ui-view  name="editToolbar"
               is-active-edit="vm.isActiveEdit"
@@ -92,16 +80,23 @@
               on-save="vm.saveChanges()" 
               on-cancel="vm.cancelChanges()">
     </ui-view>
-    
-    
-    <ui-view  name="newCase"
-              newcase="vm.caseRecord"
-              on-update="vm.autoSaveChanges()"
-              on-cancel="vm.cancelNewCase()"
-              on-finalize="vm.finalizeNewCase()"
-              is-active-edit="true"
-              is-creating="true">
+
+    <ui-view  name="docs"
+              case="vm.caseRecord">
     </ui-view>
+    
+    <!-- cards with case details -->
+    <ui-view  name="cards"
+              case="vm.caseRecord"
+              on-edit-click="vm.toggleEdit()"
+              on-save-click="vm.saveChanges(data, category)"
+              on-cancel-click="vm.cancelChanges()"
+              on-case-selected="vm.caseLookup(id)"
+              is-new-case="vm.isNewCase">
+    </ui-view>
+    
+    
+    
 
   </md-content>
 </div>

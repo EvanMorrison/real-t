@@ -13,17 +13,18 @@ const app = angular.module('RTApp', [
 require('./app.config')(app);
 require('./services')(app);
 
-require('./components/appContainer/appContainer.component')(app);
-require('./components/mainLayout/mainLayout.controller')(app);
+require('./containerComponents/appContainer.component')(app);
+require('./containerComponents/mainLayout.component')(app);
+
+require('./components/login/login.component')(app);
 require('./components/navbar/navbar.component')(app);
 require('./components/home')(app);
-require('./components/login/login.component')(app);
+
+require('./components/caseListView')(app);
+require('./components/caseDetailView')(app);
+require('./components/createNewCase')(app);
 require('./components/legacyViews/legacyViews.component')(app);
 
-require('./components/cardComponents')(app);
+require('./components/sharedComponents')(app);
 
-require('./components/caseList')(app);
 
-require('./components/caseDashboard')(app);
-
-require('./components/newCase')(app);

@@ -1,4 +1,5 @@
 module.exports = function(app) {
-  require('./newCase.component')(app);
+  require('./newCaseStyles.scss');
+  require('./caseSetup.component')(app);
   require('./newCaseCard.component')(app);
 }

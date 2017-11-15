@@ -49,13 +49,12 @@ module.exports = function(ngApp) {
               }]
             }
           })
-          
+             // mainLayout is the parent container for header/navigation and content views 
               .state('mainLayout', {
                 parent: 'index',
                 abstract: true,
                 views: {
                   '@index': { component: 'mainLayout' }
-
                 }
               })
 
@@ -121,7 +120,7 @@ module.exports = function(ngApp) {
                       parent: 'mainLayout',
                       views: {
                         'headerContent@mainLayout': { component: 'navbar' },
-                        'bodyContent@mainLayout': { component: 'newCase' },
+                        'bodyContent@mainLayout': { component: 'caseSetup' },
                       },
                     })
 

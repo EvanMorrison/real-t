@@ -20,18 +20,18 @@
         <div ng-message="required">You <b>must</b> enter a lender.</div>
       </div> 
        </md-autocomplete>  
-      <md-button ng-class="save-btn"
-                 type="submit"
-                 >
-        add lender
-      </md-button>
-      <person-card  category="Matching Profile"
-                    person="vm.person"
-                    class="case-detail-card-container person-card">
-                    <md-button ng-transclude>
-                        add this lender
-                    </md-button>
-      </person-card>
+      
+      <md-card    class="case-detail-card-container md-card">
+        Matching Profile
+        <md-card-content>
+          <rt-person-view person="vm.person">
+  
+          </rt-person-view>
+        </md-card-content>
+        <md-button>
+            add this lender
+        </md-button>
+      </md-card>
      </div>
    </form> 
 </div>

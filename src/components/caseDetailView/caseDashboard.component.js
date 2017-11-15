@@ -1,5 +1,5 @@
   
-require('./caseDashboard.scss');
+
 
 module.exports = function(ngModule) {
   ngModule

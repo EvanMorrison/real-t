@@ -46,7 +46,7 @@
                <div md-truncate hide-xs>{{case.lender[0].displayName}}</div>
                <div md-truncate >{{case.borrower[0].displayName}}</div>
                <div md-truncate >{{case.loan.originalPrincipalAmount | currency: '$' : 0 }}</div>
-               <div md-truncate >{{case.saleDate}}</div>
+               <div md-truncate >{{case.saleInfo.projectedSaleDate | date }}</div>
             </div> 
                <md-button  ng-click="vm.gotoCase(case)"
                            class="md-secondary md-icon-button" 

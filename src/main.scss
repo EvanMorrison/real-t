@@ -152,57 +152,6 @@ a.active {
   text-decoration: none;
 }
 
-/* Dashboard View */
-
-.dashboard-title-container {
-  margin-top: 20px;
-  margin-left: 20px;
-}
-
-.dashboard-content {
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.dashboard-sidenav {
-  width: 98vw;
-  max-width: 200px;
-  .case-list-item.selected {
-    background-color: rgba(179,136,255,0.5);
-  }
-}
-
-
-/* Timeline Section Styling */
-
-.dashboard-title-container, .timeline-container {
-  position: relative;
-  /*min-height: 200px;*/
-  border-bottom: 1px solid rgba(179,136,255,.2);
-  /*border-radius: 5px;*/
-  margin: 10px;
-  padding: 10px;
-}
-
-.timeline-label-container {
-  position: relative;
-  margin-top: 20px;
-  min-height: 110px;
-  .timeline-label {
-    transform-origin: top right;
-    transform: translateX(-50%) rotate(290deg) ;
-  }
-}
-
-
-.editToolbar-container {
-  position: relative;
-  min-height: 60px;
-  .dashboard-editToolbar {
-    position: relative;
-  }
-}
 
 /*
   CASE LIST PAGE

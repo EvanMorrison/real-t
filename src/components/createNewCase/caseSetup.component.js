@@ -1,10 +1,8 @@
-require('../cardComponents/')
-require('./newCaseStyles.scss');
 
 module.exports = function(app) {
   app
-  .component('newCase', {
-    template: require('./newCase.template.html'),
+  .component('caseSetup', {
+    template: require('./caseSetup.template.html'),
     controller: [ 
                   '$state',
                   '$timeout',

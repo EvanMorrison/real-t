@@ -1,28 +1,28 @@
 <div>
     <form >
         <md-input-container class="name"
-                            ng-show="person.type!='individual'">
+                            ng-show="vm.person.type!='individual'">
             <label>Organization Full Name</label>
-            <input  ng-model="person.fullOrgName"
+            <input  ng-model="vm.person.fullOrgName"
                     type="text"
                     ng-change="update()">
         </md-input-container>
         <md-input-container class="name"
-                            ng-show="person.type!='individual'">
+                            ng-show="vm.person.type!='individual'">
             <label>Org Short Name</label>
-            <input  ng-model="person.shortOrgName"
+            <input  ng-model="vm.person.shortOrgName"
                     type="text"
                     ng-change="update()">
         </md-input-container>
         <md-input-container class="name">
             <label>Person Full Name</label>
-            <input  ng-model="person.fullName"
+            <input  ng-model="vm.person.fullName"
                     type="text"
                     ng-change="update()">
         </md-input-container>
         <md-input-container class="name">
             <label>Short Name</label>
-            <input  ng-model="person.shortName"
+            <input  ng-model="vm.person.shortName"
                     placeholder="eg., Bill, or Liz"
                     type="text"
                     ng-change="update()">
@@ -30,52 +30,52 @@
         
         <md-input-container class="phone">
             <label>Phone</label>
-            <input  ng-model="person.phones[0].value"
+            <input  ng-model="vm.person.phones[0].value"
                     type="text"
                     ng-change="update()">
         </md-input-container>
         <md-input-container class="phone">
             <label>Phone Type</label>
-            <input  ng-model="person.phones[0].type"
+            <input  ng-model="vm.person.phones[0].type"
                     type="text"
                     placeholder="eg. mobile, office"
                     ng-change="update()">
         </md-input-container>
         <md-input-container class="email">
             <label>Email</label>
-            <input  ng-model="person.emails[0].value"
+            <input  ng-model="vm.person.emails[0].value"
                     type="text"
                     ng-change="update()">
         </md-input-container>
           <div layout="column" class="address-group">
             <md-input-container class="address">
                 <label>Address Line 1</label>
-                <input  ng-model="person.address1"
+                <input  ng-model="vm.person.address1"
                         type="text"
                         ng-change="update()">
             </md-input-container>
             <md-input-container class="address">
                 <label>Address Line 2</label>
-                <input  ng-model="person.address2"
+                <input  ng-model="vm.person.address2"
                         type="text"
                         ng-change="update()">
             </md-input-container>
             <div class="city-stat-zip" layout="row">
                 <md-input-container>
                     <label>City</label>
-                    <input  ng-model="person.city"
+                    <input  ng-model="vm.person.city"
                             type="text"
                             ng-change="update()">
                 </md-input-container>
                 <md-input-container>
                     <label>State</label>
-                    <input  ng-model="person.state"
+                    <input  ng-model="vm.person.state"
                             type="text"
                             ng-change="update()">
                 </md-input-container>
                 <md-input-container>
                     <label>Zip</label>
-                    <input  ng-model="person.zip"
+                    <input  ng-model="vm.person.zip"
                             type="text"
                             ng-change="update()">
                 </md-input-container>
