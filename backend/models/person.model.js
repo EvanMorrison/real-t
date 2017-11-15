@@ -5,35 +5,56 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 const personSchema = new mongoose.Schema({
-  firstName: String, 
-  lastName: String, 
-  fullName: String,
-  nickName: String,
-  relationship: String, // client, opposite party, attorney, service provider
-  organization: { // for individuals
-    type: ObjectId, ref: 'Organization'
+    type : { type: String, enum: ['individual', 'organization', 'trust', 'attorney'], default: 'organization'},
+    fullOrgName: String,  // full legal name of business, trust, or law firm as applicable
+    shortOrgName: String, // common reference name or abbreviation
+    orgDisplayName: String,
+    stateWhereOrganized: String,
+    firstName: String,
+    lastName: String,
+    fullName: String,
+    shortName: String, // nickname or abbreviated first name the contact goes by, eg. Will or Bill for William, or Hank for Henry
+    displayName: String, 
+    isSignor: Boolean, // is contact person legally authorized to sign for lender entity
+    title: String, // eg., "Manager", "Member", "President", "Trustee"
+    phones: [
+      {
+        type: { type: String }, // eg. mobile, office, home
+        value: String
+      }
+    ],
+    emails: [
+       { value: String }
+    ],
+    address1: String,
+    address2: String,
+    city: String,
+    state: String,
+    zip: String,
+    notes: [
+      {
+        note: { type: String },
+        createdBy: { type: ObjectId, ref: 'User' },
+        lastModified: { type: Date, default: Date.now() }
+      }
+    ],
+    tags: [String]
   },
-  address1: String,
-  address2: String,
-  city: String,
-  state: String,
-  phones: [
-    {
-      type: { type: String },
-      value: String
-    }
-  ],
-  email: String,
-  notes: [
-    { 
-      type: String,
-      createdBy: { type: ObjectId, ref: 'User' },
-      createdAt: { type: Date, default: Date.now() }
-    }
-  ]
-},
 // Options
-{ timestamps: true })
+{ timestamps: true,
+  setDefaultsOnInsert: true,
+  toObject: { retainKeyOrder: true } })
 
+personSchema.pre('save', function(next) {  // allows for adding leading or middle initials, or suffixes, eg. Jr.
+  if (!this.fullName && this.firstName && this.lastName) this.fullName = `${this.firstName} ${this.lastName}`;
+  if (!this.displayName && this.shortName && this.lastName) this.displayName = `${this.shortName} ${this.lastName}`;
+  else if (!this.displayName && this.firstName && this.lastName) this.displayName =  `${this.firstName} ${this.lastName}`;
+  if (this.type !== 'individual') {
+    if (!this.orgDisplayName && (this.shortOrgName || this.longOrgName)) this.orgDisplayName = this.shortOrgName || this.longOrgName;
+    
+  }
+  next();
+})
+  
 
 module.exports = mongoose.model('Person', personSchema);

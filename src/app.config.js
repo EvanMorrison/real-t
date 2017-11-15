@@ -78,7 +78,7 @@ module.exports = function(ngApp) {
 
                   .state('caseList', {
                     parent: 'mainLayout',
-                    url: '/case-list',
+                    url: '/list-view',
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
                       'bodyContent@mainLayout': { component: 'caseList' },
@@ -111,21 +111,18 @@ module.exports = function(ngApp) {
                         parent: 'caseDashboard',
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          
                           'cards': { component: 'cards' },
                           'editToolbar@caseDashboard': { component: 'editToolbar' }
-                          // 'fullDetail@caseDashboard': { component: 'fullDetail'}
                         }
                       })
 
                     .state('newCase', {
                       url: '/create-new-case',
-                      parent: 'caseDashboard',
+                      parent: 'mainLayout',
                       views: {
-                        'newCase@caseDashboard': { component: 'newCase' },
-                        '@newCase': { component: 'fullDetail' },
-                        'fullDetail@caseDashboard': ''
-                      }
+                        'headerContent@mainLayout': { component: 'navbar' },
+                        'bodyContent@mainLayout': { component: 'newCase' },
+                      },
                     })
 
                   .state('legacyforms', {

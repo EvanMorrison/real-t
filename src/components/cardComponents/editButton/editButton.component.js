@@ -8,17 +8,18 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: {
-                'showEdit': '<',
-                'isActiveEdit': '<',
-                'onEditClick': '&'
+                'showEditBtn': '<',
+                'showInputForm': '<',
+                'onEditBtnClick': '&'
     }
 
   })
 
   function EditButtonController() {
     const vm = this;
-    vm.handleEditClick = function() {
-      vm.onEditClick();
+
+    vm.handleBtnClick = function($event) {
+      vm.onEditBtnClick($event);
     }
   }
 }

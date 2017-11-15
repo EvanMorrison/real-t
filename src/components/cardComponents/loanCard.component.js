@@ -8,22 +8,21 @@ module.exports = function(app) {
     bindings: {
                 'loan': '<',
                 'category': '@',
-                'showEdit': '<',
-                'onEditClick' : '&',
+                'showEditBtn': '<',
+                'showInputs': '<',
                 'onSaveClick' : '&',
-                'toggleCard' : '&'
+                'onEditClick' : '&'
     }
   })
 
   function LoanCardController() {
     const vm = this;
-    vm.isActiveEdit = false;
     vm.saved = true;
     
       vm.handleEditClick = $event => {
-        vm.isActiveEdit = !vm.isActiveEdit;
-        vm.onEditClick();
+          vm.onEditClick({$event: $event, category: vm.category});
       }
+      
 
       vm.update = () => {
         vm.saved = false;
@@ -32,8 +31,7 @@ module.exports = function(app) {
       vm.handleSaveClick = $event => {
         vm.onSaveClick({data: vm.loan, category: vm.category});
         vm.saved = true;
-        vm.handleEditClick();
-        vm.toggleCard({$event: $event, category: vm.category});
+        vm.handleEditClick($event);
       }  
    
        

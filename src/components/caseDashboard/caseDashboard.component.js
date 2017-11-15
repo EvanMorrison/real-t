@@ -27,16 +27,12 @@ module.exports = function(ngModule) {
                                       $mdDialog) {
           const vm = this;
 
-          vm.$onInit = function() {
-            if ($stateParams.isNewCase) {
-              vm.gotoNewCase();
-            }
-          }
           
           
           // default value sets fields to read-only
           vm.isActiveEdit = false
-
+          vm.isNewCase = false;
+          vm.isLockedOpen = "$mdMedia('min-width:500px')";
           //title for toolbar
           vm.viewTitle = 'View, Edit & Create Cases'
             // vm.viewTitle = 'Create New Case'
@@ -76,23 +72,23 @@ module.exports = function(ngModule) {
         ////////////////////////////////////
 
 
-          // when the user clicks the Edit button
-          vm.toggleEdit = function() {
-            vm.isActiveEdit = !vm.isActiveEdit;
-          }
+          
 
            // save edits to case info
           vm.saveChanges = function(data, category) {
+            let lender = vm.caseRecord.lender[0];
+            if (data === lender) console.log('same pointer ')
+            else console.log('not the same');
             caseService.updateRecord(data, category)
               .then(result => {
-                  vm.caseRecord = Object.assign({}, result, vm.caseRecord);
-                  console.log('result ', result);
+                Object.assign(data, result);
+                console.log('case record ', vm.caseRecord);
+                return result;
 
               })
               .catch(err => {
-                console.log('controller error with updating record ', err)
                 vm.waiting = false;
-                console.log('error saving changes ', err)
+                console.log('controller error saving changes ', err)
                   $mdDialog.show(
                     $mdDialog.alert()
                       .clickOutsideToClose(true)
@@ -135,42 +131,33 @@ module.exports = function(ngModule) {
         vm.gotoNewCase = function() {
           vm.isCreating = true;
           // first exit any other child state
-          $state.go('caseDashboard');
-          vm.createNewCase();
+          $state.go('newCase');
         }
 
-        vm.createNewCase = function() {
+        // vm.createNewCase = function() {
 
-            function generateCaseId(yr) {
+            // function generateCaseId(yr) {
                 
-                  let newNum = Math.random().toString().slice(2,7);
-                  newNum = yr + '-' + newNum;
-                  return newNum
-            }
-            // create the object structure for the case
-            vm.caseRecord = {};
-            // generates a semi random case number
-            vm.caseRecord.caseId = generateCaseId('17');
-            vm.caseRecord.lender = {name: ''};
-            vm.caseRecord.borrower = {name: ''};
-            vm.caseRecord.property = {taxId: ''};
-            vm.caseRecord.loan = { amount: ''};
-            vm.caseRecord.loan.DOT = {entry: ''};
-            vm.caseRecord.loan.DOT.assignments = {1: {entry: ''}}
-            // save the new empty case to firebase
-            vm.caseList.$add(vm.caseRecord)
-            .then(function(ref) {
-              // set the caseRecord to point at the new firebase record
-                vm.caseRecord = vm.caseList.$getRecord(ref.key)
-              // go to the view for entering new case data
-                $state.go('newCase')
-            }, function(err) {
-                  console.log('error creating new case ', err);
-            })
+            //       let newNum = Math.random().toString().slice(2,7);
+            //       newNum = yr + '-' + newNum;
+            //       return newNum
+            // }
+            // // create the object structure for the case
+            // vm.caseRecord = {};
+            // // generates a semi random case number
+            // vm.caseRecord.casenum = generateCaseId('17');
+            // vm.caseRecord.client = {name: ''};
+            // vm.caseRecord.borrower = {name: ''};
+            // vm.caseRecord.property = {taxId: ''};
+            // vm.caseRecord.loan = { amount: ''};
+            // vm.caseRecord.loan.DOT = {entry: ''};
+            // vm.caseRecord.loan.DOT.assignments = {1: {entry: ''}}
+            // // save the new empty case to firebase
+        //         $state.go('newCase')
     
 
               
-        }
+        // }
 
         vm.autoSaveChanges = function() {
           // convert dates to strings for JSON format in database

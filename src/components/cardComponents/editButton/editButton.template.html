@@ -2,12 +2,14 @@
     <md-button  
     class="md-hue-3 md-icon-button toggle-edit"
     aria-label="edit"
-    ng-show="vm.showEdit && !vm.isActiveEdit">
+    ng-show="vm.showEditBtn && !vm.showInputs"
+    ng-click="vm.handleBtnClick($event, 'edit')">
 <md-tooltip md-direction="top">edit mode</md-tooltip>
 <md-icon class="icon-mode_edit"></md-icon></md-button>
 <md-button  class="md-hue-3 md-icon-button toggle-edit"
             aria-label="cancel changes"
-            ng-show="vm.showEdit && vm.isActiveEdit">
+            ng-show="vm.showEditBtn && vm.showInputs"
+            ng-click="vm.handleBtnClick($event, 'cancel')">
 <md-tooltip md-direction="top">cancel without saving</md-tooltip>
 <md-icon class="icon-cancel"></md-icon>
 </md-button>

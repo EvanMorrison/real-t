@@ -20,14 +20,10 @@ require('./components/home')(app);
 require('./components/login/login.component')(app);
 require('./components/legacyViews/legacyViews.component')(app);
 
+require('./components/cardComponents')(app);
+
+require('./components/caseList')(app);
 
 const CaseList = angular.module('CaseList', []);
 
-require('./components/caseList/caseList.component')(CaseList);
-require('./components/caseList.case/case.component')(CaseList);
-
-const CaseMain = angular.module('CaseMain', []);
-
-require('./components/caseMain/caseMain.component')(CaseMain);
-require('./components/caseMain.caseXV/caseXV.component')(CaseMain);
-require('./components/newCase/newCase.component')(CaseMain);
+require('./components/newCase')(app);

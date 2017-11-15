@@ -7,12 +7,14 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const documentsSchema = new mongoose.Schema({
   trustDeed: {
     dated: { type: Date },
-    ob: { type: String, alias: 'originalBeneficiary' }, // ref person or organization
+    ob: { type: String, alias: 'originalBeneficiary' },
     cb: { type: String, alias: 'currentBeneficiary' },
-    otee: { type: String, alias: 'originalTrustee' }, // ref person or organization
+    otee: { type: String, alias: 'originalTrustee' }, 
     ctee: { type: String, alias: 'currentTrustee' },
-    trustor: String, // ref person or organization
-    amount: Number,
+    istrustorSameAsBorrower: Boolean,
+    trustor: String, // usually same as borrower
+    isAmountSameAsLoan: Boolean,
+    amount: Number, // usually same as loan amount
     recDate: Date,
     entryNo: String,
   },

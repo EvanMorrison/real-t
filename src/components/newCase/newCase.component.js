@@ -1,90 +1,98 @@
-module.exports = function(ngModule) {
-  ngModule
+require('../cardComponents/')
+require('./newCaseStyles.scss');
+
+module.exports = function(app) {
+  app
   .component('newCase', {
     template: require('./newCase.template.html'),
-    controller: [ '$firebaseArray', 
-                  '$firebaseObject', 
-                  '$firebaseRef', 
+    controller: [ 
+                  '$state',
+                  '$timeout',
+                  'caseService',
                   NewCaseController
                 ],
-    controllerAs: 'ctrl'
+    controllerAs: 'vm',
+    bindings: {
+    }
   });
 
-  function NewCaseController($firebaseArray, $firebaseObject, $firebaseRef) { 
-    const ctrl = this;
-    ctrl.isCaseIdValid = true;
+  function NewCaseController($state, $timeout, caseService) { 
+    const vm = this;
+    vm.viewTitle = 'Create A New Case'
+    vm.showInputs = true;
+    vm.isCreating = false;
+    
+    $timeout(function() {window.scrollTo(0,65);},750)
 
-    ctrl.$onInit = function() {
-      ctrl.isCaseIdValid = false;
+    vm.$onInit = () => {
+      vm.getNames();
     }
 
-    ctrl.createNewCase =function(newCaseId) {
-        console.log('running create new case ')
-        newCaseId = newCaseId || ctrl.generateCaseId('17');
-        
-        $firebaseObject($firebaseRef.cases.child(newCaseId)).$loaded(function(fbObj) {
-          // check if caseId is unique, if not increment by 1
-          if (fbObj.caseId) {
-            newCaseId = '17-' + (parseInt(newCaseId.slice(3)) + 1).toString()
-            ctrl.createNewCase(newCaseId)
-          } else {
-            // the new case number is unique
-            // create the object structure for the case
-            ctrl.newCase = fbObj;
-            ctrl.newCase.caseId = fbObj.$id;
-            ctrl.newCase.lender = {name: ''};
-            ctrl.newCase.borrower = {name: ''};
-            ctrl.newCase.property = {taxId: ''};
-            ctrl.newCase.loan = { amount: ''};
-            ctrl.newCase.loan.DOT = {entry: ''};
-            ctrl.newCase.loan.DOT.assignments = {1: {entry: ''}}
+    vm.$onChanges = () => {
+      console.log('new case ', vm.newCase);
+    }
+    
+    vm.initiateNewCase = () => {
+       caseService.generateNewCase()
+      .then(result => {
+        vm.isCreating = true;
+        vm.newCase = result;
+        let focusElement = angular.element(document.getElementsByTagName('md-autocomplete')[0]);
+        $timeout(function() {focusElement.focus()});
+      })
+      .catch(err => {
+        console.log('error in controller creating new case ', err);
+      })
+    }
 
-            ctrl.isCaseIdValid = true;
-            ctrl.newCase.$save();
-          }
-        }, function(err){
-            console.log('error creating new case ', err);
+    vm.getNames = () => {
+      caseService.getAllNames()
+      .then(result => {
+        vm.names = result;
+      })
+      .catch(err => console.log('error in controller getting list of names: ', err));
+    }
+
+    vm.submitForm = ($event, data) => {
+      $event.preventDefault();
+      // using data input, add matching persons and property, or create new ones
+    }
+
+    vm.saveChanges = function(data, category) {
+      caseService.updateRecord(data, category)
+        .then(result => {
+            vm.newCase = Object.assign({}, vm.newCase, result);
+            console.log('result ', result);
+
+        })
+        .catch(err => {
+          console.log('controller error with updating record ', err)
+          vm.waiting = false;
+          console.log('error saving changes ', err)
+            $mdDialog.show(
+              $mdDialog.alert()
+                .clickOutsideToClose(true)
+                .title('Error Saving')
+                .textContent(`There was a problem saving: ${err}`)
+                .ok('Ok')
+          )
         })
     }
 
-    ctrl.generateCaseId = function(yr) {
-        let newNum = Math.floor(Math.random() * 100000).toString();
-        newNum = yr + '-' + newNum;
-        console.log('newNum', newNum)
-        return newNum
+
+    vm.cancelWithoutSaving = () => {
+      caseService.deleteCase(vm.newCase)
+      .then(result => {
+        console.log('the new case has been discarded without saving ', result);
+        vm.newCase = {};
+        vm.isCreating = false;
+      })
+      .catch(err => {
+        console.log('error in new case controller, discarding case. ', err)
+      })
     }
 
-   
     
-       // save edits to database
-          ctrl.saveChanges = function() {
-              // convert dates to strings for JSON format in database
-              if (ctrl.newCase.loan.DOT.recorded ) {
-                ctrl.newCase.loan.DOT.recorded = ctrl.caseRecord.loan.DOT.recorded.toString()
-              }
-              angular.forEach(ctrl.newCase.loan.assignments, function(val, key) {
-                if (val['recorded']) { 
-                  val['recorded'] = val['recorded'].toString()
-                }
-              })
-              ctrl.newCase.$save().then(function(ref){
-                console.log('saved case ', ref.key)
-              })
-          }
-
-          // cancel edits restore original data
-          ctrl.cancelNewCase = function() {
-              if (window.confirm('Click OK to cancel without saving')) {
-                  ctrl.isCaseIdValid = false;
-                  ctrl.newCase.$remove().then(function(ref) {
-                  console.log('deleted record ', ref.key)
-                  }, function(err) {
-                    console.log('error ', error);
-                  })
-              }
-          }
-          
-
 
   }
 

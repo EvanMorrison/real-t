@@ -4,20 +4,20 @@ module.exports = (app) => {
   app
     .component('caseList', {
       template: require('./caseList.template.html'),
-      controller: [ '$state', 
+      controller: [ 
+                    '$mdDialog',
+                    '$state',
                     'caseService', 
-                    '$firebaseAuth', 
                     CasesController
                   ],
       controllerAs: 'ctrl',
       bindings: { caseList : '<'},
     });
 
-    function CasesController($state, caseService, $firebaseAuth) {
-      const ctrl = this;
+    function CasesController($mdDialog, $state, caseService) {
+      const vm = this;
 
-      ctrl.orderProp = 'caseId';
-
+      vm.orderProp = 'caseNum';
 
       // toggle parent or child state depending on what is currently showing
       ctrl.toggleSelected = function(index) {
@@ -29,17 +29,61 @@ module.exports = (app) => {
       }
 
       // delete a case from the database and the local firebaseArray    
-      ctrl.deleteCase = function(caseObj) {
-        if (window.confirm('Click Ok to Permanently Delete case ' + caseObj.caseId)) {
-              ctrl.caseList.$remove(caseObj)
-              .then(function(ref) {
-                console.log("ref.$id ", ref.key);
-              })
-        }
+      vm.deleteCase = function($event, caseRecord) {
+        const confirm = $mdDialog.prompt()
+          .title('Delete Case')
+          .textContent(`To delete case ${caseRecord.caseNum}, enter the case number below.\nThis cannot be undone.`)
+          .placeholder(caseRecord.caseNum)
+          .initialValue(caseRecord.caseNum) // delete this line in production
+          .targetEvent($event)
+          .ok('Delete')
+          .cancel('Cancel')
+
+        $mdDialog.show(confirm)
+          .then(function(result) {
+              vm.waiting = true;
+              if (result == caseRecord.caseNum) {
+                console.log('trying to delete case ', caseRecord._id)
+                caseService.deleteCase(caseRecord)
+                  .then(function(result){
+                    vm.waiting = false;
+                    $mdDialog.show(
+                      $mdDialog.alert()
+                        .clickOutsideToClose(true)
+                        .title('Success')
+                        .textContent(`Case ${caseRecord.caseNum} has been permanently deleted.`)
+                        .ok('Ok')
+                    )
+                  }, function(err) {
+                    vm.waiting = false;
+                    $mdDialog.show(
+                      $mdDialog.alert()
+                        .clickOutsideToClose(true)
+                        .title('Error')
+                        .textContent(`Could not delete case ${caseRecord.caseNum}. \n${err.status} ${err.statusText}.`)
+                        .ok('Ok')
+                    )
+                  })
+              } else {
+                  vm.waiting = false;
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(true)
+                      .title('Not Deleted')
+                      .textContent('The case numbers did not match, the case was not deleted.')
+                      .ok('Ok')
+                  )
+              }
+          }, function() {
+                vm.waiting = false;
+                console.log('delete canceled by user')
+          })
+        
       }
 
-      ctrl.gotoCase = function (caseObj) {
-          $state.go('caseMain.caseXV', {caseId: caseObj.caseId})
+      // goto to caseFocus view for a selected case
+      vm.gotoCase = function (caseObj) {
+          $state.go('caseFocus', {recordId: caseObj.caseNum })
       }
 
       // handle change in user authentication status
