@@ -1,4 +1,39 @@
-<div>
+
+<!-- content to show for view only -->
+<div class="card-body-text" ng-show="vm.mode==='view'">
+    <div class="md-title name"
+          ng-show="vm.person.type == 'organization'">
+      {{vm.person.fullOrgName}}
+    </div>
+    <div class="md-title name">
+      {{vm.person.displayName}}
+    </div>
+    <div>
+      <div>
+        <strong>{{vm.person.phones[0].value | phone}}</strong>
+      </div>
+      <div>
+        <a href="mailto:{{vm.person.email}}">{{vm.person.emails[0].value}}</a>
+      </div>
+    </div>
+    <div>
+      <div>
+        {{vm.person.address1}}
+      </div>
+      <div ng-show="vm.person.address2">
+        {{vm.person.address2}}
+      </div>
+      <div ng-show="vm.person.city && vm.person.state">
+        {{vm.person.city}}, {{vm.person.state}} {{vm.person.zip}}
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- content to show for input and editing information -->
+
+  <div ng-show="vm.mode==='edit'">
     <form >
         <md-input-container class="name"
                             ng-show="vm.person.type!='individual'">

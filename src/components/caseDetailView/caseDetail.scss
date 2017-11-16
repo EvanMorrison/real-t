@@ -1,5 +1,11 @@
 @import '../../variables';
 
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  opacity: .4;
+}
 
 .case-card-group {
   max-width: 98%;
@@ -54,18 +60,6 @@
 
 
 
-.save-btn {
-  &:not([disabled]) {
-    background-color: $green;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
-  }
-  &:not([disabled]):hover {
-    background-color: rgba($green-dk, .8);
-  }
-  &:disabled {
-    background-color: rgba($green,.2);
-  }
-}
 
 
 .toggle-edit.ng-hide-add, .toggle-edit.ng-hide-remove {

@@ -23,25 +23,25 @@ const documentsSchema = new mongoose.Schema({
     assignee: String,
     recDate: Date,
     entryNo: String
-  }],
+  }, { _id: false }],
   substitutionTrustee: [{
     priorTrustee: String,
     newTrustee: String,
     recDate: Date,
     entryNo: String
-  }],
+  }, { _id: false }],
   noticeDefault: [{
     trustee: String,
     recDate: Date,
     entryNo: String
-  }],
+  },{ _id: false }],
   vestingDeed: [{
     grantor: String,
     grantee: String,
     type: String,
     recDate: Date,
     entryNo: String
-  }],
+  },{ _id: false }],
   noticeSale: {
     saleDate: Date,
     location: String,
@@ -61,7 +61,7 @@ const documentsSchema = new mongoose.Schema({
     entryNo: String,
     recDate: Date,
     description: String // 
-  }]
+  },{ _id: false }]
 })
 
 

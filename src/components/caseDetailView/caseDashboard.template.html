@@ -2,8 +2,7 @@
 <md-toolbar class="md-toolbar-tools md-whiteframe-z2">
   <md-button  class="md-icon-button" 
               ng-click="vm.toggleSidenav($event)"
-              aria-label="Toggle Sidenav"
-              hide-gt-xs>
+              aria-label="Toggle Sidenav">
     <md-icon class="icon-menu"></md-icon>
   </md-button>
   <h3 >{{vm.viewTitle}}</h3>
@@ -14,10 +13,14 @@
 <md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
           md-component-id="sideMenu" 
           md-disable-backdrop
-          md-is-locked-open="vm.isLockedOpen"
-          >
+          md-is-locked-open="vm.sidenavLocked">
       <md-toolbar class="md-toolbar-tools md-hue-3">
         <h3>Cases</h3>
+        <md-button  class="md-icon-button close-btn" 
+            ng-click="vm.closeSidenav($event)"
+            aria-label="Close Sidenav">
+            <md-icon class="icon-close"></md-icon>
+        </md-button>
       </md-toolbar>
       <div layout="column" padding>
         <md-input-container>
@@ -36,7 +39,7 @@
                         class="case-list-item"
                         ng-class="{selected: case.caseNum == vm.caseRecord.caseNum}"
                         ui-sref="caseFocus({recordId: case.caseNum})"
-                        ng-click="vm.closeSidenav()">
+                        ng-click="vm.closeSidenav($event)">
             <div>{{case.caseNum}}</div>
           </md-list-item>  
         </md-list>

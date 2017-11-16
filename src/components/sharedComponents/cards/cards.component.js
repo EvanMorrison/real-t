@@ -8,7 +8,6 @@ module.exports = function(app) {
     controllerAs: 'vm',
     bindings: {
                 'case': '<',
-                'isNewCase': '<',
                 'onSaveClick': '&',
                 'onCancelClick': '&',
                 'onCaseSelected': '&'

@@ -1,8 +1,26 @@
 @import '../../variables.scss';
 
-.card-container {
+
+.create-case-container {
   display: flex;
-  .new-case-card {
-    flex: 0 0 50%;  
+  flex-direction: column;
+  .case-subsection {
+    display: flex;
+    flex-direction: column;
+    
+  }
+}
+
+.add-profile-component {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  .name-input{
+    min-width: 400px;
+  }
+  .profile-card {
+    flex: 0 1 50%;
+    margin-left: 50px;
+    padding: 20px;
   }
 }

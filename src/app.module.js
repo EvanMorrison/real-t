@@ -11,7 +11,7 @@ const app = angular.module('RTApp', [
   
   
 require('./app.config')(app);
-require('./services')(app);
+require('./coreServices')(app);
 
 require('./containerComponents/appContainer.component')(app);
 require('./containerComponents/mainLayout.component')(app);

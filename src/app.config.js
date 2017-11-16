@@ -45,7 +45,6 @@ module.exports = function(ngApp) {
             resolve: {
               'user': ['localAuthService', function(localAuthService) {
                 return localAuthService.getUser().then( (usr) => usr);
-                        
               }]
             }
           })
@@ -84,8 +83,8 @@ module.exports = function(ngApp) {
                       '@caseList': { component: 'caseExpanded' }
                     },
                     resolve: {
-                      caseList: ['caseService', function(caseService) {
-                                            return caseService.LoadAllCases();
+                      caseList: ['listViewService', function(listViewService) {
+                                            return listViewService.loadCaseList();
                                 }]
                     }
                   })
@@ -93,15 +92,13 @@ module.exports = function(ngApp) {
                   .state('caseDashboard', {
                     url: '/dashboard',
                     parent: 'mainLayout',
-                    params: { isNewCase: null },
                     views: {
                       'headerContent@mainLayout': { component: 'navbar' },
                       'bodyContent@mainLayout': { component: 'caseDashboard' }
                     },
                     resolve: {
-                      caseList: ['caseService', function(caseService) {
-                                                  return caseService.LoadAllCases()
-                                                  
+                      caseList: ['listViewService', function(listViewService) {
+                                                  return listViewService.loadCaseList();
                                               }]
                     }
                   })

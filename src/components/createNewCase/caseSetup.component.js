@@ -18,23 +18,20 @@ module.exports = function(app) {
     const vm = this;
     vm.viewTitle = 'Create A New Case'
     vm.showInputs = true;
-    vm.isCreating = false;
-    
     $timeout(function() {window.scrollTo(0,65);},750)
-
+    vm.roles = ['Lender', 'Borrower']
     vm.$onInit = () => {
       vm.getNames();
     }
 
     vm.$onChanges = () => {
-      console.log('new case ', vm.newCase);
+      console.log('new case ', vm.caseRecord);
     }
     
     vm.initiateNewCase = () => {
-       caseService.generateNewCase()
+       caseService.createNewCase()
       .then(result => {
-        vm.isCreating = true;
-        vm.newCase = result;
+        vm.caseRecord = result;
         let focusElement = angular.element(document.getElementsByTagName('md-autocomplete')[0]);
         $timeout(function() {focusElement.focus()});
       })
@@ -44,7 +41,7 @@ module.exports = function(app) {
     }
 
     vm.getNames = () => {
-      caseService.getAllNames()
+      caseService.getPrincipalPartyNames()
       .then(result => {
         vm.names = result;
       })
@@ -59,9 +56,8 @@ module.exports = function(app) {
     vm.saveChanges = function(data, category) {
       caseService.updateRecord(data, category)
         .then(result => {
-            vm.newCase = Object.assign({}, vm.newCase, result);
+            vm.caseRecord = Object.assign({}, vm.caseRecord, result);
             console.log('result ', result);
-
         })
         .catch(err => {
           console.log('controller error with updating record ', err)
@@ -79,10 +75,10 @@ module.exports = function(app) {
 
 
     vm.cancelWithoutSaving = () => {
-      caseService.deleteCase(vm.newCase)
+      caseService.deleteCase(vm.caseRecord)
       .then(result => {
         console.log('the new case has been discarded without saving ', result);
-        vm.newCase = {};
+        vm.caseRecord = {};
         vm.isCreating = false;
       })
       .catch(err => {

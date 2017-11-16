@@ -7,15 +7,19 @@ module.exports = (app) => {
       controller: [ 
                     '$mdDialog',
                     '$state',
-                    'caseService', 
+                    'caseService',
+                    'listViewService',
                     CasesController
                   ],
       controllerAs: 'vm',
       bindings: { caseList : '<'},
     });
 
-    function CasesController($mdDialog, $state, caseService) {
+    function CasesController($mdDialog, $state, listViewService) {
       const vm = this;
+      
+      // display a spinner while waiting to load async api calls
+      vm.waiting = listViewService.waiting;
 
       vm.orderProp = 'caseNum';
 
@@ -42,12 +46,10 @@ module.exports = (app) => {
 
         $mdDialog.show(confirm)
           .then(function(result) {
-              vm.waiting = true;
               if (result == caseRecord.caseNum) {
                 console.log('trying to delete case ', caseRecord._id)
                 caseService.deleteCase(caseRecord)
                   .then(function(result){
-                    vm.waiting = false;
                     $mdDialog.show(
                       $mdDialog.alert()
                         .clickOutsideToClose(true)
@@ -56,7 +58,6 @@ module.exports = (app) => {
                         .ok('Ok')
                     )
                   }, function(err) {
-                    vm.waiting = false;
                     $mdDialog.show(
                       $mdDialog.alert()
                         .clickOutsideToClose(true)
@@ -66,7 +67,6 @@ module.exports = (app) => {
                     )
                   })
               } else {
-                  vm.waiting = false;
                   $mdDialog.show(
                     $mdDialog.alert()
                       .clickOutsideToClose(true)
@@ -76,7 +76,6 @@ module.exports = (app) => {
                   )
               }
           }, function() {
-                vm.waiting = false;
                 console.log('delete canceled by user')
           })
         

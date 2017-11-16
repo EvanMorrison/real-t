@@ -63,6 +63,7 @@ const caseSchema = new mongoose.Schema({
       other: [
         { description: String,
           amount: Number },
+          { _id: false }
       ],
       asOf: Date
     },
@@ -72,6 +73,7 @@ const caseSchema = new mongoose.Schema({
   
   currentOwnerName: String,
   isOwnerOccupied: { type: Boolean, default: false },
+  
   saleInfo: {
     projectedSaleDate: { type: Date, default: function() {
       let date = new Date();
@@ -105,7 +107,8 @@ const caseSchema = new mongoose.Schema({
       taskDescription: String,
       dueDate: Date,
       isCompleted: { type: Boolean, default: false }
-    }
+    },
+    { _id: false }
   ],
   status: [
     {
@@ -113,7 +116,8 @@ const caseSchema = new mongoose.Schema({
       createdAt: Date,
       createdBy: { type: ObjectId, ref: 'User'}, // User Id
       updatedAt: Date
-    }
+    },
+    { _id: false }
   ]
 },
 // Options

@@ -1,10 +1,10 @@
 module.exports = function(app) {
   
-  app.component('newCaseCard', {
-    template: require('./newCaseCard.template.html'),
+  app.component('rtAddProfile', {
+    template: require('./addProfile.template.html'),
     controller: [ 
                     'caseService',
-                    NewCaseCardController
+                    AddProfileController
     ],
     controllerAs: 'vm',
     bindings: { 
@@ -14,16 +14,14 @@ module.exports = function(app) {
     }
   })
 
-  function NewCaseCardController(caseService) {
+  function AddProfileController(caseService) {
     const vm = this;
 
     vm.itemSelected = () => {
       console.log('selected item ', vm.selectedItem)
       if (vm.selectedItem !== null) {
         caseService.getPerson(vm.selectedItem._id)
-        .then(result => {
-          vm.person = result;
-        })
+        .then(result => vm.person = result)
         .catch(err => console.log('error getting person: ', err))
       } else vm.person = null;
     }

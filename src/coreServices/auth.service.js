@@ -5,7 +5,7 @@ module.exports = function(app) {
 
 
             this.getUser = () => {
-              return $http.get('/api/user/me')
+              return $http.get('/api/users/me')
                 .then((res) => {
                   this.user = res.data;
                   this.user.name = res.data.name || res.data.email.slice(0,res.data.email.indexOf('@'));

@@ -1,7 +1,7 @@
 
 module.exports = function(app) {
   
-  require('./caseService.Service')(app);
+  require('./case.service')(app);
   require('./auth.service')(app);
 
 }

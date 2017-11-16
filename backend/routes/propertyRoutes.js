@@ -7,13 +7,13 @@ const Case = require('../models/case.model');
 
 // Route requires authentication
 
-router.get('/all', (req, res) => {
+router.get('/', (req, res) => {
   Property.find({})
   .then(() => res.json(result))
   .catch(err => res.status(500).json(err))
 })
 
-router.post('/new', (req, res) => {
+router.post('/', (req, res) => {
   console.log('posting new property')
   let newProperty = new Property(req.body.property);
   let caseId = req.body.caseId;
