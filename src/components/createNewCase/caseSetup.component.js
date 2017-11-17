@@ -53,6 +53,16 @@ module.exports = function(app) {
       // using data input, add matching persons and property, or create new ones
     }
 
+    vm.getProfile = (profile) => {
+      return caseService.getPerson(profile._id)
+      .then(result => result)
+      .catch(err => console.log('error getting person: ', err))
+    }
+
+    vm.clearProfile = () => {
+      vm.profile = {};
+    }
+
     vm.saveChanges = function(data, category) {
       caseService.updateRecord(data, category)
         .then(result => {

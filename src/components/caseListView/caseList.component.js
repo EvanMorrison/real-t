@@ -15,7 +15,7 @@ module.exports = (app) => {
       bindings: { caseList : '<'},
     });
 
-    function CasesController($mdDialog, $state, listViewService) {
+    function CasesController($mdDialog, $state, caseService, listViewService) {
       const vm = this;
       
       // display a spinner while waiting to load async api calls

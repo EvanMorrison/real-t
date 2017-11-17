@@ -2,13 +2,16 @@ module.exports = function(app) {
   
   app.component('rtAddProfile', {
     template: require('./addProfile.template.html'),
+    require: {
+      newCaseCtrl: '^caseSetup'
+    },
     controller: [ 
                     'caseService',
                     AddProfileController
     ],
     controllerAs: 'vm',
     bindings: { 
-                'category': '@',
+                'category': '<',
                 'names': '<',
                 'onSubmit': '&'
     }
@@ -18,12 +21,11 @@ module.exports = function(app) {
     const vm = this;
 
     vm.itemSelected = () => {
-      console.log('selected item ', vm.selectedItem)
       if (vm.selectedItem !== null) {
-        caseService.getPerson(vm.selectedItem._id)
-        .then(result => vm.person = result)
-        .catch(err => console.log('error getting person: ', err))
-      } else vm.person = null;
+        vm.newCaseCtrl.getProfile(vm.selectedItem)
+        .then(result => vm.profile = result)
+        .catch(err => err);
+      } else vm.profile = {};
     }
 
     vm.handleSubmit = ($event) => {

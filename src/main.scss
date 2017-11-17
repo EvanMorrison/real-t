@@ -10,6 +10,10 @@ html, body, h1, h2, h3, h4, h5, h6, p {
 }
 
 body {
+  height: auto !important; // these lines are added as a fix
+  position: absolute !important; // for angular material select box
+  top: 0 !important; // causing the window scroll to jump to the top
+  width: 100% !important; // when an option is selected
   padding-bottom: 200px;
 }
 
