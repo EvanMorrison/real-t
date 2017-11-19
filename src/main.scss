@@ -2,6 +2,7 @@
 @import 'icons';
 @import 'variables';
 
+// defaults
 
 html, body, h1, h2, h3, h4, h5, h6, p {
   font-family: 'Roboto', 'Helvetica Neue', 'sans serif';
@@ -15,6 +16,11 @@ body {
   top: 0 !important; // causing the window scroll to jump to the top
   width: 100% !important; // when an option is selected
   padding-bottom: 200px;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 
@@ -161,20 +167,31 @@ a.active {
 * shared controls
 */
 
-.save-btn {
+.save-btn,.save-btn.md-fab,.save-btn.md-fab.md-mini {
+  padding: 1px 7px 2px;
   &:not([disabled]) {
     background-color: $green;
     color: $white;
-    font-weight: 900;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    * {
+      color: $white;
+    }
   }
-&:not([disabled]):hover, &:not([disabled]):focus {
+  &:not([disabled]):hover, &:not([disabled]):focus {
     background-color: rgba($green-dk, .8);
   }
   &:disabled {
     background-color: rgba($green,.2);
   }
 
+}
+
+.add-contact-btn:not([disabled]),.add-contact-btn:disabled {
+  position: relative;
+  top: 28px;
+  md-icon {
+    font-size: 18px;
+  }
 }
 
 

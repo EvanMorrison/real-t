@@ -30,10 +30,10 @@
         </div>
 
         <div>
-          <md-button  class="md-raised md-accent"
-                      ng-click="vm.initiateNewCase()"
+          <md-button  class="save-btn"
+                      ng-click="vm.createNewCase()"
                       ng-disabled="vm.isCreating">
-              initiate new case
+              Click to Start
           </md-button>
         </div>
           
@@ -56,17 +56,24 @@
               </div>
 
           <div class="create-case-container">
-            <md-card class="case-subsection" ng-repeat="role in vm.roles">
-              <md-card-title><h2>
-                {{role}}
-              </h2></md-card-title>
-              <rt-add-profile  
-                              names="vm.names"
-                              category="role"
-                              on-submit="vm.submitForm($event, data)">
-              </rt-add-profile>
+            <md-card class="case-section" ng-repeat="section in vm.sections">
+              <md-toolbar layout="row" layout-align="center center"
+                          class="expanding-toolbar"
+                          ng-click="expand=!expand; vm.expandBox(expand, $event)" tabindex="-1">
+                <md-card-title><h2 class="md-display-1">{{vm.props[section].title}}</h2></md-card-title>
+                <md-button class="md-icon-button large-icon-btn" aria-label="Expand Panel">
+                  <md-icon class="icon-expand_more" ng-show="!expand"></md-icon>
+                  <md-icon class="icon-expand_less" ng-show="expand"></md-icon>
+                </md-button>
+              </md-toolbar>
+              <div class="section-box" ng-class="{collapsed: !expand}">
+                <rt-add-profile props="vm.props[section]"
+                                section="section"
+                                expand="expand"
+                        save-profile-to-case="vm.saveProfileToCase(data, path, section)">
+                </rt-add-profile>
+              </div>
             </md-card>
-  
           </div>
 
         </md-card-content>

@@ -1,4 +1,5 @@
 
+
 module.exports = function(ngModule) {
 
   ngModule
@@ -64,23 +65,12 @@ module.exports = function(ngModule) {
       // Create an new empty case record
       this.createNewCase = () => {
         this.waiting = true;
-        this.newCase = {
-          caseNum: null,
-          lender: [],
-          borrower: [],
-          loan: {},
-          property: {},
-          documents: {},
-          currentOwnerName: null,
-          status: []
-        }
         return $http.post('/api/cases')
         .then(result => {
             this.waiting = false;
-            Object.assign(this.newCase, result.data);
-            this.caseRecord = this.newCase;
+            this.caseRecord = result.data;
+            listViewService.caseList.unshift(this.caseRecord);
             console.log('created new case ', this.caseRecord);
-            if (this.caseList.length > 0) this.caseList.unshift(this.caseRecord);
             return this.caseRecord;
         })
         .catch(err => {
@@ -96,8 +86,7 @@ module.exports = function(ngModule) {
           return $http.post('/api/' + path, data)
           .then(result => {
               this.waiting = false;
-              this.caseRecord = result.data;
-              return this.caseRecord
+              return this.result.data;
           })
           .catch(err => {
               this.waiting = false;
@@ -106,15 +95,47 @@ module.exports = function(ngModule) {
           })
     }
 
+    this.saveProfileToCase = (data, path, section) => {
+        this.waiting = true;
+        if (!data._id) { // if new profile must save to DB then add to case
+            return this.saveNewRecord(data, path)
+            .then(result => {
+                this.profile = result;
+                let casePart = {};
+                casePart = {_id:this.caseRecord._id, section: [this.profile]}
+                return this.updateRecord(casePart, 'cases')
+                .then(result => {
+                    console.log('updated case ', result);
+                    this.caseRecord = result;
+                    return this.profile
+            })
+            })
+        } else { // if existing profile, then update it and the caseRecord
+            return this.updateRecord(data, path)
+            .then(result => {
+                this.profile = result;
+                let casePart = {};
+                casePart = {_id:this.caseRecord._id, lender: [this.profile]}
+                return this.updateRecord(casePart, 'cases')
+                .then(result => {
+                    console.log('updated case ', result);
+                    this.caseRecord = result;
+                    return this.profile
+                })
+            })
+            .catch(err => console.log('service error saveProfiletoCase ', err))
+        }
+    }
     
     // Save updates to existing cases
     this.updateRecord = (data, path) => {
+        console.log('in updaterecord ', 'path: ', path, 'data: ', data)
       this.waiting = true;
           return $http.put('/api/' + path + '/' + data._id, data)
           .then(result => {
               this.waiting = false;
-              this.recordData = result.data;
-              return this.recordData
+              console.log('results of updaterecord ', result);
+              return result.data;
           })
           .catch(err => {
               this.waiting = false;
@@ -125,6 +146,7 @@ module.exports = function(ngModule) {
 
     // Delete a case
     this.deleteCase = (caseRecord) => {
+      if (!caseRecord || !caseRecord._id) return Promise.reject('cannot delete undefined case or case._id')
       this.waiting = true;
       return $http.delete('/api/cases/' + caseRecord._id)
       .then(result => {
@@ -139,9 +161,9 @@ module.exports = function(ngModule) {
       })
     } 
     
-    this.getPerson = (personId) => {
+    this.getProfile = (profileId, path) => {
       this.waiting = true;
-      return $http.get('/api/people/' + personId) 
+      return $http.get('/api/' + path + '/' + profileId) 
       .then(result => {
         this.waiting = false;
         return result.data;
@@ -161,17 +183,28 @@ module.exports = function(ngModule) {
 
     // get names of all organizations and trusts and all individuals not associated with an
     // organization or trust
-    this.getPrincipalPartyNames = () => {
-        return $http.get('/api/people/names/principals')
+    this.getLookupList = (path, key, filter) => {
+        if (path === 'people') path = 'people/names/principals';
+        else if (path === 'properties') {
+            if (key === 'county') path = 'properties/counties';
+            else if (key === 'parcelTaxId') path = 'properties/parcelids';
+        } else if (path === 'documents') {
+            if (key === 'county') path = 'documents/counties';
+            else if (key === 'entryNo') path = 'documents/entrynos'
+        }
+        if (filter) path += '?type=' + filter;
+        return $http.get('/api/' + path)
         .then(result => {
-          this.names = result.data.map(item => {
-              item.name = item.fullOrgName || item.displayName;
-              delete item.displayName;
-              delete item.fullOrgName;
-              return item;
-          }).sort((a,b) => a.name > b.name);
-          console.log('list of all names ', this.names);
-          return this.names;
+            this.data = result.data;
+          if (key === 'name') {  // for names, need to reorganize the data to be returned
+            this.data = result.data.reduce((acc, item) => {
+                let arr = [];
+                if (item.displayName) arr.push({_id: item._id, name: item.displayName})
+                if (item.fullOrgName) arr.push({_id: item._id, name: item.fullOrgName});
+                return acc.concat(arr);
+            },[]).sort((a,b) => a.name > b.name);
+          }
+          return this.data;
         })
         .catch(err => {
             console.log('service error in get all names')

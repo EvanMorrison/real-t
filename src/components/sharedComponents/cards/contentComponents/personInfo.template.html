@@ -1,19 +1,19 @@
 
 <!-- content to show for view only -->
-<div class="card-body-text" ng-show="vm.mode==='view'">
+<div class="card-body-text toggle-edit" ng-show="vm.mode==='view'">
     <div class="md-title name"
           ng-show="vm.person.type == 'organization'">
-      {{vm.person.fullOrgName}}
+      {{vm.person.orgDisplayName}}
     </div>
     <div class="md-title name">
       {{vm.person.displayName}}
     </div>
     <div>
-      <div>
-        <strong>{{vm.person.phones[0].value | phone}}</strong>
+      <div ng-repeat="phone in vm.person.phones">
+        <strong>{{phone.value | phone}}</strong><span>{{phone.type}}</span>
       </div>
-      <div>
-        <a href="mailto:{{vm.person.email}}">{{vm.person.emails[0].value}}</a>
+      <div ng-repeat="email in vm.person.emails">
+        <a href="mailto:{{vm.person.email}}">{{email.value}}</a>
       </div>
     </div>
     <div>
@@ -24,7 +24,7 @@
         {{vm.person.address2}}
       </div>
       <div ng-show="vm.person.city && vm.person.state">
-        {{vm.person.city}}, {{vm.person.state}} {{vm.person.zip}}
+        {{vm.person.city}}<span ng-show="vm.person.state">, {{vm.person.state}}</span> {{vm.person.zip}}
       </div>
     </div>
   </div>
@@ -33,9 +33,9 @@
 
   <!-- content to show for input and editing information -->
 
-  <div ng-show="vm.mode==='edit' || vm.mode==='new'">
+  <div class="toggle-edit" ng-cloak ng-show="vm.mode==='edit' || vm.mode==='new'">
     <form class="info-card">
-      <div class="profile-type-radio-group">
+      <div class="profile-type-radio-group" ng-if="vm.person.type!=='attorney'">
         <div class="radio-group-caption">
           <md-headline >
             This {{vm.category}} is a:
@@ -45,7 +45,7 @@
         <!-- business organization, trust, or lawfirm section -->
           <md-radio-group class="radio-group"
                           ng-model="vm.person.type"
-                          ng-change="vm.update()">
+                          ng-change="vm.update(); vm.setInputLabels()">
             <md-radio-button ng-value="'organization'">business organization</md-radio-button>
             <md-radio-button ng-value="'individual'">individual</md-radio-button>
             <md-radio-button ng-value="'trust'">trust</md-radio-button>
@@ -53,20 +53,22 @@
       </div>
         <div class="name-input-group"
               ng-show="vm.person.type!='individual'">
-          <h4>Name of Organization or Trust</h4>
+          <h4 class="md-title">Name of {{vm.labels.type}}</h4>
           <div>
             <md-input-container class="name full-org-name">
-                <label>{{vm.person.type}} full name</label>
+                <label>{{vm.labels.org}} full name</label>
                 <input  ng-model="vm.person.fullOrgName"
                         type="text"
-                        ng-change="vm.update()">
+                        ng-change="vm.update(); vm.updateName()"
+                        ng-blur="vm.setDisplayName()">
             </md-input-container>
             <md-input-container class="name short-org-name"
                                 ng-show="vm.person.type!='individual'">
-                <label>{{vm.person.type}} short name</label>
+                <label>{{vm.labels.org}} short name</label>
                 <input  ng-model="vm.person.shortOrgName"
                         type="text"
-                        ng-change="vm.update()">
+                        ng-change="vm.update(); vm.updateName()"
+                        ng-blur="vm.setDisplayName()">
             </md-input-container>
           </div>
           <md-input-container class="state-long"
@@ -85,101 +87,120 @@
 
         <!-- individual contact name section -->
         <div class="name-input-group">
-          <h4>Contact Information</h4>
+          <h4 class="md-title">Contact Information</h4>
           <div>
             <md-input-container class="name part-name">
-                <label>first name</label>
+                <label>{{vm.labels.person}} first name</label>
                 <input  ng-model="vm.person.firstName"
                         type="text"
                         ng-change="vm.update(); vm.updateName()">
             </md-input-container>
             <md-input-container class="name part-name">
-                <label>last name</label>
+                <label>{{vm.labels.person}} last name</label>
                 <input  ng-model="vm.person.lastName"
                         type="text"
-                        ng-change="vm.update(); vm.updateName()">
+                        ng-change="vm.update(); vm.updateName(); vm.setDisplayName()">
             </md-input-container>
             <md-input-container class="name short-name">
-                <label>short name</label>
+                <label>{{vm.labels.person}} short name</label>
                 <input  ng-model="vm.person.shortName"
                         placeholder="eg., Bill, or Liz"
                         type="text"
-                        ng-change="vm.update()">
+                        ng-change="vm.update(); vm.setDisplayName()">
             </md-input-container>
           </div>
           <div>
             <md-input-container class="name full-name">
-                <label>full name</label>
+                <label>{{vm.labels.person}} full name</label>
                 <input  ng-model="vm.person.fullName"
                         type="text"
                         ng-change="vm.update()">
             </md-input-container>
           </div>
         </div>
-        <!-- phone section -->
-          <!-- initial block to show for new profiles -->
-        <div class="phone-input-group input-group" 
-              ng-if="vm.mode==='new' && !vm.person.phones">
-            <md-input-container class="phone">
-                <label>phone</label>
-                <input  ng-model="phone.value"
-                        type="tel"
-                        ng-change="vm.update()">
-            </md-input-container>
-            <md-input-container class="phone-type">
-              <label>label</label>
-              <md-select  ng-model="phone.type"
-                          ng-change="vm.setPhoneLabel($event, $index); vm.update()">
-                <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
-                  {{teltype}}
-                </md-option>
-              </md-select> 
-              <div class="md-errors-spacer"></div> 
-            </md-input-container>
+        <div layout="row">
+          <div layout="column">
+            <!-- phone section -->
+              <!-- initial block to show for new profiles -->
+            <div class="phone-input-group input-group" 
+                  ng-if="!vm.person.phones || !vm.person.phones.length">
+                <md-input-container class="phone">
+                    <label>phone</label>
+                    <input  ng-model="phone.value"
+                            type="tel"
+                            ng-change="vm.update()">
+                </md-input-container>
+                <md-input-container class="phone-type">
+                  <label>label</label>
+                  <md-select  ng-model="phone.type"
+                              ng-change="vm.setPhoneLabel($event, $index); vm.update()">
+                    <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
+                      {{teltype}}
+                    </md-option>
+                  </md-select> 
+                  <div class="md-errors-spacer"></div> 
+                </md-input-container>
+            </div>
+              <!-- repeat block to show data for existing profile -->
+            <div  class="phone-input-group input-group"
+                  ng-repeat="phone in vm.person.phones">
+                <md-input-container class="phone">
+                    <label>phone</label>
+                    <input  ng-model="phone.value"
+                            type="tel"
+                            ng-change="vm.update()">
+                </md-input-container>
+                <md-input-container class="phone-type">
+                  <label>label</label>
+                  <md-select  ng-model="phone.type"
+                              ng-change="vm.setPhoneLabel($event, $index); vm.update()">
+                    <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
+                      {{teltype}}
+                    </md-option>
+                  </md-select> 
+                  <div class="md-errors-spacer"></div> 
+                </md-input-container>
+            </div>
+          </div>
+          <md-button class="md-icon-button add-contact-btn" disabled>
+              <md-tooltip md-direction="top">add another phone</md-tooltip>
+              <md-icon class="icon-add"></md-icon>
+            </md-button>
         </div>
-          <!-- repeat block to show data for existing profile -->
-        <div  class="phone-input-group input-group"
-              ng-repeat="phone in vm.person.phones">
-            <md-input-container class="phone">
-                <label>phone</label>
-                <input  ng-model="phone.value"
-                        type="tel"
-                        ng-change="vm.update()">
-            </md-input-container>
-            <md-input-container class="phone-type">
-              <label>label</label>
-              <md-select  ng-model="phone.type"
-                          ng-change="vm.setPhoneLabel($event, $index); vm.update()">
-                <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
-                  {{teltype}}
-                </md-option>
-              </md-select> 
-              <div class="md-errors-spacer"></div> 
-            </md-input-container>
+
+
+
+        <div layout="row">
+          <div layout="column">
+           <!-- email section  -->
+              <!-- initial block shows for new profiles -->
+            <div  class="email-input-group input-group"
+                  ng-if="!vm.person.emails || !vm.person.emails.length">
+              <md-input-container class="email">
+                  <label>email</label>
+                  <input  ng-model="email.value"
+                          type="email"
+                          ng-change="vm.update()">
+              </md-input-container>
+            </div>
+              <!-- ng-repeat block shows data for existing profile -->
+            <div  class="email-input-group input-group"
+                  ng-repeat="email in vm.person.emails">
+              <md-input-container class="email"
+                                  ng-repeat="email in vm.person.emails">
+                  <label>email</label>
+                  <input  ng-model="email.value"
+                          type="email"
+                          ng-change="vm.update()">
+              </md-input-container>
+            </div>
+          </div>
+          <md-button class="md-icon-button add-contact-btn" disabled>
+            <md-tooltip md-direction="top">add another email</md-tooltip>
+            <md-icon class="icon-add"></md-icon>
+          </md-button>
         </div>
-       <!-- email section  -->
-          <!-- initial block shows for new profiles -->
-        <div  class="email-input-group input-group"
-              ng-if="vm.mode==='new' && !vm.person.emails">
-          <md-input-container class="email"
-                              ng-repeat="email in vm.person.emails">
-              <label>email</label>
-              <input  ng-model="email.value"
-                      type="email"
-                      ng-change="vm.update()">
-          </md-input-container>
-        </div>
-          <!-- ng-repeat block shows data for existing profile -->
-        <div  class="email-input-group input-group"
-              ng-repeat="email in vm.person.emails">
-          <md-input-container class="email"
-                              ng-repeat="email in vm.person.emails">
-              <label>email</label>
-              <input  ng-model="email.value"
-                      type="email"
-                      ng-change="vm.update()">
-          </md-input-container>
-        </div>
+
           <div layout="column" class="address-group">
             <md-input-container class="address">
                 <label>address line 1</label>
@@ -218,11 +239,6 @@
                 </md-input-container>
             </div>
           </div>
-      <md-button  class="save-btn"
-                  ng-click="handleSaveClick({$event: $event})"
-                  type="submit"
-                  ng-disabled="vm.saved">
-        Save
-      </md-button>
+      
     </form>
 </div>

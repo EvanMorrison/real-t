@@ -7,7 +7,25 @@
   .case-subsection {
     display: flex;
     flex-direction: column;
-    
+  }
+}
+
+.case-section {
+  .expanding-toolbar {
+    max-height: 64px;
+    md-card-title {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .section-box {
+    overflow: auto;
+    transition: max-height .3s ease-out;
+    max-height: 1400px;
+    &.collapsed {
+      max-height: 0px;
+    }
   }
 }
 
@@ -15,13 +33,62 @@
   display: flex;
   flex-direction: column;
   padding: 40px;
-  .name-input{
+  .autocomplete-input{
     min-width: 400px;
   }
+  .profile-btn-group {
+    margin: 5px 0px auto;
+    display: flex;
+    justify-content: space-around;
+    >:first-child {
+      margin-left: 20px;
+      margin-right: 0;
+      border-right: 1px solid rgba($gray,.2)
+    }
+    >:last-child {
+      margin-left: 0;
+      border-left: 1px solid rgba($gray,.2)
+    }
+  }
   .profile-card {
-    flex: 0 1 50%;
+    flex: 1 1 50%;
+    min-height: 800px;
     margin-left: 50px;
     padding: 20px;
     border: 1px solid rgba($gray, .2);
+    transition: min-height 0.3s ease-out;
+    &.compact {
+      min-height: 100px;
+    }
+  }
+  .autocomplete-input {
+    width: 400px;
+  }
+  md-autocomplete.autocomplete-input.county {
+    ::after {
+      content: ' - and - '; 
+      position: relative;
+      top: 30px;
+      right: 0px;
+      margin: 0 18px;
+    }
+ md-autocomplete-wrap{
+    ::after {
+      content: '';
+  }}
+}
+}
+
+
+.large-icon-btn:not([disabled]) {
+  height: 58px;
+  width: 58px;
+  * {
+    position: relative;
+    left: -8px;
+    font-size: 48px;
+    height: 48px;
   }
 }
+
+

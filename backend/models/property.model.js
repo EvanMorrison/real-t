@@ -18,7 +18,7 @@ const propertySchema = new mongoose.Schema({
   },
   zip: String,
   county: String,
-  taxParcelNo: String,
+  parcelTaxId: String,
   legalDescription: String,
   
 })

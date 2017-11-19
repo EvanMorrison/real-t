@@ -19,28 +19,58 @@ module.exports = function(app) {
         vm.new = true;
         vm.teltypes = ['mobile', 'office', 'home', 'custom'];
         vm.states = require('../stateList');
+        vm.labels = {type: 'Organization'}
 
+        vm.$onInit = () => {
+          vm.person = { type: 'organization' };
+          if (vm.category.toLowerCase().indexOf('attorney') != -1) vm.person.type = 'attorney';
+          vm.setInputLabels();
+        }
         // 
-        vm.$onChanges = (changesObj) => {
+        vm.$onChanges = (changesObj) => { 
           if (changesObj.person) {
             vm.saved = false;
           }
-          if (!changesObj.person.currentValue || !changesObj.person.currentValue._id) {
+          if (!changesObj.person || !changesObj.person.currentValue || !changesObj.person.currentValue._id) {
             vm.teltypes = ['mobile', 'office', 'home', 'custom'];
           }
           else {
             let person = changesObj.person;
             if (person.previousValue == null || person.currentValue._id !== person.previousValue._id) {
-              console.log('changes obj ', changesObj);
                 if (Array.isArray(vm.person.phones)) {
                   for (let tel of vm.person.phones) {
-                    console.log('tel ', tel, ' tel.type ', tel.type);
-                    if (tel.type != null && vm.teltypes.indexOf(tel.type) === -1) vm.teltypes.push(tel.type);
+                    if (tel.type != null && !vm.teltypes.includes(tel.type)) vm.teltypes.push(tel.type);
                 }
               }
             }
           }
           
+        }
+
+        // apply correct labels for inputs based on type of contact
+        vm.setInputLabels = () => {
+          let labels = { };
+          switch (vm.person.type) {
+            case 'attorney':
+              labels.org = 'law firm';
+              labels.person = 'attorney';
+              labels.type = 'Law Firm'
+              break;
+            case 'organization':
+              labels.org = 'company';
+              labels.person = 'contact';
+              labels.type = 'Organization';
+              break;
+            case 'trust':
+              labels.org = 'trust';
+              labels.person = 'trustee';
+              labels.type = 'Trust';
+              break;
+            case 'individual':
+              labels.person = 'person';
+              break;
+          }
+          vm.labels = labels;
         }
 
         // allow for custom input on phone number type
@@ -56,7 +86,6 @@ module.exports = function(app) {
             
               $mdDialog.show(prompt)
               .then(result => {
-                console.log('phone label ', result)
                 vm.teltypes.push(result);
                 vm.person.phones[$index].type = result})
               .catch(cancel => vm.person.phones[$index].type = '')
@@ -69,14 +98,17 @@ module.exports = function(app) {
         }
 
         vm.updateName = () => {
-          if (vm.new || vm.fullName == null ) {
-            vm.person.fullName = `${vm.person.firstName || ''} ${vm.person.lastName || ''}`
+          if (vm.new || vm.person.fullName == null ) {
+            vm.person.fullName = `${vm.person.firstName || ''} ${vm.person.lastName || ''}`;
           }
-          if (vm.shortName) {
-            vm.displayName = vm.displayName || `${vm.displayName} ${vm.lastName}` || vm.fullName;
-          } else if (vm.fullName) {
-            vm.displayName = vm.displayName || vm.fullName;
+          if (vm.person.displayName == null) {
+            vm.person.displayName = `${vm.person.firstName || ''} ${vm.person.lastName || ''}`;
           }
+        }
+
+        vm.setDisplayName = () => {
+            vm.person.displayName = `${vm.person.shortName || vm.person.firstName || ''} ${vm.person.lastName || ''}`;
+            vm.person.orgDisplayName = vm.person.shortOrgName || vm.person.fullOrgName;
         }
 
         vm.handleSaveClick = $event => {

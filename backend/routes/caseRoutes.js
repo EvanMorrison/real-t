@@ -58,7 +58,8 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  Case.findByIdAndUpdate({ _id: req.params.id}, req.body, {new: true})
+  console.log('in update case ', req.params.id, ' body ', req.body)
+  Case.findByIdAndUpdate(req.params.id, req.body, {new: true})
     .then(result => res.json(result))
     .catch(err => res.status(500).send(err));
 })

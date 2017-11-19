@@ -11,35 +11,41 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: { 
-                'category': '<',
-                'names': '<',
-                'onSubmit': '&'
+                'props': '<',
+                'section': '<',
+                'expand': '<',
+                'saveProfileToCase': '&'
     }
   })
 
   function AddProfileController(caseService) {
     const vm = this;
+    vm.mode = 'view';
+    
 
-    vm.itemSelected = () => {
-      if (vm.selectedItem !== null) {
-        vm.newCaseCtrl.getProfile(vm.selectedItem)
-        .then(result => vm.profile = result)
+    vm.getProfile = (item, path) => {
+      if (!item || !item._id) vm.profile = { type: 'organization'};
+      else {
+        caseService.getProfile(item._id, path)
+        .then(result => vm.profile = result, vm.mode = 'edit')
         .catch(err => err);
-      } else vm.profile = {};
+      }
     }
 
-    vm.handleSubmit = ($event) => {
-      vm.onSubmit($event, { data: vm.caseData });
+    vm.clickCreateNew = ($event) => {
+      vm.mode = 'edit';
+      vm.profile = {type: 'organization'};
     }
 
-    vm.querySearch = (query) => {
-      let results = query ? vm.names.filter((item) => {
-        query = angular.lowercase(query);
-        let name = angular.lowercase(item.name);
-        return (name.indexOf(query) != -1);
-      }) : vm.names;
-      return results;
+    vm.handleSaveToCase = ($event) => {
+      vm.saveProfileToCase({data: vm.profile, path: vm.props.apiPath, section: vm.section})
+      .then(result => {
+        vm.mode = 'view';
+        vm.profile = result
+      })
+      .catch(err => err);
     }
+
 
   }
 

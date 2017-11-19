@@ -12,8 +12,6 @@ const caseSchema = new mongoose.Schema({
     { type: ObjectId, ref: 'Person' }
   ],
 
-  isLenderRepresented: { type: Boolean, default: false },
-
   lenderAtty: [
     { 
       attorney: { type: ObjectId, ref: 'Person' },  
@@ -24,8 +22,6 @@ const caseSchema = new mongoose.Schema({
   borrower: [
     { type: ObjectId, ref: 'Person' }
   ],
-
-  isBorrowerRepresented: { type: Boolean, default: false },
 
   borrowerAtty: [
     { 
@@ -71,7 +67,7 @@ const caseSchema = new mongoose.Schema({
   
   property: { type: ObjectId, ref: 'Property' },
   
-  currentOwnerName: String,
+  currentVesting: String,
   isOwnerOccupied: { type: Boolean, default: false },
   
   saleInfo: {

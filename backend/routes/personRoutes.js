@@ -16,16 +16,9 @@ router.get('/', (req, res) => {
 // retrieves and combines into single array, all org/trust names, 
 // and all individual names that aren't associated with an org or trust
 router.get('/names/principals', (req, res) => {
-  Person.find({}, 'fullOrgName')
-  .where('type').in(['organization', 'trust'])
-  .then(result1 => {
-    Person.find({}, 'displayName')
-    .where('type').in(['individual'])
-    .then(result2 => {
-      let result = result1.concat(result2);
-      res.json(result);
-    })
-  })
+  Person.find({}, 'fullOrgName displayName')
+  .where('type').in((req.query.type || ['individual', 'organization', 'trust']))
+  .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
 
