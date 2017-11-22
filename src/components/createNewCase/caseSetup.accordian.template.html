@@ -58,7 +58,7 @@
           <div class="create-case-container">
             <md-card class="case-section" ng-repeat="section in vm.sections">
               <md-toolbar layout="row" layout-align="center center"
-                          class="expanding-toolbar"
+                          class="expanding-toolbar profile-card"
                           ng-click="expand=!expand; vm.expandBox(expand, $event)" tabindex="-1">
                 <md-card-title><h2 class="md-display-1">{{vm.props[section].title}}</h2></md-card-title>
                 <md-button class="md-icon-button large-icon-btn" aria-label="Expand Panel">
@@ -67,9 +67,11 @@
                 </md-button>
               </md-toolbar>
               <div class="section-box" ng-class="{collapsed: !expand}">
-                <rt-add-profile props="vm.props[section]"
-                                section="section"
+                <rt-add-profile profiles="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section-label="section"
                                 expand="expand"
+                                states-list="vm.statesList"
                         save-profile-to-case="vm.saveProfileToCase(data, path, section)">
                 </rt-add-profile>
               </div>

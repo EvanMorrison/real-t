@@ -21,39 +21,51 @@
       }
     }
   }
+  h4.md-title {
+    margin-bottom: 20px;
+  }
   .name-input-group {
     display: flex;
     flex-flow: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
     h4 {
       flex: 1 0 100%;
       flex-basis: 100%;  
     }
-    >div {
-      display: flex;
-      flex-flow: row wrap;
-    }
-    .short-org-name, .part-name {
-      flex: .5 0 20%;
-      max-width: 250px;
-      margin-right: 18px;
+    >div.row {
+      align-items: flex-end;
     }
     .short-org-name {
-      flex: .5 0 20%;
-      flex-basis: 20px;
-      margin-right: 18px;
+      flex: .5 0 50%;
+      flex-basis: 200px;
+      margin-right: 48px;
     }
     .full-org-name, .full-name {
-      flex: 1 .5 30%;
-      flex-basis: 200px;
+      flex: 1 1 80%;
+      flex-basis: 400px;
       max-width: 450px;
-      margin-right: 28px;
-      
     }
     .state-long {
       flex: 0 1 10%;
       max-width: 200px;
+      margin-top: 0px;
     }
+    .part-name {
+      flex: 1 0 25%;
+      margin-right: 18px;
+    }
+    .short-name {
+      flex: 0 1 25%
+    }
+  }
+  .phone {
+    max-width: 120px;
+  }
+  .add-phone-btn {
+    margin-right: 38px;
+  }
+  .email {
+    min-width: 100%;
   }
   .address-group {
     max-width: 500px;
@@ -74,5 +86,8 @@
         max-width: 70px;
       }
     }
+  }
+  md-input-container {
+    max-height: 40px;
   }
 }

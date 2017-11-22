@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 router.get('/lightlist', (req, res) => {
   Case.find({}, { caseNum: 1, lender: {$slice: 1}, borrower: {$slice: 1}, property: 1, 
                   "loan.originalPrincipalAmount": 1,  "saleInfo.projectedSaleDate": 1})
-  .populate('lender borrower', 'type displayName orgDisplayName')
+  .populate('lender borrower', 'type displayName orgDisplayName address1 address2 city state zip phones emails')
   .populate('property', '-legalDescription')
   .exec()
   .then(result => res.json(result))
@@ -30,7 +30,7 @@ router.get('/lightlist', (req, res) => {
 // get all cases, populating all refs from other collections
 router.get('/fulllist', (req, res) => {
   Case.find({})
-  .populate('lender lenderAtty borrower borrowerAtty otherParties')
+  .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
   .populate('property documents')
   .exec()
   .then(result => res.json(result))
@@ -40,7 +40,7 @@ router.get('/fulllist', (req, res) => {
 // get 1 case by id and fully populate all subdocuments
 router.get('/:id', (req, res) => {
   Case.findOne({ _id: req.params.id })
-  .populate('lender lenderAtty borrower borrowerAtty otherParties')
+  .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
   .populate('property documents tasks status')
   .exec()
   .then(result => res.json(result))
@@ -57,12 +57,44 @@ router.post('/', (req, res) => {
   })
 })
 
-router.put('/:id', (req, res) => {
-  console.log('in update case ', req.params.id, ' body ', req.body)
-  Case.findByIdAndUpdate(req.params.id, req.body, {new: true})
+// add a new person to a case
+router.put('/:id/people/:role', (req, res) => {
+  Case.findByIdAndUpdate(req.params.id, 
+    { 
+      $addToSet: { [req.params.role]: req.body }
+    }, 
+    {new: true})
+    .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
+    .populate('property documents tasks status')
+    .exec()
     .then(result => res.json(result))
     .catch(err => res.status(500).send(err));
 })
+
+// add a new property profile to a case
+router.put('/:id/properties', (req, res) => {
+  Case.findByIdAndUpdate(req.params.id, 
+    { 
+      $addToSet:  req.body 
+    }, 
+    {new: true})
+    .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
+    .populate('property documents tasks status')
+    .exec()
+    .then(result => res.json(result))
+    .catch(err => res.status(500).send(err));
+})
+
+// update a non-array property of a case
+router.put('/:id', (req, res) => {
+  Case.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
+  .populate('property documents tasks status')
+  .exec()
+  .then(result => res.json(result))
+  .catch(err => res.status(500).send(err));
+})
+
 
 router.delete('/:id', (req, res) => {
   Case.findByIdAndRemove(req.params.id)

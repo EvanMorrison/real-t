@@ -9,33 +9,38 @@ const caseSchema = new mongoose.Schema({
   caseNum: String,
 
   lender: [  
-    { type: ObjectId, ref: 'Person' }
+    { type: ObjectId, ref: 'Person' },
+    { _id: false }
   ],
 
-  lenderAtty: [
+  lenderAttorney: [
     { 
       attorney: { type: ObjectId, ref: 'Person' },  
       represents: { type: ObjectId, ref: 'Person' }
     },
+    { _id: false }
   ],
   
   borrower: [
-    { type: ObjectId, ref: 'Person' }
+    { type: ObjectId, ref: 'Person' },
+    { _id: false }
   ],
 
-  borrowerAtty: [
+  borrowerAttorney: [
     { 
       attorney: { type: ObjectId, ref: 'Person' },  
       represents: { type: ObjectId, ref: 'Person' }
     },
+    { _id: false }
   ],
 
   otherParties: [
     {
       party: { type: ObjectId, ref: 'Person' },
       role: String,  // appraiser, surveyor, etc., or additional parties requesting notices
-      getsLegalNotices: { type: Boolean, default: false }
-    }
+      getsNotices: { type: Boolean, default: false }
+    },
+    { _id: false }
   ],
 
   loan: {
@@ -65,7 +70,10 @@ const caseSchema = new mongoose.Schema({
     },
   },
   
-  property: { type: ObjectId, ref: 'Property' },
+  property: [
+    { type: ObjectId, ref: 'Property' },
+    { _id: false}
+  ],
   
   currentVesting: String,
   isOwnerOccupied: { type: Boolean, default: false },

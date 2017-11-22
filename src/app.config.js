@@ -89,12 +89,20 @@ module.exports = function(ngApp) {
                     }
                   })
 
-                  .state('caseDashboard', {
-                    url: '/dashboard',
+                  .state('caseDataContainer', {
+                    abstract: true,
                     parent: 'mainLayout',
                     views: {
-                      'headerContent@mainLayout': { component: 'navbar' },
-                      'bodyContent@mainLayout': { component: 'caseDashboard' }
+                      'headerContent@mainLayout': { component: 'navbar'},
+                      'bodyContent@mainLayout': {component: 'rtCaseDataContainer'}
+                    }
+                  })
+
+                  .state('caseDashboard', {
+                    url: '/dashboard',
+                    parent: 'caseDataContainer',
+                    views: {
+                      'view@caseDataContainer': { component: 'caseDashboard' }
                     },
                     resolve: {
                       caseList: ['listViewService', function(listViewService) {
@@ -107,18 +115,26 @@ module.exports = function(ngApp) {
                         parent: 'caseDashboard',
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          'cards': { component: 'cards' },
+                          'cards': { component: 'rtNewCaseSetup' },
                           'editToolbar@caseDashboard': { component: 'editToolbar' }
                         }
                       })
 
                     .state('newCase', {
                       url: '/create-new-case',
-                      parent: 'mainLayout',
+                      parent: 'caseDataContainer',
                       views: {
-                        'headerContent@mainLayout': { component: 'navbar' },
-                        'bodyContent@mainLayout': { component: 'caseSetup' },
+                        'view@caseDataContainer': { component: 'rtNewCaseSetup'}
                       },
+                    })
+
+                    .state('editCase', {
+                      url: '/case-setup/{caseNum}',
+                      parent: 'caseDataContainer',
+                      params: {'case_id': null},
+                      views: {
+                        'view@caseDataContainer': { component: 'rtNewCaseSetup'}
+                      }
                     })
 
                   .state('legacyforms', {

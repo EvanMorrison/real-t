@@ -107,8 +107,6 @@ module.exports = function(ngModule) {
       ////////////////////////////////////
 
       vm.gotoNewCase = function() {
-        vm.isCreating = true;
-        // first exit any other child state
         $state.go('newCase');
       }
 
@@ -128,10 +126,7 @@ module.exports = function(ngModule) {
       }
 
       
-      vm.finalizeNewCase = function() {
-          vm.isCreating = false;
-          $state.go('caseFocus', {recordId: vm.caseRecord.$id})
-        }
+      
       // cancel edits restore original data
       vm.cancelNewCase = function() {
           vm.isCreating = false;

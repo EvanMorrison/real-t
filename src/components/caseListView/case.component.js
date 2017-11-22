@@ -14,6 +14,7 @@ module.exports = function(app) {
 
     function CaseController(phoneFilter) {
       const vm = this;
+      
     }
 
     // filter for formatting phone numbers

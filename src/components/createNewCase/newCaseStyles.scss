@@ -11,72 +11,78 @@
 }
 
 .case-section {
-  .expanding-toolbar {
-    max-height: 64px;
-    md-card-title {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
-  .section-box {
-    overflow: auto;
-    transition: max-height .3s ease-out;
-    max-height: 1400px;
-    &.collapsed {
-      max-height: 0px;
-    }
+  md-toolbar.profile-card {
+    background-color: rgba($primary,.70);
+    color: $text-primary-lt;
   }
 }
 
 .add-profile-component {
-  display: flex;
-  flex-direction: column;
   padding: 40px;
-  .autocomplete-input{
-    min-width: 400px;
-  }
-  .profile-btn-group {
-    margin: 5px 0px auto;
+  .add-profile-group {
     display: flex;
-    justify-content: space-around;
-    >:first-child {
-      margin-left: 20px;
-      margin-right: 0;
-      border-right: 1px solid rgba($gray,.2)
+    flex-direction: column;
+    flex: 1 1 60%;
+    .autocomplete-input {
+      min-width: 400px;
     }
-    >:last-child {
-      margin-left: 0;
-      border-left: 1px solid rgba($gray,.2)
+    .profile-btn-group {
+      margin: 5px 0px auto 35px;
+    }
+    .profile-card {
+      flex: 1 1 30%;
+      min-height: 800px;
+      margin-left: 50px;
+      padding: 20px;
+      border: 1px solid rgba($gray, .2);
+      transition: min-height 0.3s ease-out;
+      &.compact {
+        min-height: 130px;
+      }
+      
+    }
+    .autocomplete-input {
+      width: 400px;
+    }
+    md-autocomplete.autocomplete-input.county {
+      ::after {
+        content: ' - and - '; 
+        position: relative;
+        top: 30px;
+        right: 0px;
+        margin: 0 18px;
+      }
+      md-autocomplete-wrap{
+          ::after {
+            content: '';
+        }
+      }
     }
   }
-  .profile-card {
-    flex: 1 1 50%;
-    min-height: 800px;
-    margin-left: 50px;
-    padding: 20px;
-    border: 1px solid rgba($gray, .2);
-    transition: min-height 0.3s ease-out;
-    &.compact {
-      min-height: 100px;
+
+  .profiles-list {
+    flex: 1 1 39%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+      rt-person-info {
+        position: relative;
+        margin-left: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba($gray, .2);
+        .remove-profile-btn {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          md-icon.icon-cancel {
+            color: $inactive-icon-dk;
+          }
+        }
     }
   }
-  .autocomplete-input {
-    width: 400px;
-  }
-  md-autocomplete.autocomplete-input.county {
-    ::after {
-      content: ' - and - '; 
-      position: relative;
-      top: 30px;
-      right: 0px;
-      margin: 0 18px;
-    }
- md-autocomplete-wrap{
-    ::after {
-      content: '';
-  }}
-}
+
 }
 
 

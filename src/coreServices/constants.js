@@ -1,4 +1,5 @@
-module.exports = [
+module.exports = {
+    STATES: [
     {
         "name": "Alabama",
         "short": "AL"
@@ -236,3 +237,4 @@ module.exports = [
         "short": "WY"
     }
 ]
+}

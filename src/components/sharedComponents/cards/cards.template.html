@@ -1,18 +1,18 @@
 <div class="case-card-group">
   
 
-  <person-card  person="vm.case.lender[0]"
+  <rt-person-info  person="vm.case.lender[0]"
                 category="Lender"
+                mode="edit"
                 class="case-detail-card-container person-card"
-                ng-class="{'active-edit' : vm.editLender}"
-                show-inputs="vm.editLender"
+                ng-class="{'expand' : !expand}"
                 on-edit-click="vm.toggleCard($event, category)"
                 on-save-click="vm.onSaveClick({data: data, category: category})"
                 on-cancel-click="vm.onCancelClick()"
                 ng-mouseenter="vm.hoverLender=true"
                 ng-mouseleave="vm.hoverLender=false"
                 show-edit-btn="vm.hoverLender">
-  </person-card>
+</rt-person-info>
   <person-card  person="vm.case.borrower[0]"
                 category="Borrower"
                 class="case-detail-card-container person-card"

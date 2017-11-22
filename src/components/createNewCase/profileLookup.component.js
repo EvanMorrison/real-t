@@ -5,7 +5,6 @@ module.exports = function(app) {
       '         ng-focus="vm.getSearchList(vm.path, vm.key, vm.filter)"',
       '        id="myAC"  ',
       '        md-input-name="{{vm.key}}Lookup"',
-      '        md-no-cache="vm.noCache"',
       '        md-selected-item="vm.selectedItem"',
       '        md-selected-item-change="vm.itemSelected(vm.selectedItem, vm.path)"',
       '        md-search-text="vm.searchText"',
@@ -25,7 +24,7 @@ module.exports = function(app) {
                     'path': '<', // api path base
                     'key': '<', 
                     'filter': '<',
-                    'reset': '<',
+                    'actions': '<',
                     'onItemSelected': '&'
       }
 })
@@ -47,8 +46,14 @@ module.exports = function(app) {
           .catch(err => console.log('getSearchList error', err))
         }
         
-        vm.$onChanges = () => {
-          if (vm.reset) vm.searchText = '';
+        vm.$onChanges = (changes) => {
+          if (changes.actions) {
+            let currActions = changes.actions.currentValue;
+            let prevActions = changes.actions.previousValue;
+            if (currActions.clearSearch === true && currActions.clearSearch != prevActions.clearSearch) {
+              vm.selectedItem = null;
+            }
+          }
         }
 
         vm.querySearch = (query, searchList, key) => {
@@ -61,7 +66,7 @@ module.exports = function(app) {
         }
 
         vm.itemSelected = (item, path) => {
-          if (!item || item[vm.key] === 'no match found') item = null;
+          if (!item || item[vm.key] === 'no match found') item = null, vm.selectedItem = null;
           vm.onItemSelected({item, path});
         }
 

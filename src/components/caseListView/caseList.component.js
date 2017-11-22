@@ -50,6 +50,7 @@ module.exports = function (app) {
                 console.log('trying to delete case ', caseRecord._id)
                 caseService.deleteCase(caseRecord)
                   .then(function(result){
+                    // this.caseList = result;
                     $mdDialog.show(
                       $mdDialog.alert()
                         .clickOutsideToClose(true)
@@ -83,8 +84,8 @@ module.exports = function (app) {
       // end deleteCase
 
       // goto to caseFocus view for a selected case
-      vm.gotoCase = function (caseObj) {
-          $state.go('caseFocus', {recordId: caseObj.caseNum })
+      vm.gotoCase = function (caseRecord) {
+          $state.go('editCase', {caseNum: caseRecord.caseNum, case_id: caseRecord._id })
       }
 
 

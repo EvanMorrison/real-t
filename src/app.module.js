@@ -15,6 +15,7 @@ require('./coreServices')(app);
 
 require('./containerComponents/appContainer.component')(app);
 require('./containerComponents/mainLayout.component')(app);
+require('./containerComponents/caseData.container')(app);
 
 require('./components/login/login.component')(app);
 require('./components/navbar/navbar.component')(app);

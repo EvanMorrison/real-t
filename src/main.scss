@@ -4,6 +4,10 @@
 
 // defaults
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
 html, body, h1, h2, h3, h4, h5, h6, p {
   font-family: 'Roboto', 'Helvetica Neue', 'sans serif';
   margin: 0;
@@ -21,6 +25,13 @@ body {
 .row {
   display: flex;
   flex-flow: row wrap;
+  justify-content: flex-start;
+  &.right-justify {
+    justify-content: flex-end;
+  }
+  &.center {
+    justify-content: center;
+  }
 }
 
 
@@ -156,7 +167,7 @@ a.active {
 /* Navbar styles */
 .navbar-title {
   padding: 5px 10px;
-  color: $purple;
+  color: $primary;
   font-weight: 900;
   font-size: 1.35em;
   text-decoration: none;
@@ -167,28 +178,34 @@ a.active {
 * shared controls
 */
 
-.save-btn,.save-btn.md-fab,.save-btn.md-fab.md-mini {
-  padding: 1px 7px 2px;
+.btn,.btn.md-fab,.btn.md-fab.md-mini {
+  padding: 1px 14px 2px;
   &:not([disabled]) {
-    background-color: $green;
+    background-color: $accent;
     color: $white;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
     * {
       color: $white;
     }
+    &.save-btn {
+      background-color: $green;
+    }
   }
   &:not([disabled]):hover, &:not([disabled]):focus {
-    background-color: rgba($green-dk, .8);
+    background-color: rgba($accent-dk, .8);
+    &.save-btn {
+      background-color: rgba($green-dk, .8);
+    }
   }
   &:disabled {
-    background-color: rgba($green,.2);
+    background-color: rgba($accent-lt,.2);
+    color: $text-disabled-dk;
   }
 
 }
 
 .add-contact-btn:not([disabled]),.add-contact-btn:disabled {
   position: relative;
-  top: 28px;
   md-icon {
     font-size: 18px;
   }

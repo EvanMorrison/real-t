@@ -1,7 +1,7 @@
 require('./editButton.scss');
 
 module.exports = function(app) {
-  app.component('editButton', {
+  app.component('rtEditButton', {
     template: require('./editButton.template.html'),
     controller: [
                   EditButtonController

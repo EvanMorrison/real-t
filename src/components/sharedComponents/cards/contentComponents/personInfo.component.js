@@ -1,54 +1,78 @@
 module.exports = function(app) {
   app.component('rtPersonInfo', {
     template: require('./personInfo.template.html'),
-    controller: [ '$mdDialog', PersonInfoController],
+    controller: [ '$mdDialog', '$scope', PersonInfoController],
+    transclude: true,
     controllerAs: 'vm',
     bindings: {
-                  person: '<',
+                  profile: '<',
                   mode: '<',
-                  category: '<',
-                  onSaveClick: '&',
+                  section: '<',
+                  statesList: '<',
+                  'actions': '<',
+                  onSaveClick: '&'
       }
     
   })
 
-    function PersonInfoController($mdDialog) {
+    function PersonInfoController($mdDialog, $scope) {
       // controller level variables
         const vm = this;
         vm.saved = true;
         vm.new = true;
-        vm.teltypes = ['mobile', 'office', 'home', 'custom'];
-        vm.states = require('../stateList');
-        vm.labels = {type: 'Organization'}
+
 
         vm.$onInit = () => {
-          vm.person = { type: 'organization' };
-          if (vm.category.toLowerCase().indexOf('attorney') != -1) vm.person.type = 'attorney';
+          if (vm.person && vm.section.indexOf('Attorney') != -1) vm.person.type = 'attorney';
           vm.setInputLabels();
         }
-        // 
-        vm.$onChanges = (changesObj) => { 
-          if (changesObj.person) {
-            vm.saved = false;
-          }
-          if (!changesObj.person || !changesObj.person.currentValue || !changesObj.person.currentValue._id) {
-            vm.teltypes = ['mobile', 'office', 'home', 'custom'];
-          }
-          else {
-            let person = changesObj.person;
-            if (person.previousValue == null || person.currentValue._id !== person.previousValue._id) {
-                if (Array.isArray(vm.person.phones)) {
-                  for (let tel of vm.person.phones) {
-                    if (tel.type != null && !vm.teltypes.includes(tel.type)) vm.teltypes.push(tel.type);
-                }
+
+        // handles adding or resetting phone types to selector options to accomodate custom labels
+        vm.$onChanges = (changes) => { 
+          if (changes.profile) {
+            let profile = changes.profile; // SimpleChanges class object
+            if (profile.currentValue) {
+              vm.person = JSON.parse(JSON.stringify(profile.currentValue));
+              vm.person.phones = vm.getPhoneList(); // these add an empty phone/email entry for ngrepeat to display... 
+              vm.person.emails = vm.getEmailList(); // if there are no phone/emails or if user selects to add one
+              vm.teltypes = ['mobile', 'office', 'home', 'custom'];
+              // if existing profile has custom tel types, add them to the selector options list
+              for (let tel of vm.person.phones) {
+                if (tel.type && !vm.teltypes.includes(tel.type)) vm.teltypes.push(tel.type);
               }
             }
           }
+
+          if (changes.actions) {
+            let actions = changes.actions;
+            if (actions.currentValue && actions.currentValue.save && !actions.previousValue.save)
+            vm.onSaveClick({data: vm.person});
+          } 
           
         }
 
-        // apply correct labels for inputs based on type of contact
+
+        // provide a default for ng-repeat when there are not yet any phones
+        vm.getPhoneList = () => {
+          if (!vm.person.phones || vm.person.phones.length === 0) return [{ type: null, value: null}];
+          else return vm.person.phones;
+        }
+        // provide a default for ng-repeat when there are not yet any emails
+        vm.getEmailList = () => {
+          if (!vm.person) return null;
+          if (!vm.person.emails || vm.person.emails.length === 0) return [{ value: null}];
+          else return vm.person.emails;
+        }
+        vm.addPhone = () => {
+          vm.person.phones.push({ value: null, type: null})
+        }
+        vm.addEmail = () => {
+          vm.person.emails.push({value: null})
+        }
+
+        // apply specified labels for inputs based on type of contact
         vm.setInputLabels = () => {
+          if (!vm.person) return;
           let labels = { };
           switch (vm.person.type) {
             case 'attorney':
@@ -73,8 +97,9 @@ module.exports = function(app) {
           vm.labels = labels;
         }
 
-        // allow for custom input on phone number type
+        // dialog box for custom input on phone number type
         vm.setPhoneLabel = ($event, $index) => {
+          if (!$index || !vm.person.phones) return;
           if (vm.person.phones[$index].type === 'custom') {  
             let prompt = $mdDialog.prompt()
               .title('Cutom Phone Label')
@@ -94,7 +119,7 @@ module.exports = function(app) {
 
 
         vm.update = () => {
-          vm.saved = false;
+
         }
 
         vm.updateName = () => {
@@ -111,11 +136,6 @@ module.exports = function(app) {
             vm.person.orgDisplayName = vm.person.shortOrgName || vm.person.fullOrgName;
         }
 
-        vm.handleSaveClick = $event => {
-          vm.onSaveClick({data: vm.person});
-          vm.saved = true;
-          vm.new = false;
-        }
       
     }
   

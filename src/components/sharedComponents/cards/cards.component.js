@@ -1,6 +1,6 @@
 
 module.exports = function(app) {
-  app.component('cards', {
+  app.component('rtCardsGroup', {
     template: require('./cards.template.html'),
     controller: [ '$stateParams',
                   CardsController
