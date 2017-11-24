@@ -29,7 +29,7 @@ module.exports = function(ngModule) {
         angular.element(document).ready( () => $mdSidenav('sideMenu').open());
 
         //title for toolbar
-        vm.viewTitle = 'View, Edit & Create Cases'
+        vm.viewTitle = 'View Case Details'
 
         // property to user for sorting cases in sidenav
         vm.orderProp = 'caseNum';
@@ -67,32 +67,6 @@ module.exports = function(ngModule) {
       //    EDIT EXISTING CASES        ////
       ////////////////////////////////////
 
-
-        
-
-          // save edits to case info
-        vm.saveChanges = function(data, category) {
-          let lender = vm.caseRecord.lender[0];
-          if (data === lender) console.log('same pointer ')
-          else console.log('not the same');
-          caseService.updateRecord(data, category)
-            .then(result => {
-              Object.assign(data, result);
-              console.log('case record ', vm.caseRecord);
-              return result;
-            })
-            .catch(err => {
-              vm.waiting = false;
-              console.log('controller error saving changes ', err)
-                $mdDialog.show(
-                  $mdDialog.alert()
-                    .clickOutsideToClose(true)
-                    .title('Error Saving')
-                    .textContent(`There was a problem saving: ${err}`)
-                    .ok('Ok')
-              )
-            })
-        }
 
        
         

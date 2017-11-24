@@ -23,7 +23,7 @@ require('./components/home')(app);
 
 require('./components/caseListView')(app);
 require('./components/caseDetailView')(app);
-require('./components/createNewCase')(app);
+require('./components/caseSetup')(app);
 require('./components/legacyViews/legacyViews.component')(app);
 
 require('./components/sharedComponents')(app);

@@ -9,13 +9,23 @@ module.exports = function(ngApp) {
  // material design config for theming, etc.
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
-        .primaryPalette('deep-purple')
-        .accentPalette('indigo')
+        .primaryPalette('deep-purple', {
+          'default' : '400',
+          'hue-1': '100',
+          'hue-2' : '600',
+          'hue-3' : 'A100'
+        })
+        .accentPalette('green', {
+          'default' : '600',
+          'hue-1' : '100',
+          'hue-2' : '600',
+          'hue-3' : 'A100'
+        })
     }])
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('Auth')
         .primaryPalette('red')
-        .accentPalette('indigo', {
+        .accentPalette('light-blue', {
           'default' : '600'
         })
     }])
@@ -115,25 +125,25 @@ module.exports = function(ngApp) {
                         parent: 'caseDashboard',
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          'cards': { component: 'rtNewCaseSetup' },
+                          'cards': { component: 'rtCaseSetup' },
                           'editToolbar@caseDashboard': { component: 'editToolbar' }
                         }
                       })
 
-                    .state('newCase', {
-                      url: '/create-new-case',
+                    .state('caseSetupStart', {
+                      url: '/case-setup',
                       parent: 'caseDataContainer',
                       views: {
-                        'view@caseDataContainer': { component: 'rtNewCaseSetup'}
+                        'view@caseDataContainer': { component: 'rtCaseSetup'}
                       },
                     })
 
-                    .state('editCase', {
+                    .state('caseSetup', {
                       url: '/case-setup/{caseNum}',
-                      parent: 'caseDataContainer',
+                      parent: 'caseSetupStart',
                       params: {'case_id': null},
                       views: {
-                        'view@caseDataContainer': { component: 'rtNewCaseSetup'}
+                        'view@caseDataContainer': { component: 'rtCaseSetup'}
                       }
                     })
 

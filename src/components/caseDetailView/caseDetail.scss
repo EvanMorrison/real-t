@@ -110,6 +110,8 @@
 }
 
 .dashboard-sidenav {
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 98vw;
   max-width: 200px;
   .case-list-item.selected {

@@ -3,37 +3,37 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Documents = require('../models/documents.model');
-const Case = require('../models/case.model');
 
 // Route requires authentication
 
 router.get('/', (req, res) => {
   Documents.find({})
-  .then(() => res.json(result))
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err))
+})
+
+router.get('/:id', (req, res) => {
+  Documents.findById(req.params.id)
+  .then(result => res.json(result))
   .catch(err => res.status(500).json(err))
 })
 
 router.post('/', (req, res) => {
-  console.log('posting new documents')
-  let newDocuments = new Documents(req.body.documents);
-  let caseId = req.body.caseId;
+  let newDocuments = new Documents(req.body);
   newDocuments.save()
-  .then(savedDocuments => {
-    if (caseId) {
-      Case.findByIdAndUpdate(caseId, { documents : savedDocuments }, { new: true})
-      .then(updatedCase => {
-        res.json(savedDocuments)
-      })
-      .catch(err => res.status(500).json(err));
-    }
-    else res.json(savedDocuments);
-  })
+  .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
 
 router.put('/:id', (req, res) => {
-  Documents.findByIdAndUpdate(req.params.id, req.body, { new: true })
-  .then(updatedResult => res.json(updatedResult))
+  Documents.findByIdAndUpdate(req.params.id, req.body, { new: true, upsert:true })
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err));
+})
+
+router.delete('/:id', (req,res) => {
+  Documents.findByIdAndRemove(req.params.id)
+  .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
 

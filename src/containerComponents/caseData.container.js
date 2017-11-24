@@ -1,9 +1,11 @@
 
+
 module.exports = function(app) {
   app
   .component('rtCaseDataContainer', {
     template: require('./caseData.template.html'),
     controller: [ 
+                  '$mdDialog',
                   '$state',
                   '$stateParams',
                   'caseService',
@@ -15,7 +17,7 @@ module.exports = function(app) {
     }
   });
 
-  function CaseDataController($state, $stateParams, caseService) { 
+  function CaseDataController($mdDialog, $state, $stateParams, caseService) { 
     const vm = this;
     
     
@@ -37,34 +39,12 @@ module.exports = function(app) {
       if ($stateParams.case_id) {
         vm.getCase($stateParams.case_id);
       }
+      else if ($stateParams.caseNum) {
+        vm.lookupCaseByCaseNum($stateParams.caseNum)
+      }
       
     }
     
-
-    vm.getCase = case_id => {
-      if (!case_id) return;
-      return caseService.getCaseRecord(case_id)
-      .then(result => vm.caseRecord = result)
-      .catch(err => console.log(err))
-    }
-
-    // create a new empty case with an assigned case number (caseNum)
-    vm.createNewCase = () => {
-      caseService.createNewCase()
-      .then(result => {
-        vm.caseRecord = result;
-        return vm.caseRecord;
-      })
-    }
-
-    // this will add a person/property/document profile to the current caseRecord
-    vm.saveProfileToCase = (data, path, section) => {
-      if (!vm.caseRecord || !vm.caseRecord._id) return Promise.reject(data);
-      if (data._id === 'new') delete data._id;
-      return caseService.saveProfileToCase(data, path, section)
-      .then(result => vm.caseRecord = result)
-      .catch(err => console.log('error in saveProfileToCase ', err))
-    }
 
     // will return a specific person/property/document profile by _id. Used with autocomplete
     // for quickly adding an existing profile to a new case
@@ -74,42 +54,92 @@ module.exports = function(app) {
       .catch(err => console.log('error in getProfile: ', err))
     }
 
-    
-    // this is not tied in with the current version
-    vm.saveChanges = function(data, category) {
-      caseService.updateRecord(data, category)
-        .then(result => {
-            console.log('result ', result);
-        })
-        .catch(err => {
-          console.log('controller error with updating record ', err)
-          vm.waiting = false;
-          console.log('error saving changes ', err)
-            $mdDialog.show(
-              $mdDialog.alert()
-                .clickOutsideToClose(true)
-                .title('Error Saving')
-                .textContent(`There was a problem saving: ${err}`)
-                .ok('Ok')
-          )
-        })
+    // get a case by its Mongo _id
+    vm.getCase = case_id => {
+      if (!case_id) return;
+      return caseService.getCaseRecord(case_id)
+      .then(result => vm.caseRecord = result)
+      .catch(err => console.log(err))
     }
 
-
-    vm.cancelWithoutSaving = () => {
-      caseService.deleteCase(vm.caseRecord)
+    // get a case by its case number
+    vm.lookupCaseByCaseNum = caseNum => {
+      if (!caseNum) return;
+      return caseService.getCaseRecordByCaseNum(caseNum)
       .then(result => {
-        console.log('the new case has been discarded without saving ', result);
-        vm.caseRecord = {};
-        vm.isCreating = false;
+        vm.caseRecord = result;
+        $state.go('caseSetup', {caseNum: result.caseNum})
       })
-      .catch(err => {
-        console.log('error in new case controller, discarding case. ', err)
+      .catch(err => vm.errorAlert(`There was a problem looking up case number ${caseNum}. Message: ${err}`))
+    }
+
+
+    // create a new empty case with an assigned case number (caseNum)
+    vm.createNewCase = () => {
+      caseService.createNewCase()
+      .then(result => {
+        vm.caseRecord = result;
+        $state.go('caseSetup', {caseNum: vm.caseRecord.caseNum})
       })
+      .catch(err => vm.errorAlert(`An error occurred attempting to create a new case. Message: ${err}`))
+    }
+
+    vm.errorAlert = (message) => {
+      $mdDialog.show(
+        $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Error')
+        .textContent(message)
+        .ariaLabel('error performing action')
+        .ok('ok')
+      )
+      vm.caseRecord = null;
+      $state.go('caseSetupStart');
+    }
+
+
+    vm.saveProfileAndUpdateCase = (profile, path, section) => {
+      console.log('save profile and update case ', 'profile ', profile, ' path ', path, ' section: ', section);
+      // non-array, non-ref, direct case sections - 
+      if (path === 'cases') { // profile is directly part of the case object
+        return caseService.updateCaseSection(vm.caseRecord._id, profile, section)
+        .then(result => {
+          vm.caseRecord[section] = result[section];
+          vm.caseRecord = JSON.parse(JSON.stringify(vm.caseRecord))
+          return true;
+        })
+        .catch(err => console.log('update case section err ', err));
+      } else { // profile is a ref to another collection
+        // for attorneys and 'other parties', must target appropriate subproperty
+          let subsection = null, profileToUpdate = profile;
+          if (section.indexOf('attorney') >= 0) subsection = 'attorney';
+          if (section.indexOf('other') >= 0) subsection = 'party';
+          if (subsection) profileToUpdate = profile[subsection];
+          return caseService.updatePersonPropertyOrDocuments(profileToUpdate, path, section)
+          .then(result => { // result is the saved/updated profile
+            if (subsection) profile[subsection] = result;
+            else profile = result;
+            return caseService.updateCaseSection(vm.caseRecord._id, profile, section)
+            .then(result => { // result is updated case
+              vm.caseRecord[section] = result[section];
+              vm.caseRecord = JSON.parse(JSON.stringify(vm.caseRecord));
+              return true;
+            })
+          })
+          .catch(err => console.log('err 2 ', err));
+      }
+    }
+
+
+    vm.removeProfileFromCase = (profile, section) => {
+      if (!vm.caseRecord || !vm.caseRecord._id) return Promise.reject('the case is undefined');
+      return caseService.removeProfileFromCase(profile, section)
+      .then(result => vm.caseRecord = result)
+      .catch(err => vm.errorAlert(err))
+
     }
 
     
-
   }
 
 }

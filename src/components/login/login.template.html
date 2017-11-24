@@ -28,7 +28,7 @@
                           ng-click="vm.loginWithFacebook($event)">
                   <i flex="15" flex-offset="20" class="fa fa-facebook fa-lg"></i> <div flex="65">Facebook</div>
                             </md-button>   -->
-                <md-button  class="md-accent md-raised loginbox-btn"
+                <md-button md-theme="Auth" class="md-accent md-raised loginbox-btn"
                           ng-if="!vm.user.SignedIn"
                           ng-click="vm.loginAnonymous($event)">
                   Sign in Anonymously

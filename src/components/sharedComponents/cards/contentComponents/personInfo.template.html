@@ -121,50 +121,57 @@
         </div>
 
 
-        <div class="row" layout-align="start start">
+        <div class="row phone-email-group">
           
-          <div layout="row" layout-align="end end">
-            <div layout="column">
-              <!-- phone section -->
-              <div  class="phone-input-group input-group"
-                    ng-repeat="phone in vm.person.phones">
-                  <md-input-container class="phone">
-                      <label>phone</label>
-                      <input  ng-model="phone.value"
-                              type="tel"
-                              ng-change="vm.update()">
-                  </md-input-container>
-                  <md-input-container class="phone-type">
-                    <label>type</label>
-                    <md-select  ng-model="phone.type"
-                                ng-change="vm.setPhoneLabel($event, $index); vm.update()"
-                                aria-label="phone type">
-                      <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
-                        {{teltype}}
-                      </md-option>
-                    </md-select> 
-                    <div class="md-errors-spacer"></div> 
-                  </md-input-container>
-              </div>
+          <div class="column phone-group">
+              <div class="column">
+                <!-- phone section -->
+                <div  class="row phone-input-group input-group"
+                      ng-repeat="phone in vm.person.phones track by $index">
+                    <md-input-container class="phone">
+                        <label>phone</label>
+                        <input  ng-model="phone.value"
+                                type="tel"
+                                ng-change="vm.update()">
+                    </md-input-container>
+                    <md-input-container class="phone-type">
+                      <label>type</label>
+                      <md-select  ng-model="phone.type"
+                                  ng-change="vm.setPhoneLabel($event, $index); vm.update()"
+                                  aria-label="phone type">
+                        <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
+                          {{teltype}}
+                        </md-option>
+                      </md-select> 
+                      <div class="md-errors-spacer"></div> 
+                    </md-input-container>
+                    <md-button class="md-icon-button remove-contact-btn" ng-click="vm.deletePhone($index)">
+                      <md-tooltip md-direction="top">remove phone</md-tooltip>
+                      <md-icon class="icon-close"></md-icon>
+                    </md-button>
+                </div>
             </div>
-            <md-button class="md-icon-button add-contact-btn add-phone-btn" ng-click="vm.addPhone()">
+              <md-button class="md-icon-button add-contact-btn add-phone-btn" ng-click="vm.addPhone()">
                 <md-tooltip md-direction="top">additional phone</md-tooltip>
                 <md-icon class="icon-add"></md-icon>
               </md-button>
-          </div>
+            </div>
   
-          <div layout="row" layout-align="end end">
-            <div layout="column">
-
+          <div class="column email-group">
+            <div class="column">
              <!-- email section  -->
-              <div  class="email-input-group input-group"
-                    ng-repeat="email in vm.person.emails">
+              <div  class="row email-input-group input-group"
+                    ng-repeat="email in vm.person.emails track by $index">
                 <md-input-container class="email">
                     <label>email</label>
                     <input  ng-model="email.value"
                             type="email"
                             ng-change="vm.update()">
                 </md-input-container>
+                <md-button class="md-icon-button remove-contact-btn" ng-click="vm.deleteEmail($index)">
+                    <md-tooltip md-direction="top">remove email</md-tooltip>
+                    <md-icon class="icon-close"></md-icon>
+                  </md-button>
               </div>
             </div>
             <md-button class="md-icon-button add-contact-btn" ng-click="vm.addEmail()">
@@ -200,7 +207,7 @@
                     <md-select ng-model="vm.person.state"
                                 ng-change="vm.update()"
                                 aria-label="state">
-                      <md-option ng-repeat="state in vm.states" 
+                      <md-option ng-repeat="state in vm.statesList" 
                                  ng-value="state.short">
                           {{state.short}}
                       </md-option>

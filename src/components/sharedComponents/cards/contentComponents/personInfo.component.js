@@ -45,12 +45,12 @@ module.exports = function(app) {
 
           if (changes.actions) {
             let actions = changes.actions;
-            if (actions.currentValue && actions.currentValue.save && !actions.previousValue.save)
-            vm.onSaveClick({data: vm.person});
+            if (actions.currentValue && actions.currentValue.save === true && actions.previousValue.save === false) {
+              vm.removeBlankPhoneAndEmail();
+              vm.onSaveClick({profile: vm.person});
+            }
           } 
-          
         }
-
 
         // provide a default for ng-repeat when there are not yet any phones
         vm.getPhoneList = () => {
@@ -70,6 +70,21 @@ module.exports = function(app) {
           vm.person.emails.push({value: null})
         }
 
+        vm.removeBlankPhoneAndEmail = () => {
+          let last = vm.person.phones.length - 1;
+          if (vm.person.phones[last].value == null) vm.person.phones.pop();
+          last = vm.person.emails.length - 1;
+          if (vm.person.emails[last].value == null) vm.person.emails.pop();
+        }
+        vm.deletePhone = ($index) => {
+          if ($index === 0 && vm.person.phones[0].value == null && vm.person.phones.length === 1) return;
+          vm.person.phones.splice($index, 1);
+
+        }
+        vm.deleteEmail = ($index) => {
+          if ($index === 0 && vm.person.emails[0].value == null && vm.person.emails.length === 1) return;
+          vm.person.emails.splice($index, 1);
+        }
         // apply specified labels for inputs based on type of contact
         vm.setInputLabels = () => {
           if (!vm.person) return;

@@ -85,7 +85,7 @@ module.exports = function (app) {
 
       // goto to caseFocus view for a selected case
       vm.gotoCase = function (caseRecord) {
-          $state.go('editCase', {caseNum: caseRecord.caseNum, case_id: caseRecord._id })
+          $state.go('caseSetup', {caseNum: caseRecord.caseNum, case_id: caseRecord._id })
       }
 
 

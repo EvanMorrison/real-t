@@ -29,8 +29,7 @@ module.exports = function(ngModule) {
           })
           .catch(err => {
             this.waiting = false;
-            console.log('error retrieving case list: ', err);
-            return this.caseList;
+            return Promise.reject(this.caseList);
           })
         }
         else return this.caseList;
@@ -51,12 +50,26 @@ module.exports = function(ngModule) {
         })
         .catch(err => {
             this.waiting = false;
-            console.log('error getting case detail: ', err);
             return Promise.reject(err);
         })
     }
 
-
+    this.getCaseRecordByCaseNum = caseNum => {
+        this.waiting = true;
+        return $http.get('/api/cases/casenum/' + caseNum)
+        .then(result => {
+            this.waiting = false;
+            if (!result.data) return Promise.reject('no result found')
+            else {
+                this.caseRecord = result.data;
+                return this.caseRecord;
+            }
+        })
+        .catch(err => {
+            this.waiting = false;
+            return Promise.reject(err);
+        })
+    }
 
     /**
      * Create, Update, Delete Services
@@ -70,84 +83,49 @@ module.exports = function(ngModule) {
             this.waiting = false;
             this.caseRecord = result.data;
             if (listViewService.caseList.length) listViewService.caseList.unshift(this.caseRecord);
-            console.log('created new case ', this.caseRecord);
             return this.caseRecord;
         })
         .catch(err => {
             this.waiting = false;
-            console.log('error in service generating new case: ', err);
             return Promise.reject(err);
         }) 
     }
 
+
+    this.updateCaseSection = (caseid, profile, section) => {
+        return $http.put('/api/cases/' + caseid + '/' + section, profile)
+        .then(result => result.data)  // returns updated case with 'section' populated
+        .catch(err => Promise.reject(err));
+    }
+    
     // save new person
-    this.saveNewPersonOrProperty = (data, path) => {
-          return $http.post('/api/' + path, data)
-          .then(result => result.data)
-          .catch(err => Promise.reject(err));
-    }
-
-    this.saveProfileToCase = (data, path, section) => {
-        // this.waiting = true;
-        if (path === 'people' || path === 'properties') {
-            if (!data._id) {
-                return this.saveNewPersonorProperty(data, path)
-                .then(result => {
-                    data = result._id;
-                    this.updateCasePeopleOrProperty(data, path, section)
-                    .then(result => result)
-                })
-                .catch(err => Promise.reject(err));
-
-            } else {
-                return this.updateCasePeopleOrProperty(data, path, section)
-                .then(result => result)
-                .catch(err => Promise.reject(err));
-            }
-        } else {
-            return this.updateCase(data,section)
-            .then(result => result)
+    this.updatePersonPropertyOrDocuments = (profile, path) => {
+        console.log('path: ', path, ' profile ', profile);
+        if (profile._id === 'new') {
+            delete profile._id;
+            return $http.post('/api/' + path, profile)
+            .then(result => result.data)
             .catch(err => Promise.reject(err))
-        }
-    }
-        
-        this.updateCasePeopleOrProperty = (data, path, section) => {
-            let url = '/api/cases/' + this.caseRecord._id;
-            url += '/' + path;
-            url += path === 'people' ? '/' + section : '';
-            return $http.put(url, data)
-            .then(result => {
-                this.caseRecord = result.data;
-                return this.caseRecord;
-            })
+        } else {
+            return $http.put('/api/' + path + '/' + profile._id, profile)
+            .then(result => result.data)
             .catch(err => Promise.reject(err));
         }
-
-		this.updateCase = (data, section) => {
-			return $http.put('/api/cases/' + this.caseRecord._id, {[section]: data})
-			.then(result => {
-                this.caseRecord = result.data;
-                return this.caseRecord;
-            })
-			.catch(err => Promise.reject(err));
-		}
-    
-    // Save updates to existing cases
-    this.updateRecord = (data, path) => {
-        console.log('in updaterecord ', 'path: ', path, 'data: ', data)
-      this.waiting = true;
-          return $http.put('/api/' + path + '/' + data._id, data)
-          .then(result => {
-              this.waiting = false;
-              console.log('results of updaterecord ', result);
-              return result.data;
-          })
-          .catch(err => {
-              this.waiting = false;
-              console.log('service error in update record ', err);
-              return Promise.reject(err);
-          })
     }
+
+    
+  
+    // remove a person or property profile from a case (does not delete the person or property profile from its collection)
+    this.removeProfileFromCase = (profile, section) => {
+        return $http.delete('/api/cases/' + this.caseRecord._id + '/' + section + '/' + profile._id)
+        .then(result => {
+            this.caseRecord = result.data;
+            return this.caseRecord;
+        })
+        .catch(err => Promise.reject(err));
+    }
+   
+   
 
     // Delete a case
     this.deleteCase = (caseRecord) => {
@@ -155,22 +133,26 @@ module.exports = function(ngModule) {
       this.waiting = true;
       return $http.delete('/api/cases/' + caseRecord._id)
       .then(result => {
-					this.waiting = false;
-					for (let i = 0; i < this.caseList.length; i++) {
-						if (this.caseList[i]._id === result.data._id) {
-							this.caseList.splice(i,1)
-							break;
-						}
-					}
+            this.waiting = false;
+            for (let i = 0; i < this.caseList.length; i++) {
+                if (this.caseList[i]._id === result.data._id) {
+                    this.caseList.splice(i,1)
+                    break;
+                }
+            }
           return Promise.resolve(this.caseList);
       })
       .catch(err => {
           this.waiting = false;
-          console.log('error in service deleting case: ', err);
           return Promise.reject(err);
       })
     } 
     
+
+
+
+
+    // retrieve a specific person or property profile
     this.getProfile = (profileId, path) => {
       this.waiting = true;
       return $http.get('/api/' + path + '/' + profileId) 

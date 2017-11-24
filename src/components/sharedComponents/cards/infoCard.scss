@@ -58,16 +58,45 @@
       flex: 0 1 25%
     }
   }
-  .phone {
-    max-width: 120px;
+
+.phone-email-group.row {
+  max-width: 1200px;
+}
+
+.phone-group {
+  flex: 1 40%;
+  padding-right: 30px;
+  // align-items: stretch;
+    div.column {
+      // align-content: flex-start;
+      .phone-input-group {
+        align-items: center;
+        justify-content: space-around;
+        .phone {
+          flex: 1;
+          max-width: 120px;
+        }
+    }
   }
-  .add-phone-btn {
-    margin-right: 38px;
+}
+
+.email-group {
+  flex: 1 50%;
+  div {
+    .email-input-group {
+      align-items: center;
+      .email {
+        flex: 1;
+      }
+    }
   }
-  .email {
-    min-width: 100%;
+}
+  
+  .add-contact-btn {
+    align-self: flex-end;
   }
-  .address-group {
+
+    .address-group {
     max-width: 500px;
     .city-state-zip {
       display: flex;

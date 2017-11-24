@@ -20,13 +20,12 @@ const personSchema = new mongoose.Schema({
     phones: [
       {
         type: { type: String }, // eg. mobile, office, home
-        value: String
-      },
-      { _id: false }
+        value: String,
+        _id: false
+      }
     ],
     emails: [
-       { value: String },
-       { _id: false }
+       { value: String, _id: false }
     ],
     address1: String,
     address2: String,
@@ -37,11 +36,11 @@ const personSchema = new mongoose.Schema({
       {
         note: { type: String },
         createdBy: { type: ObjectId, ref: 'User' },
-        lastModified: { type: Date, default: Date.now() }
-      },
-      { _id: false }
+        lastModified: { type: Date, default: Date.now() },
+        _id: false
+      }
     ],
-    tags: [String]
+    tags: [{type: String, _id: false}]
   },
 // Options
 { timestamps: true,

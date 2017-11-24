@@ -34,6 +34,12 @@ body {
   }
 }
 
+.column {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-content: stretch;
+}
 
 
 // loading progress spinner
@@ -97,7 +103,7 @@ body {
 
 a.active {
   font-weight: 900;
-  border-bottom: 3px solid #ddd;
+  border-bottom: 3px solid $accent;
 }
 
 
@@ -181,25 +187,76 @@ a.active {
 .btn,.btn.md-fab,.btn.md-fab.md-mini {
   padding: 1px 14px 2px;
   &:not([disabled]) {
-    background-color: $accent;
-    color: $white;
+    border: 1px solid transparent;
+    background-color: $primary-lt;
+    color: $text-primary-lt;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    
     * {
-      color: $white;
+      color: inherit;
     }
     &.save-btn {
-      background-color: $green;
+      background-color: $accent;
+    }
+    &.warn-btn {
+      background-color: $warn;
+    }
+    &.save-btn-reverse {
+      background-color: transparent;
+      color: $accent;
+      box-shadow: none;
+    }
+    &.warn-btn-reverse {
+      background-color: transparent;
+      color: $warn;
+      box-shadow: none;
+    }
+    &.primary-btn-reverse  {
+      background-color: transparent;
+      color: $primary-dk;
+      box-shadow: none;
     }
   }
   &:not([disabled]):hover, &:not([disabled]):focus {
-    background-color: rgba($accent-dk, .8);
+    background-color: $accent-dk;
     &.save-btn {
-      background-color: rgba($green-dk, .8);
+      background-color: $accent-dk;
     }
+    &.warn-btn {
+      background-color: $warn-dk;
+    }
+    &.primary-btn-reverse {
+      border: 1px solid rgba($primary-lt, .3);
+      background-color: transparent;
+    }
+    &.save-btn-reverse {
+      border: 1px solid rgba($accent-lt, .3);
+      background-color: transparent;
+    }
+    &.warn-btn-reverse {
+      border: 1px solid rgba($warn-lt, .3);
+      background-color: transparent;
+    }
+    
   }
   &:disabled {
-    background-color: rgba($accent-lt,.2);
+    background-color: $accent-lt;
     color: $text-disabled-dk;
+    &.warn-btn, &.warn-btn * {
+      background-color: $warn-lt;
+    }
+    &.primary-btn-reverse, &.primary-btn-reverse * {
+      background-color: transparent;
+      color: rgba($primary-lt, .3);
+    }
+    &.save-btn-reverse {
+      background-color: transparent;
+      background-color: rgba($accent-lt, .2);
+    }
+    &.warn-btn-reverse {
+      background-color: transparent;
+      background-color: rgba($warn-lt, .2);
+    }
   }
 
 }
@@ -208,6 +265,12 @@ a.active {
   position: relative;
   md-icon {
     font-size: 18px;
+  }
+}
+.remove-contact-btn:not([disabled]),.remove-contact-btn:disabled {
+  position: relative;
+  md-icon {
+    font-size: 14px;
   }
 }
 

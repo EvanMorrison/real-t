@@ -1,24 +1,28 @@
 $white: #fff;
 $gray: #888;
 $black: #000;
-$green: #4caf50;
-$green-lt: #80e27e;
-$green-dk: #087f23;
-$orange: #f80;
+$green: #2e7d32;
+$green-lt: #c8e6c9;
+$green-dk: #1b5e20;
+$orange: #fb8c00;
+$orange-lt: #ffe0b2;
+$orange-dk: #e65100;
 $purple: #673ab7;
 $purple-lt: #9a67ea;
-$purple-dk: #320b86;
-$red: #ff3d00;
-$red-lt: #ff7539;
-$red-dk: #c30000;
+$purple-dk: #480b86;
+$red: #f44336;
+$red-lt: #ef9a9a;
+$red-dk: #c62828;
 
 $primary: $purple;
 $primary-lt: $purple-lt;
 $primary-dk: $purple-dk;
-$accent: rgba($purple, 0.7);
-$accent-lt: rgba($purple, 0.3);
-$accent-dk: rgba($purple-dk, 0.7);
-
+$accent: rgba($green, .7);
+$accent-lt: rgba($green-lt, 0.8);
+$accent-dk: rgba($green-dk, 0.7);
+$warn: $red;
+$warn-lt: $red-lt;
+$warn-dk: $red-dk;
 
 $text-primary-lt: $white;
 $text-secondary-lt: rgba($white, 0.7);

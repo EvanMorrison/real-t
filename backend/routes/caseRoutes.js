@@ -3,9 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Case = require('../models/case.model');
-const Person = require('../models/person.model');
-const Documents = require('../models/documents.model');
-const Property = require('../models/property.model');
 
 // Route requires authentication
 
@@ -18,7 +15,7 @@ router.get('/', (req, res) => {
 
 // get all cases but return only selected fields and populating a particular subset of ref documents
 router.get('/lightlist', (req, res) => {
-  Case.find({}, { caseNum: 1, lender: {$slice: 1}, borrower: {$slice: 1}, property: 1, 
+  Case.find({}, { caseNum: 1, lender: {$slice: 1}, borrower: {$slice: 1}, property: {$slice:1}, 
                   "loan.originalPrincipalAmount": 1,  "saleInfo.projectedSaleDate": 1})
   .populate('lender borrower', 'type displayName orgDisplayName address1 address2 city state zip phones emails')
   .populate('property', '-legalDescription')
@@ -41,7 +38,17 @@ router.get('/fulllist', (req, res) => {
 router.get('/:id', (req, res) => {
   Case.findOne({ _id: req.params.id })
   .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
-  .populate('property documents tasks status')
+  .populate('property documents')
+  .exec()
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err))
+})
+
+// get 1 case by its caseNum property and populate all subdocuments
+router.get('/casenum/:id', (req, res) => {
+  Case.findOne({ 'caseNum': req.params.id })
+  .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
+  .populate('property documents')
   .exec()
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err))
@@ -57,37 +64,29 @@ router.post('/', (req, res) => {
   })
 })
 
-// add a new person to a case
-router.put('/:id/people/:role', (req, res) => {
-  Case.findByIdAndUpdate(req.params.id, 
-    { 
-      $addToSet: { [req.params.role]: req.body }
-    }, 
-    {new: true})
-    .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
-    .populate('property documents tasks status')
-    .exec()
-    .then(result => res.json(result))
-    .catch(err => res.status(500).send(err));
+// update a section of the case, eg. 'lender', 'property', or 'loan'
+router.put('/:id/:section', (req, res) => {
+  let _id = req.params.id, section = req.params.section;
+  let operation = {};
+  if (/^lender|^borrower|^other|^property/.test(section)) {
+    operation = { $addToSet: { [section]: req.body._id} }
+  } else operation = { $set: {[section]: req.body }}
+  Case.findByIdAndUpdate(_id, operation, {new: true})
+  .select(section)
+  .populate([section])
+  .exec()
+  // .populate(section)
+  // .exec()
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err));
 })
 
-// add a new property profile to a case
-router.put('/:id/properties', (req, res) => {
-  Case.findByIdAndUpdate(req.params.id, 
-    { 
-      $addToSet:  req.body 
-    }, 
-    {new: true})
-    .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
-    .populate('property documents tasks status')
-    .exec()
-    .then(result => res.json(result))
-    .catch(err => res.status(500).send(err));
-})
 
-// update a non-array property of a case
-router.put('/:id', (req, res) => {
-  Case.findByIdAndUpdate(req.params.id, req.body, {new: true})
+// delete a profile from a person or property array
+router.delete('/:caseId/:section/:profileId', (req, res) => {
+  Case.findByIdAndUpdate(req.params.caseId, {
+    $pull: { [req.params.section]: req.params.profileId }
+  }, {new: true})
   .populate('lender lenderAttorney borrower borrowerAttorney otherParties')
   .populate('property documents tasks status')
   .exec()
@@ -95,7 +94,7 @@ router.put('/:id', (req, res) => {
   .catch(err => res.status(500).send(err));
 })
 
-
+// delete a case entirely
 router.delete('/:id', (req, res) => {
   Case.findByIdAndRemove(req.params.id)
   .then(result => res.json(result))

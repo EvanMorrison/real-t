@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Person = require('../models/person.model');
-const Case = require('../models/case.model');
 
 // Route requires authentication
 
@@ -13,8 +12,8 @@ router.get('/', (req, res) => {
   .catch(err => res.status(500).json(err));
 })
 
-// retrieves and combines into single array, all org/trust names, 
-// and all individual names that aren't associated with an org or trust
+// retrieves and combines into single array, all org, trust, and individual's names
+// excluding attorneys.
 router.get('/names/principals', (req, res) => {
   Person.find({}, 'fullOrgName displayName')
   .where('type').in((req.query.type || ['individual', 'organization', 'trust']))
@@ -37,7 +36,7 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  Person.findByIdAndUpdate(req.params.id, req.body, {new: true} )
+  Person.findByIdAndUpdate(req.params.id, req.body, {new: true, upsert:true} )
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })

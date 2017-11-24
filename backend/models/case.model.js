@@ -9,38 +9,36 @@ const caseSchema = new mongoose.Schema({
   caseNum: String,
 
   lender: [  
-    { type: ObjectId, ref: 'Person' },
-    { _id: false }
+    { type: ObjectId, ref: 'Person' }
   ],
 
   lenderAttorney: [
     { 
       attorney: { type: ObjectId, ref: 'Person' },  
-      represents: { type: ObjectId, ref: 'Person' }
-    },
-    { _id: false }
+      client: { type: ObjectId, ref: 'Person' },
+      _id: false
+    }
   ],
   
   borrower: [
-    { type: ObjectId, ref: 'Person' },
-    { _id: false }
+    { type: ObjectId, ref: 'Person' }
   ],
 
   borrowerAttorney: [
     { 
       attorney: { type: ObjectId, ref: 'Person' },  
-      represents: { type: ObjectId, ref: 'Person' }
-    },
-    { _id: false }
+      client: { type: ObjectId, ref: 'Person' },
+      _id: false
+    }
   ],
 
   otherParties: [
     {
       party: { type: ObjectId, ref: 'Person' },
       role: String,  // appraiser, surveyor, etc., or additional parties requesting notices
-      getsNotices: { type: Boolean, default: false }
-    },
-    { _id: false }
+      getsNotices: { type: Boolean, default: false },
+      _id: false
+    }
   ],
 
   loan: {
@@ -63,16 +61,15 @@ const caseSchema = new mongoose.Schema({
       costs: Number,
       other: [
         { description: String,
-          amount: Number },
-          { _id: false }
+          amount: Number,
+          _id: false }
       ],
       asOf: Date
     },
   },
   
   property: [
-    { type: ObjectId, ref: 'Property' },
-    { _id: false}
+    { type: ObjectId, ref: 'Property' }
   ],
   
   currentVesting: String,
@@ -111,8 +108,7 @@ const caseSchema = new mongoose.Schema({
       taskDescription: String,
       dueDate: Date,
       isCompleted: { type: Boolean, default: false }
-    },
-    { _id: false }
+    }
   ],
   status: [
     {
@@ -120,8 +116,7 @@ const caseSchema = new mongoose.Schema({
       createdAt: Date,
       createdBy: { type: ObjectId, ref: 'User'}, // User Id
       updatedAt: Date
-    },
-    { _id: false }
+    }
   ]
 },
 // Options
