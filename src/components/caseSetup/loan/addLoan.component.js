@@ -1,14 +1,14 @@
 module.exports = function(app) {
   
-  app.component('rtAddProfile', {
-    template: require('./addProfile.template.html'),
+  app.component('rtAddLoan', {
+    template: require('./addLoan.template.html'),
     controller: [ 
                     'caseService',
-                    AddProfileController
+                    AddLoanController
     ],
     controllerAs: 'vm',
     bindings: { 
-                'profiles': '<',
+                'profile': '<',
                 'props': '<',
                 'sectionLabel': '<',
                 'statesList': '<',
@@ -19,15 +19,14 @@ module.exports = function(app) {
     }
   })
 
-  function AddProfileController(caseService) {
+  function AddLoanController(caseService) {
     const vm = this;
     vm.mode = 'view';
     vm.states = caseService.states;
-    vm.isUnsaved = false;
     
     vm.$onInit = () => {
       vm.actions = { clearSearch: false, save: false }
-      vm.baseProfile = vm.props.apiPath === 'people' ? {type: 'organization'} : {};
+      vm.baseProfile = {};
       vm.profileToAdd = Object.assign({}, vm.baseProfile);
     }
 
@@ -80,14 +79,10 @@ module.exports = function(app) {
       .catch(err => err);
     }
 
-    vm.removeProfileFromCase = (index) => {
-      if (vm.profileToAdd._id === vm.profiles[index]._id) vm.profileToAdd = Object.assign({}, vm.baseProfile)
-      vm.onRemoveProfileFromCase({ profile: vm.profiles[index], section: vm.sectionLabel });
-    }
     
     vm.loadProfileToEdit = (index) => {
       vm.mode = 'edit';
-      vm.profileToAdd = vm.profiles[index];
+      vm.profileToAdd = vm.profile;
     }
 
   }

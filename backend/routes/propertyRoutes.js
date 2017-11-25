@@ -12,11 +12,25 @@ router.get('/', (req, res) => {
   .catch(err => res.status(500).json(err))
 })
 
+// return a list of counties for which there are property profiles
+router.get('/counties', (req, res) => {
+  Property.aggregate([
+    { $group: { _id: '$county', 'prop': { $push: '$taxId'}}}
+  ])
+  .then(result => {
+    console.log(result);
+    res.json(result)
+  })
+  .catch(err => res.status(500).json(err))
+})
+
+
 router.get('/:id', (req, res) => {
   Property.findById(req.params.id)
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })
+
 
 router.post('/', (req, res) => {
   let newProperty = new Property(req.body);

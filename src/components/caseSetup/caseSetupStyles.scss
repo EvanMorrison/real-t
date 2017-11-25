@@ -19,7 +19,7 @@
 
 .add-profile-component {
   padding: 40px;
-  .add-profile-group {
+   .add-profile-group {
     display: flex;
     flex-direction: column;
     flex: 1 1 60%;
@@ -46,20 +46,22 @@
     .autocomplete-input {
       width: 400px;
     }
-    md-autocomplete.autocomplete-input.county {
-      ::after {
-        content: ' - and - '; 
-        position: relative;
-        top: 30px;
-        right: 0px;
-        margin: 0 18px;
-      }
-      md-autocomplete-wrap{
-          ::after {
-            content: '';
-        }
-      }
-    }
+  //   md-autocomplete.autocomplete-input {
+  //     &.index1, &.index2 {
+  //       ::before {
+  //         content: ' - and - '; 
+  //         position: relative;
+  //         top: 30px;
+  //         right: 0px;
+  //         margin: 0 18px;
+  //       }
+  //     }
+  //     md-autocomplete-wrap{
+  //         ::before {
+  //           content: '';
+  //       }
+  //     }
+  //   }
   }
 
   .profiles-list {

@@ -1,7 +1,7 @@
 
 <!-- content for view only -->
 
-<div class="card-body-text" ng-show="vm.mode==='view'">
+<div class="card-body-text toggle-edit" ng-show="vm.mode==='view'">
   <div>
     <div>
       {{vm.property.address1}}
@@ -9,15 +9,15 @@
     <div ng-if="vm.property.address2">
       {{vm.property.address2}}
     </div>
-    <div>
+    <div ng-show="vm.property.city && vm.property.state">
       {{vm.property.city}}, {{vm.property.state}} {{vm.property.zip}}
     </div>
   </div>
-  <div>
+  <div ng-show="vm.property.county">
     {{vm.property.county}} County 
   </div>
-  <div>
-    parcel id. {{vm.property.taxParcelNo}}
+  <div ng-show="vm.property.taxId">
+    parcel id. {{vm.property.taxId}}
   </div>
   <div class="card-body-text">
     {{vm.property.legalDescription}}
@@ -27,79 +27,81 @@
 
 
 <!-- content for input and edit -->
-<div ng-show="vm.mode==='new' || vm.mode==='edit'">
-  <form>
+<div class="toggle-edit" ng-cloak ng-show="vm.mode==='edit'">
+  <form class="info-card">
+    <!-- street address section -->
     <div layout="column" class="address-group">
         <md-input-container class="address">
-          <label>Address Line 1</label>
-          <input  ng-model="vm.property.address1"
-                  type="text"
-                  ng-change="vm.update()">
+            <label>address line 1</label>
+            <input  ng-model="vm.property.address1"
+                    type="text"
+                    ng-change="vm.update()">
         </md-input-container>
         <md-input-container class="address">
-          <label>Address Line 2</label>
-          <input ng-model="vm.property.address2"
-                  type="text"
-                  ng-change="vm.update()">
+            <label>address line 2</label>
+            <input  ng-model="vm.property.address2"
+                    type="text"
+                    ng-change="vm.update()">
         </md-input-container>
-      <div class="city-stat-zip" layout="row">
-          <md-input-container class="city">
-            <label>City</label>
-            <input  ng-model="vm.property.city"
-                    type="text"
-                    ng-change="vm.update()">
-          </md-input-container>
-          <md-input-container class="state">
-            <label>ST</label>
-            
-            <input ng-model="vm.property.state"
-                    type="text"
-                    ng-change="vm.update()">
-          </md-input-container>
-          <md-input-container class="zip">
-            <label>Zip</label>
-            <input ng-model="vm.property.zip"
-                    type="text"
-                    ng-change="vm.update()">
-          </md-input-container>
+        <div class="city-state-zip" layout="row">
+            <md-input-container class="city">
+                <label>city</label>
+                <input  ng-model="vm.property.city"
+                        type="text"
+                        ng-change="vm.update()">
+            </md-input-container>
+            <md-input-container class="state">
+                <label>state</label>
+                <md-select ng-model="vm.property.state"
+                            ng-change="vm.update()"
+                            aria-label="state">
+                  <md-option ng-repeat="state in vm.statesList" 
+                            ng-value="state.short">
+                      {{state.short}}
+                  </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="zip">
+                <label>zip</label >
+                <input  ng-model="vm.property.zip"
+                        type="text"
+                        ng-change="vm.update()">
+            </md-input-container>
+        </div>
       </div>
-    </div>
-  
-    <div>
-      <md-input-container class="county">
-        <label>County</label>
-        <md-select  ng-model="vm.property.county"
+
+
+
+        <div>
+          <md-input-container class="county">
+            <label>county</label>
+            <md-select  ng-model="vm.property.county"
+                        ng-change="vm.update()">
+              <md-option  ng-repeat="county in vm.Counties" 
+                          ng-value="county"
+                          ng-selected="county === '{{vm.property.county}}'">
+                    {{county}}
+              </md-option>  
+          </md-select>
+          </md-input-container>
+        </div>
+        <div>
+          <md-input-container class="parcel-id">
+            <label>assessor's parcel no./tax Id.</label>
+            <input  ng-model="vm.property.taxId"
+                    type="text"
                     ng-change="vm.update()">
-          <md-option  ng-repeat="county in vm.Counties" 
-                      ng-value="county"
-                      ng-selected="county === '{{vm.property.county}}'" 
-                      ng-disabled="county != '{{vm.property.county}}' && !vm.isActiveEdit && !vm.isCreating">
-                {{county}}
-          </md-option>  
-      </md-select>
-      </md-input-container>
-    </div>
-    <div>
-      <md-input-container class="parcel-id">
-        <label>Parcel Id.</label>
-        <input  ng-model="vm.property.taxParcelNo"
-                type="text"
-                ng-change="vm.update()">
-      </md-input-container>
-    </div>
-    <div layout="column">
-      <md-input-container class="legal-description">
-        <label>Legal Description</label>
-        <textarea ng-model="vm.property.legalDescription"
-                  ng-change="vm.update()">
-        </textarea>
-      </md-input-container>
-    </div>
-    <md-button class="save-btn"
-                type="submit"
-                ng-click="vm.handleSaveClick($event)"
-                ng-disabled="vm.saved">
-        Save
-    </md-button>
+          </md-input-container>
+        </div>
+        <div layout="column">
+          <md-input-container class="legal-description">
+            <label>legal description</label>
+            <textarea ng-model="vm.property.legalDescription"
+                      ng-change="vm.update()">
+            </textarea>
+          </md-input-container>
+        </div>
+        
   </form>
 </div>
+<div ng-transclude></div>

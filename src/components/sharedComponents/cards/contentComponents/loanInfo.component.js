@@ -3,26 +3,45 @@ module.exports = function(app) {
     template: require('./loanInfo.template.html'),
     controller: [ LoanInfoController ],
     controllerAs: 'vm',
+    transclude: true,
     bindings: {
-                  loan: '<',
-                  mode: '<',
-                  onSaveClick: '&',
+                profile: '<',
+                mode: '<',
+                section: '<',
+                statesList: '<',
+                'actions': '<',
+                onSaveClick: '&'
     }
   })
 
   function LoanInfoController() {
     const vm = this;
     
-    vm.saved = true;
-    
-    vm.update = () => {
-      vm.saved = false;
+    vm.$onInit = () => {
+      console.log('loan profile ', vm.profile)
+      vm.profileToAdd = vm.profile;
     }
 
-    vm.handleSaveClick = $event => {
-      vm.onSaveClick({data: vm.loan});
-      vm.saved = true;
-    }  
- 
+    vm.$onChanges = (changes) => {
+      if (changes.profile) {
+        let profile = changes.profile; // SimpleChanges class object
+        if (profile.currentValue) {
+          vm.loan = JSON.parse(JSON.stringify(profile.currentValue));
+          vm.profileToAdd = vm.loan;
+        }
+      }
+      if (changes.actions) {
+        let actions = changes.actions;
+        if (actions.currentValue && actions.currentValue.save === true && actions.previousValue.save === false) {
+          vm.onSaveClick({profile: vm.loan});
+        }
+      } 
+
+    }
+
+    vm.update = () => {
+    }
+
+   
   }
 }

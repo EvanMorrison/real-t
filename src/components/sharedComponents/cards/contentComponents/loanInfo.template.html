@@ -2,7 +2,7 @@
 <!-- content for view only -->
 <div class="card-body-text" ng-show="vm.mode==='view'">
   <div>
-    Original Principal: {{vm.loan.initialPrincipal | currency: "$" : "0" }}
+    Original Principal: {{vm.loan.initialPrincipalAmount | currency: "$" : "0" }}
   </div>
   <div>
     Interest Rate: {{vm.loan.interestRate}}%
@@ -22,7 +22,7 @@
     <div layout="column">
       <md-input-container>
           <label>Original Principal</label>
-          <input  ng-model="vm.loan.initialPrincipal"
+          <input  ng-model="vm.loan.initialPrincipalAmount"
                   type="text"
                   ng-change="vm.update()">
       </md-input-container>
@@ -53,3 +53,4 @@
     </md-button>
   </form>
 </div>
+<div ng-transclude></div>

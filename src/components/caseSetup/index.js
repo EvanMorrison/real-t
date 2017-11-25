@@ -1,6 +1,8 @@
 module.exports = function(app) {
   require('./caseSetupStyles.scss');
-  require('./caseSetup.component')(app);
-  require('./addProfile.component')(app);
   require('./profileLookup.component')(app);
+  require('./people')(app);
+  require('./caseSetup.component')(app);
+  require('./property/addProperty.component')(app);
+  require('./loan/addLoan.component')(app);
 }

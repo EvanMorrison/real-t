@@ -1,7 +1,7 @@
 module.exports = function(app) {
   app.component('rtProfileAutocomplete', {
       template: [
-      '  <md-autocomplete class="autocomplete-input {{vm.key}}"',
+      '  <md-autocomplete class="autocomplete-input index{{vm.$index}}"',
       '         ng-focus="vm.getSearchList(vm.path, vm.key, vm.filter)"',
       '        id="myAC"  ',
       '        md-input-name="{{vm.key}}Lookup"',
@@ -25,6 +25,7 @@ module.exports = function(app) {
                     'key': '<', 
                     'filter': '<',
                     'actions': '<',
+                    $index: '<',
                     'onItemSelected': '&'
       }
 })
@@ -32,7 +33,8 @@ module.exports = function(app) {
         const vm = this;
          
         vm.$onInit = () => { // set the floating label in the autocorrect input
-          vm.label = 'search by '
+          
+          vm.label = vm.$index === 0 ?  'search by ' : 'and/or ';
           vm.label += vm.key.replace(/[A-Z]/g, match => ' ' + match.toLowerCase())
           if (vm.key === 'name') vm.label += ' for an existing profile'
         }
@@ -41,6 +43,7 @@ module.exports = function(app) {
         vm.getSearchList = (path, key, filter) => {
           caseService.getLookupList(path, key, filter)
           .then(result => {
+            console.log('search list ', result)
             vm.searchList = result
           })
           .catch(err => console.log('getSearchList error', err))

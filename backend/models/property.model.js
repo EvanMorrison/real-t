@@ -1,3 +1,4 @@
+
 // PROPERTY: 
 
 const mongoose = require('mongoose');
@@ -8,17 +9,11 @@ const propertySchema = new mongoose.Schema({
   address1: String,
   address2: String,
   city: String,
-  state: {
-    type: String,
-    default: 'Utah'
-  },
-  stateShort: {
-    type: String,
-    default: 'UT'
-  },
+  state: {type: String, default: 'UT'},
+  stateFull: {type: String, default: 'Utah'},
   zip: String,
   county: String,
-  parcelTaxId: String,
+  taxId: String,
   legalDescription: String,
   
 })

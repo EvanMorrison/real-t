@@ -179,7 +179,7 @@ module.exports = function(ngModule) {
         if (path === 'people') path = 'people/names/principals';
         else if (path === 'properties') {
             if (key === 'county') path = 'properties/counties';
-            else if (key === 'parcelTaxId') path = 'properties/parcelids';
+            else if (key === 'taxId') path = 'properties/parcelids';
         } else if (path === 'documents') {
             if (key === 'county') path = 'documents/counties';
             else if (key === 'entryNo') path = 'documents/entrynos'
@@ -195,6 +195,11 @@ module.exports = function(ngModule) {
                 if (item.fullOrgName) arr.push({_id: item._id, name: item.fullOrgName});
                 return acc.concat(arr);
             },[]).sort((a,b) => a.name > b.name);
+          }
+          else if (key === 'county') {
+              this.data = result.data.map(item => {
+                  return ({ county: item._id, taxIds: item.prop})
+              })
           }
           return this.data;
         })

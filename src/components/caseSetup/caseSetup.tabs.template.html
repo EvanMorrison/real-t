@@ -49,14 +49,40 @@
                 <md-card-title><h3 class="md-title">{{vm.props[section].title}}</h2></md-card-title>
               </md-toolbar>
               <div class="section-box">
-                <rt-add-profile profiles="vm.caseRecord[section]"
+                <rt-add-people  ng-if="vm.props[section].apiPath==='people'"
+                                profiles="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section-label="section"
                                 case-loaded="vm.caseLoaded"
                                 states-list="vm.statesList"
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
                         on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
-                </rt-add-profile>
+                </rt-add-people>
+                <rt-add-property ng-if="vm.props[section].apiPath==='properties'" 
+                                profiles="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section-label="section"
+                                case-loaded="vm.caseLoaded"
+                                states-list="vm.statesList"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
+                        on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
+                </rt-add-property>
+                <rt-add-documents ng-if="vm.props[section].apiPath==='documents'" 
+                                profile="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section-label="section"
+                                case-loaded="vm.caseLoaded"
+                                states-list="vm.statesList"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
+                </rt-add-documents>
+                <rt-add-loan ng-if="section==='loan'" 
+                                profile="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section-label="section"
+                                case-loaded="vm.caseLoaded"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
+                </rt-add-loan>
+                
               </div>
               </md-tab>
             </md-tabs>
