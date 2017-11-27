@@ -1,27 +1,31 @@
 module.exports = function(app) {
   app.component('rtPersonInfo', {
     template: require('./personInfo.template.html'),
-    controller: [ '$mdDialog', '$scope', PersonInfoController],
+    controller: [ 'caseService', '$mdDialog', '$scope', PersonInfoController],
     transclude: true,
     controllerAs: 'vm',
     bindings: {
                   profile: '<',
                   mode: '<',
                   section: '<',
-                  statesList: '<',
                   'actions': '<',
                   onSaveClick: '&'
       }
     
   })
 
-    function PersonInfoController($mdDialog, $scope) {
+    function PersonInfoController(caseService, $mdDialog, $scope) {
       // controller level variables
         const vm = this;
         vm.saved = true;
         vm.new = true;
+        vm.statesList = caseService.statesList;
 
-
+        vm.$onDestroy = () => {
+          vm.profiles = null;
+          vm.actions = null;
+          vm.onSaveClick = null;
+        }
         vm.$onInit = () => {
           if (vm.person && vm.section.indexOf('Attorney') != -1) vm.person.type = 'attorney';
           vm.setInputLabels();
@@ -50,8 +54,13 @@ module.exports = function(app) {
               vm.onSaveClick({profile: vm.person});
             }
           } 
+          
+          if (changes.mode) {
+            if (changes.mode.currentValue === 'edit') vm.statesList = caseService.statesList;
+            else vm.statesList = null;
+          }
         }
-
+          
         // provide a default for ng-repeat when there are not yet any phones
         vm.getPhoneList = () => {
           if (!vm.person.phones || vm.person.phones.length === 0) return [{ type: null, value: null}];

@@ -15,7 +15,7 @@ const propertySchema = new mongoose.Schema({
   county: String,
   taxId: String,
   legalDescription: String,
-  
+  imageUrls: [ String ]
 })
 
 module.exports = mongoose.model('Property', propertySchema);

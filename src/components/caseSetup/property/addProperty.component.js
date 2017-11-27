@@ -11,7 +11,6 @@ module.exports = function(app) {
                 'profiles': '<',
                 'props': '<',
                 'sectionLabel': '<',
-                'statesList': '<',
                 'caseLoaded' : '<',
                 'onSaveProfileAndUpdateCase': '&',
                 'onRemoveProfileFromCase': '&',

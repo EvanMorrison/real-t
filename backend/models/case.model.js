@@ -55,7 +55,7 @@ const caseSchema = new mongoose.Schema({
     },
     delinquencyDate: Date,
     defaultInterestRate: Number,
-    pastDue: {
+    payoff: {
       pAndI: Number,
       lateFees: Number,
       costs: Number,

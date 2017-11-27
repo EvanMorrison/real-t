@@ -42,14 +42,14 @@
               </div>
 
           <div class="create-case-container">
-            <md-tabs ng-cloak class="case-section" md-dynamic-height md-border-bottom>
-              <md-tab ng-cloak label="{{vm.props[section].title}}" ng-repeat="section in vm.sections">
+            <md-tabs ng-cloak class="case-section" md-dynamic-height md-border-bottom ng-init="selected=0">
+              <md-tab ng-cloak label="{{vm.props[section].title}}" ng-repeat="section in ::vm.sections track by $index" md-on-select="selected=$index">
               <md-toolbar layout="row" layout-align="center center"
                           class="profile-card md-toolbar-tools">
                 <md-card-title><h3 class="md-title">{{vm.props[section].title}}</h2></md-card-title>
               </md-toolbar>
               <div class="section-box">
-                <rt-add-people  ng-if="vm.props[section].apiPath==='people'"
+                <rt-add-people  ng-if="vm.props[section].apiPath==='people' && selected===$index"
                                 profiles="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section-label="section"
@@ -58,7 +58,7 @@
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
                         on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
                 </rt-add-people>
-                <rt-add-property ng-if="vm.props[section].apiPath==='properties'" 
+                <rt-add-property ng-if="vm.props[section].apiPath==='properties' && selected===$index"
                                 profiles="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section-label="section"
@@ -67,7 +67,7 @@
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
                         on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
                 </rt-add-property>
-                <rt-add-documents ng-if="vm.props[section].apiPath==='documents'" 
+                <rt-add-documents ng-if="vm.props[section].apiPath==='documents' && selected===$index"
                                 profile="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section-label="section"
@@ -75,7 +75,7 @@
                                 states-list="vm.statesList"
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
                 </rt-add-documents>
-                <rt-add-loan ng-if="section==='loan'" 
+                <rt-add-loan    ng-if="section==='loan' && selected===$index"
                                 profile="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section-label="section"

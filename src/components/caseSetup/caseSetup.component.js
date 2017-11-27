@@ -11,7 +11,6 @@ module.exports = function(app) {
                 'sections': '<',
                 'props': '<',
                 'caseRecord': '<',
-                'statesList': '<',
                 'onCreateNewCase': '&',
                 'onLookupCaseByCaseNum': '&',
                 'onSaveProfileAndUpdateCase': '&',
@@ -28,7 +27,7 @@ module.exports = function(app) {
     vm.$onChanges = changes => {
       if (changes.caseRecord && changes.caseRecord.currentValue) {
         vm.caseRecord = JSON.parse(JSON.stringify(changes.caseRecord.currentValue));
-        console.log('case loaded ', vm.caseRecord);
+        // console.log('case loaded ', vm.caseRecord);
         vm.caseLoaded = true;
       } else vm.caseLoaded = false;
     }

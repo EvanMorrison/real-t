@@ -1,43 +1,31 @@
-<div class="row add-profile-component">
+<div class="row add-profile-component loan-input-container">
     
       <div class="column add-profile-group">
-          <div class="profile-btn-group">
-              <md-button class="btn primary-btn-reverse"
-                          ng-disabled="vm.mode==='edit' || !vm.caseLoaded"
-                          ng-click="vm.clickEnterNewProfile($event); showClear=!showClear">
-                    Enter new
-                <md-icon class="icon-mode_edit"></md-icon>
-              </md-button>
-            </div>
-            
-         <!-- potential profile to add  -->
-        <div class="profile-card-container column">
+        <div class="column profile-card-container">
           <rt-loan-info class="profile-card"
                           ng-class="{compact: vm.mode==='view'}"
                           profile="vm.profileToAdd"
                           mode="vm.mode"
-                          states-list="vm.statesList"
                           section="vm.sectionLabel"
                           actions="vm.actions"
+                          case-loaded="vm.caseLoaded"
                           on-save-click="vm.handleSaveToCase(profile)">
           </rt-loan-info>
-              <div class="row right-justify">
+              <div class="row right-justify" ng-show="vm.caseLoaded">
                 <md-button class="btn save-btn-reverse toggle-edit"
-                            ng-show="vm.profileToAdd._id"
+                            ng-show="vm.mode==='edit'"
                             ng-click="vm.saveClick()">
-                    <span ng-show="vm.mode==='view'">Add</span>
-                    <span ng-show="vm.mode==='edit' && vm.profile._id==='new'">Save & Add</span>
-                    <span ng-show="vm.mode==='edit' && vm.profile._id!='new'">Save Changes</span>
+                    <span >Save Changes</span>
                   <md-icon class="icon-save"></md-icon>
                 </md-button>
                 <md-button class="btn save-btn-reverse toggle-edit"
-                            ng-show="vm.profileToAdd._id && vm.mode==='view'"
+                            ng-show="vm.mode==='view'"
                             ng-click="vm.editCurrentProfile()">
                             Edit
                   <md-icon class="icon-mode_edit"></md-icon>
                 </md-button>
                 <md-button class="btn warn-btn-reverse toggle-edit"
-                            ng-show="vm.profileToAdd._id && vm.mode==='edit'"
+                            ng-show="vm.caseLoaded && vm.mode==='edit'"
                             ng-click="vm.cancelChangesToProfile()">
                             Cancel
                   <md-icon class="icon-cancel"></md-icon>
@@ -51,14 +39,5 @@
     <!-- existing section profiles list -->
     
       <div class="column profiles-list">
-          <div  class="profile-list-profile">
-            <rt-loan-info class="profile-card"
-                            ng-class="{compact: vm.mode==='view'}"
-                            profile="vm.profile"
-                            section="vm.sectionLabel"
-                            mode="'view'">
-            </rt-loan-info>
-    
-          </div>
       </div>
     </div>

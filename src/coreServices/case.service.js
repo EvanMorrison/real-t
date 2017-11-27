@@ -76,9 +76,9 @@ module.exports = function(ngModule) {
      */
 
       // Create an new empty case record
-      this.createNewCase = () => {
+      this.createNewCase = (caseData) => {
         this.waiting = true;
-        return $http.post('/api/cases')
+        return $http.post('/api/cases', caseData)
         .then(result => {
             this.waiting = false;
             this.caseRecord = result.data;
@@ -98,9 +98,8 @@ module.exports = function(ngModule) {
         .catch(err => Promise.reject(err));
     }
     
-    // save new person
+    // update or create new person, property, or documents profile
     this.updatePersonPropertyOrDocuments = (profile, path) => {
-        console.log('path: ', path, ' profile ', profile);
         if (profile._id === 'new') {
             delete profile._id;
             return $http.post('/api/' + path, profile)

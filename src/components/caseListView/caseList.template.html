@@ -42,7 +42,7 @@
          <div layout="column" flex>
            <div class="caselist-row">  
                <div >{{case.caseNum}}</div>
-               <div md-truncate hide-xs class="case-list-address">{{case.property.address1}}</div>
+               <div md-truncate hide-xs class="case-list-address">{{case.property[0].address1}}</div>
                <div md-truncate hide-xs>{{case.lender[0].displayName}}</div>
                <div md-truncate >{{case.borrower[0].orgDisplayName}}{{case.borrower[0].displayName}}</div>
                <div md-truncate >{{case.loan.originalPrincipalAmount | currency: '$' : 0 }}</div>

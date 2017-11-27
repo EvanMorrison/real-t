@@ -38,13 +38,7 @@
     .card-title:focus {
       outline: none;
     }
-    .card-body-text>* {
-      margin: 8px auto;
-      &.name {
-        font-weight: 900;
-        padding-bottom: 10px;
-      }
-    }
+    
 
     md-input-container {
       margin: 5px 0;

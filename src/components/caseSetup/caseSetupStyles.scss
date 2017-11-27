@@ -41,64 +41,45 @@
           min-height: 130px;
         }
       }
-      
     }
     .autocomplete-input {
       width: 400px;
     }
-  //   md-autocomplete.autocomplete-input {
-  //     &.index1, &.index2 {
-  //       ::before {
-  //         content: ' - and - '; 
-  //         position: relative;
-  //         top: 30px;
-  //         right: 0px;
-  //         margin: 0 18px;
-  //       }
-  //     }
-  //     md-autocomplete-wrap{
-  //         ::before {
-  //           content: '';
-  //       }
-  //     }
-  //   }
   }
-
   .profiles-list {
     flex: 1 1 39%;
     position: relative;
     display: flex;
     flex-direction: column;
-
-      .profile-list-profile {
-        position: relative;
-        margin-left: 40px;
-        margin-bottom: 20px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid rgba($gray, .2);
-        .profile-options-menu {
-          position: absolute;
-          top: 0px;
-          right: 0px;
-          md-icon.icon-cancel {
-            color: $inactive-icon-dk;
-          }
+    .profile-list-profile {
+      position: relative;
+      margin-left: 40px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba($gray, .2);
+      .profile-options-menu {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        md-icon.icon-cancel {
+          color: $inactive-icon-dk;
         }
+      }
     }
   }
-
 }
 
-
-.large-icon-btn:not([disabled]) {
-  height: 58px;
-  width: 58px;
-  * {
-    position: relative;
-    left: -8px;
-    font-size: 48px;
-    height: 48px;
+.add-profile-component.loan-input-container {
+    .add-profile-group {
+      flex: 0 0 100%;
+      max-width: 1100px;
   }
 }
 
-
+.add-profile-component.doc-container {
+  .add-profile-group {
+    flex: 0 0 100%;
+    max-width: 1100px;
+    
+  }
+}

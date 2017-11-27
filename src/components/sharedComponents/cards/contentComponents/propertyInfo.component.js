@@ -1,21 +1,21 @@
 module.exports = function(app) {
   app.component('rtPropertyInfo', {
     template: require('./propertyInfo.template.html'),
-    controller: [ PropertyInfoController],
+    controller: [ 'caseService', PropertyInfoController],
     controllerAs: 'vm',
     transclude: true,
     bindings: {
                     profile: '<',
                     mode: '<',
                     section: '<',
-                    statesList: '<',
                     'actions': '<',
                     onSaveClick: '&'
     }
   })
 
-  function PropertyInfoController() {
+  function PropertyInfoController(caseService) {
     const vm = this;
+    // vm.statesList = caseService.statesList
 
       vm.$onChanges = (changes) => {
         if (changes.profile) {

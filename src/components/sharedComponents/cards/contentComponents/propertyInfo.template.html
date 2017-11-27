@@ -34,26 +34,22 @@
         <md-input-container class="address">
             <label>address line 1</label>
             <input  ng-model="vm.property.address1"
-                    type="text"
-                    ng-change="vm.update()">
+                    type="text">
         </md-input-container>
         <md-input-container class="address">
             <label>address line 2</label>
             <input  ng-model="vm.property.address2"
-                    type="text"
-                    ng-change="vm.update()">
+                    type="text">
         </md-input-container>
         <div class="city-state-zip" layout="row">
             <md-input-container class="city">
                 <label>city</label>
                 <input  ng-model="vm.property.city"
-                        type="text"
-                        ng-change="vm.update()">
+                        type="text">
             </md-input-container>
             <md-input-container class="state">
                 <label>state</label>
                 <md-select ng-model="vm.property.state"
-                            ng-change="vm.update()"
                             aria-label="state">
                   <md-option ng-repeat="state in vm.statesList" 
                             ng-value="state.short">
@@ -64,8 +60,7 @@
             <md-input-container class="zip">
                 <label>zip</label >
                 <input  ng-model="vm.property.zip"
-                        type="text"
-                        ng-change="vm.update()">
+                        type="text">
             </md-input-container>
         </div>
       </div>
@@ -75,8 +70,7 @@
         <div>
           <md-input-container class="county">
             <label>county</label>
-            <md-select  ng-model="vm.property.county"
-                        ng-change="vm.update()">
+            <md-select  ng-model="vm.property.county">
               <md-option  ng-repeat="county in vm.Counties" 
                           ng-value="county"
                           ng-selected="county === '{{vm.property.county}}'">
@@ -89,15 +83,13 @@
           <md-input-container class="parcel-id">
             <label>assessor's parcel no./tax Id.</label>
             <input  ng-model="vm.property.taxId"
-                    type="text"
-                    ng-change="vm.update()">
+                    type="text">
           </md-input-container>
         </div>
         <div layout="column">
           <md-input-container class="legal-description">
             <label>legal description</label>
-            <textarea ng-model="vm.property.legalDescription"
-                      ng-change="vm.update()">
+            <textarea ng-model="vm.property.legalDescription">
             </textarea>
           </md-input-container>
         </div>

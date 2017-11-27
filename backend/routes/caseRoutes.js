@@ -67,16 +67,16 @@ router.post('/', (req, res) => {
 // update a section of the case, eg. 'lender', 'property', or 'loan'
 router.put('/:id/:section', (req, res) => {
   let _id = req.params.id, section = req.params.section;
-  let operation = {};
+  let operation = {}, isRefDoc = false;
   if (/^lender|^borrower|^other|^property/.test(section)) {
+    isRefDoc = true;
     operation = { $addToSet: { [section]: req.body._id} }
   } else operation = { $set: {[section]: req.body }}
+  if (section === 'documents') isRefDoc = true;
   Case.findByIdAndUpdate(_id, operation, {new: true})
   .select(section)
-  .populate([section])
+  .populate((isRefDoc ? section : ' '))
   .exec()
-  // .populate(section)
-  // .exec()
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err));
 })

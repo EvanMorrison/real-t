@@ -1,6 +1,6 @@
 module.exports = function(app) {
   
-  app.component('rtaddDocuments', {
+  app.component('rtAddDocuments', {
     template: require('./addDocuments.template.html'),
     controller: [ 
                     'caseService',
@@ -8,10 +8,9 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: { 
-                'profiles': '<',
+                'profile': '<',
                 'props': '<',
                 'sectionLabel': '<',
-                'statesList': '<',
                 'caseLoaded' : '<',
                 'onSaveProfileAndUpdateCase': '&',
                 'onRemoveProfileFromCase': '&',
@@ -22,34 +21,15 @@ module.exports = function(app) {
   function AddDocumentsController(caseService) {
     const vm = this;
     vm.mode = 'view';
-    vm.states = caseService.states;
-    vm.isUnsaved = false;
     
     vm.$onInit = () => {
-      vm.actions = { clearSearch: false, save: false }
-      vm.baseProfile = vm.props.apiPath === 'people' ? {type: 'organization'} : {};
-      vm.profileToAdd = Object.assign({}, vm.baseProfile);
+      vm.actions = { save: false }
     }
 
-    vm.lookupProfile = (item, path) => {
-      if (vm.mode === 'view' && !item) vm.profileToAdd = Object.assign({}, vm.baseProfile);
-      else if (vm.mode === 'edit' && !item) return;
-      else {
-        caseService.getProfile(item._id, path)
-        .then(result => {
-          vm.actions = Object.assign({}, vm.actions, {clearSearch: false})
-          vm.profileToAdd = result;
-          vm.mode = 'view';
-        })
-        .catch(err => err);
-      }
+    vm.$onChanges = (changes) => {
+      if (changes.profile) vm.profileToAdd = vm.baseProfile = vm.profile;
     }
 
-    vm.clickEnterNewProfile = ($event) => {
-      vm.mode = 'edit';
-      vm.actions = Object.assign({}, vm.actions, { clearSearch: true});
-      vm.profileToAdd = Object.assign({},vm.baseProfile, {_id:'new'});
-    }
 
     vm.editCurrentProfile = () => { // edit an existing profile before adding it to the case
       vm.mode = 'edit';
@@ -80,15 +60,6 @@ module.exports = function(app) {
       .catch(err => err);
     }
 
-    vm.removeProfileFromCase = (index) => {
-      if (vm.profileToAdd._id === vm.profiles[index]._id) vm.profileToAdd = Object.assign({}, vm.baseProfile)
-      vm.onRemoveProfileFromCase({ profile: vm.profiles[index], section: vm.sectionLabel });
-    }
-    
-    vm.loadProfileToEdit = (index) => {
-      vm.mode = 'edit';
-      vm.profileToAdd = vm.profiles[index];
-    }
 
   }
 

@@ -45,7 +45,7 @@
         <!-- business organization, trust, or lawfirm section -->
           <md-radio-group class="radio-group"
                           ng-model="vm.person.type"
-                          ng-change="vm.update(); vm.setInputLabels()">
+                          ng-change="vm.setInputLabels()">
             <md-radio-button ng-value="'organization'">business organization</md-radio-button>
             <md-radio-button ng-value="'individual'">individual</md-radio-button>
             <md-radio-button ng-value="'trust'">trust</md-radio-button>
@@ -58,7 +58,7 @@
                 <label>{{vm.labels.org}} full name</label>
                 <input  ng-model="vm.person.fullOrgName"
                         type="text"
-                        ng-change="vm.update(); vm.updateName()"
+                        ng-change="vm.updateName()"
                         ng-blur="vm.setDisplayName()">
             </md-input-container>
           <div class="row">
@@ -67,14 +67,13 @@
               <label>{{vm.labels.org}} short name</label>
               <input  ng-model="vm.person.shortOrgName"
                       type="text"
-                      ng-change="vm.update(); vm.updateName()"
+                      ng-change="vm.updateName()"
                       ng-blur="vm.setDisplayName()">
             </md-input-container>
             <md-input-container class="state-long"
                                 ng-if="vm.person.type==='organization'">
               <label>state of incorporation</label>
               <md-select ng-model="vm.person.state"
-                          ng-change="vm.update()"
                           aria-label="state of incorporation">
                 <md-option ng-repeat="state in vm.statesList" 
                            ng-value="state.name">
@@ -94,28 +93,27 @@
                 <label>{{vm.labels.person}} first name</label>
                 <input  ng-model="vm.person.firstName"
                         type="text"
-                        ng-change="vm.update(); vm.updateName()">
+                        ng-change="vm.updateName()">
             </md-input-container>
             <md-input-container class="name part-name">
                 <label>{{vm.labels.person}} last name</label>
                 <input  ng-model="vm.person.lastName"
                         type="text"
-                        ng-change="vm.update(); vm.updateName(); vm.setDisplayName()">
+                        ng-change="vm.updateName(); vm.setDisplayName()">
             </md-input-container>
             <md-input-container class="name short-name">
                 <label>{{vm.labels.person}} short name</label>
                 <input  ng-model="vm.person.shortName"
                         placeholder="eg., Bill, or Liz"
                         type="text"
-                        ng-change="vm.update(); vm.setDisplayName()">
+                        ng-change="vm.setDisplayName()">
             </md-input-container>
           </div>
           <div class="row">
             <md-input-container class="name full-name">
                 <label>{{vm.labels.person}} full name</label>
                 <input  ng-model="vm.person.fullName"
-                        type="text"
-                        ng-change="vm.update()">
+                        type="text">
             </md-input-container>
           </div>
         </div>
@@ -131,13 +129,12 @@
                     <md-input-container class="phone">
                         <label>phone</label>
                         <input  ng-model="phone.value"
-                                type="tel"
-                                ng-change="vm.update()">
+                                type="tel">
                     </md-input-container>
                     <md-input-container class="phone-type">
                       <label>type</label>
                       <md-select  ng-model="phone.type"
-                                  ng-change="vm.setPhoneLabel($event, $index); vm.update()"
+                                  ng-change="vm.setPhoneLabel($event, $index)"
                                   aria-label="phone type">
                         <md-option ng-repeat="teltype in vm.teltypes" ng-value="teltype">
                           {{teltype}}
@@ -165,8 +162,7 @@
                 <md-input-container class="email">
                     <label>email</label>
                     <input  ng-model="email.value"
-                            type="email"
-                            ng-change="vm.update()">
+                            type="email">
                 </md-input-container>
                 <md-button class="md-icon-button remove-contact-btn" ng-click="vm.deleteEmail($index)">
                     <md-tooltip md-direction="top">remove email</md-tooltip>
@@ -186,29 +182,26 @@
             <md-input-container class="address">
                 <label>address line 1</label>
                 <input  ng-model="vm.person.address1"
-                        type="text"
-                        ng-change="vm.update()">
+                        type="text">
             </md-input-container>
             <md-input-container class="address">
                 <label>address line 2</label>
                 <input  ng-model="vm.person.address2"
-                        type="text"
-                        ng-change="vm.update()">
+                        type="text">
             </md-input-container>
             <div class="city-state-zip" layout="row">
                 <md-input-container class="city">
                     <label>city</label>
                     <input  ng-model="vm.person.city"
-                            type="text"
-                            ng-change="vm.update()">
+                            type="text">
                 </md-input-container>
                 <md-input-container class="state">
                     <label>ST</label>
                     <md-select ng-model="vm.person.state"
-                                ng-change="vm.update()"
                                 aria-label="state">
                       <md-option ng-repeat="state in vm.statesList" 
-                                 ng-value="state.short">
+                                 ng-value="state.short"
+                                 mg-ink-ripple="false">
                           {{state.short}}
                       </md-option>
                     </md-select>
@@ -216,8 +209,7 @@
                 <md-input-container class="zip">
                     <label>zip</label >
                     <input  ng-model="vm.person.zip"
-                            type="text"
-                            ng-change="vm.update()">
+                            type="text">
                 </md-input-container>
             </div>
           </div>

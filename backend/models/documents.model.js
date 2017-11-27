@@ -17,6 +17,7 @@ const documentsSchema = new mongoose.Schema({
     amount: Number, // usually same as loan amount
     recDate: Date,
     entryNo: String,
+    county: String
   },
   assignmentTD: [{
     assignor: String,
@@ -41,22 +42,19 @@ const documentsSchema = new mongoose.Schema({
   vestingDeed: [{
     grantor: String,
     grantee: String,
-    type: String,
+    docTitle: String,
     recDate: Date,
     entryNo: String,
+    includesAllProperty: Boolean,
     _id: false
   }],
-  noticeSale: {
+  noticeSale: [{
     saleDate: Date,
     location: String,
-    openingBid: Number,
-    publishDates: [Date],
+    publishDate: Date,
     publication: String,
     mailedAt: Date
-  },
-  noticeIRS: {
-    sentDate: Date
-  },
+  }],
   other: [{
     title: String,
     party1: String,
@@ -65,9 +63,14 @@ const documentsSchema = new mongoose.Schema({
     entryNo: String,
     recDate: Date,
     description: String,
+    includesAllProperty: Boolean,
     _id: false
   }]
-})
+}, 
+{ minimize: false, 
+  timestamps: true,
+  setDefaultsOnInsert: true,
+  toObject: { retainKeyOrder: true } })
 
 
 module.exports = mongoose.model('Documents', documentsSchema);

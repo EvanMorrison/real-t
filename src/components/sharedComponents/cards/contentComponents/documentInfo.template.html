@@ -1,17 +1,371 @@
 
 <!-- content for view only -->
-<div ng-show="vm.mode==='view'">
+<div class="row doc-info view-mode" ng-show="vm.mode==='view'">
 
-  <h4>Documents Go Here</h4>
+  <table class="doc-table">
+    <tr><th rowspan="5">Trust Deed</th><td>amount:</td><td>{{vm.documents.trustDeed.amount | currency: "$" : "0"}}</td></tr>
+    <tr><td>recorded:</td><td>{{vm.documents.trustDeed.recDate | date}}</td></tr>
+    <tr><td>entry no.:</td><td>{{vm.documents.trustDeed.entryNo}}</td></tr>
+    <tr><td>original beneficiary:</td><td>{{vm.documents.trustDeed.ob}}</td></tr>
+    <tr><td>original trustee:</td><td>{{vm.documents.trustDeed.otee}}</td></tr>
+  </table>
+
+  <table class="doc-table" ng-repeat="subTee in vm.documents.substitutionTrustee">
+    <tr><th rowspan="5">Substitution</th><td>new trustee:</td><td>{{subTee.newTrustee}}</td></tr>
+    <tr><td>recorded:</td><td>{{subTee.recDate | date}}</td></tr>
+    <tr><td>entry no.:</td><td>{{subTee.entryNo}}</td></tr>
+  </table>
+
+  <table class="doc-table" ng-repeat="NOD in vm.documents.noticeDefault">
+    <tr><th rowspan="5">Notice of Default</th><td>trustee:</td><td>{{NOD.trustee}}</td></tr>
+    <tr><td>recorded:</td><td>{{NOD.recDate | date}}</td></tr>
+    <tr><td>entry no.:</td><td>{{NOD.entryNo}}</td></tr>
+  </table>
+
+  <table class="doc-table" ng-repeat="NOS in vm.documents.noticeSale">
+    <tr><th rowspan="5">Notice of Sale</th><td>sale date:</td><td>{{NOS.saleDate}}</td></tr>
+    <tr><td>date published:</td><td>{{NOS.publishDate | date}}</td></tr>
+    <tr><td>publication:</td><td>{{NOS.publication}}</td></tr>
+  </table>
+
+  <table class="doc-table" ng-repeat="deed in vm.documents.vestingDeed">
+    <tr><th rowspan="5">Vesting Deed</th><td>grantor:</td><td>{{deed.grantor}}</td></tr>
+    <tr><td>grantee:</td><td>{{deed.grantee}}</td></tr>
+    <tr><td>recorded:</td><td>{{deed.recDate | date}}</td></tr>
+    <tr><td>entry no.:</td><td>{{deed.entryNo}}</td></tr>
+  </table>
+
+  <table class="doc-table" ng-repeat="assignment in vm.documents.assignmentTD">
+    <tr><th rowspan="5">Assignment of Trust Deed</th><td>assignee:</td><td>{{assignment.assignor}}</td></tr>
+    <tr><td>assignee:</td><td>{{assignment.assignee}}</td></tr>
+    <tr><td>recorded:</td><td>{{assignment.recDate | date}}</td></tr>
+    <tr><td>entry no.:</td><td>{{assignment.entryNo}}</td></tr>
+  </table>
+
+  <table class="doc-table" ng-repeat="doc in vm.documents.other">
+    <tr><th rowspan="7">Other Docs:</th><td>title:</td><td>{{doc.docTitle}}</td></tr>
+    <tr><td>party 1:</td><td>{{doc.party1}}</td></tr>
+    <tr><td>party 2:</td><td>{{doc.party2}}</td></tr>
+    <tr><td>dated:</td><td>{{doc.dated | date}}</td></tr>
+    <tr><td>recorded:</td><td>{{doc.recDate | date}}</td></tr>
+    <tr><td>entry no.:</td><td>{{doc.entryNo}}</td></tr>
+    <tr><td>description:</td><td>{{doc.description}}</td></tr>
+  </table>
 
 </div>
 
 
 
 <!-- content for input and edit -->
-<div ng-show="vm.mode==='edit' || vm.mode==='new'">
+<div class="column doc-info inputs" ng-show="vm.mode==='edit'">
+  <div class="md-title">Trust Deed</div>
+  <div class="row">
+    <!-- Trust Deed  -->
+      <md-input-container>
+        <label>amount</label>
+        <input  ng-model="vm.documents.trustDeed.amount"
+                type="number">
+      </md-input-container>
+      <md-input-container class="date">
+        <label>date recorded</label>
+        <md-datepicker ng-model="vm.documents.trustDeed.recDate">
+        </md-datepicker>
+      </md-input-container>
+      <md-input-container class="entry-num">
+        <label>recorder's entry number</label>
+        <input  ng-model="vm.documents.trustDeed.entryNo"
+                type="text">
+      </md-input-container>
+      <md-input-container class="name">
+        <label>original beneficiary</label>
+        <input  ng-model="vm.documents.trustDeed.ob"
+                type="text">
+      </md-input-container>
+      <md-input-container class="name">
+        <label>original trustee</label>
+        <input  ng-model="vm.documents.trustDeed.otee"
+                type="text">
+      </md-input-container>
+      <md-input-container class="name">
+        <label>current beneficiary</label>
+        <input  ng-model="vm.documents.trustDeed.cb"
+                type="text">
+      </md-input-container>
+      <md-input-container class="name">
+        <label>current trustee</label>
+        <input  ng-model="vm.documents.trustDeed.ctee"
+                type="text">
+      </md-input-container>
+  </div> 
+  <md-divider></md-divider>
+<!-- end Trust Deed -->
 
-  <h4>Add Document Info Here</h4>
 
+
+<!-- Substitutions -->
+  <div class="md-title">Substitution of Trustee</div>
+  <div class="row" ng-repeat="substitution in vm.documents.substitutionTrustee">
+    <md-input-container class="name">
+      <label>prior trustee</label>
+      <input  ng-model="substitution.priorTrustee"
+              type="text">
+    </md-input-container>
+    <md-input-container class="name">
+      <label>new trustee</label>
+      <input  ng-model="substitution.newTrustee"
+              type="text">
+    </md-input-container>
+    <md-input-container class="date">
+      <label>date recorded</label>
+      <md-datepicker ng-model="substitution.recDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="entry-num">
+      <label>entry number</label>
+      <input  ng-model="substitution.entryNo"
+              type="text">
+    </md-input-container>
+    <div>
+    <md-button class="btn warn-btn-reverse remove-doc-btn" ng-click="vm.deleteDoc('substitutionTrustee', $index)">
+      <md-tooltip md-direction="top">Remove Substitution</md-tooltip>
+      remove
+      <md-icon class="icon-close"></md-icon>
+    </md-button>
+    </div>
+  </div>
+  <div>
+    <md-button class="btn primary-btn-reverse add-doc-btn" ng-click="vm.addDoc('substitutionTrustee')">
+      <md-tooltip md-direction="top">Add a Substitution</md-tooltip>
+      add
+      <md-icon class="icon-add"></md-icon>
+    </md-button>
+  </div>  
+  <md-divider></md-divider>
   
+
+
+
+<!-- Notice of Default -->
+  <div class="md-title">Notice of Default</div>
+  <div class="row" ng-repeat="NOD in vm.documents.noticeDefault">
+    <md-input-container class="name">
+      <label>trustee</label>
+      <input  ng-model="NOD.trustee"
+              type="text">
+    </md-input-container>
+    <md-input-container class="date">
+      <label>date recorded</label>
+      <md-datepicker ng-model="NOD.recDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="entry-num">
+      <label>entry number</label>
+      <input  ng-model="NOD.entryNo"
+              type="text">
+    </md-input-container>
+    <div>
+    <md-button class="btn warn-btn-reverse remove-doc-btn" ng-click="vm.deleteDoc('noticeDefault', $index)">
+      <md-tooltip md-direction="top">Remove Notice of Default</md-tooltip>
+      remove
+      <md-icon class="icon-close"></md-icon>
+    </md-button>
+    </div>
+  </div>
+  <div>
+    <md-button class="btn primary-btn-reverse add-doc-btn" ng-click="vm.addDoc('noticeDefault')">
+      <md-tooltip md-direction="top">Add a Notice of Default</md-tooltip>
+      add
+      <md-icon class="icon-add"></md-icon>
+    </md-button>
+  </div>
+  <md-divider></md-divider>
+  
+
+
+<!-- Notice of Sale -->
+  <div class="md-title">Notice of Sale</div>
+  <div class="row" ng-repeat="NOS in vm.documents.noticeSale">
+    <md-input-container class="date">
+          <label>sale date</label>
+          <md-datepicker ng-model="NOS.saleDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="textarea">
+      <label>location</label>
+      <textarea  ng-model="NOS.location"></textarea>
+    </md-input-container>
+    <md-input-container class="date">
+        <label>date published</label>
+        <md-datepicker ng-model="NOS.publishDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="name">
+      <label>publication</label>
+      <input  ng-model="NOS.publication"
+              type="text">
+    </md-input-container>
+    <md-input-container class="date">
+        <label>date mailed</label>
+        <md-datepicker ng-model="NOS.mailedAt"></md-datepicker>
+    </md-input-container>
+    <div>
+    <md-button class="btn warn-btn-reverse remove-doc-btn" ng-click="vm.deleteDoc('noticeSale', $index)">
+      <md-tooltip md-direction="top">Remove Notice of Sale Entry</md-tooltip>
+      remove
+      <md-icon class="icon-close"></md-icon>
+    </md-button>
+    </div>
+  </div>
+  <div>
+    <md-button class="btn primary-btn-reverse add-doc-btn" ng-click="vm.addDoc('noticeSale')">
+      <md-tooltip md-direction="top">Add Notice of Sale Entry</md-tooltip>
+      add
+      <md-icon class="icon-add"></md-icon>
+    </md-button>
+  </div>
+  <md-divider></md-divider>
+  
+
+
+
+<!-- Vesting Deed -->
+  <div class="md-title">Vesting Deed</div>
+  <div class="row" ng-repeat="deed in vm.documents.vestingDeed">
+    <md-input-container class="name">
+      <label>grantor</label>
+      <input  ng-model="deed.grantor"
+              type="text">
+    </md-input-container>
+    <md-input-container class="name">
+      <label>grantee</label>
+      <input  ng-model="deed.grantee"
+              type="text">
+    </md-input-container>
+    <md-input-container class="date">
+      <label>date recorded</label>
+      <md-datepicker ng-model="deed.recDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="entry-num">
+      <label>entry number</label>
+      <input  ng-model="deed.entryNo"
+              type="text">
+    </md-input-container>
+    <md-checkbox  class="md-primary"
+                  ng-model="deed.includesAllProperty"
+                  aria-label="includes all property in trust deed?">
+        includes all property under Trust Deed
+    </md-checkbox>
+    <div>
+    <md-button class="btn warn-btn-reverse remove-doc-btn" ng-click="vm.deleteDoc('vestingDeed', $index)">
+      <md-tooltip md-direction="top">Remove Deed</md-tooltip>
+      remove
+      <md-icon class="icon-close"></md-icon>
+    </md-button>
+    </div>
+  </div>
+  <div>
+    <md-button class="btn primary-btn-reverse add-doc-btn" ng-click="vm.addDoc('vestingDeed')">
+      <md-tooltip md-direction="top">Add a Deed</md-tooltip>
+      add
+      <md-icon class="icon-add"></md-icon>
+    </md-button>
+  </div>
+  <md-divider></md-divider>
+  
+
+
+<!-- Assignments -->
+  <div class="md-title">Assignment of Trust Deed</div>
+  <div class="row" ng-repeat="assignment in vm.documents.assignmentTD">
+    <md-input-container class="name">
+      <label>assignor</label>
+      <input  ng-model="assignment.assignor"
+              type="text">
+    </md-input-container>
+    <md-input-container class="name">
+      <label>assignee</label>
+      <input  ng-model="assignment.assignee"
+              type="text">
+    </md-input-container>
+    <md-input-container class="date">
+      <label>date recorded</label>
+      <md-datepicker ng-model="assignment.recDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="entry-num">
+      <label>entry number</label>
+      <input  ng-model="assignment.entryNo"
+              type="text">
+    </md-input-container>
+    <div>
+    <md-button class="btn warn-btn-reverse remove-doc-btn" ng-click="vm.deleteDoc('assignmentTD', $index)">
+      <md-tooltip md-direction="top">Remove Assignment</md-tooltip>
+      remove
+      <md-icon class="icon-close"></md-icon>
+    </md-button>
+    </div>
+  </div>
+  <div>
+    <md-button class="btn primary-btn-reverse add-doc-btn" ng-click="vm.addDoc('assignmentTD')">
+      <md-tooltip md-direction="top">Add an Assignment</md-tooltip>
+      add
+      <md-icon class="icon-add"></md-icon>
+    </md-button>
+  </div>
+  <md-divider></md-divider>
+  
+
+  <!-- Other Documents -->
+  <div class="md-title">Other Documents</div>
+  <div class="row" ng-repeat="document in vm.documents.other">
+    <md-input-container class="name">
+      <label>document title</label>
+      <input  ng-model="document.docTitle"
+              type="text">
+    </md-input-container>
+    <md-input-container class="name">
+      <label>party 1</label>
+      <input  ng-model="document.party1"
+              type="text">
+    </md-input-container>
+    <md-input-container class="name">
+      <label>party 2</label>
+      <input  ng-model="document.party2"
+              type="text">
+    </md-input-container>
+    <md-input-container class="date">
+      <label>dated</label>
+      <md-datepicker ng-model="document.dated"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="date">
+      <label>date recorded</label>
+      <md-datepicker ng-model="document.recDate"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="entry-num">
+      <label>entry number</label>
+      <input  ng-model="document.entryNo"
+              type="text">
+    </md-input-container>
+    <md-input-container class="textarea">
+        <label>document description</label>
+        <textarea  ng-model="document.description"></textarea>
+      </md-input-container>
+    <md-checkbox  class="md-primary"
+                  ng-model="document.includesAllProperty"
+                  aria-label="includes all property in trust deed?">
+        includes all property under Trust Deed
+    </md-checkbox>
+    <div>
+    <md-button class="btn warn-btn-reverse remove-doc-btn" ng-click="vm.deleteDoc('other', $index)">
+      <md-tooltip md-direction="top">Remove Document</md-tooltip>
+      remove
+      <md-icon class="icon-close"></md-icon>
+    </md-button>
+    </div>
+  </div>
+  <div>
+    <md-button class="btn primary-btn-reverse add-doc-btn" ng-click="vm.addDoc('other')">
+      <md-tooltip md-direction="top">Add a Document</md-tooltip>
+      add
+      <md-icon class="icon-add"></md-icon>
+    </md-button>
+  </div>
+  <md-divider></md-divider>
+  
+
 </div>

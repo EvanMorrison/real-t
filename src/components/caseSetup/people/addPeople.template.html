@@ -25,7 +25,6 @@
                       ng-class="{compact: vm.mode==='view'}"
                       profile="vm.profileToAdd"
                       mode="vm.mode"
-                      states-list="vm.statesList"
                       section="vm.sectionLabel"
                       actions="vm.actions"
                       on-save-click="vm.handleSaveToCase(profile)">
@@ -62,7 +61,7 @@
 
   <div class="column profiles-list">
       <div  class="profile-list-profile"
-            ng-repeat="profile in vm.profiles track by $index">
+            ng-repeat="profile in vm.profiles track by profile._id">
         <rt-person-info class="profile-card"
                         ng-class="{compact: vm.mode==='view'}"
                         profile="profile"

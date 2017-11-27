@@ -120,3 +120,92 @@
     max-height: 40px;
   }
 }
+
+.loan-info {
+  justify-content: space-around;
+  >:first-child {
+    // flex:0 1 30%;
+  }
+  >:last-child {
+    // flex: 0 1 30%;
+  }
+  >.column {
+    flex: 0 1 45%;
+    padding: 40px 0 40px 40px;
+    > md-input-container {
+      max-width: 300px;
+    }
+  }
+  table.loan-table {
+    border-collapse: collapse;
+    th {
+      padding-right: 15px;
+    }
+    th, td {
+      text-align: right;
+    }
+  }
+}
+
+.doc-info.view-mode.row {
+  justify-content: space-around;
+  table.doc-table {
+    flex: 1 1 45%;
+    margin-left: 5%;
+    margin-top: 30px;
+    min-width: 440px;
+    border-collapse: collapse;
+    border: 1px solid rgba($gray, 0.3);
+    
+    tr:nth-child(2n) {
+      background-color: rgba($gray, 0.2);
+      border: none;
+    }
+    th {
+      text-align: left;
+      vertical-align: top;
+      padding: 8px 15px;
+      background-color: $white;
+    }
+    td:first-of-type {
+      text-align: right;
+    }
+    td {
+      padding: 3px 7px;
+    }
+    tr:first-child>* {
+      padding-top: 20px;
+    }
+    tr:last-child>* {
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba($gray, 0.3);
+    }
+  }
+}
+
+
+// styling for input/edit view of case documents section
+.doc-info.inputs {
+  md-input-container {
+    margin: auto 18px;
+    &.name {
+      flex: 1 1 30%;
+      max-width: 30em;
+    }
+  }
+  .md-title {
+    margin: 18px;
+  }
+  .add-doc-btn:not([disabled]),.add-doc-btn:disabled {
+    position: relative;
+    md-icon {
+      font-size: 18px;
+    }
+  }
+  .remove-doc-btn:not([disabled]),.remove-doc-btn:disabled {
+    position: relative;
+    md-icon {
+      font-size: 14px;
+    }
+  }
+}

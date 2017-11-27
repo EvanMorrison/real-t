@@ -1,56 +1,138 @@
 
 <!-- content for view only -->
-<div class="card-body-text" ng-show="vm.mode==='view'">
-  <div>
-    Original Principal: {{vm.loan.initialPrincipalAmount | currency: "$" : "0" }}
-  </div>
-  <div>
-    Interest Rate: {{vm.loan.interestRate}}%
-  </div>
-  <div>
-    Maturity Date:{{vm.loan.maturityDate}}
-  </div>
-  <div>
-    Status: {{vm.loan.status}}
-  </div>
+
+<div class="card-body-text loan-info row" ng-show="vm.mode==='view'">
+    <table class="loan-table">
+        <tr><th scope="row">Original Principal:</th><td>{{vm.loan.originalPrincipalAmount | currency: "$" : "0" }}</td></tr>
+        <tr><th scope="row">Loan Origination Date:</th><td>{{vm.loan.loanDate | date}}</td></tr>
+        <tr><th scope="row">Interest Rate:</th><td>{{vm.loan.interestRate}}%</td></tr>
+        <tr><th scope="row">Maturity Date:</th><td>{{vm.loan.maturityDate | date}}</td></tr>
+        <tr><th scope="row">Current Principal Balance:</th><td>{{vm.loan.currentPrincipal.amount | currency: "$" : "0"}} <span>as of {{vm.loan.currentPrincipal.asOf | date}}</span></td></tr>
+    </table>
+    <table class="loan-table">
+      <tr><th>Payoff thru</th><td>{{vm.loan.payoff.asOf | date}}</td></tr>
+      <tr><th>P&I</th><td>{{vm.loan.payoff.pAndI | currency: "$" : "0"}}</td></tr>
+      <tr><th>Late Fees</th><td>{{vm.loan.payoff.lateFees | currency: "$" : "0"}}</td></tr>
+      <tr><th>Costs</th><td>{{vm.loan.payoff.costs | currency: "$" : "0"}}</td></tr>
+      <tr ng-repeat="item in vm.loan.payoff.other">
+        <th>{{item.description}}</th><td>{{item.amount | currency: "$" : "0"}}</td></tr>
+      <tr></tr>
+      <tr><th>Total</th><td>{{vm.payoffTotal | currency: "$" : "0"}}</td></tr>
+    </table>
 </div>
-
-
-<!-- content for input and edit -->
-<div ng-show="vm.mode==='edit'">
-  <form>
-    <div layout="column">
-      <md-input-container>
-          <label>Original Principal</label>
-          <input  ng-model="vm.loan.initialPrincipalAmount"
-                  type="text"
-                  ng-change="vm.update()">
-      </md-input-container>
-      <md-input-container>
-          <label>Interest Rate</label>
-          <input  ng-model="vm.loan.interestRate"
-                  type="text"
-                  ng-change="vm.update()">
-      </md-input-container>
-      <md-input-container>
-          <label>Maturity Date</label>
-          <input  ng-model="vm.loan.maturityDate"
-                  type="text"
-                  ng-change="vm.update()">
-      </md-input-container>
-      <md-input-container>
-          <label>Interest Rate</label>
-          <input  ng-model="vm.loan.status"
-                  type="text"
-                  ng-change="vm.update()">
-      </md-input-container>
+  
+  
+  <!-- content for input and edit -->
+  <div ng-show="vm.mode==='edit'">
+    <div class="row loan-info">
+      <div class="column">
+          <label>origination date</label>
+          <md-datepicker ng-model="vm.loan.loanDate">
+          </md-datepicker>
+        <md-input-container>
+            <label>original principal</label>
+            <input  ng-model="vm.loan.originalPrincipalAmount"
+                    type="number">
+        </md-input-container>
+        <md-input-container>
+            <label>interest rate</label>
+            <input  ng-model="vm.loan.interestRate"
+                    type="number">
+        </md-input-container>
+        <md-input-container>
+          <label>intallment amount</label>
+          <input  ng-model="vm.loan.installmentAmount"
+                    type="number">
+        </md-input-container>
+        <md-input-container>
+          <label>payment period, eg. monthly</label>
+          <input  ng-model="vm.loan.installmentPeriod"
+                    type="text">
+        </md-input-container>
+        <md-input-container>
+          <label>balloon payment (if any)</label>
+          <input  ng-model="vm.loan.finalPaymentAmount"
+                    type="number">
+        </md-input-container>
+        <md-input-container>
+            <label>maturity date</label>
+            <md-datepicker ng-model="vm.loan.maturityDate">
+            </md-datepicker>
+        </md-input-container>
+        <div class="row">
+          <md-input-container>
+              <label>current principal balance</label>
+              <input  ng-model="vm.loan.currentPrincipal.amount"
+                      type="number">
+          </md-input-container>
+          <md-input-container>
+            <label>as of</label>
+            <md-datepicker ng-model="vm.loan.currentPrincipal.asOf">
+            </md-datepicker>
+        </div>
+          <label>delinquency start date</label>
+          <md-datepicker ng-model="vm.loan.delinquencyDate">
+          </md-datepicker>
+        <md-input-container>
+            <label>default interest rate</label>
+            <input  ng-model="vm.loan.defaultInterestRate"
+                    type="number">
+        </md-input-container>
+      </div>  <!-- end column -->
+  
+      <div class="column">
+        <div class="md-title">Payoff:</div>
+        <md-input-container>
+            <label>through</label>
+            <md-datepicker ng-model="vm.loan.payoff.asOf">
+            </md-datepicker>
+          </md-input-container>
+          <md-input-container>
+              <label>principal and interest</label>
+              <input  ng-model="vm.loan.payoff.pAndI"
+                      ng-change="vm.updatePayoff()"
+                      type="number">
+          </md-input-container>
+          <md-input-container>
+              <label>late fees</label>
+              <input  ng-model="vm.loan.payoff.lateFees"
+                      ng-change="vm.updatePayoff()"
+                      type="number">
+          </md-input-container>
+          <md-input-container>
+              <label>costs</label>
+              <input  ng-model="vm.loan.payoff.costs"
+                      ng-change="vm.updatePayoff()"
+                      type="number">
+          </md-input-container>
+  
+          <div class="column loan-cost-group">
+                <div >Other Costs</div>
+               <!-- other costs section  -->
+                <div  class="row input-group"
+                      ng-repeat="item in vm.loan.payoff.other track by $index">
+                  <md-input-container>
+                      <label>amount</label>
+                      <input  ng-model="item.amount"
+                              ng-change="vm.updatePayoff()"
+                              type="number">
+                  </md-input-container>
+                  <md-input-container>
+                    <label>description</label>
+                    <input  ng-model="item.description"
+                            type="text">
+                  </md-input-container>
+                  <md-button class="md-icon-button remove-contact-btn" ng-click="vm.deleteCostEntry($index)">
+                      <md-tooltip md-direction="top">remove expense</md-tooltip>
+                      <md-icon class="icon-close"></md-icon>
+                    </md-button>
+                </div>
+              <md-button class="md-icon-button add-contact-btn" ng-click="vm.addCostEntry()">
+                <md-tooltip md-direction="top">add new expense</md-tooltip>
+                <md-icon class="icon-add"></md-icon>
+              </md-button>
+            </div>
+          </div>
+      </div>
     </div>
-    <md-button class="save-btn" 
-                type="submit"
-                ng-click="vm.handleSaveClick($event)"
-                ng-disabled="vm.saved">
-        Save
-    </md-button>
-  </form>
-</div>
-<div ng-transclude></div>
+  </div>
