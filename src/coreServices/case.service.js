@@ -12,7 +12,7 @@ module.exports = function(ngModule) {
 
     function CaseService($http, $stateParams, listViewService) {
       
-      this.caseList = listViewService.caseList;
+      this.caseList = []; //listViewService.caseList;
       this.statesList = require('./constants').STATES;
     /**
      * List-View Service, retrieves a 'light' list of all cases with select fields populated
@@ -99,10 +99,13 @@ module.exports = function(ngModule) {
     }
     
     // update or create new person, property, or documents profile
-    this.updatePersonPropertyOrDocuments = (profile, path) => {
+    this.updatePersonPropertyOrDocuments = (profile, path, section) => {
         if (profile._id === 'new') {
             delete profile._id;
-            return $http.post('/api/' + path, profile)
+            let url = '/api/' + path;
+            if (/Attorney/.test(section)) url += '/' + 'attorney';
+            if (/otherParties/.test(section)) url += '/' + 'otherparty';
+            return $http.post(url, profile)
             .then(result => result.data)
             .catch(err => Promise.reject(err))
         } else {
@@ -172,8 +175,7 @@ module.exports = function(ngModule) {
      * searches of case data
      */
 
-    // get names of all organizations and trusts and all individuals not associated with an
-    // organization or trust
+    // eg. get names of all organizations and trusts and all individuals
     this.getLookupList = (path, key, filter) => {
         if (path === 'people') path = 'people/names/principals';
         else if (path === 'properties') {
@@ -190,7 +192,8 @@ module.exports = function(ngModule) {
           if (key === 'name') {  // for names, need to reorganize the data to be returned
             this.data = result.data.reduce((acc, item) => {
                 let arr = [];
-                if (item.displayName) arr.push({_id: item._id, name: item.displayName})
+                if (item.shortName) arr.push({_id: item._id, name: `${item.shortName} ${item.lastName}`})
+                if (item.fullName) arr.push({_id: item._id, name: item.fullName})
                 if (item.fullOrgName) arr.push({_id: item._id, name: item.fullOrgName});
                 return acc.concat(arr);
             },[]).sort((a,b) => a.name > b.name);

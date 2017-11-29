@@ -1,33 +1,27 @@
 module.exports = function(app) {
   app.component('rtPersonInfo', {
     template: require('./personInfo.template.html'),
-    controller: [ 'caseService', '$mdDialog', '$scope', PersonInfoController],
+    controller: [ 'caseService', '$timeout', '$mdDialog', '$scope', PersonInfoController],
     transclude: true,
     controllerAs: 'vm',
     bindings: {
                   profile: '<',
                   mode: '<',
-                  section: '<',
-                  'actions': '<',
+                  actions: '<',
                   onSaveClick: '&'
       }
     
   })
 
-    function PersonInfoController(caseService, $mdDialog, $scope) {
+    function PersonInfoController(caseService, $timeout, $mdDialog, $scope) {
       // controller level variables
         const vm = this;
-        vm.saved = true;
-        vm.new = true;
-        vm.statesList = caseService.statesList;
-
+        
         vm.$onDestroy = () => {
-          vm.profiles = null;
-          vm.actions = null;
-          vm.onSaveClick = null;
+          
         }
         vm.$onInit = () => {
-          if (vm.person && vm.section.indexOf('Attorney') != -1) vm.person.type = 'attorney';
+          
           vm.setInputLabels();
         }
 
@@ -36,7 +30,10 @@ module.exports = function(app) {
           if (changes.profile) {
             let profile = changes.profile; // SimpleChanges class object
             if (profile.currentValue) {
+              vm.states = null;
               vm.person = JSON.parse(JSON.stringify(profile.currentValue));
+              vm.client = vm.profile.client;
+              vm.role = vm.profile.role;
               vm.person.phones = vm.getPhoneList(); // these add an empty phone/email entry for ngrepeat to display... 
               vm.person.emails = vm.getEmailList(); // if there are no phone/emails or if user selects to add one
               vm.teltypes = ['mobile', 'office', 'home', 'custom'];
@@ -51,7 +48,7 @@ module.exports = function(app) {
             let actions = changes.actions;
             if (actions.currentValue && actions.currentValue.save === true && actions.previousValue.save === false) {
               vm.removeBlankPhoneAndEmail();
-              vm.onSaveClick({profile: vm.person});
+              vm.onSaveClick({ profile: vm.person });
             }
           } 
           
@@ -60,7 +57,13 @@ module.exports = function(app) {
             else vm.statesList = null;
           }
         }
-          
+        
+        // load states list for md-select
+        vm.loadStates = () => {
+          vm.states = caseService.statesList;
+        }
+
+
         // provide a default for ng-repeat when there are not yet any phones
         vm.getPhoneList = () => {
           if (!vm.person.phones || vm.person.phones.length === 0) return [{ type: null, value: null}];
@@ -142,15 +145,28 @@ module.exports = function(app) {
         }
 
 
-        vm.update = () => {
-
+        vm.updateDisplayName = (nameType) => {
+          let { displayName, fullName, firstName, lastName, shortName, shortOrgName, fullOrgName, orgDisplayName } = vm.person;
+          if (nameType === 'individual') {
+            if (displayName == fullName) {
+              displayName = `${shortName || firstName} ${lastName}`;
+            }
+            else displayName = fullName;
+            let profile = { _id: vm.person._id, displayName }
+            vm.onSaveClick({ profile });
+          } else if (nameType === 'org') {
+            if (orgDisplayName == fullOrgName) orgDisplayName = `${shortOrgName || fullOrgName}`
+            else orgDisplayName = fullOrgName
+            let profile = { _id: vm.person._id, orgDisplayName }
+            vm.onSaveClick({ profile });
+          }
         }
 
         vm.updateName = () => {
-          if (vm.new || vm.person.fullName == null ) {
+          if (vm.person._id == 'new') {
             vm.person.fullName = `${vm.person.firstName || ''} ${vm.person.lastName || ''}`;
           }
-          if (vm.person.displayName == null) {
+          if (vm.person._id == 'new') {
             vm.person.displayName = `${vm.person.firstName || ''} ${vm.person.lastName || ''}`;
           }
         }

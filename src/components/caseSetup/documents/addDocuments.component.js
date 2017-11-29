@@ -10,7 +10,7 @@ module.exports = function(app) {
     bindings: { 
                 'profile': '<',
                 'props': '<',
-                'sectionLabel': '<',
+                'section': '<',
                 'caseLoaded' : '<',
                 'onSaveProfileAndUpdateCase': '&',
                 'onRemoveProfileFromCase': '&',
@@ -47,7 +47,7 @@ module.exports = function(app) {
     }
 
     vm.handleSaveToCase = (profile) => {
-      vm.onSaveProfileAndUpdateCase({profile, path: vm.props.apiPath, section: vm.sectionLabel})
+      vm.onSaveProfileAndUpdateCase({profile, path: vm.props.apiPath, section: vm.section})
       .then(result => {
         console.log('result ', result);
         if (result) {

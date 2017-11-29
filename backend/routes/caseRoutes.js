@@ -70,7 +70,7 @@ router.put('/:id/:section', (req, res) => {
   let operation = {}, isRefDoc = false;
   if (/^lender|^borrower|^other|^property/.test(section)) {
     isRefDoc = true;
-    operation = { $addToSet: { [section]: req.body._id} }
+    operation = { $addToSet: { [section]: req.body._id || req.body } }
   } else operation = { $set: {[section]: req.body }}
   if (section === 'documents') isRefDoc = true;
   Case.findByIdAndUpdate(_id, operation, {new: true})

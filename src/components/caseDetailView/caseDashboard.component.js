@@ -13,21 +13,38 @@ module.exports = function(ngModule) {
                   CaseDashboardController
                 ],
     controllerAs: 'vm',
-    bindings: { 'caseList': '<'}
+    bindings: {   
+                  $transition$: '<',
+                  caseList: '<',
+                  caseRecord: '<',
+                  props: '<',
+                  sections: '<',
+                  onLookupCaseByCaseNum: '&',
+                  onSaveProfileAndUpdateCase: '&'
+                }
   });
 
     function CaseDashboardController( caseService,
                                       $state, 
-                                      $stateParams, 
+                                      $stateParams,
                                       $mdSidenav, 
                                       $mdDialog) {
         const vm = this;
 
-        
+        vm.$onChanges = changes => {
+          if (changes.caseRecord) {
+            let cr = changes.caseRecord;
+            if (cr.currentValue) {
+                if ($state.name != 'caseFocus') $state.go('caseFocus', { caseNum: vm.caseRecord.caseNum })
+            } else $state.go('caseDashboard')
+            }
+          
+        }
+
         // start with sidenav open
         vm.sidenavLocked = true;
         angular.element(document).ready( () => $mdSidenav('sideMenu').open());
-
+        
         //title for toolbar
         vm.viewTitle = 'View Case Details'
 
@@ -46,85 +63,20 @@ module.exports = function(ngModule) {
         }
         
 
-        // load full case details when a casenumber is selected from the sidenav
-        vm.caseLookup = function(caseNum) {
-          vm.waiting = true;
-          
-          vm.caseRecord = vm.caseList.filter(a => a.caseNum === caseNum )[0];
-          console.log('case record ', vm.caseRecord);
-          // }, function(err) {
-          //     vm.waiting = false;
-          //     $mdDialog.show(
-          //       $mdDialog.alert()
-          //         .title('Error')
-          //         .textContent(`There was a problem retrieving case data. ${err}`)
-          //         .ok('Ok')
-          //     )
-          // })
-        }
-
-      //////////////////////////////////////
-      //    EDIT EXISTING CASES        ////
-      ////////////////////////////////////
-
-
-       
-        
-        // when user returns to parent Dashboard state, without any case selected for view
-        vm.clearCaseRecord = function() {
-          vm.caseRecord = {};
-        }
-        
-      
-      //////////////////////////////////////
-      //    CREATING NEW CASES         ////
-      ////////////////////////////////////
 
       vm.gotoNewCase = function() {
         $state.go('newCase');
       }
 
-      vm.autoSaveChanges = function() {
-        // convert dates to strings for JSON format in database
-            if (vm.caseRecord.loan.DOT.recorded ) {
-              vm.caseRecord.loan.DOT.recorded = vm.caseRecord.loan.DOT.recorded.toString()
-            }
-            angular.forEach(vm.caseRecord.loan.assignments, function(val, key) {
-              if (val['recorded']) { 
-                val['recorded'] = val['recorded'].toString()
-              }
-            })
-            vm.caseList.$save(vm.caseRecord).then(function(ref){
-              console.log('saved case ', ref.key)
-            })
+
+      vm.lookupCaseByCaseNum = caseNum => {
+        vm.onLookupCaseByCaseNum({caseNum})
       }
 
-      
-      
-      // cancel edits restore original data
-      vm.cancelNewCase = function() {
-          vm.isCreating = false;
-            $mdDialog.show(
-              $mdDialog.confirm()
-                .title('Cancel Without Saving')
-                .textContent('Do you want to discard the new case without saving?')
-                .ok('Yes')
-                .cancel('No')
-            )
-              .then(function(yes) {
-                  vm.caseList.$remove(vm.caseRecord)
-                  .then(function(ref) {
-                    console.log('deleted record ', ref.key)
-                    vm.clearCaseRecord();
-                    $state.go('caseDashboard');
-                  }, function(err) {
-                    console.log('error ', err);
-                  })
-              }, function(no) {
-
-              })
-
+      vm.toggleDisplayNames = (profile, path, section) => {
+        vm.onSaveProfileAndUpdateCase({profile, path, section})
       }
+    
     }
 
 }

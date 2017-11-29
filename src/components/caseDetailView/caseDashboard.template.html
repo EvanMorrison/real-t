@@ -37,9 +37,9 @@
         <md-list>
           <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
+                        ui-sref="caseFocus({caseNum: case.caseNum, case_id: case._id})"
                         ng-class="{selected: case.caseNum == vm.caseRecord.caseNum}"
-                        ui-sref="caseFocus({recordId: case.caseNum})"
-                        ng-click="vm.closeSidenav($event)">
+                        ng-click="vm.lookupCaseByCaseNum(case.caseNum); vm.closeSidenav($event)">
             <div>{{case.caseNum}}</div>
           </md-list-item>  
         </md-list>
@@ -77,25 +77,17 @@
               case="vm.caseRecord">
     </ui-view>
     
-    <ui-view  name="editToolbar"
-              is-active-edit="vm.isActiveEdit"
-              on-edit="vm.toggleEdit()" 
-              on-save="vm.saveChanges()" 
-              on-cancel="vm.cancelChanges()">
-    </ui-view>
 
     <ui-view  name="docs"
               case="vm.caseRecord">
     </ui-view>
     
     <!-- cards with case details -->
-    <ui-view  name="cards"
-              case="vm.caseRecord"
-              on-edit-click="vm.toggleEdit()"
-              on-save-click="vm.saveChanges(data, category)"
-              on-cancel-click="vm.cancelChanges()"
-              on-case-selected="vm.caseLookup(id)"
-              >
+    <ui-view  name="info"
+              case-record="vm.caseRecord"
+              props="vm.props"
+              sections="vm.sections"
+              on-toggle-display-names="vm.toggleDisplayNames(profile, path, section)">
     </ui-view>
     
     

@@ -1,13 +1,13 @@
 
 <!-- content for view only -->
 
-<div class="card-body-text loan-info row" ng-show="vm.mode==='view'">
+<div class="card-body-text loan-info row" ng-if="vm.mode==='view'">
     <table class="loan-table">
         <tr><th scope="row">Original Principal:</th><td>{{vm.loan.originalPrincipalAmount | currency: "$" : "0" }}</td></tr>
-        <tr><th scope="row">Loan Origination Date:</th><td>{{vm.loan.loanDate | date}}</td></tr>
         <tr><th scope="row">Interest Rate:</th><td>{{vm.loan.interestRate}}%</td></tr>
+        <tr><th scope="row">Loan Origination Date:</th><td>{{vm.loan.loanDate | date}}</td></tr>
         <tr><th scope="row">Maturity Date:</th><td>{{vm.loan.maturityDate | date}}</td></tr>
-        <tr><th scope="row">Current Principal Balance:</th><td>{{vm.loan.currentPrincipal.amount | currency: "$" : "0"}} <span>as of {{vm.loan.currentPrincipal.asOf | date}}</span></td></tr>
+        <tr><th scope="row">Current Principal Balance:</th><td>{{vm.loan.currentPrincipal.amount | currency: "$" : "0"}}</td></tr>
     </table>
     <table class="loan-table">
       <tr><th>Payoff thru</th><td>{{vm.loan.payoff.asOf | date}}</td></tr>
@@ -23,7 +23,7 @@
   
   
   <!-- content for input and edit -->
-  <div ng-show="vm.mode==='edit'">
+  <div ng-if="vm.mode==='edit'">
     <div class="row loan-info">
       <div class="column">
           <label>origination date</label>

@@ -9,7 +9,7 @@ module.exports = function(app) {
                 .then((res) => {
                   this.user = res.data;
                   this.user.name = res.data.name || res.data.email.slice(0,res.data.email.indexOf('@'));
-                  console.log('acquired user profile ', this.user);
+                //   console.log('acquired user profile ', this.user);
                   this.user.isSignedIn = true;
                   return this.user;
                 })

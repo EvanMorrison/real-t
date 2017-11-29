@@ -1,57 +1,29 @@
 @import '../../variables';
 
-.close-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  opacity: .4;
-}
-
-.case-card-group {
-  max-width: 98%;
-  // min-width: 900px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-}
-
- 
-.case-detail-card-container {
-  flex: 0 0 33%;
-  position: relative;
-  outline: none;
-  &.property-card {
-    flex: 0 0 60%; 
-  }
-  &.active-edit {
-    flex: 0 0 90%;
-  }
-  .case-detail-card {
-    min-height: 240px;
-    .card-title {
-      position: relative;
-      margin-bottom: 20px;
+.dashboard-case-info-container {
+  md-card {
+    flex: 1 1 20%;
+    padding: 18px;
+    max-width: 35em;
+    &.property-card {
+      flex: 0 1 33%;
     }
-    .card-title:hover {
-      cursor: pointer;
-    }
-    .card-title:focus {
-      outline: none;
-    }
-    
-
-    md-input-container {
-      margin: 5px 0;
-      md-select {
-        margin-bottom: 20px;
+    &.loan-card {
+      flex: 1 .5 60%;
+      max-width: 100%;
+      min-width: 25em;
+      .loan-info {
+        justify-content: flex-start;
+        >* {
+          margin: 15px 15px;
+        }
       }
     }
-    form {
-      // background-color: red;
+    .card-body-text.info-view {
+      margin: 15px auto;
     }
   }
 }
-
 
 
 

@@ -21,6 +21,7 @@ module.exports = function(app) {
         if (changes.profile) {
           let profile = changes.profile; // SimpleChanges class object
           if (profile.currentValue) {
+            vm.states = null;
             vm.property = JSON.parse(JSON.stringify(profile.currentValue));
           }
         }
@@ -32,9 +33,9 @@ module.exports = function(app) {
         } 
       }
 
-      vm.update = () => {
+      vm.loadStates = () => {
+        vm.states = caseService.statesList;
       }
-
       
 
       // county selection input options

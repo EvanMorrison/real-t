@@ -93,8 +93,8 @@ module.exports = function(ngApp) {
                       '@caseList': { component: 'caseExpanded' }
                     },
                     resolve: {
-                      caseList: ['listViewService', function(listViewService) {
-                                            return listViewService.loadCaseList();
+                      caseList: ['caseService', function(caseService) {
+                                            return caseService.loadCaseList();
                                 }]
                     }
                   })
@@ -111,22 +111,23 @@ module.exports = function(ngApp) {
                   .state('caseDashboard', {
                     url: '/dashboard',
                     parent: 'caseDataContainer',
+                    params: { 'caseNum': null },
                     views: {
                       'view@caseDataContainer': { component: 'caseDashboard' }
                     },
                     resolve: {
-                      caseList: ['listViewService', function(listViewService) {
-                                                  return listViewService.loadCaseList();
+                      caseList: ['caseService', function(caseService) {
+                                                  return caseService.loadCaseList();
                                               }]
                     }
                   })
                       .state('caseFocus', {
-                        url: '/{recordId}',
+                        url: '/{caseNum}',
                         parent: 'caseDashboard',
+                        params: { 'case_id': null },
                         views: {
                           'timeline@caseDashboard': { component: 'timeline' },
-                          'cards': { component: 'rtCaseSetup' },
-                          'editToolbar@caseDashboard': { component: 'editToolbar' }
+                          'info@caseDashboard': { component: 'rtCaseInfo' },
                         }
                       })
 
@@ -139,7 +140,7 @@ module.exports = function(ngApp) {
                     })
 
                     .state('caseSetup', {
-                      url: '/case-setup/{caseNum}',
+                      url: '/{caseNum}',
                       parent: 'caseSetupStart',
                       params: {'case_id': null},
                       views: {

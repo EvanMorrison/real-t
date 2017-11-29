@@ -10,7 +10,7 @@ module.exports = function(app) {
     bindings: { 
                 'profiles': '<',
                 'props': '<',
-                'sectionLabel': '<',
+                'section': '<',
                 'caseLoaded' : '<',
                 'onSaveProfileAndUpdateCase': '&',
                 'onRemoveProfileFromCase': '&',
@@ -25,7 +25,7 @@ module.exports = function(app) {
     
     vm.$onInit = () => {
       vm.actions = { clearSearch: false, save: false }
-      vm.baseProfile = vm.props.apiPath === 'people' ? {type: 'organization'} : {};
+      vm.baseProfile = /Attorney/.test(vm.section) ? { type: 'attorney'} : { type: 'organization'};
       vm.profileToAdd = Object.assign({}, vm.baseProfile);
     }
 
@@ -46,7 +46,8 @@ module.exports = function(app) {
     vm.clickEnterNewProfile = ($event) => {
       vm.mode = 'edit';
       vm.actions = Object.assign({}, vm.actions, { clearSearch: true});
-      vm.profileToAdd = Object.assign({},vm.baseProfile, {_id:'new'});
+
+      vm.profileToAdd = Object.assign({},vm.baseProfile, {_id: 'new'});
     }
 
     vm.editCurrentProfile = () => { // edit an existing profile before adding it to the case
@@ -65,10 +66,9 @@ module.exports = function(app) {
     }
 
     vm.handleSaveToCase = (profile) => {
-      vm.onSaveProfileAndUpdateCase({profile, path: vm.props.apiPath, section: vm.sectionLabel})
+      vm.onSaveProfileAndUpdateCase({profile, path: vm.props.apiPath, section: vm.section})
       .then(result => {
-        console.log('result ', result);
-        if (result) {
+        if (result) { // expect result to be 'true' for success or 'false' for failure
           vm.profileToAdd = Object.assign({}, vm.baseProfile);
           vm.mode = 'view';
           vm.actions = Object.assign({}, vm.actions, {save: false});
@@ -80,12 +80,12 @@ module.exports = function(app) {
 
     vm.removeProfileFromCase = (index) => {
       if (vm.profileToAdd._id === vm.profiles[index]._id) vm.profileToAdd = Object.assign({}, vm.baseProfile)
-      vm.onRemoveProfileFromCase({ profile: vm.profiles[index], section: vm.sectionLabel });
+      vm.onRemoveProfileFromCase({ profile: vm.profiles[index], section: vm.section });
     }
     
     vm.loadProfileToEdit = (index) => {
       vm.mode = 'edit';
-      vm.profileToAdd = vm.profiles[index];
+      vm.profileToAdd = Object.assign({}, vm.profiles[index]);
     }
 
   }

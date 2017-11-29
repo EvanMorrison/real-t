@@ -2,7 +2,7 @@ module.exports = function(app) {
   app.component('rtCaseSetup', {
     template: require('./caseSetup.tabs.template.html'),
     controller: [ 
-      '$timeout',
+      '$state',
       'caseService',
       CaseSetupController 
     ],
@@ -18,7 +18,7 @@ module.exports = function(app) {
     }
   })
 
-  function CaseSetupController($timeout, caseService) {
+  function CaseSetupController($state, caseService) {
     const vm = this;
     vm.$onInit = () => {
       vm.viewTitle = 'Lookup An Existing Case Or Create A New One';
@@ -29,7 +29,11 @@ module.exports = function(app) {
         vm.caseRecord = JSON.parse(JSON.stringify(changes.caseRecord.currentValue));
         // console.log('case loaded ', vm.caseRecord);
         vm.caseLoaded = true;
-      } else vm.caseLoaded = false;
+        $state.go('caseSetup',({caseNum: vm.caseRecord.caseNum}))
+      } else { 
+        $state.go('caseSetupStart');
+        vm.caseLoaded = false;
+      }
     }
 
   vm.createNewCase = () => {

@@ -13,11 +13,7 @@ const caseSchema = new mongoose.Schema({
   ],
 
   lenderAttorney: [
-    { 
-      attorney: { type: ObjectId, ref: 'Person' },  
-      client: { type: ObjectId, ref: 'Person' },
-      _id: false
-    }
+    { type: ObjectId, ref: 'Attorney' },  
   ],
   
   borrower: [
@@ -25,20 +21,11 @@ const caseSchema = new mongoose.Schema({
   ],
 
   borrowerAttorney: [
-    { 
-      attorney: { type: ObjectId, ref: 'Person' },  
-      client: { type: ObjectId, ref: 'Person' },
-      _id: false
-    }
+    { type: ObjectId, ref: 'Attorney' },
   ],
 
   otherParties: [
-    {
-      party: { type: ObjectId, ref: 'Person' },
-      role: String,  // appraiser, surveyor, etc., or additional parties requesting notices
-      getsNotices: { type: Boolean, default: false },
-      _id: false
-    }
+    { type: ObjectId, ref: 'OtherParty' },
   ],
 
   loan: {

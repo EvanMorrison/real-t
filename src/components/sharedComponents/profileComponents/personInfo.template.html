@@ -1,11 +1,13 @@
 
 <!-- content to show for view only -->
-<div class="card-body-text toggle-edit" ng-show="vm.mode==='view'">
-    <div class="md-title name"
-          ng-show="vm.person.type == 'organization'">
+<div class="card-body-text info-view toggle-edit" ng-if="vm.mode==='view'">
+    <div class="md-title name display-name"
+          ng-show="vm.person.type != 'individual'"
+          ng-click="vm.updateDisplayName('org')">
       {{vm.person.orgDisplayName}}
     </div>
-    <div class="md-title name">
+    <div class="md-title name display-name"
+          ng-click="vm.updateDisplayName('individual')">
       {{vm.person.displayName}}
     </div>
     <div>
@@ -33,9 +35,9 @@
 
   <!-- content to show for input and editing information -->
 
-  <div class="toggle-edit" ng-cloak ng-show="vm.mode==='edit'">
-    <form class="info-card">
-      <div class="profile-type-radio-group" ng-if="vm.person.type!=='attorney'">
+  <div class="toggle-edit" ng-cloak ng-if="vm.mode==='edit'">
+    <form class="info-edit">
+      <div class="profile-type-radio-group" ng-if="vm.person.type!='attorney'">
         <div class="radio-group-caption">
           <md-headline >
             This {{vm.sectionTitle}} is a:
@@ -71,11 +73,13 @@
                       ng-blur="vm.setDisplayName()">
             </md-input-container>
             <md-input-container class="state-long"
-                                ng-if="vm.person.type==='organization'">
-              <label>state of incorporation</label>
-              <md-select ng-model="vm.person.state"
+            ng-show="vm.person.type==='organization'">
+            <span class="md-caption">state of incorporation</span>
+              <md-select ng-model="vm.person.stateWhereOrganized"
+                          md-selected-text="vm.person.stateWhereOrganized"
+                          md-on-open="vm.loadStates()"
                           aria-label="state of incorporation">
-                <md-option ng-repeat="state in vm.statesList" 
+                <md-option ng-repeat="state in vm.states" 
                            ng-value="state.name">
                     {{state.short}} - {{state.name}}
                 </md-option>
@@ -198,10 +202,11 @@
                 <md-input-container class="state">
                     <label>ST</label>
                     <md-select ng-model="vm.person.state"
+                                md-selected-text="vm.person.state"
+                                md-on-open="vm.loadStates()"
                                 aria-label="state">
-                      <md-option ng-repeat="state in vm.statesList" 
-                                 ng-value="state.short"
-                                 mg-ink-ripple="false">
+                      <md-option ng-repeat="state in vm.states" 
+                                 ng-value="state.short">
                           {{state.short}}
                       </md-option>
                     </md-select>

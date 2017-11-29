@@ -7,17 +7,18 @@ module.exports = function(app) {
     controller: [ 
                   '$mdDialog',
                   '$state',
-                  '$stateParams',
+                  '$urlService',
                   'caseService',
                   CaseDataController
                 ],
     controllerAs: 'vm',
     bindings: {
-                'user': '<'
+                $transition$: '<',
+                user: '<'
     }
   });
 
-  function CaseDataController($mdDialog, $state, $stateParams, caseService) { 
+  function CaseDataController($mdDialog, $state, $urlService, caseService) { 
     const vm = this;
     
     
@@ -27,22 +28,26 @@ module.exports = function(app) {
                      apiPath: 'people', 
                      acKeys: ['name']};
       let borrower = Object.assign({},lender,{title: 'Borrower'});
-      let lenderAttorney = Object.assign({},lender,{title: 'Lender Attorney'}, {acFilter: 'attorney'}, { client: true });
+      let lenderAttorney = Object.assign({},lender,{title: 'Lender Attorney'}, {acFilter: 'Attorney'});
       let borrowerAttorney = Object.assign({},lenderAttorney,{title: 'Borrower Attorney'});
-      let otherParties = Object.assign({},lender,{title: 'Other Parties'}, {role: true}, {getsNotices: true});
+      let otherParties = Object.assign({},lender,{title: 'Other Parties'}, {acFilter: 'OtherParty'});
       let property = { title: 'Property', apiPath: 'properties', acKeys: ['county','taxId']};
       let documents = { title: 'Trust Deed', apiPath: 'documents', acKeys: ['county', 'date','entryNo']};
       let loan = { title: 'Loan', apiPath: 'cases'};
       vm.props = { lender, borrower, lenderAttorney, borrowerAttorney, otherParties, property, documents, loan};
 
-      if ($stateParams.case_id) {
-        vm.getCase($stateParams.case_id);
+      let params = vm.$transition$.params();
+      if (params.case_id) {
+        vm.getCase(params.case_id);
       }
-      else if ($stateParams.caseNum) {
-        vm.lookupCaseByCaseNum($stateParams.caseNum)
+      else if (params.caseNum) {
+        vm.lookupCaseByCaseNum(params.caseNum)
       }
+
       
     }
+
+    
     
 
     // will return a specific person/property/document profile by _id. Used with autocomplete
@@ -67,9 +72,12 @@ module.exports = function(app) {
       return caseService.getCaseRecordByCaseNum(caseNum)
       .then(result => {
         vm.caseRecord = result;
-        $state.go('caseSetup', {caseNum: result.caseNum})
+        $state.go('.*', {caseNum: result.caseNum})
       })
-      .catch(err => vm.errorAlert(`There was a problem looking up case number ${caseNum}. Message: ${err}`))
+      .catch(err => {
+        console.log('err 1 ', err);
+        vm.errorAlert(`There was a problem looking up case number ${caseNum}. Message: ${err}`)
+      })
     }
 
 
@@ -105,7 +113,7 @@ module.exports = function(app) {
 
 
     vm.saveProfileAndUpdateCase = (profile, path, section) => {
-      console.log('save profile and update case ', 'profile ', profile, ' path ', path, ' section: ', section);
+      // console.log('save profile and update case ', 'profile ', profile, ' path ', path, ' section: ', section);
       // non-array, non-ref, direct case sections - 
       if (path === 'cases') { // profile is directly part of the case object
         return caseService.updateCaseSection(vm.caseRecord._id, profile, section)
@@ -117,14 +125,9 @@ module.exports = function(app) {
         .catch(err => console.log('update case section err ', err));
       } else { // profile is a ref to another collection
         // for attorneys and 'other parties', must target appropriate subproperty
-          let subsection = null, profileToUpdate = profile;
-          if (section.indexOf('attorney') >= 0) subsection = 'attorney';
-          if (section.indexOf('other') >= 0) subsection = 'party';
-          if (subsection) profileToUpdate = profile[subsection];
-          return caseService.updatePersonPropertyOrDocuments(profileToUpdate, path, section)
+          return caseService.updatePersonPropertyOrDocuments(profile, path, section)
           .then(result => { // result is the saved/updated profile
-            if (subsection) profile[subsection] = result;
-            else profile = result;
+            profile = result;
             return caseService.updateCaseSection(vm.caseRecord._id, profile, section)
             .then(result => { // result is updated case
               vm.caseRecord[section] = result[section];
