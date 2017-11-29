@@ -37,7 +37,6 @@
         <md-list>
           <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
-                        ui-sref="caseFocus({caseNum: case.caseNum, case_id: case._id})"
                         ng-class="{selected: case.caseNum == vm.caseRecord.caseNum}"
                         ng-click="vm.lookupCaseByCaseNum(case.caseNum); vm.closeSidenav($event)">
             <div>{{case.caseNum}}</div>
