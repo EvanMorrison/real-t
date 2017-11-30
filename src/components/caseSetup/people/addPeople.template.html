@@ -1,0 +1,103 @@
+<div class="row add-profile-component">
+
+  <div class="column add-profile-group">
+    <div class="row">
+      <rt-profile-autocomplete  ng-repeat="key in vm.props.acKeys track by $index"
+                                $index="$index"
+                                path="vm.props.apiPath"
+                                key="key"
+                                filter="vm.props.acFilter"
+                                actions="vm.actions"
+                                on-item-selected="vm.lookupProfile(item, path)">
+      </rt-profile-autocomplete>
+        <div class="profile-btn-group">
+          <md-button class="btn primary-btn-reverse"
+                      ng-disabled="vm.mode==='edit' || !vm.caseLoaded"
+                      ng-click="vm.clickEnterNewProfile($event); showClear=!showClear">
+                Enter new
+            <md-icon class="icon-mode_edit"></md-icon>
+          </md-button>
+        </div>
+    </div>
+     <!-- potential profile to add  -->
+    <div class="profile-card-container column"
+          ng-class="{compact: vm.mode==='view'}">
+      <rt-person-info class="profile-card"
+                      ng-class="{compact: vm.mode==='view'}"
+                      profile="vm.profileToAdd"
+                      mode="vm.mode"
+                      actions="vm.actions"
+                      on-save-click="vm.handleSaveToCase(profile)">
+      </rt-person-info>
+      
+          <div class="row right-justify">
+            <md-button class="btn save-btn-reverse toggle-edit"
+                        ng-show="vm.profileToAdd._id"
+                        ng-click="vm.saveClick()">
+                <span ng-show="vm.mode==='view'">Add</span>
+                <span ng-show="vm.mode==='edit' && vm.profile._id==='new'">Save & Add</span>
+                <span ng-show="vm.mode==='edit' && vm.profile._id!='new'">Save Changes</span>
+              <md-icon class="icon-save"></md-icon>
+            </md-button>
+            <md-button class="btn save-btn-reverse toggle-edit"
+                        ng-show="vm.profileToAdd._id && vm.mode==='view'"
+                        ng-click="vm.editCurrentProfile()">
+                        Edit
+              <md-icon class="icon-mode_edit"></md-icon>
+            </md-button>
+            <md-button class="btn warn-btn-reverse toggle-edit"
+                        ng-show="vm.profileToAdd._id && vm.mode==='edit'"
+                        ng-click="vm.cancelChangesToProfile()">
+                        Cancel
+              <md-icon class="icon-cancel"></md-icon>
+            </md-button>
+          </div>
+
+    </div>
+
+  </div>
+
+<!-- existing section profiles list -->
+
+  <div class="column profiles-list">
+      <div  class="profile-list-profile"
+            ng-repeat="profile in vm.profiles">
+        <rt-person-info class="profile-card"
+                        profile="profile"
+                        on-save-click="vm.handleSaveToCase(profile)"
+                        mode="'view'">
+
+              <div class="profile-options-menu">
+                <md-fab-speed-dial ng-cloak class="md-hover-full md-fling" 
+                                   md-direction="left"
+                                   md-open="isOpen"
+                                   ng-mouseenter="isOpen=true"
+                                   ng-mouseleave="isOpen=false">
+                    <md-fab-trigger>
+                      <md-button class="md-fab md-mini" 
+                                 md-colors="{background:'default-background-50'}" 
+                                 aria-label="profile options">
+                        <md-icon class="icon-menu" md-colors="{color: 'grey-900-0.55'}"></md-icon>
+                      </md-button>
+                    </md-fab-trigger>
+                  <md-fab-actions>
+                      <md-button  class="remove-profile-btn md-icon-button"
+                                  aria-label="remove profile from case"
+                                  ng-click="vm.removeProfileFromCase($index)">
+                        <md-tooltip md-direction="top">remove profile</md-tooltip>
+                        <md-icon class="icon-close"></md-icon>
+                      </md-button>
+                      <md-button  class="md-icon-button" 
+                                  aria-label="edit profile"
+                                  ng-click="vm.loadProfileToEdit($index)">
+                        <md-tooltip md-direction="top">edit profile</md-tooltip>
+                        <md-icon class="icon-mode_edit"></md-icon>
+                      </md-button>
+                  </md-fab-actions>
+                </md-fab-speed-dial>   
+              </div>
+        </rt-person-info>
+
+      </div>
+  </div>
+</div>

@@ -1,35 +1,34 @@
+<div layout="row" layout-align="end center">
+  <md-button ng-click="vm.signout()">user: {{vm.user.name}} / sign out</md-button>
+</div>
 <md-content class="home-view-container"
             layout="row" 
             layout-align="center center">  
-<div flex="80" style="min-height:50vh;margin-top:80px">
+<div flex="80" style="min-height:50vh;margin-top:20px">
   <md-grid-list md-cols-gt-xs="3" md-cols-xs="1" md-row-height="1.5em" md-gutter="20px">
-    <md-grid-tile md-rowspan="7">
-          <a ui-sref="cases.case" class="plain-link">
-            <div layout="column" flex layout-align="center center">
-              
-              <h1><br/>List All Cases </h1>
-              <div>
-                <i class="fa fa-th-list fa-5x"></i>
-              </div>
+    <md-grid-tile md-rowspan="5">
+            <div layout="column"
+                  class="main-nav-links"
+                  ui-sref="caseList">
+              <h1>List All Cases </h1>
+                <md-icon class="icon-view_list home-icon"></md-icon>
             </div>
           </a>
     </md-grid-tile>
-    <md-grid-tile md-rowspan="7">
-      <a ui-sref="caseMain" class="plain-link"><div layout="column" flex layout-align="center center">
-          <h1 style="text-align:center">Lookup<br/> Case Number</h1>
-        <div layout="row" >
-          <i class="fa fa-compass fa-5x"></i>
+    <md-grid-tile md-rowspan="5">
+        <div  layout="column" 
+              class="main-nav-links"
+              ui-sref="caseDashboard">
+          <h1 >Case Dashboard</h1>
+          <md-icon  class="icon-chrome_reader_mode home-icon"></md-icon>
         </div>
-        </div>
-      </a>
     </md-grid-tile>
-    <md-grid-tile md-rowspan="7">
-      <a ui-sref="newCaseForm" class="plain-link">
-        <div layout="column" flex layout-align="center center"> 
-          <h1 style="text-align:center"><br/>Open A New Case</h1>
-          <div>
-            <i class="fa fa-user-plus fa-5x"></i>
-          </div>
+    <md-grid-tile md-rowspan="5">
+        <div layout="column"
+              class="main-nav-links"
+              ui-sref="caseSetupStart"> 
+          <h1>Open A New Case</h1>
+            <md-icon class="icon-create_new_folder home-icon"></md-icon>
         </div>
       </a>
       

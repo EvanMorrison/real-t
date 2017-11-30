@@ -1,0 +1,277 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import 'icons';
+@import 'variables';
+
+// defaults
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p {
+  font-family: 'Roboto', 'Helvetica Neue', 'sans serif';
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: auto !important; // these lines are added as a fix
+  position: absolute !important; // for angular material select box
+  top: 0 !important; // causing the window scroll to jump to the top
+  width: 100% !important; // when an option is selected
+  padding-bottom: 200px;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  &.right-justify {
+    justify-content: flex-end;
+  }
+  &.center {
+    justify-content: center;
+  }
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-content: stretch;
+}
+
+
+// loading progress spinner
+.progress-circular {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+
+.hero-container {
+    position: relative;
+    width: 100vw;
+    height: 50vh;
+    z-index: 1;
+    color: $white;
+    &::before {
+      position: absolute;
+      content: ' ';
+      width: 100%;
+      height: 100%;
+        /* image of city skyline */
+      background: linear-gradient(to right,rgba(100,100,250,.9), rgba(0,0,250,.5)), url('./assets/architecture-1867077_960.jpg');
+      background-repeat: no-repeat;
+      background-position: top center, bottom center;
+      background-size: cover;
+      z-index: -1;
+    }
+    .hero-title-block {
+      position: absolute;
+      top: 5vh;
+      left: 15vw;
+    }
+    .hero-text {
+      position: absolute;
+      width: 100vw;
+      bottom: 1vh;
+      text-align: center;
+    }
+}
+
+
+/*
+   Home Page Links 
+*/
+
+.home-view-container {
+  color: $gray;
+  .main-nav-links {
+    text-align: center;
+    .home-icon {
+      transform: scale(5) translateY(30%);
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+a.active {
+  font-weight: 900;
+  border-bottom: 3px solid $accent;
+}
+
+
+/*
+    Login View Styling
+*/
+
+.login-page {
+  position: absolute;
+  /*content: ' ';*/
+  width: 100vw;
+  height: 100vh;
+  min-height: 900px;
+  background: url('./assets/architecture-1867077_960.jpg');
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: cover;
+  .hero-title-block {
+    position: absolute;
+    top: 35px;
+    left: 5vw;
+  }
+  .login-card {
+    position: relative;
+    margin-top: 180px;
+    min-height: 500px;
+    width: 98%;
+    max-width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,.9);
+    .login-form {
+      /*position: relative;*/
+      margin: 10px auto;
+      padding: 10px;
+      width: 98%;
+      max-width: 500px;
+      border: 1px solid rgba(0,0,0,.2);
+      border-radius: 5px;
+      .login-form-input {
+        margin: 1.25em auto 0;
+        width: 98%;
+        max-width: 350px;
+      }
+    }
+    .loginbox-btn {
+      height: 40px;
+      width: 98%;
+      max-width: 300px;
+      margin: 5px auto;
+      font-size: 1.1em;
+      font-weight: 700;
+      text-align: center;
+    
+    }
+  }
+}
+
+/* Alert Dialog for login errors */
+.md-dialog-content {
+  max-width: 400px;
+  .md-title {
+    margin-bottom: 1em;
+  }
+}
+
+/* Navbar styles */
+.navbar-title {
+  padding: 5px 10px;
+  color: $primary;
+  font-weight: 900;
+  font-size: 1.35em;
+  text-decoration: none;
+}
+
+
+/*
+* shared controls
+*/
+
+.btn,.btn.md-fab,.btn.md-fab.md-mini {
+  padding: 1px 14px 2px;
+  &:not([disabled]) {
+    border: 1px solid transparent;
+    background-color: $primary-lt;
+    color: $text-primary-lt;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    
+    * {
+      color: inherit;
+    }
+    &.save-btn {
+      background-color: $accent;
+    }
+    &.warn-btn {
+      background-color: $warn;
+    }
+    &.save-btn-reverse {
+      background-color: transparent;
+      color: $accent;
+      box-shadow: none;
+    }
+    &.warn-btn-reverse {
+      background-color: transparent;
+      color: $warn;
+      box-shadow: none;
+    }
+    &.primary-btn-reverse  {
+      background-color: transparent;
+      color: $primary-dk;
+      box-shadow: none;
+    }
+  }
+  &:not([disabled]):hover, &:not([disabled]):focus {
+    background-color: $accent-dk;
+    &.save-btn {
+      background-color: $accent-dk;
+    }
+    &.warn-btn {
+      background-color: $warn-dk;
+    }
+    &.primary-btn-reverse {
+      border: 1px solid rgba($primary-lt, .3);
+      background-color: transparent;
+    }
+    &.save-btn-reverse {
+      border: 1px solid rgba($accent-lt, .3);
+      background-color: transparent;
+    }
+    &.warn-btn-reverse {
+      border: 1px solid rgba($warn-lt, .3);
+      background-color: transparent;
+    }
+    
+  }
+  &:disabled {
+    background-color: $accent-lt;
+    color: $text-disabled-dk;
+    &.warn-btn, &.warn-btn * {
+      background-color: $warn-lt;
+    }
+    &.primary-btn-reverse, &.primary-btn-reverse * {
+      background-color: transparent;
+      color: rgba($primary-lt, .3);
+    }
+    &.save-btn-reverse {
+      background-color: transparent;
+      background-color: rgba($accent-lt, .2);
+    }
+    &.warn-btn-reverse {
+      background-color: transparent;
+      background-color: rgba($warn-lt, .2);
+    }
+  }
+
+}
+
+.add-contact-btn:not([disabled]),.add-contact-btn:disabled {
+  position: relative;
+  md-icon {
+    font-size: 18px;
+  }
+}
+.remove-contact-btn:not([disabled]),.remove-contact-btn:disabled {
+  position: relative;
+  md-icon {
+    font-size: 14px;
+  }
+}
+
+

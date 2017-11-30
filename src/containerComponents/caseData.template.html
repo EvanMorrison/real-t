@@ -1,0 +1,12 @@
+<ui-view  name="view" 
+          ng-cloak
+          user="vm.user"
+          sections="vm.sections"
+          props="vm.props"
+          case-record="vm.caseRecord"
+          get-profile="vm.getProfile(profile, path)"
+          on-create-new-case="vm.createNewCase()"
+          on-lookup-case-by-case-num="vm.lookupCaseByCaseNum(caseNum)"
+          on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
+          on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
+</ui-view>

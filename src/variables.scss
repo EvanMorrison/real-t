@@ -1,0 +1,41 @@
+$white: #fff;
+$gray: #888;
+$black: #000;
+$green: #2e7d32;
+$green-lt: #c8e6c9;
+$green-dk: #1b5e20;
+$orange: #fb8c00;
+$orange-lt: #ffe0b2;
+$orange-dk: #e65100;
+$purple: #673ab7;
+$purple-lt: #9a67ea;
+$purple-dk: #480b86;
+$red: #f44336;
+$red-lt: #ef9a9a;
+$red-dk: #c62828;
+
+$primary: $purple;
+$primary-lt: $purple-lt;
+$primary-dk: $purple-dk;
+$accent: rgba($green, .7);
+$accent-lt: rgba($green-lt, 0.8);
+$accent-dk: rgba($green-dk, 0.7);
+$warn: $red;
+$warn-lt: $red-lt;
+$warn-dk: $red-dk;
+
+$text-primary-lt: $white;
+$text-secondary-lt: rgba($white, 0.7);
+$text-disabled-lt: rgba($white, 0.5);
+$text-dividers-lt: rgba($white, 0.12);
+
+$text-primary-dk: $black;
+$text-secondary-dk: rgba($black, 0.7);
+$text-disabled-dk: rgba($black, 0.5);
+$text-dividers-dk: rgba($black, 0.12);
+
+$active-icon-lt: $white;
+$inactive-icon-lt: rgba($white, 0.5);
+
+$active-icon-dk: rgba($black, 0.54);
+$inactive-icon-dk: rgba($black, 0.38);

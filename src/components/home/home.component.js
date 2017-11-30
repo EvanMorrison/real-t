@@ -4,12 +4,21 @@ module.exports =function(ngModule) {
   ngModule
     .component('home', {
       template: require('./home.template.html'),
-      controller: [HomeController],
-      controllerAs: 'ctrl'
+      controller: [ 
+                    HomeController
+                  ],
+      controllerAs: 'vm',
+      bindings: {
+                  'user': '<',
+                  onSignout: '&'
+      }
     });
-
     function HomeController() {
-      const ctrl = this;
+      const vm = this;
+
+      vm.signout = function() {
+        vm.onSignout();
+      }
         
       
     }

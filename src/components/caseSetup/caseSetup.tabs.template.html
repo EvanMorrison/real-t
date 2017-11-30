@@ -1,0 +1,97 @@
+
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
+    <h3 >{{vm.viewTitle}}</h3>
+  </md-toolbar>
+  
+  <div layout="row">
+  
+  <!-- Dashboard Layout-->
+  <md-content layout="column" class="dashboard-content">
+      
+
+          
+      <md-card ng-cloak class="case-card-group" flex layout="column">
+        <md-card-content flex>
+              <div layout="row" layout-align="start center">
+                <h1 class="md-headline" 
+                      style="position:relative;top:-10px;margin-right:10px" 
+                      flex-offset-gt-xs="5">
+                  Case: 
+                </h1>
+                <form name="lookupCase" layout="row" layout-align="start center">
+                  <md-input-container >
+                      <label >Case Number</label>
+                      <input  class="md-headline"
+                              type="text" 
+                              ng-model="vm.caseRecord.caseNum">
+                  </md-input-container>
+                  <div>
+                      <md-button  class="btn primary-btn-reverse"
+                                  ng-click="vm.lookupCaseByCaseNum()"
+                                  type="submit">
+                          Find by Case Number
+                      </md-button>
+                    </div>
+                </form>
+                  <div>
+                      <md-button  class="btn primary-btn-reverse"
+                                  ng-click="vm.createNewCase()">
+                          Start New
+                      </md-button>
+                    </div>
+              </div>
+
+          <div class="create-case-container">
+            <md-tabs ng-cloak class="case-section" md-dynamic-height md-border-bottom ng-init="selected=0">
+              <md-tab ng-cloak label="{{vm.props[section].title}}" ng-repeat="section in ::vm.sections track by $index" md-on-select="selected=$index">
+              <md-toolbar layout="row" layout-align="center center"
+                          class="profile-card md-toolbar-tools">
+                <md-card-title><h3 class="md-title">{{vm.props[section].title}}</h2></md-card-title>
+              </md-toolbar>
+              <div class="section-box">
+                <rt-add-people  ng-if="vm.props[section].apiPath==='people' && selected===$index"
+                                profiles="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section="section"
+                                case-loaded="vm.caseLoaded"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
+                        on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
+                </rt-add-people>
+                <rt-add-property ng-if="vm.props[section].apiPath==='properties' && selected===$index"
+                                profiles="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section="section"
+                                case-loaded="vm.caseLoaded"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
+                        on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
+                </rt-add-property>
+                <rt-add-documents ng-if="vm.props[section].apiPath==='documents' && selected===$index"
+                                profile="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section="section"
+                                case-loaded="vm.caseLoaded"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
+                </rt-add-documents>
+                <rt-add-loan    ng-if="section==='loan' && selected===$index"
+                                profile="vm.caseRecord[section]"
+                                props="vm.props[section]"
+                                section="section"
+                                case-loaded="vm.caseLoaded"
+                        on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
+                </rt-add-loan>
+                
+              </div>
+              </md-tab>
+            </md-tabs>
+          </div>
+
+        </md-card-content>
+
+
+      </md-card>
+
+  </md-content>
+</div>
+  
+
+

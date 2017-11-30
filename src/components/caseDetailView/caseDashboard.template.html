@@ -1,0 +1,96 @@
+
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
+  <md-button  class="md-icon-button" 
+              ng-click="vm.toggleSidenav($event)"
+              aria-label="Toggle Sidenav">
+    <md-icon class="icon-menu"></md-icon>
+  </md-button>
+  <h3 >{{vm.viewTitle}}</h3>
+</md-toolbar>
+
+
+<div layout="row">
+<md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
+          md-component-id="sideMenu" 
+          md-disable-backdrop
+          md-is-locked-open="vm.sidenavLocked">
+      <md-toolbar class="md-toolbar-tools md-hue-3">
+        <h3>Cases</h3>
+        <md-button  class="md-icon-button close-btn" 
+            ng-click="vm.closeSidenav($event)"
+            aria-label="Close Sidenav">
+            <md-icon class="icon-close"></md-icon>
+        </md-button>
+      </md-toolbar>
+      <div layout="column" padding>
+        <md-input-container>
+          <label><md-icon class="icon-search"></md-icon> search</label>
+          <input type="search" ng-model="vm.query" md-autofocus>
+          <md-button  class="md-icon-button" 
+                      ng-click="vm.query=''" 
+                      style="position:absolute;right:0;top:0" 
+                      ng-hide="!vm.query"
+                      aria-label="Clear Search">
+              <md-icon class="icon-cancel"></md-icon> 
+          </md-button>
+        </md-input-container>
+        <md-list>
+          <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
+                        class="case-list-item"
+                        ng-class="{selected: case.caseNum == vm.caseRecord.caseNum}"
+                        ng-click="vm.lookupCaseByCaseNum(case.caseNum); vm.closeSidenav($event)">
+            <div>{{case.caseNum}}</div>
+          </md-list-item>  
+        </md-list>
+      </div>
+     
+</md-sidenav>
+            
+            <!-- Floating button to add create a new case -->
+            <md-button  class="md-fab md-accent"
+                        hide-xs
+                        style="position:fixed;top:90vh;left:120px;z-index:100"
+                        ng-click="vm.gotoNewCase()"
+                        aria-label="create new case">
+              <md-tooltip md-direction="top">create a new case</md-tooltip>
+              <md-icon class="icon-add"></md-icon>
+            </md-button>
+
+<!-- Case Detail View Layout-->
+<md-content layout="column" class="dashboard-content">
+    
+    <div class="dashboard-title-container">
+      <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.lender[0].displayName}} / {{vm.caseRecord.borrower[0].displayName}} / {{vm.caseRecord.property.address1}}</small></h2>
+      <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View or 
+           Create A New Case
+           <md-button  ng-click="vm.gotoNewCase()" 
+                      class="md-icon-button"
+                      aria-label="create a new case"> 
+              <md-icon class="icon-add_circle"></md-icon> 
+          </md-button>
+      </h2>
+    </div>
+
+
+    <ui-view  name="timeline"
+              case="vm.caseRecord">
+    </ui-view>
+    
+
+    <ui-view  name="docs"
+              case="vm.caseRecord">
+    </ui-view>
+    
+    <!-- cards with case details -->
+    <ui-view  name="info"
+              case-record="vm.caseRecord"
+              props="vm.props"
+              sections="vm.sections"
+              on-toggle-display-names="vm.toggleDisplayNames(profile, path, section)">
+    </ui-view>
+    
+    
+    
+
+  </md-content>
+</div>
