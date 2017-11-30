@@ -39,7 +39,6 @@ module.exports = function (app) {
           .title('Delete Case')
           .textContent(`To delete case ${caseRecord.caseNum}, enter the case number below.\nThis cannot be undone.`)
           .placeholder(caseRecord.caseNum)
-          .initialValue(caseRecord.caseNum) // delete this line in production
           .targetEvent($event)
           .ok('Delete')
           .cancel('Cancel')
@@ -85,7 +84,7 @@ module.exports = function (app) {
 
       // goto to caseFocus view for a selected case
       vm.gotoCase = function (caseRecord) {
-          $state.go('caseSetup', {caseNum: caseRecord.caseNum, case_id: caseRecord._id })
+          $state.go('caseFocus', {caseNum: caseRecord.caseNum, case_id: caseRecord._id })
       }
 
 

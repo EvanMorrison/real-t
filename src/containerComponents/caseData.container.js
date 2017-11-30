@@ -127,7 +127,18 @@ module.exports = function(app) {
         // for attorneys and 'other parties', must target appropriate subproperty
           return caseService.updatePersonPropertyOrDocuments(profile, path, section)
           .then(result => { // result is the saved/updated profile
-            profile = result;
+            // if profile is already part of the caseRecord, then update locally, otherwise
+            // update the case in the DB.
+            let isInCase = false;
+            if (section === 'documents') isInCase = true, vm.caseRecord.documents = result;
+            else {
+              let i = vm.caseRecord[section].findIndex(item => item._id === result._id);
+              if (i >= 0) isInCase = true, vm.caseRecord[section][i] = result;
+            }
+            if (isInCase) {
+              vm.caseRecord = JSON.parse(JSON.stringify(vm.caseRecord));
+              return true;
+            }
             return caseService.updateCaseSection(vm.caseRecord._id, profile, section)
             .then(result => { // result is updated case
               vm.caseRecord[section] = result[section];

@@ -10,7 +10,7 @@
 
 
 <div layout="row">
-<md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
+<md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav view-frame" 
           md-component-id="sideMenu" 
           md-disable-backdrop
           md-is-locked-open="vm.sidenavLocked">
@@ -38,7 +38,7 @@
           <md-list-item ng-repeat="case in vm.caseList | filter: vm.query | orderBy: vm.orderProp : reverse=true"
                         class="case-list-item"
                         ng-class="{selected: case.caseNum == vm.caseRecord.caseNum}"
-                        ng-click="vm.lookupCaseByCaseNum(case.caseNum); vm.closeSidenav($event)">
+                        ng-click="vm.lookupCaseByCaseNum(case.caseNum)">
             <div>{{case.caseNum}}</div>
           </md-list-item>  
         </md-list>
@@ -49,6 +49,7 @@
             <!-- Floating button to add create a new case -->
             <md-button  class="md-fab md-accent"
                         hide-xs
+                        ng-if="vm.isOpen"
                         style="position:fixed;top:90vh;left:120px;z-index:100"
                         ng-click="vm.gotoNewCase()"
                         aria-label="create new case">
@@ -57,16 +58,11 @@
             </md-button>
 
 <!-- Case Detail View Layout-->
-<md-content layout="column" class="dashboard-content">
+<md-content layout="column" class="dashboard-content view-frame">
     
     <div class="dashboard-title-container">
       <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.lender[0].displayName}} / {{vm.caseRecord.borrower[0].displayName}} / {{vm.caseRecord.property.address1}}</small></h2>
-      <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View or 
-           Create A New Case
-           <md-button  ng-click="vm.gotoNewCase()" 
-                      class="md-icon-button"
-                      aria-label="create a new case"> 
-              <md-icon class="icon-add_circle"></md-icon> 
+      <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View
           </md-button>
       </h2>
     </div>
@@ -83,6 +79,7 @@
     
     <!-- cards with case details -->
     <ui-view  name="info"
+              class="view-frame"
               case-record="vm.caseRecord"
               props="vm.props"
               sections="vm.sections"

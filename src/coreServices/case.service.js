@@ -82,7 +82,7 @@ module.exports = function(ngModule) {
         .then(result => {
             this.waiting = false;
             this.caseRecord = result.data;
-            if (listViewService.caseList.length) listViewService.caseList.unshift(this.caseRecord);
+            if (this.caseList.length) this.caseList.unshift(this.caseRecord);
             return this.caseRecord;
         })
         .catch(err => {

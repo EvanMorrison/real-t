@@ -41,9 +41,19 @@ module.exports = function(ngModule) {
           
         }
 
-        // start with sidenav open
-        vm.sidenavLocked = true;
-        angular.element(document).ready( () => $mdSidenav('sideMenu').open());
+        // start with sidenav open if no case is loaded, otherwise close it
+        vm.$onInit = () => {
+          if (vm.$transition$.params().caseNum && vm.$transition$.from().name != 'caseFocus') {
+            vm.sidenavLocked = false;
+            angular.element(document).ready( () => $mdSidenav('sideMenu').close());
+            vm.isOpen = false;
+          } else {
+            vm.sidenavLocked = true;
+            angular.element(document).ready( () => $mdSidenav('sideMenu').open());
+            vm.isOpen = true;
+          }
+
+        }
         
         //title for toolbar
         vm.viewTitle = 'View Case Details'
@@ -54,18 +64,20 @@ module.exports = function(ngModule) {
         vm.toggleSidenav = function($event) {  // menu button in main toolbar toggles sidenav
           vm.sidenavLocked = !vm.sidenavLocked;
           $mdSidenav('sideMenu').toggle();
+          vm.isOpen = $mdSidenav('sideMenu').isOpen() ? true : false;
         }
 
         vm.closeSidenav = function($event) { // close button in sidenav also will close it, on small screens it will close upon selecting a case number from the list
           let target = angular.element($event.target);
           if (target.hasClass('icon-close')) vm.sidenavLocked = false;
           $mdSidenav('sideMenu').close();
+          vm.isOpen = false;
         }
         
 
 
       vm.gotoNewCase = function() {
-        $state.go('newCase');
+        $state.go('caseSetupStart');
       }
 
 
