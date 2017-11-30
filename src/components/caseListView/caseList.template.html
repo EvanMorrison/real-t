@@ -1,4 +1,4 @@
-<md-toolbar class="toolbar md-whiteframe-z2">
+<md-toolbar class="md-toolbar-tools md-whiteframe-z2">
       <h3 class="view-frame" >Case List</h3>
 </md-toolbar>
 <md-content class="view-frame">
@@ -25,7 +25,9 @@
       <h4>Loan Amount</h4>
       <h4>Sale Date</h4>
     </md-list-item>
+  </md-list>
 
+  <md-list ng-init="vm.selectedCase=null">
     <!-- list summary info for al cases -->
       <md-list-item ng-repeat="case in vm.caseList | filter:vm.query | orderBy:vm.orderProp : reverse = true"
                     class="case-list-item case-summary md-2-line md-long-text"
@@ -62,9 +64,6 @@
          </div>
         <md-divider></md-divider>
       </md-list-item>
-        <md-divider ng-if="ctrl.selectedCase != $index"></md-divider>
-        <ui-view case-expanded="case" selected-case="ctrl.selectedCase" index="$index" ></ui-view>
-    </div>
     
         </md-list>
       </md-content>

@@ -11,7 +11,7 @@ module.exports = function (app) {
                     'listViewService',
                     CasesController
                   ],
-      controllerAs: 'ctrl',
+      controllerAs: 'vm',
       bindings: { caseList : '<'},
     });
 
@@ -24,11 +24,12 @@ module.exports = function (app) {
       vm.orderProp = 'caseNum';
 
       // toggle parent or child state depending on what is currently showing
-      ctrl.toggleSelected = function(index) {
-          if (ctrl.selectedCase === index) {
-            ctrl.selectedCase = null;
+      vm.toggleSelected = function(index) {
+          
+          if (vm.selectedCase === index) {
+            vm.selectedCase = null;
             } else {
-              ctrl.selectedCase = index;
+              vm.selectedCase = index;
             }
       }
 
@@ -80,29 +81,13 @@ module.exports = function (app) {
           })
         
       }
+      // end deleteCase
 
       // goto to caseFocus view for a selected case
       vm.gotoCase = function (caseRecord) {
           $state.go('caseSetup', {caseNum: caseRecord.caseNum, case_id: caseRecord._id })
       }
 
-      // handle change in user authentication status
-      ctrl.authObj = $firebaseAuth();
-      console.log('auth object: ')
-      console.log(ctrl.authObj)
-
-      ctrl.authObj.$onAuthStateChanged(function(user) {
-        if (user) {
-            caseService.LoadAllCases()
-            .$loaded(function(cases) {
-              ctrl.caseList = cases
-            }, function(err) {
-              console.log('error retrieving cases ', err)
-            })
-        } else {
-            ctrl.caseList.$destroy();
-        }
-      });
 
     }
 
