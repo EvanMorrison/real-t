@@ -100,7 +100,7 @@ module.exports = function(ngApp) {
                   })
 
                   .state('caseDataContainer', {
-                    abstract: true,
+                    // abstract: true,
                     parent: 'mainLayout',
                     views: {
                       'headerContent@mainLayout': { component: 'navbar'},
@@ -136,7 +136,7 @@ module.exports = function(ngApp) {
                       parent: 'caseDataContainer',
                       views: {
                         'view@caseDataContainer': { component: 'rtCaseSetup'}
-                      },
+                      }
                     })
 
                     .state('caseSetup', {
@@ -159,8 +159,5 @@ module.exports = function(ngApp) {
 
       }
 
-    
- 
-  
 
 }

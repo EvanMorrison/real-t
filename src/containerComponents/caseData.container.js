@@ -31,8 +31,8 @@ module.exports = function(app) {
       let lenderAttorney = Object.assign({},lender,{title: 'Lender Attorney'}, {acFilter: 'Attorney'});
       let borrowerAttorney = Object.assign({},lenderAttorney,{title: 'Borrower Attorney'});
       let otherParties = Object.assign({},lender,{title: 'Other Parties'}, {acFilter: 'OtherParty'});
-      let property = { title: 'Property', apiPath: 'properties', acKeys: ['county','taxId']};
-      let documents = { title: 'Trust Deed', apiPath: 'documents', acKeys: ['county', 'date','entryNo']};
+      let property = { title: 'Property', apiPath: 'properties', acKeys: ['taxId']};
+      let documents = { title: 'Trust Deed', apiPath: 'documents', acKeys: []};
       let loan = { title: 'Loan', apiPath: 'cases'};
       vm.props = { lender, borrower, lenderAttorney, borrowerAttorney, otherParties, property, documents, loan};
 
@@ -90,7 +90,7 @@ module.exports = function(app) {
         // create the new case
         caseService.createNewCase({documents: result._id})
         .then(result => {
-          result.document = documents;
+          result.documents = documents;
           vm.caseRecord = result;
           $state.go('caseSetup', {caseNum: vm.caseRecord.caseNum})
         })
@@ -139,7 +139,7 @@ module.exports = function(app) {
               vm.caseRecord = JSON.parse(JSON.stringify(vm.caseRecord));
               return true;
             }
-            return caseService.updateCaseSection(vm.caseRecord._id, profile, section)
+            return caseService.updateCaseSection(vm.caseRecord._id, result, section)
             .then(result => { // result is updated case
               vm.caseRecord[section] = result[section];
               vm.caseRecord = JSON.parse(JSON.stringify(vm.caseRecord));

@@ -8,6 +8,7 @@ module.exports = function(app) {
                 mode: '<',
                 section: '<',
                 actions: '<',
+                loanData: '<',
                 onSaveClick: '&'
     }
   })
@@ -38,6 +39,6 @@ module.exports = function(app) {
     vm.deleteDoc = (docType, $index) => {
       vm.documents[docType].splice($index, 1)
     }
- 
+    
   }
 }

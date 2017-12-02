@@ -36,7 +36,8 @@ module.exports = function(app) {
           
           vm.label = vm.$index === 0 ?  'search by ' : 'and/or ';
           vm.label += vm.key.replace(/[A-Z]/g, match => ' ' + match.toLowerCase())
-          if (vm.key === 'name') vm.label += ' for an existing profile'
+          if (vm.key === 'name') vm.label += ' for an existing profile';
+          if (vm.key === 'caseNum') vm.label = 'search by case number';
         }
 
         // path = api base path, key = field for autocomplete list, filter = category to limit list results
@@ -65,7 +66,7 @@ module.exports = function(app) {
             let compareItem = angular.lowercase(item[key]);
             return (compareItem.indexOf(query) != -1);
           }) : searchList;
-          return (results.length ? results : [{name: 'no match found'}]);
+          return (results.length ? results : [{[key]: 'no match found'}]);
         }
 
         vm.itemSelected = (item, path) => {

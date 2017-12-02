@@ -1,102 +1,104 @@
-
-<!-- content for view only -->
-
-<div class="card-body-text info-view toggle-edit" ng-if="vm.mode==='view'">
-  <div>
+<div class="property-info">
+  
+  <!-- content for view only -->
+  
+  <div class="card-body-text info-view toggle-edit" ng-if="vm.mode==='view'">
     <div>
-      {{vm.property.address1}}
-    </div>
-    <div ng-if="vm.property.address2">
-      {{vm.property.address2}}
-    </div>
-    <div ng-show="vm.property.city && vm.property.state">
-      {{vm.property.city}}, {{vm.property.state}} {{vm.property.zip}}
-    </div>
-  </div>
-  <div ng-show="vm.property.county">
-    {{vm.property.county}} County 
-  </div>
-  <div ng-show="vm.property.taxId">
-    parcel id. {{vm.property.taxId}}
-  </div>
-  <div class="card-body-text" ng-init="limit=80">
-    {{vm.property.legalDescription | limitTo: limit}}
-    <a href=""><span ng-show="limit" ng-click="limit=undefined">...<small>more</small></span></a>
-    <a href=""><span ng-show="!limit" ng-click="limit=80"><small><-less</small></span></a>
-  </div>
-</div>
-
-
-
-<!-- content for input and edit -->
-<div class="toggle-edit" ng-cloak ng-if="vm.mode==='edit'">
-  <form class="info-edit">
-    <!-- street address section -->
-    <div layout="column" class="address-group">
-        <md-input-container class="address">
-            <label>address line 1</label>
-            <input  ng-model="vm.property.address1"
-                    type="text">
-        </md-input-container>
-        <md-input-container class="address">
-            <label>address line 2</label>
-            <input  ng-model="vm.property.address2"
-                    type="text">
-        </md-input-container>
-        <div class="city-state-zip" layout="row">
-            <md-input-container class="city">
-                <label>city</label>
-                <input  ng-model="vm.property.city"
-                        type="text">
-            </md-input-container>
-            <md-input-container class="state">
-                <label>ST</label>
-                <md-select ng-model="vm.property.state"
-                            md-on-open="vm.loadStates()"
-                            aria-label="state">
-                  <md-option ng-repeat="state in vm.states" 
-                            ng-value="state.short">
-                      {{state.short}}
-                  </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container class="zip">
-                <label>zip</label >
-                <input  ng-model="vm.property.zip"
-                        type="text">
-            </md-input-container>
-        </div>
+      <div>
+        {{vm.property.address1}}
       </div>
-
-
-
-        <div>
-          <md-input-container class="county">
-            <label>county</label>
-            <md-select  ng-model="vm.property.county">
-              <md-option  ng-repeat="county in vm.Counties" 
-                          ng-value="county"
-                          ng-selected="county === '{{vm.property.county}}'">
-                    {{county}}
-              </md-option>  
-          </md-select>
+      <div ng-if="vm.property.address2">
+        {{vm.property.address2}}
+      </div>
+      <div ng-show="vm.property.city && vm.property.state">
+        {{vm.property.city}}, {{vm.property.state}} {{vm.property.zip}}
+      </div>
+    </div>
+    <div ng-show="vm.property.county">
+      {{vm.property.county}} County 
+    </div>
+    <div ng-show="vm.property.taxId">
+      parcel id. {{vm.property.taxId}}
+    </div>
+    <div class="card-body-text" ng-init="limit=80">
+      {{vm.property.legalDescription | limitTo: limit}}
+      <a href="" ng-show="limit && limit < vm.property.legalDescription.length"><span ng-show="limit" ng-click="limit=undefined">...<small>more</small></span></a>
+      <a href=""><span ng-show="!limit" ng-click="limit=80"><small><-less</small></span></a>
+    </div>
+  </div>
+  
+  
+  
+  <!-- content for input and edit -->
+  <div class="toggle-edit" ng-cloak ng-if="vm.mode==='edit'">
+    <form class="info-edit">
+      <!-- street address section -->
+      <div layout="column" class="address-group">
+          <md-input-container class="address">
+              <label>address line 1</label>
+              <input  ng-model="vm.property.address1"
+                      type="text">
           </md-input-container>
-        </div>
-        <div>
-          <md-input-container class="parcel-id">
-            <label>assessor's parcel no./tax Id.</label>
-            <input  ng-model="vm.property.taxId"
-                    type="text">
+          <md-input-container class="address">
+              <label>address line 2</label>
+              <input  ng-model="vm.property.address2"
+                      type="text">
           </md-input-container>
+          <div class="city-state-zip" layout="row">
+              <md-input-container class="city">
+                  <label>city</label>
+                  <input  ng-model="vm.property.city"
+                          type="text">
+              </md-input-container>
+              <md-input-container class="state">
+                  <label>ST</label>
+                  <md-select ng-model="vm.property.state"
+                              md-on-open="vm.loadStates()"
+                              aria-label="state">
+                    <md-option ng-repeat="state in vm.states" 
+                              ng-value="state.short">
+                        {{state.short}}
+                    </md-option>
+                  </md-select>
+              </md-input-container>
+              <md-input-container class="zip">
+                  <label>zip</label >
+                  <input  ng-model="vm.property.zip"
+                          type="text">
+              </md-input-container>
+          </div>
         </div>
-        <div>
-          <md-input-container class="legal-description">
-            <label>legal description</label>
-            <textarea ng-model="vm.property.legalDescription">
-            </textarea>
-          </md-input-container>
-        </div>
-        
-  </form>
+  
+  
+  
+          <div>
+            <md-input-container class="county">
+              <label>county</label>
+              <md-select  ng-model="vm.property.county">
+                <md-option  ng-repeat="county in vm.Counties" 
+                            ng-value="county"
+                            ng-selected="county === '{{vm.property.county}}'">
+                      {{county}}
+                </md-option>  
+            </md-select>
+            </md-input-container>
+          </div>
+          <div>
+            <md-input-container class="parcel-id">
+              <label>assessor's parcel no./tax Id.</label>
+              <input  ng-model="vm.property.taxId"
+                      type="text">
+            </md-input-container>
+          </div>
+          <div>
+            <md-input-container class="legal-description">
+              <label>legal description</label>
+              <textarea ng-model="vm.property.legalDescription">
+              </textarea>
+            </md-input-container>
+          </div>
+          
+    </form>
+  </div>
+  <div ng-transclude></div>
 </div>
-<div ng-transclude></div>

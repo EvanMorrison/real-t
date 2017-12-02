@@ -1,4 +1,4 @@
-<md-card>
+<md-card md-colors="{background:'default-background-200'}">
   <md-card-content class="column dashboard-case-info-container">
     <div class="row">
       <div class="md-display-2"></div>
@@ -8,7 +8,7 @@
 
       <md-card class="loan-card">
         <md-card-content>
-          <div class="md-headline">Loan</div>
+          <div class="md-headline"><md-icon class="icon-monetization_on md-primary"></md-icon>Loan</div>
             <rt-loan-info profile="vm.caseRecord.loan" 
                           mode="'view'">
             </rt-loan-info>
@@ -17,7 +17,7 @@
       
       <md-card class="property-card">
         <md-card-content>
-          <div class="md-headline">Property</div>
+          <div class="md-headline"><md-icon class="icon-location_city md-primary"></md-icon>Property</div>
           <div ng-repeat="parcel in vm.caseRecord.property">
             <rt-property-info profile="parcel" 
                               mode="'view'">
@@ -29,7 +29,7 @@
       <md-card ng-repeat="section in ['lender', 'borrower', 'lenderAttorney', 'borrowerAttorney']"
                 ng-if="vm.caseRecord[section].length">
         <md-card-content class="column">
-          <div class="md-headline">{{vm.props[section].title}}</div>
+          <div class="md-headline"><md-icon class="icon-account_circle md-primary"></md-icon>{{vm.props[section].title}}</div>
           <div ng-repeat="profile in vm.caseRecord[section]">
             <rt-person-info 
                             profile="profile"
@@ -43,7 +43,7 @@
       
       <md-card class="document-card">
         <md-card-content>
-          <div class="md-headline">Documents</div>
+          <div class="md-headline"><md-icon class="icon-assignment md-primary"></md-icon>Documents</div>
             <rt-document-info profile="vm.caseRecord.documents" 
                               mode="'view'">
             </rt-document-info>

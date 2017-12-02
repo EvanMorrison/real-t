@@ -7,12 +7,13 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: { 
-                'profile': '<',
-                'props': '<',
-                'section': '<',
-                'caseLoaded' : '<',
-                'onSaveProfileAndUpdateCase': '&',
-                'onRemoveProfileFromCase': '&',
+                profile: '<',
+                props: '<',
+                section: '<',
+                loanData: '<',
+                caseLoaded : '<',
+                onSaveProfileAndUpdateCase: '&',
+                onRemoveProfileFromCase: '&',
             
     }
   })
@@ -31,6 +32,10 @@ module.exports = function(app) {
 
     vm.editCurrentProfile = () => { // edit an existing profile before adding it to the case
       vm.mode = 'edit';
+       // provide defaults based on data entered in other case sections
+       vm.profileToAdd.originalPrincipalAmount = vm.profile.originalPrincipalAmount || vm.loanData.amount;
+       vm.profileToAdd.loanDate = vm.profile.loanDate || vm.loanData.date;
+       vm.profileToAdd = Object.assign({}, vm.profileToAdd);
     }
 
     vm.saveClick = () => { // user clicks save/add profile to case

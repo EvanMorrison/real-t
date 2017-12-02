@@ -8,12 +8,13 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: { 
-                'profile': '<',
-                'props': '<',
-                'section': '<',
-                'caseLoaded' : '<',
-                'onSaveProfileAndUpdateCase': '&',
-                'onRemoveProfileFromCase': '&',
+                profile: '<',
+                props: '<',
+                section: '<',
+                loanData: '<',
+                caseLoaded : '<',
+                onSaveProfileAndUpdateCase: '&',
+                onRemoveProfileFromCase: '&',
             
     }
   })
@@ -33,6 +34,14 @@ module.exports = function(app) {
 
     vm.editCurrentProfile = () => { // edit an existing profile before adding it to the case
       vm.mode = 'edit';
+      // provide defaults based on data entered in other case sections
+      vm.profileToAdd.trustDeed.amount = vm.profile.trustDeed.amount || vm.loanData.amount;
+      vm.profileToAdd.trustDeed.ob = vm.profile.trustDeed.ob || vm.loanData.lender;
+      vm.profileToAdd.trustDeed.cb = vm.profile.trustDeed.cb || vm.loanData.lender;
+      vm.profileToAdd.trustDeed.trustor = vm.profile.trustDeed.trustor || vm.loanData.borrower;
+      vm.profileToAdd.trustDeed.date = vm.profile.trustDeed.date || vm.loanData.date;
+      vm.profileToAdd.trustDeed.recDate = vm.profile.trustDeed.recDate || vm.loanData.date;
+      vm.profileToAdd = Object.assign({}, vm.profileToAdd);
     }
 
     vm.saveClick = () => { // user clicks save/add profile to case

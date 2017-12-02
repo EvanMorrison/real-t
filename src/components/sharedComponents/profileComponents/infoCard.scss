@@ -131,6 +131,13 @@
   }
 }
 
+.property-info {
+  .legal-description {
+    width: 100%;
+    max-width: 35em;
+  }
+}
+
 .loan-info {
   justify-content: space-around;
   >:first-child {

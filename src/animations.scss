@@ -2,18 +2,19 @@
 /* 
 * Animations for page routing changes
 */
-.view-container {
+
+.view-container, .view-container .view-frame {
   position: relative;
+  &.ng-enter {
+    opacity: 0;
+    transition: all .4s ease-out;
+  }
+  &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
 }
 
- .view-frame.ng-enter {
-  opacity: 0;
-  transition: .5s;
- }
 
- .view-frame.ng-enter.ng-enter-active {
-   opacity: 1;
- }
 
  
 /*

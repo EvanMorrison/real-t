@@ -13,17 +13,19 @@ module.exports = function(ngModule) {
     function CaseService($http, $stateParams, listViewService) {
       
       this.caseList = []; //listViewService.caseList;
+      this.isListCurrent = false;
       this.statesList = require('./constants').STATES;
     /**
      * List-View Service, retrieves a 'light' list of all cases with select fields populated
      * for the caseList view.
      */
     this.loadCaseList = () => {
-        if (!this.caseList.length) {
+        if (!this.isListCurrent) {
           this.waiting = true;
           return $http.get('/api/cases/lightlist')
           .then(result => {
             this.waiting = false;
+            this.isListCurrent = true;
             this.caseList = result.data;
             return this.caseList;
           })
@@ -82,7 +84,7 @@ module.exports = function(ngModule) {
         .then(result => {
             this.waiting = false;
             this.caseRecord = result.data;
-            if (this.caseList.length) this.caseList.unshift(this.caseRecord);
+            this.isListCurrent = false;
             return this.caseRecord;
         })
         .catch(err => {
@@ -94,12 +96,18 @@ module.exports = function(ngModule) {
 
     this.updateCaseSection = (caseid, profile, section) => {
         return $http.put('/api/cases/' + caseid + '/' + section, profile)
-        .then(result => result.data)  // returns updated case with 'section' populated
+        .then(result => {
+            let i = this.caseList.findIndex(item => item._id === caseid);
+            if (i >= 0) this.caseList[i] = result.data;
+            else this.isListCurrent = false;
+            return result.data // returns updated case with section populated
+        })  
         .catch(err => Promise.reject(err));
     }
     
     // update or create new person, property, or documents profile
     this.updatePersonPropertyOrDocuments = (profile, path, section) => {
+        this.isListCurrent = false; // sets this.caseList to not current
         if (profile._id === 'new') {
             delete profile._id;
             let url = '/api/' + path;
@@ -119,6 +127,7 @@ module.exports = function(ngModule) {
   
     // remove a person or property profile from a case (does not delete the person or property profile from its collection)
     this.removeProfileFromCase = (profile, section) => {
+        this.isListCurrent = false;
         return $http.delete('/api/cases/' + this.caseRecord._id + '/' + section + '/' + profile._id)
         .then(result => {
             this.caseRecord = result.data;
@@ -178,13 +187,8 @@ module.exports = function(ngModule) {
     // eg. get names of all organizations and trusts and all individuals
     this.getLookupList = (path, key, filter) => {
         if (path === 'people') path = 'people/names/principals';
-        else if (path === 'properties') {
-            if (key === 'county') path = 'properties/counties';
-            else if (key === 'taxId') path = 'properties/parcelids';
-        } else if (path === 'documents') {
-            if (key === 'county') path = 'documents/counties';
-            else if (key === 'entryNo') path = 'documents/entrynos'
-        }
+        else if (path === 'properties') path = 'properties/parcelids';
+        else if (path === 'cases') path = 'cases/casenum/list'
         if (filter) path += '?type=' + filter;
         return $http.get('/api/' + path)
         .then(result => {
@@ -202,6 +206,11 @@ module.exports = function(ngModule) {
               this.data = result.data.map(item => {
                   return ({ county: item._id, taxIds: item.prop})
               })
+          } else if (key === 'caseNum') {
+              this.data = result.data.sort((a,b) => {
+                if (a.caseNum.slice(0,2) === b.caseNum.slice(0,2)) return b.caseNum.slice(3) - a.caseNum.slice(3);
+                else return b.caseNum - a.caseNum;
+                });
           }
           return this.data;
         })

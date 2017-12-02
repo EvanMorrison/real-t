@@ -7,6 +7,7 @@ module.exports = function(app) {
                 profile: '<',
                 mode: '<',
                 section: '<',
+                loanData: '<',
                 actions: '<',
                 onSaveClick: '&'
     }

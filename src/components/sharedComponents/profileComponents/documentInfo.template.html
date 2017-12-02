@@ -59,43 +59,55 @@
 <!-- content for input and edit -->
 <div class="column doc-info inputs" ng-if="vm.mode==='edit'">
   <div class="md-title">Trust Deed</div>
-  <div class="row">
+  <div class="column">
     <!-- Trust Deed  -->
-      <md-input-container>
-        <label>amount</label>
-        <input  ng-model="vm.documents.trustDeed.amount"
-                type="number">
-      </md-input-container>
-      <md-input-container class="date">
-        <label>date recorded</label>
-        <md-datepicker ng-model="vm.documents.trustDeed.recDate">
-        </md-datepicker>
-      </md-input-container>
-      <md-input-container class="entry-num">
-        <label>recorder's entry number</label>
-        <input  ng-model="vm.documents.trustDeed.entryNo"
-                type="text">
-      </md-input-container>
-      <md-input-container class="name">
-        <label>original beneficiary</label>
-        <input  ng-model="vm.documents.trustDeed.ob"
-                type="text">
-      </md-input-container>
-      <md-input-container class="name">
-        <label>original trustee</label>
-        <input  ng-model="vm.documents.trustDeed.otee"
-                type="text">
-      </md-input-container>
-      <md-input-container class="name">
-        <label>current beneficiary</label>
-        <input  ng-model="vm.documents.trustDeed.cb"
-                type="text">
-      </md-input-container>
-      <md-input-container class="name">
-        <label>current trustee</label>
-        <input  ng-model="vm.documents.trustDeed.ctee"
-                type="text">
-      </md-input-container>
+      <div class="row">
+        <md-input-container>
+          <label>amount</label>
+          <input  ng-model="vm.documents.trustDeed.amount"
+                  type="number">
+        </md-input-container>
+        <md-input-container class="date">
+          <label>date recorded</label>
+          <md-datepicker ng-model="vm.documents.trustDeed.recDate">
+          </md-datepicker>
+        </md-input-container>
+        <md-input-container class="entry-num">
+          <label>recorder's entry number</label>
+          <input  ng-model="vm.documents.trustDeed.entryNo"
+                  type="text">
+        </md-input-container>
+        <md-input-container class="name">
+          <label>trustor</label>
+          <input  ng-model="vm.documents.trustDeed.trustor"
+                  type="text">
+        </md-input-container>
+      </div>
+      <div class="row">
+        <md-input-container class="name">
+          <label>original beneficiary</label>
+          <input  ng-model="vm.documents.trustDeed.ob"
+                  type="text">
+        </md-input-container>
+        
+        <md-input-container class="name">
+          <label>current beneficiary</label>
+          <input  ng-model="vm.documents.trustDeed.cb"
+                  type="text">
+        </md-input-container>
+      </div>
+      <div class="row">
+        <md-input-container class="name">
+          <label>original trustee</label>
+          <input  ng-model="vm.documents.trustDeed.otee"
+                  type="text">
+        </md-input-container>
+        <md-input-container class="name">
+          <label>current trustee</label>
+          <input  ng-model="vm.documents.trustDeed.ctee"
+                  type="text">
+        </md-input-container>
+      </div>
   </div> 
   <md-divider></md-divider>
 <!-- end Trust Deed -->

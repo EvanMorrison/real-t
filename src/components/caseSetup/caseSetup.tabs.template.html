@@ -6,7 +6,7 @@
   <div layout="row">
   
   <!-- Dashboard Layout-->
-  <md-content layout="column" class="dashboard-content view-frame">
+  <md-content class="column dashboard-content">
       
 
           
@@ -18,21 +18,20 @@
                       flex-offset-gt-xs="5">
                   Case: 
                 </h1>
-                <form name="lookupCase" layout="row" layout-align="start center">
-                  <md-input-container >
-                      <label >Case Number</label>
-                      <input  class="md-headline"
-                              type="text" 
-                              ng-model="vm.caseRecord.caseNum">
-                  </md-input-container>
-                  <div>
-                      <md-button  class="btn primary-btn-reverse"
-                                  ng-click="vm.lookupCaseByCaseNum()"
-                                  type="submit">
-                          Find by Case Number
-                      </md-button>
-                    </div>
-                </form>
+                <md-input-container flex="20">
+                    <div class="md-headline">{{vm.caseRecord.caseNum}}</div>
+                    <div class="md-errors-spacer"></div>
+                </md-input-container>
+                  <div >
+                      <rt-profile-autocomplete  path="'cases'"
+                                                key="'caseNum'"
+                                                $index="0"
+                                                actions="{'clearSearch': 'false'}"
+                                                on-item-selected="vm.lookupCaseByCaseNum(item)">
+                      </rt-profile-autocomplete>
+                  </div>
+                  <div flex="5"></div>
+                  <div class="md-subhead" flex="5">or</div>
                   <div>
                       <md-button  class="btn primary-btn-reverse"
                                   ng-click="vm.createNewCase()">
@@ -42,14 +41,14 @@
               </div>
 
           <div class="create-case-container">
-            <md-tabs ng-cloak class="case-section" md-dynamic-height md-border-bottom ng-init="selected=0">
+            <md-tabs  ng-cloak class="case-section" md-dynamic-height md-border-bottom ng-init="selected=0">
               <md-tab ng-cloak label="{{vm.props[section].title}}" ng-repeat="section in ::vm.sections track by $index" md-on-select="selected=$index">
               <md-toolbar layout="row" layout-align="center center"
                           class="profile-card md-toolbar-tools">
                 <md-card-title><h3 class="md-title">{{vm.props[section].title}}</h2></md-card-title>
               </md-toolbar>
               <div class="section-box">
-                <rt-add-people  ng-if="vm.props[section].apiPath==='people' && selected===$index"
+                <rt-add-people ng-cloak ng-if="vm.props[section].apiPath==='people' && selected===$index"
                                 profiles="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section="section"
@@ -57,7 +56,7 @@
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
                         on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
                 </rt-add-people>
-                <rt-add-property ng-if="vm.props[section].apiPath==='properties' && selected===$index"
+                <rt-add-property ng-cloak ng-if="vm.props[section].apiPath==='properties' && selected===$index"
                                 profiles="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section="section"
@@ -69,6 +68,7 @@
                                 profile="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section="section"
+                                loan-data="vm.loanData"
                                 case-loaded="vm.caseLoaded"
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
                 </rt-add-documents>
@@ -76,6 +76,7 @@
                                 profile="vm.caseRecord[section]"
                                 props="vm.props[section]"
                                 section="section"
+                                loan-data="vm.loanData"
                                 case-loaded="vm.caseLoaded"
                         on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)">
                 </rt-add-loan>

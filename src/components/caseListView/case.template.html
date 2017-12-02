@@ -4,12 +4,15 @@
     <p>{{vm.caseExpanded.property[0].county}} County</p>
     <p>id: {{vm.caseExpanded.property[0].taxId}}</p>
   </div>
-  <div hide-xs class="case-text">
-    <p class="case-list-address">{{vm.caseExpanded.lender[0].address1}}</p>
-    <p class="case-list-address">{{vm.caseExpanded.lender[0].address2}}</p>
-    <p class="case-list-address">{{vm.caseExpanded.lender[0].city}}, {{vm.caseExpanded.lender[0].state}} {{vm.caseExpanded.lender[0].zip}}</p>
+  <div class="case-text">
+    <p >{{vm.caseExpanded.lender[0].address1}}</p>
+    <p >{{vm.caseExpanded.lender[0].address2}}</p>
+    <p >{{vm.caseExpanded.lender[0].city}}, {{vm.caseExpanded.lender[0].state}} {{vm.caseExpanded.lender[0].zip}}</p>
     <p>{{vm.caseExpanded.lender[0].phones[0].value | phone}}</p>
     <p>{{vm.caseExpanded.lender[0].emails[0].value }}</p>
   </div>
+  <div class="case-text"></div>
+  <div class="case-text"></div>
+  
   </div>
 </div>

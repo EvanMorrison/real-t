@@ -60,6 +60,7 @@
     
       <div class="column profiles-list">
           <div  class="profile-list-profile"
+                ng-cloak
                 ng-repeat="profile in vm.profiles track by $index">
             <rt-property-info class="profile-card"
                             ng-class="{compact: vm.mode==='view'}"

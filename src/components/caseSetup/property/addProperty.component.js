@@ -8,12 +8,12 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: { 
-                'profiles': '<',
-                'props': '<',
-                'section': '<',
-                'caseLoaded' : '<',
-                'onSaveProfileAndUpdateCase': '&',
-                'onRemoveProfileFromCase': '&',
+                profiles: '<',
+                props: '<',
+                section: '<',
+                caseLoaded : '<',
+                onSaveProfileAndUpdateCase: '&',
+                onRemoveProfileFromCase: '&',
             
     }
   })

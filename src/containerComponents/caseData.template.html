@@ -1,5 +1,5 @@
-<ui-view  name="view" 
-          ng-cloak
+<div  ui-view="view" 
+          class="view-frame"
           user="vm.user"
           sections="vm.sections"
           props="vm.props"
@@ -9,4 +9,4 @@
           on-lookup-case-by-case-num="vm.lookupCaseByCaseNum(caseNum)"
           on-save-profile-and-update-case="vm.saveProfileAndUpdateCase(profile, path, section)"
           on-remove-profile-from-case="vm.removeProfileFromCase(profile, section)">
-</ui-view>
+</div>

@@ -27,6 +27,12 @@ module.exports = function(app) {
     vm.$onChanges = changes => {
       if (changes.caseRecord && changes.caseRecord.currentValue) {
         vm.caseRecord = JSON.parse(JSON.stringify(changes.caseRecord.currentValue));
+        let lender = vm.caseRecord.lender.length ? vm.caseRecord.lender[0].fullOrgName || vm.caseRecord.lender[0].fullName : null;
+        let borrower = vm.caseRecord.borrower.length ? vm.caseRecord.borrower[0].fullOrgName || vm.caseRecord.borrower[0].fullName : null;
+        let TD = vm.caseRecord.documents.trustDeed || {};
+        let amount = vm.caseRecord.loan.originalPrincipalAmount || TD.amount;
+        let date = vm.caseRecord.loan.loanDate || TD.recDate;
+        vm.loanData = { lender, borrower, amount, date };
         // console.log('case loaded ', vm.caseRecord);
         vm.caseLoaded = true;
         $state.go('caseSetup',({caseNum: vm.caseRecord.caseNum}))
@@ -40,8 +46,9 @@ module.exports = function(app) {
       vm.onCreateNewCase()
   }
 
-  vm.lookupCaseByCaseNum = () => {
-     vm.onLookupCaseByCaseNum({caseNum: vm.caseRecord.caseNum});
+  vm.lookupCaseByCaseNum = (item) => {
+    if (!item || vm.caseRecord && item.caseNum === vm.caseRecord.caseNum) return;
+    vm.onLookupCaseByCaseNum({caseNum: item.caseNum})
   }
 
   vm.saveProfileAndUpdateCase = (profile, path, section) => {

@@ -9,10 +9,10 @@
 </md-toolbar>
 
 
-<div layout="row">
-<md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav view-frame" 
+<div class="row">
+<md-sidenav  class="md-sidenav-left md-whiteframe-z2 dashboard-sidenav" 
           md-component-id="sideMenu" 
-          md-disable-backdrop
+          md-disable-scroll-target
           md-is-locked-open="vm.sidenavLocked">
       <md-toolbar class="md-toolbar-tools md-hue-3">
         <h3>Cases</h3>
@@ -25,7 +25,7 @@
       <div layout="column" padding>
         <md-input-container>
           <label><md-icon class="icon-search"></md-icon> search</label>
-          <input type="search" ng-model="vm.query" md-autofocus>
+          <input type="search" ng-model="vm.query">
           <md-button  class="md-icon-button" 
                       ng-click="vm.query=''" 
                       style="position:absolute;right:0;top:0" 
@@ -49,7 +49,7 @@
             <!-- Floating button to add create a new case -->
             <md-button  class="md-fab md-accent"
                         hide-xs
-                        ng-if="vm.isOpen"
+                        ng-show="vm.isOpen"
                         style="position:fixed;top:90vh;left:120px;z-index:100"
                         ng-click="vm.gotoNewCase()"
                         aria-label="create new case">
@@ -58,11 +58,13 @@
             </md-button>
 
 <!-- Case Detail View Layout-->
-<md-content layout="column" class="dashboard-content view-frame">
+<md-content layout="column" class="dashboard-content">
     
     <div class="dashboard-title-container">
       <h2 ng-show="vm.caseRecord.caseNum">Case: {{vm.caseRecord.caseNum}} <small>/ {{vm.caseRecord.lender[0].displayName}} / {{vm.caseRecord.borrower[0].displayName}} / {{vm.caseRecord.property.address1}}</small></h2>
-      <h2 ng-hide="vm.caseRecord.caseNum">Select A Case To View
+      <h2 ng-hide="vm.caseRecord.caseNum">
+        <md-icon class="icon-arrow_upward"></md-icon>
+        Open The Menu To Select A Case 
           </md-button>
       </h2>
     </div>
@@ -79,7 +81,7 @@
     
     <!-- cards with case details -->
     <ui-view  name="info"
-              class="view-frame"
+              class="view-frame-content"
               case-record="vm.caseRecord"
               props="vm.props"
               sections="vm.sections"

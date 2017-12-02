@@ -44,13 +44,13 @@ module.exports = function(ngModule) {
         // start with sidenav open if no case is loaded, otherwise close it
         vm.$onInit = () => {
           if (vm.$transition$.params().caseNum && vm.$transition$.from().name != 'caseFocus') {
-            vm.sidenavLocked = false;
+            // vm.sidenavLocked = false;
             angular.element(document).ready( () => $mdSidenav('sideMenu').close());
             vm.isOpen = false;
           } else {
-            vm.sidenavLocked = true;
-            angular.element(document).ready( () => $mdSidenav('sideMenu').open());
-            vm.isOpen = true;
+            // vm.sidenavLocked = true;
+            // angular.element(document).ready( () => $mdSidenav('sideMenu').open());
+            // vm.isOpen = true;
           }
 
         }
@@ -62,7 +62,7 @@ module.exports = function(ngModule) {
         vm.orderProp = 'caseNum';
         
         vm.toggleSidenav = function($event) {  // menu button in main toolbar toggles sidenav
-          vm.sidenavLocked = !vm.sidenavLocked;
+          // vm.sidenavLocked = !vm.sidenavLocked;
           $mdSidenav('sideMenu').toggle();
           vm.isOpen = $mdSidenav('sideMenu').isOpen() ? true : false;
         }

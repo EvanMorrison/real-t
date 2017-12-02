@@ -51,19 +51,39 @@ $icon-sort: "\e164";
 $icon-sort_by_alpha: "\e053";
 $icon-view_list: "\e8ef";
 $icon-pageview: "\e8a0";
+$icon-account_box: "\e851";
+$icon-account_circle: "\e853";
+$icon-attach_file: "\e226";
+$icon-attach_money: "\e227";
+$icon-indeterminate_check_box: "\e909";
+$icon-info: "\e88e";
+$icon-location_city: "\e7f1";
+$icon-monetization_on: "\e263";
+$icon-navigation: "\e55d";
+$icon-near_me: "\e569";
+$icon-remove: "\e15b";
+$icon-store_mall_directory: "\e563";
+$icon-account_balance: "\e84f";
+$icon-apps: "\e5c3";
+$icon-cloud_done: "\e2bf";
+$icon-cloud_off: "\e2c1";
+$icon-cloud_queue: "\e2c2";
+$icon-content_paste: "\e14f";
+$icon-domain: "\e7ee";
+$icon-event_available: "\e614";
+$icon-event_busy: "\e615";
+$icon-event_note: "\e616";
 $icon-github: "\eab0";
 $icon-linkedin: "\eac9";
 $icon-file-pdf: "\eadf";
 
-
 @font-face {
   font-family: 'materialicons';
-  // src:  url('#{$icomoon-font-path}/materialicons.eot?t47h4v');
-  src:  
-  url('#{$icomoon-font-path}/materialicons.woff?t47h4v') format('woff');
-    // url('#{$icomoon-font-path}/materialicons.eot?t47h4v#iefix') format('embedded-opentype'),
-    // url('#{$icomoon-font-path}/materialicons.ttf?t47h4v') format('truetype'),
-    // url('#{$icomoon-font-path}/materialicons.svg?t47h4v#materialicons') format('svg');
+  // src:  url('#{$icomoon-font-path}/materialicons.eot?5261wl');
+  src:  url('#{$icomoon-font-path}/materialicons.woff?5261wl') format('woff');
+    // url('#{$icomoon-font-path}/materialicons.eot?5261wl#iefix') format('embedded-opentype'),
+    // url('#{$icomoon-font-path}/materialicons.ttf?5261wl') format('truetype'),
+    // url('#{$icomoon-font-path}/materialicons.svg?5261wl#materialicons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -337,6 +357,116 @@ $icon-file-pdf: "\eadf";
 .icon-pageview {
   &:before {
     content: $icon-pageview;
+  }
+}
+.icon-account_box {
+  &:before {
+    content: $icon-account_box;
+  }
+}
+.icon-account_circle {
+  &:before {
+    content: $icon-account_circle;
+  }
+}
+.icon-attach_file {
+  &:before {
+    content: $icon-attach_file;
+  }
+}
+.icon-attach_money {
+  &:before {
+    content: $icon-attach_money;
+  }
+}
+.icon-indeterminate_check_box {
+  &:before {
+    content: $icon-indeterminate_check_box;
+  }
+}
+.icon-info {
+  &:before {
+    content: $icon-info;
+  }
+}
+.icon-location_city {
+  &:before {
+    content: $icon-location_city;
+  }
+}
+.icon-monetization_on {
+  &:before {
+    content: $icon-monetization_on;
+  }
+}
+.icon-navigation {
+  &:before {
+    content: $icon-navigation;
+  }
+}
+.icon-near_me {
+  &:before {
+    content: $icon-near_me;
+  }
+}
+.icon-remove {
+  &:before {
+    content: $icon-remove;
+  }
+}
+.icon-store_mall_directory {
+  &:before {
+    content: $icon-store_mall_directory;
+  }
+}
+.icon-account_balance {
+  &:before {
+    content: $icon-account_balance;
+  }
+}
+.icon-apps {
+  &:before {
+    content: $icon-apps;
+  }
+}
+.icon-cloud_done {
+  &:before {
+    content: $icon-cloud_done;
+  }
+}
+.icon-cloud_off {
+  &:before {
+    content: $icon-cloud_off;
+  }
+}
+.icon-cloud_queue {
+  &:before {
+    content: $icon-cloud_queue;
+  }
+}
+.icon-content_paste {
+  &:before {
+    content: $icon-content_paste;
+  }
+}
+.icon-domain {
+  &:before {
+    content: $icon-domain;
+  }
+}
+.icon-event_available {
+  &:before {
+    content: $icon-event_available;
+  }
+}
+.icon-event_busy {
+  &:before {
+    content: $icon-event_busy;
+  }
+}
+.icon-event_note {
+  &:before {
+    content: $icon-event_note;
   }
 }
 .icon-github {

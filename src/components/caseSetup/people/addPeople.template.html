@@ -4,6 +4,7 @@
     <div class="row">
       <rt-profile-autocomplete  ng-repeat="key in vm.props.acKeys track by $index"
                                 $index="$index"
+                                ng-cloak
                                 path="vm.props.apiPath"
                                 key="key"
                                 filter="vm.props.acFilter"
@@ -61,6 +62,7 @@
 
   <div class="column profiles-list">
       <div  class="profile-list-profile"
+            ng-cloak
             ng-repeat="profile in vm.profiles">
         <rt-person-info class="profile-card"
                         profile="profile"
@@ -74,7 +76,7 @@
                                    ng-mouseenter="isOpen=true"
                                    ng-mouseleave="isOpen=false">
                     <md-fab-trigger>
-                      <md-button class="md-fab md-mini" 
+                      <md-button ng-cloak class="md-fab md-mini" 
                                  md-colors="{background:'default-background-50'}" 
                                  aria-label="profile options">
                         <md-icon class="icon-menu" md-colors="{color: 'grey-900-0.55'}"></md-icon>

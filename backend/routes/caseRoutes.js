@@ -34,6 +34,13 @@ router.get('/fulllist', (req, res) => {
   .catch(err => res.status(500).json(err))
 })
 
+// a complete list of all casenumbers with case_ids
+router.get('/casenum/list', (req, res) => {
+  Case.find({}, { caseNum : 1 })
+  .then(result => res.json(result))
+  .catch(err => res.status(500).json(err))
+})
+
 // get 1 case by id and fully populate all subdocuments
 router.get('/:id', (req, res) => {
   Case.findOne({ _id: req.params.id })
@@ -43,6 +50,8 @@ router.get('/:id', (req, res) => {
   .then(result => res.json(result))
   .catch(err => res.status(500).json(err))
 })
+
+
 
 // get 1 case by its caseNum property and populate all subdocuments
 router.get('/casenum/:id', (req, res) => {

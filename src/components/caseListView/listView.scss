@@ -1,5 +1,8 @@
 
-
+md-list {
+  max-width: 1600px;
+  margin: auto;
+}
 .case-summary {
   font-size: .9em;
 }
@@ -13,31 +16,49 @@
   }
 }
 
+.column.col-justified {
+  flex: 1;
+}
+
 .caselist-row {
   width: 100%;
 }
 
 .caselist-headings, .caselist-row, .additional-info {
+  padding: 0;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  text-align: left;
   overflow: hidden;
   >*, >*>* {
     padding-right: 15px;
   }
-  >*:first-child {
-    flex: 0 0 8%;
+  >*:first-child { // case number
+    flex: 0 0 12%;
+    max-width: 120px;
     margin-left: 5vw;
   }
-  >*:nth-child(n+2) {
+  >*:nth-child(n+2) { // property
     flex: 0 0 20%;
   }
-  >*:nth-child(n+3) {
-    flex: 0 0 15%;
+  >*:nth-child(n+3) { // lender, borrower
+    flex: 0 .3 20%;
   }
-  >*:last-child {
-    flex: 0 1 10%;
+  >*:nth-child(n+5) { // loan amount
+    flex: 0 0 7%;
+  }
+  >*:nth-child(n+6) { // sale date
+    flex: 0 1 12%;
     padding-right: 10px;
+    min-width: 90px;
+  }
+  >*:nth-child(n+7) { // view-detail & delete buttons
+    flex: 0 0 9%;
+    padding: 0;
+  }
+  >*::last-child {
+    flex: 0 1 0;
   }
 }
 
@@ -54,11 +75,16 @@
 
 .case-expanded.case-detail {
   position: relative;
-  top: -1em;
+  top: -.75em;
   div.case-text {
+    display: flex;
+    flex-direction: column;
     p {
-      margin: .5em 0;
-      line-height: 1.15em;
+      flex: 1;
+      padding: 0;
+      width: 100%;
+      margin: 0;
+      line-height: 1.25em;
       font-size: 1em;
     &:last-child {
         margin-bottom: 1.5em;
@@ -66,6 +92,8 @@
     }
   }
 }
+
+
 
 
 

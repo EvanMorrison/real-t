@@ -5,6 +5,12 @@
     flex: 1 1 20%;
     padding: 18px;
     max-width: 35em;
+    md-icon {
+      position: relative;
+      right: .5em;
+      top: -.3em;
+      font-size: 1.25em;
+    }
     &.property-card {
       flex: 0 1 33%;
     }
