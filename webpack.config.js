@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 // see webpack --env option for passing environment to config, if it is a function
@@ -43,18 +43,18 @@ module.exports = (env = {}) => {
       },
       
       devtool: (() => {
-            if (isProduction) return 'hidden-source-map'
-            else return 'cheap-module-eval-source-map'
-        })(),
+        if (isProduction) return 'hidden-source-map'
+        else return 'eval-cheap-module-source-map'
+      })(),
 
       devServer: (() => {
         if (isProduction) return {}
         else return {
-                      contentBase: './dist',
-                      historyApiFallback: {
-                        index: '/'
-                      }
-                    }
+          contentBase: './dist',
+          historyApiFallback: {
+            index: '/'
+          }
+        }
       })(),
 
       module: {
@@ -80,21 +80,15 @@ module.exports = (env = {}) => {
                     }
             }]
           },
-          { test: /\.scss$/, 
-            use: ExtractTextPlugin.extract({
-                  use: [
-                    {
-                      loader: 'css-loader', 
-                      options: { sourceMap: true }
-                    },
-                    {
-                      loader: 'sass-loader',
-                      options: { sourceMap: true }
-                    }
-                  ],    
-                  // fallback to inlining styles when extracting is disabled in development
-                  fallback: 'style-loader',
-                })
+          {
+            test: /\.scss$/,
+            use: [
+              {
+                loader: MiniCssExtractPlugin.loader,
+              },
+              'css-loader',
+              'sass-loader',
+            ],
           },
         ]
       },
@@ -107,28 +101,15 @@ module.exports = (env = {}) => {
                   filename: 'index.html',
                   inject: 'body'
                 }),
-                new ExtractTextPlugin({
-                      filename: '[name].[contenthash].css',
-                      disable: !isProduction // will use fallback loader in development 
-                }),
-                  /**
-                   * Note: CommonsChunckPlugin is often only run in production, but
-                   * dev-server was not loading angular correctly without it
-                   */
-                new webpack.optimize.CommonsChunkPlugin({ 
-                  name: 'vendor'
-                }),
-                new webpack.optimize.CommonsChunkPlugin({
-                  name: 'runtime'
-                })
+                new MiniCssExtractPlugin(),
         ];
           // plugins for production only
         if (isProduction) {
           pluginList.push(
-            new CleanWebpackPlugin(['dist']), 
-            new webpack.HashedModuleIdsPlugin(),
+            new CleanWebpackPlugin(), 
+            new webpack.ids.HashedModuleIdsPlugin(),
             new CompressionPlugin({
-              asset: '[path].gz[query]',
+              filename: '[path][base].gz[query]',
               algorithm: 'gzip',
               threshold: 10240,
               test: /\.js$|\.html$|\.css$/,
@@ -144,7 +125,8 @@ module.exports = (env = {}) => {
         }
         return pluginList
       })(),
-
+      
+      mode: isProduction ? 'production' : 'development'
       
   }
 
