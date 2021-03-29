@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin');
 
 // see webpack --env option for passing environment to config, if it is a function
@@ -13,14 +14,11 @@ module.exports = (env = {}) => {
 
   return {
       entry: (() => {
-       const entry = {
-        index: ['./src/app.module.js']
-      }
-      if (isProduction) return entry
-      else {
-        entry.index.push('webpack-hot-middleware/client?reload=true');
-        return entry;
-      }  
+        const entry = './src/app.module.js';
+        if (isProduction) return entry
+        else {
+          return [entry, 'webpack-hot-middleware/client'];
+        }  
       })(),
 
       output: {
@@ -59,11 +57,9 @@ module.exports = (env = {}) => {
             type: 'asset/resource',
           },
           {
-            test: /\.scss$/,
+            test: /\.s?css$/,
             use: [
-              {
-                loader: MiniCssExtractPlugin.loader,
-              },
+              MiniCssExtractPlugin.loader,
               'css-loader',
               'sass-loader',
             ],
@@ -75,9 +71,7 @@ module.exports = (env = {}) => {
         const pluginList = [
             // plugins used by dev and production
                 new HTMLWebpackPlugin({
-                  template: path.resolve(__dirname,'src/index.html'),
-                  filename: 'index.html',
-                  inject: 'body'
+                  base: { href: '/' },
                 }),
                 new MiniCssExtractPlugin(),
         ];
@@ -98,13 +92,20 @@ module.exports = (env = {}) => {
         } else {
             pluginList.push(
               new webpack.HotModuleReplacementPlugin(),
-              new webpack.NoEmitOnErrorsPlugin()
             )
         }
         return pluginList
       })(),
       
-      mode: isProduction ? 'production' : 'development'
+      mode: isProduction ? 'production' : 'development',
+
+      optimization: {
+        minimize: isProduction,
+        minimizer: [
+          '...',
+          new CssMinimizerPlugin(),
+        ]
+      }
       
   }
 
