@@ -1,8 +1,9 @@
+import template from './legacyViews.template.html';
 
-module.exports = function(ngModule) {
+export default function(ngModule) {
   ngModule
       .component('legacyViews', {
-        template: require('./legacyViews.template.html'),
+        template,
         controller: [LegacyController],
         controllerAs: 'ctrl'
       });

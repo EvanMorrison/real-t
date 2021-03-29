@@ -1,8 +1,8 @@
-module.exports = function(app) {
+export default function(app) {
   app.service("listViewService", [ 
-                              '$http',
-                              '$stateParams',
-                              ListViewService
+    '$http',
+    '$stateParams',
+    ListViewService
   ])
 
   function ListViewService($http, $stateParams) {

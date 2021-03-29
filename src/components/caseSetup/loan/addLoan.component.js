@@ -1,20 +1,21 @@
-module.exports = function(app) {
+import template from './addLoan.template.html';
+
+export default function(app) {
   
   app.component('rtAddLoan', {
-    template: require('./addLoan.template.html'),
+    template,
     controller: [ 
-                    AddLoanController
+      AddLoanController
     ],
     controllerAs: 'vm',
     bindings: { 
-                profile: '<',
-                props: '<',
-                section: '<',
-                loanData: '<',
-                caseLoaded : '<',
-                onSaveProfileAndUpdateCase: '&',
-                onRemoveProfileFromCase: '&',
-            
+      profile: '<',
+      props: '<',
+      section: '<',
+      loanData: '<',
+      caseLoaded : '<',
+      onSaveProfileAndUpdateCase: '&',
+      onRemoveProfileFromCase: '&',      
     }
   })
 

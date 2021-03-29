@@ -1,6 +1,8 @@
-module.exports = function(app) {
+import template from './caseSetup.tabs.template.html';
+
+export default function(app) {
   app.component('rtCaseSetup', {
-    template: require('./caseSetup.tabs.template.html'),
+    template,
     controller: [ 
       '$state',
       'caseService',
@@ -8,13 +10,13 @@ module.exports = function(app) {
     ],
     controllerAs: 'vm',
     bindings: {
-                'sections': '<',
-                'props': '<',
-                'caseRecord': '<',
-                'onCreateNewCase': '&',
-                'onLookupCaseByCaseNum': '&',
-                'onSaveProfileAndUpdateCase': '&',
-                'onRemoveProfileFromCase': '&',
+      'sections': '<',
+      'props': '<',
+      'caseRecord': '<',
+      'onCreateNewCase': '&',
+      'onLookupCaseByCaseNum': '&',
+      'onSaveProfileAndUpdateCase': '&',
+      'onRemoveProfileFromCase': '&',
     }
   })
 

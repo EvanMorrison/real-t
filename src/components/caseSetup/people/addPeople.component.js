@@ -1,19 +1,21 @@
-module.exports = function(app) {
+import template from './addPeople.template.html';
+
+export default function(app) {
   
   app.component('rtAddPeople', {
-    template: require('./addPeople.template.html'),
+    template,
     controller: [ 
-                    'caseService',
-                    AddPeopleController
+      'caseService',
+      AddPeopleController
     ],
     controllerAs: 'vm',
     bindings: { 
-                'profiles': '<',
-                'props': '<',
-                'section': '<',
-                'caseLoaded' : '<',
-                'onSaveProfileAndUpdateCase': '&',
-                'onRemoveProfileFromCase': '&',
+      'profiles': '<',
+      'props': '<',
+      'section': '<',
+      'caseLoaded' : '<',
+      'onSaveProfileAndUpdateCase': '&',
+      'onRemoveProfileFromCase': '&',
     }
   })
 

@@ -1,8 +1,9 @@
-require('./editButton.scss');
+import './editButton.scss';
+import template from './editButton.template.html';
 
-module.exports = function(app) {
+export default function(app) {
   app.component('rtEditButton', {
-    template: require('./editButton.template.html'),
+    template,
     controller: [
                   EditButtonController
     ],

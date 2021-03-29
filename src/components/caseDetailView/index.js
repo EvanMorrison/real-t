@@ -1,6 +1,10 @@
-module.exports = function(app) {
-  require('./caseDetail.scss');
-  require('./caseDashboard.component')(app);
-  require('./timeline.component')(app);
-  require('./caseInfo.component')(app);
+import './caseDetail.scss';
+import caseDashboard from './caseDashboard.component';
+import timeline from './timeline.component';
+import caseInfo from './caseInfo.component';
+
+export default function(app) {
+  caseDashboard(app);
+  timeline(app);
+  caseInfo(app);
 }

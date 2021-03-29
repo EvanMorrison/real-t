@@ -1,13 +1,15 @@
-module.exports = function(app) {
+import template from './caseInfo.template.html';
+
+export default function(app) {
   app.component('rtCaseInfo', {
-    template: require('./caseInfo.template.html'),
+    template,
     controller: [ DetailsController],
     controllerAs: 'vm',
     bindings: {
-                  sections: '<',
-                  props: '<',
-                  caseRecord: '<',
-                  onToggleDisplayNames: '&',
+      sections: '<',
+      props: '<',
+      caseRecord: '<',
+      onToggleDisplayNames: '&',
     }
   })
 

@@ -1,6 +1,7 @@
-module.exports = function (app) {
+import hero from './hero.component';
+import home from './home.component';
 
-  require('./hero.component')(app);
-  require('./home.component')(app);
-
+export default function (app) {
+  hero(app);
+  home(app);
 }

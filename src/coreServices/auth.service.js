@@ -1,4 +1,4 @@
-module.exports = function(app) {
+export default function(app) {
 
     app.service('localAuthService', ['$http', '$state', 'tokenService', function ($http, $state, tokenService) {
             this.spinner = false;

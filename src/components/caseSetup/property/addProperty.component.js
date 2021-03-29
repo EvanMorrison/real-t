@@ -1,20 +1,21 @@
-module.exports = function(app) {
+import template from './addProperty.template.html';
+
+export default function(app) {
   
   app.component('rtAddProperty', {
-    template: require('./addProperty.template.html'),
+    template,
     controller: [ 
-                    'caseService',
-                    AddPropertyController
+      'caseService',
+      AddPropertyController
     ],
     controllerAs: 'vm',
     bindings: { 
-                profiles: '<',
-                props: '<',
-                section: '<',
-                caseLoaded : '<',
-                onSaveProfileAndUpdateCase: '&',
-                onRemoveProfileFromCase: '&',
-            
+      profiles: '<',
+      props: '<',
+      section: '<',
+      caseLoaded : '<',
+      onSaveProfileAndUpdateCase: '&',
+      onRemoveProfileFromCase: '&',      
     }
   })
 

@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin');
 
 // see webpack --env option for passing environment to config, if it is a function
@@ -13,24 +14,11 @@ module.exports = (env = {}) => {
 
   return {
       entry: (() => {
-       const entry = {
-        index: ['./src/app.module.js' ],
-        vendor: [
-          'angular',
-          'angular-material',
-          'angular-resource',
-          'angular-messages',
-          'angular-cookies',
-          '@uirouter/angularjs',
-          './node_modules/angular-material/angular-material.scss',
-        ]
-      }
-      if (isProduction) return entry
-      else {
-        entry.index.push('webpack-hot-middleware/client?reload=true');
-        entry.vendor.push('webpack-hot-middleware/client?reload=true');
-        return entry;
-      }  
+        const entry = './src/app.module.js';
+        if (isProduction) return entry
+        else {
+          return [entry, 'webpack-hot-middleware/client'];
+        }  
       })(),
 
       output: {
@@ -43,58 +31,38 @@ module.exports = (env = {}) => {
       },
       
       devtool: (() => {
-            if (isProduction) return 'hidden-source-map'
-            else return 'cheap-module-eval-source-map'
-        })(),
+        if (isProduction) return 'hidden-source-map'
+        else return 'eval-cheap-module-source-map'
+      })(),
 
       devServer: (() => {
         if (isProduction) return {}
         else return {
-                      contentBase: './dist',
-                      historyApiFallback: {
-                        index: '/'
-                      }
-                    }
+          contentBase: './dist',
+          historyApiFallback: {
+            index: '/'
+          }
+        }
       })(),
 
       module: {
         rules: [
           { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
-          { test: /\.html$/, exclude: /node_modules/, use: 'raw-loader'},
+          { test: /\.html$/, exclude: /node_modules/, type: 'asset/source'},
           { test: /\.(jpe?g|png|gif)$/, 
             exclude: /node_modules/, 
-            use: [{
-                    loader: 'url-loader',
-                    options: {
-                      limit: 10000,
-                      name: 'assets/[name].[hash].[ext]'
-                    }
-            }]
+            type: 'asset/resource',
           },
           { test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-            use: [{
-                    loader: 'url-loader',
-                    options: {
-                      limit: 33000,
-                      name: 'assets/fonts/[name].[hash].[ext]'
-                    }
-            }]
+            type: 'asset/resource',
           },
-          { test: /\.scss$/, 
-            use: ExtractTextPlugin.extract({
-                  use: [
-                    {
-                      loader: 'css-loader', 
-                      options: { sourceMap: true }
-                    },
-                    {
-                      loader: 'sass-loader',
-                      options: { sourceMap: true }
-                    }
-                  ],    
-                  // fallback to inlining styles when extracting is disabled in development
-                  fallback: 'style-loader',
-                })
+          {
+            test: /\.s?css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              'css-loader',
+              'sass-loader',
+            ],
           },
         ]
       },
@@ -103,32 +71,17 @@ module.exports = (env = {}) => {
         const pluginList = [
             // plugins used by dev and production
                 new HTMLWebpackPlugin({
-                  template: path.resolve(__dirname,'src/index.html'),
-                  filename: 'index.html',
-                  inject: 'body'
+                  base: { href: '/' },
                 }),
-                new ExtractTextPlugin({
-                      filename: '[name].[contenthash].css',
-                      disable: !isProduction // will use fallback loader in development 
-                }),
-                  /**
-                   * Note: CommonsChunckPlugin is often only run in production, but
-                   * dev-server was not loading angular correctly without it
-                   */
-                new webpack.optimize.CommonsChunkPlugin({ 
-                  name: 'vendor'
-                }),
-                new webpack.optimize.CommonsChunkPlugin({
-                  name: 'runtime'
-                })
+                new MiniCssExtractPlugin(),
         ];
           // plugins for production only
         if (isProduction) {
           pluginList.push(
-            new CleanWebpackPlugin(['dist']), 
-            new webpack.HashedModuleIdsPlugin(),
+            new CleanWebpackPlugin(), 
+            new webpack.ids.HashedModuleIdsPlugin(),
             new CompressionPlugin({
-              asset: '[path].gz[query]',
+              filename: '[path][base].gz[query]',
               algorithm: 'gzip',
               threshold: 10240,
               test: /\.js$|\.html$|\.css$/,
@@ -139,12 +92,20 @@ module.exports = (env = {}) => {
         } else {
             pluginList.push(
               new webpack.HotModuleReplacementPlugin(),
-              new webpack.NoEmitOnErrorsPlugin()
             )
         }
         return pluginList
       })(),
+      
+      mode: isProduction ? 'production' : 'development',
 
+      optimization: {
+        minimize: isProduction,
+        minimizer: [
+          '...',
+          new CssMinimizerPlugin(),
+        ]
+      }
       
   }
 

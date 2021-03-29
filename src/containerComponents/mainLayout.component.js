@@ -1,7 +1,9 @@
-module.exports = function(app) {
+import template from './mainLayout.template.html';
+
+export default function(app) {
   app
     .component('mainLayout', {
-      template: require('./mainLayout.template.html'),
+      template,
       controller: [MainLayoutController],
       controllerAs: 'vm',
       bindings: {

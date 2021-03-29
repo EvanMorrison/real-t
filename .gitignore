@@ -3,8 +3,8 @@
 
 node_modules
 dist
-assets
 
+config.js
 backend/**/*config.js
 
 *.log

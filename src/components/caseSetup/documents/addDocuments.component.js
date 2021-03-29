@@ -1,21 +1,22 @@
-module.exports = function(app) {
+import template from './addDocuments.template.html';
+
+export default function(app) {
   
   app.component('rtAddDocuments', {
-    template: require('./addDocuments.template.html'),
+    template,
     controller: [ 
-                    'caseService',
-                    AddDocumentsController
+      'caseService',
+      AddDocumentsController
     ],
     controllerAs: 'vm',
     bindings: { 
-                profile: '<',
-                props: '<',
-                section: '<',
-                loanData: '<',
-                caseLoaded : '<',
-                onSaveProfileAndUpdateCase: '&',
-                onRemoveProfileFromCase: '&',
-            
+      profile: '<',
+      props: '<',
+      section: '<',
+      loanData: '<',
+      caseLoaded : '<',
+      onSaveProfileAndUpdateCase: '&',
+      onRemoveProfileFromCase: '&',     
     }
   })
 

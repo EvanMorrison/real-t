@@ -1,16 +1,16 @@
+import template from './caseList.template.html';
 
-
-module.exports = function (app) {
+export default function (app) {
   app
     .component('caseList', {
-      template: require('./caseList.template.html'),
+      template,
       controller: [ 
-                    '$mdDialog',
-                    '$state',
-                    'caseService',
-                    'listViewService',
-                    CasesController
-                  ],
+        '$mdDialog',
+        '$state',
+        'caseService',
+        'listViewService',
+        CasesController
+      ],
       controllerAs: 'vm',
       bindings: { caseList : '<'},
     });

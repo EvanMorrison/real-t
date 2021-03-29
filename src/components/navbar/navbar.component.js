@@ -1,7 +1,9 @@
-module.exports = function(app) {
+import template from './navbar.template.html';
+
+export default function(app) {
    app
       .component('navbar', {
-        template: require('./navbar.template.html'),
+        template,
         controller: [ NavbarController ],
         controllerAs: 'vm',
         bindings: {

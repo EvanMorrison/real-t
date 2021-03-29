@@ -1,7 +1,9 @@
-module.exports = function(app) {
+import template from './case.template.html';
+
+export default function(app) {
   app
     .component('caseExpanded', {
-      template: require('./case.template.html'),
+      template,
       controller: [
                       'phoneFilter',
                       CaseController

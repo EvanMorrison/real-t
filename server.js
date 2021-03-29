@@ -7,17 +7,18 @@ const logger = require('morgan');
 const expressJWT = require('express-jwt');
 const cookieParser = require('cookie-parser');
 
-const config = require('./backend/config');
+const config = require('./config');
 const port = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production'
 ////////////////////////
 // connect to MongoDB //
 ///////////////////////
 mongoose.Promise = global.Promise;
-const database = `mongodb://${config.db_user}:${config.db_pwd}@${config.db_path}/${config.db_name}`;
+const database = `mongodb+srv://${config.db_user}:${config.db_pwd}${config.db_path}/${config.db_name}?retryWrites=true&w=majority`;
 mongoose.connect(database, {
-                              useMongoClient: true,
-                              reconnectTries: 30
+                  useNewUrlParser: true,
+                  useUnifiedTopology: true,
+                  reconnectTries: 30
                 }).then((res) => {
                     console.log(`Connected to MongoDB ${config.db_name} as user: ${config.db_user}`)
                   })
@@ -25,7 +26,7 @@ mongoose.connect(database, {
                     console.log('Error connecting to MongoDB ', err.message)
                   });
 mongoose.connection.on('disconnected', () => {
-  mongoose.connect(database, { useMongoClient: true})
+  mongoose.connect(database)
   .then((res) => console.log('Reconnected to MongoDB'))
   .catch((err) => console.log('Error reconnecting to MongoDB', err.message))
 });
@@ -39,7 +40,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use('/auth', require('./backend/routes/authRoutes'));
-app.use('/api', expressJWT({secret: config.token_secret}));
+app.use('/api', expressJWT({secret: config.token_secret, algorithms: ['HS256']}));
 app.use('/api/users', require('./backend/routes/userRoutes'));
 app.use('/api/cases', require('./backend/routes/caseRoutes'));
 app.use('/api/people', require('./backend/routes/personRoutes'));
@@ -60,9 +61,6 @@ if (process.env.NODE_ENV !== 'production') {
     const compiler = webpack(config);
     const instance = webpackDevMiddleware(compiler, {
       publicPath: config.output.publicPath,
-      stats: {
-        colors: true
-      }
     });
     app.use(instance);
     app.use(historyApiFallback());
@@ -74,7 +72,7 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(express.static(path.join(__dirname,'/dist')));
 
      // serve index.html for all requests without a route specified above
-    app.get('*', function(req, res) {
+     app.get('*', function(req, res) {
       res.sendFile(path.join(__dirname,'/dist/index.html'))
     });
 }

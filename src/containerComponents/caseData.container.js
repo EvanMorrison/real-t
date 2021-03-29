@@ -1,16 +1,16 @@
+import template from './caseData.template.html';
 
-
-module.exports = function(app) {
+export default function(app) {
   app
   .component('rtCaseDataContainer', {
-    template: require('./caseData.template.html'),
+    template,
     controller: [ 
-                  '$mdDialog',
-                  '$state',
-                  '$urlService',
-                  'caseService',
-                  CaseDataController
-                ],
+      '$mdDialog',
+      '$state',
+      '$urlService',
+      'caseService',
+      CaseDataController
+    ],
     controllerAs: 'vm',
     bindings: {
                 $transition$: '<',

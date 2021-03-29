@@ -1,4 +1,4 @@
-module.exports = function(app) {
+export default function(app) {
   app.component('rtProfileAutocomplete', {
       template: [
       '  <md-autocomplete class="autocomplete-input index{{vm.$index}}"',

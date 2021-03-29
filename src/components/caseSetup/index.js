@@ -1,9 +1,16 @@
-module.exports = function(app) {
-  require('./caseSetupStyles.scss');
-  require('./profileLookup.component')(app);
-  require('./people')(app);
-  require('./caseSetup.component')(app);
-  require('./property/addProperty.component')(app);
-  require('./loan/addLoan.component')(app);
-  require('./documents/addDocuments.component')(app);
+import './caseSetupStyles.scss';
+import profileLookup from './profileLookup.component';
+import people from './people';
+import caseSetup from './caseSetup.component';
+import addProperty from './property/addProperty.component';
+import addLoan from './loan/addLoan.component';
+import addDocs from './documents/addDocuments.component';
+
+export default function(app) {
+  profileLookup(app);
+  people(app);
+  caseSetup(app);
+  addProperty(app);
+  addLoan(app);
+  addDocs(app);
 }

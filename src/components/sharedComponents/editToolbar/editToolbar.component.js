@@ -1,14 +1,16 @@
-module.exports = function(app) {
+import template from './editToolbar.template.html';
+
+export default function(app) {
   app 
     .component('editToolbar', {
-      template: require('./editToolbar.template.html'),
+      template,
       controller: [ EditToolbarController ],
       controllerAs: 'vm',
       bindings: {
-                  'isActiveEdit': '<',
-                  'onEdit' : '&',
-                  'onSave' : '&',
-                  'onCancel': '&'
+        'isActiveEdit': '<',
+        'onEdit' : '&',
+        'onSave' : '&',
+        'onCancel': '&'
       }
     });
 

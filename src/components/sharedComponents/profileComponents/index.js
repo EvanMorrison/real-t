@@ -1,7 +1,12 @@
-module.exports = function(app) {
-  require('./infoCard.scss');
-  require('./personInfo.component')(app);
-  require('./propertyInfo.component')(app);
-  require('./loanInfo.component')(app);
-  require('./documentInfo.component')(app);
+import './infoCard.scss';
+import personInfo from './personInfo.component';
+import propertyInfo from './propertyInfo.component';
+import loanInfo from './loanInfo.component';
+import documentInfo from './documentInfo.component';
+
+export default function(app) {
+  personInfo(app);
+  propertyInfo(app);
+  loanInfo(app);
+  documentInfo(app);
 }

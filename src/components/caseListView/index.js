@@ -1,6 +1,10 @@
-module.exports = function(app) {
-  require('./listView.scss');
-  require('./listView.service')(app);
-  require('./caseList.component')(app);
-  require('./case.component')(app);
+import './listView.scss';
+import listView from './listView.service';
+import caseList from './caseList.component';
+import caseComponent from './case.component';
+
+export default function(app) {
+  listView(app);
+  caseList(app);
+  caseComponent(app);
 }

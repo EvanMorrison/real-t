@@ -1,5 +1,4 @@
-module.exports = {
-    STATES: [
+export const STATES = [
     {
         "name": "Alabama",
         "short": "AL"
@@ -236,5 +235,4 @@ module.exports = {
         "name": "Wyoming",
         "short": "WY"
     }
-]
-}
+];

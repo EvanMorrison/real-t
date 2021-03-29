@@ -1,15 +1,17 @@
-module.exports = function(app) {
+import template from './propertyInfo.template.html';
+
+export default function(app) {
   app.component('rtPropertyInfo', {
-    template: require('./propertyInfo.template.html'),
+    template,
     controller: [ 'caseService', PropertyInfoController],
     controllerAs: 'vm',
     transclude: true,
     bindings: {
-                    profile: '<',
-                    mode: '<',
-                    section: '<',
-                    'actions': '<',
-                    onSaveClick: '&'
+      profile: '<',
+      mode: '<',
+      section: '<',
+      'actions': '<',
+      onSaveClick: '&'
     }
   })
 
