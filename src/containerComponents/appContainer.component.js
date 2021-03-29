@@ -1,9 +1,10 @@
-
 // Container Component for Login-sidebar, user authentication, and all content views
-module.exports = function(app) {
+import template from './appContainer.template.html';
+
+export default function(app) {
   app
       .component('appContainer', {
-        template: require('./appContainer.template.html'),
+        template,
         controller: [ 
                       '$state',
                       'localAuthService',

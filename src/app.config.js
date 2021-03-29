@@ -2,7 +2,7 @@
 
 
 
-module.exports = function(ngApp) {  
+export default function(ngApp) {  
 
   ngApp
 
@@ -35,17 +35,17 @@ module.exports = function(ngApp) {
 // routing with ui-router
     .config([ '$locationProvider', 
               '$stateProvider', 
-              '$urlRouterProvider', 
+              '$urlServiceProvider', 
               RoutingConfig
             ]);
 
       function RoutingConfig( $locationProvider, 
                               $stateProvider, 
-                              $urlRouterProvider) {
+                              $urlServiceProvider) {
 
           $locationProvider.html5Mode(true);
 
-          $urlRouterProvider.otherwise('/');
+          $urlServiceProvider.rules.otherwise('/');
 
           $stateProvider
           .state('index',{

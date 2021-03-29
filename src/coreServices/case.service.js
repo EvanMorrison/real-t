@@ -1,20 +1,20 @@
+import { STATES } from './constants';
 
-
-module.exports = function(ngModule) {
+export default function(ngModule) {
 
   ngModule
     .service('caseService', [
-                                '$http',
-                                '$stateParams', 
-                                'listViewService',
-                                CaseService
-                            ])
+        '$http',
+        '$stateParams', 
+        'listViewService',
+        CaseService
+    ])
 
     function CaseService($http, $stateParams, listViewService) {
       
       this.caseList = []; //listViewService.caseList;
       this.isListCurrent = false;
-      this.statesList = require('./constants').STATES;
+      this.statesList = STATES;
     /**
      * List-View Service, retrieves a 'light' list of all cases with select fields populated
      * for the caseList view.

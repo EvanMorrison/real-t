@@ -1,6 +1,8 @@
-module.exports = function(app) {
+import template from './documentInfo.template.html';
+
+export default function(app) {
   app.component('rtDocumentInfo', {
-    template: require('./documentInfo.template.html'),
+    template,
     controller: [ DocumentInfoController ],
     controllerAs: 'vm',
     bindings: {

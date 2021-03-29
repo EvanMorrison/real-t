@@ -1,8 +1,9 @@
+import template from './hero.template.html';
 
-module.exports = function(app) {
+export default function(app) {
   app
     .component('hero', {
-      template: require('./hero.template.html'),
+      template,
       controller: [HeroController],
       controllerAs: 'vm',
       bindings: {

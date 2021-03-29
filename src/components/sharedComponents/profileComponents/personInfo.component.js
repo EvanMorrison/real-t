@@ -1,6 +1,8 @@
-module.exports = function(app) {
+import template from './personInfo.template.html';
+
+export default function(app) {
   app.component('rtPersonInfo', {
-    template: require('./personInfo.template.html'),
+    template,
     controller: [ 'caseService', '$timeout', '$mdDialog', '$scope', PersonInfoController],
     transclude: true,
     controllerAs: 'vm',

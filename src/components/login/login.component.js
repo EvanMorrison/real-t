@@ -1,14 +1,16 @@
+import template from './login.template.html';
+import app from '../../app.module';
 
-module.exports = function(AuthApp) {
-
-  AuthApp
+export default function() {
+  app
     .component('loginComponent', {
-      template: require('./login.template.html'),
-      controller: [ '$mdDialog',
-                    '$state',
-                    'localAuthService',
-                    LoginController
-                  ],
+      template,
+      controller: [
+        '$mdDialog',
+        '$state',
+        'localAuthService',
+        LoginController
+      ],
       controllerAs: 'vm',
       bindings: {
                   'user': '<'

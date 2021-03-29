@@ -1,7 +1,9 @@
-module.exports = function(app) {
+import template from './timeline.template.html';
+
+export default function(app) {
   app 
     .component('timeline', {
-      template: require('./timeline.template.html'),
+      template,
       controller: [
                     TimelineController
                   ],

@@ -14,21 +14,11 @@ module.exports = (env = {}) => {
   return {
       entry: (() => {
        const entry = {
-        index: ['./src/app.module.js' ],
-        vendor: [
-          'angular',
-          'angular-material',
-          'angular-resource',
-          'angular-messages',
-          'angular-cookies',
-          '@uirouter/angularjs',
-          './node_modules/angular-material/angular-material.scss',
-        ]
+        index: ['./src/app.module.js']
       }
       if (isProduction) return entry
       else {
         entry.index.push('webpack-hot-middleware/client?reload=true');
-        entry.vendor.push('webpack-hot-middleware/client?reload=true');
         return entry;
       }  
       })(),
@@ -60,25 +50,13 @@ module.exports = (env = {}) => {
       module: {
         rules: [
           { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
-          { test: /\.html$/, exclude: /node_modules/, use: 'raw-loader'},
+          { test: /\.html$/, exclude: /node_modules/, type: 'asset/source'},
           { test: /\.(jpe?g|png|gif)$/, 
             exclude: /node_modules/, 
-            use: [{
-                    loader: 'url-loader',
-                    options: {
-                      limit: 10000,
-                      name: 'assets/[name].[hash].[ext]'
-                    }
-            }]
+            type: 'asset/resource',
           },
           { test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-            use: [{
-                    loader: 'url-loader',
-                    options: {
-                      limit: 33000,
-                      name: 'assets/fonts/[name].[hash].[ext]'
-                    }
-            }]
+            type: 'asset/resource',
           },
           {
             test: /\.scss$/,

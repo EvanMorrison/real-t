@@ -1,9 +1,10 @@
+import template from './home.template.html';
 
-module.exports =function(ngModule) {
+export default function(ngModule) {
 
   ngModule
     .component('home', {
-      template: require('./home.template.html'),
+      template,
       controller: [ 
                     HomeController
                   ],

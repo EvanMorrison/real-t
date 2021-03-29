@@ -1,6 +1,8 @@
-module.exports = function(app) {
+import template from './loanInfo.template.html';
+
+export default function(app) {
   app.component('rtLoanInfo', {
-    template: require('./loanInfo.template.html'),
+    template,
     controller: [ LoanInfoController ],
     controllerAs: 'vm',
     bindings: {

@@ -1,7 +1,7 @@
+import authService from './auth.service';
+import caseService from './case.service';
 
-module.exports = function(app) {
-  
-  require('./case.service')(app);
-  require('./auth.service')(app);
-
+export default function(app) {
+  authService(app);
+  caseService(app);
 }

@@ -1,10 +1,9 @@
-  
+import template from './caseDashboard.template.html';
 
-
-module.exports = function(ngModule) {
+export default function(ngModule) {
   ngModule
   .component('caseDashboard', {
-    template: require('./caseDashboard.template.html'),
+    template,
     controller: [ 'caseService', 
                   '$state', 
                   '$stateParams',
@@ -14,14 +13,14 @@ module.exports = function(ngModule) {
                 ],
     controllerAs: 'vm',
     bindings: {   
-                  $transition$: '<',
-                  caseList: '<',
-                  caseRecord: '<',
-                  props: '<',
-                  sections: '<',
-                  onLookupCaseByCaseNum: '&',
-                  onSaveProfileAndUpdateCase: '&'
-                }
+      $transition$: '<',
+      caseList: '<',
+      caseRecord: '<',
+      props: '<',
+      sections: '<',
+      onLookupCaseByCaseNum: '&',
+      onSaveProfileAndUpdateCase: '&'
+    }
   });
 
     function CaseDashboardController( caseService,
